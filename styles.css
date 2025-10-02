@@ -1,18 +1,1 @@
-/* News Layout */
-.news-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
-.news-sidebar {
-    width: 25%;
-    margin-right: 2rem;
-}
-
-.news-grid {
-    width: 75%;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-}
+/* Content of styles.css fetched from Blob SHA */
