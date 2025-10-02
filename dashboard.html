@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Newsly AI</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dashboard-body">
+    <!-- Navigation Dashboard -->
+    <nav class="navbar dashboard-nav">
+        <div class="nav-container">
+            <a href="dashboard.html" class="logo">
+                <span class="logo-icon">📰</span>
+                <span class="logo-text">Newsly AI</span>
+            </a>
+            <div class="nav-links">
+                <span id="userNameDisplay" class="user-name"></span>
+                <button id="logoutBtn" class="btn-secondary">Déconnexion</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar">
+            <div class="sidebar-header">
+                <h2>Vos Catégories</h2>
+                <button id="refreshNewsBtn" class="btn-icon" title="Rafraîchir">🔄</button>
+            </div>
+
+            <div class="categories-list">
+                <label class="category-toggle">
+                    <input type="checkbox" class="category-checkbox" data-category="ai" checked>
+                    <span class="category-label">
+                        <span class="category-icon">🤖</span>
+                        <span>Intelligence Artificielle</span>
+                    </span>
+                </label>
+
+                <label class="category-toggle">
+                    <input type="checkbox" class="category-checkbox" data-category="world" checked>
+                    <span class="category-label">
+                        <span class="category-icon">🌍</span>
+                        <span>Actualités Mondiales</span>
+                    </span>
+                </label>
+
+                <label class="category-toggle">
+                    <input type="checkbox" class="category-checkbox" data-category="finance" checked>
+                    <span class="category-label">
+                        <span class="category-icon">💹</span>
+                        <span>Finance</span>
+                    </span>
+                </label>
+
+                <label class="category-toggle">
+                    <input type="checkbox" class="category-checkbox" data-category="science" checked>
+                    <span class="category-label">
+                        <span class="category-icon">🔬</span>
+                        <span>Science</span>
+                    </span>
+                </label>
+            </div>
+
+            <div class="sidebar-footer">
+                <p class="sidebar-info">💡 Activez/désactivez les catégories pour personnaliser votre NewsWall</p>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <div class="dashboard-header">
+                <h1 id="welcomeTitle">Bienvenue sur votre NewsWall 🎯</h1>
+                <p class="dashboard-subtitle">Actualités en temps réel personnalisées par IA</p>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loadingState" class="loading-state">
+                <div class="loader-big"></div>
+                <p>Chargement de vos actualités...</p>
+            </div>
+
+            <!-- News Grid -->
+            <div id="newsGrid" class="news-grid" style="display: none;">
+                <!-- AI Category -->
+                <div class="news-category" id="ai-category" data-category="ai">
+                    <div class="category-header">
+                        <div class="category-title-group">
+                            <span class="category-icon">🤖</span>
+                            <h2 class="category-title">Intelligence Artificielle</h2>
+                        </div>
+                    </div>
+                    <div class="news-items" id="ai-news">
+                        <div class="loading">Chargement...</div>
+                    </div>
+                </div>
+
+                <!-- World Category -->
+                <div class="news-category" id="world-category" data-category="world">
+                    <div class="category-header">
+                        <div class="category-title-group">
+                            <span class="category-icon">🌍</span>
+                            <h2 class="category-title">Actualités Mondiales</h2>
+                        </div>
+                    </div>
+                    <div class="news-items" id="world-news">
+                        <div class="loading">Chargement...</div>
+                    </div>
+                </div>
+
+                <!-- Finance Category -->
+                <div class="news-category" id="finance-category" data-category="finance">
+                    <div class="category-header">
+                        <div class="category-title-group">
+                            <span class="category-icon">💹</span>
+                            <h2 class="category-title">Finance</h2>
+                        </div>
+                    </div>
+                    <div class="news-items" id="finance-news">
+                        <div class="loading">Chargement...</div>
+                    </div>
+                </div>
+
+                <!-- Science Category -->
+                <div class="news-category" id="science-category" data-category="science">
+                    <div class="category-header">
+                        <div class="category-title-group">
+                            <span class="category-icon">🔬</span>
+                            <h2 class="category-title">Science</h2>
+                        </div>
+                    </div>
+                    <div class="news-items" id="science-news">
+                        <div class="loading">Chargement...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <div class="empty-state-icon">📭</div>
+                <h2>Aucune catégorie sélectionnée</h2>
+                <p>Activez au moins une catégorie dans la barre latérale pour voir les actualités</p>
+            </div>
+        </main>
+    </div>
+
+    <script type="module">
+        import { supabase, loadUserProfile, loadUserPreferences, saveUserPreferences, fetchNewsForCategory, displayNews } from './app.js';
+
+        let currentUser = null;
+        let userPreferences = {};
+
+        // Vérifier l'authentification
+        const checkAuth = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            
+            if (!session) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            currentUser = session.user;
+            await initDashboard();
+        };
+
+        // Initialiser le dashboard
+        const initDashboard = async () => {
+            // Charger le profil utilisateur
+            const profile = await loadUserProfile(currentUser.id);
+            
+            if (profile) {
+                document.getElementById('userNameDisplay').textContent = profile.full_name || profile.email;
+                document.getElementById('welcomeTitle').textContent = `Bienvenue ${profile.full_name || ''} 👋`;
+            }
+
+            // Charger les préférences
+            userPreferences = await loadUserPreferences(currentUser.id);
+            
+            // Mettre à jour les checkboxes selon les préférences
+            updateCheckboxes();
+
+            // Charger les actualités
+            await loadAllNews();
+
+            // Cacher le loading et afficher le contenu
+            document.getElementById('loadingState').style.display = 'none';
+            updateNewsGridVisibility();
+        };
+
+        // Mettre à jour les checkboxes selon les préférences
+        const updateCheckboxes = () => {
+            document.querySelectorAll('.category-checkbox').forEach(checkbox => {
+                const category = checkbox.dataset.category;
+                checkbox.checked = userPreferences[category] !== false;
+            });
+        };
+
+        // Charger toutes les actualités
+        const loadAllNews = async () => {
+            const categories = ['ai', 'world', 'finance', 'science'];
+            
+            for (const category of categories) {
+                if (userPreferences[category] !== false) {
+                    const articles = await fetchNewsForCategory(category);
+                    displayNews(`${category}-news`, articles);
+                }
+            }
+        };
+
+        // Mettre à jour la visibilité de la grille
+        const updateNewsGridVisibility = () => {
+            const anyActive = Object.values(userPreferences).some(val => val !== false);
+            
+            if (anyActive) {
+                document.getElementById('newsGrid').style.display = 'grid';
+                document.getElementById('emptyState').style.display = 'none';
+            } else {
+                document.getElementById('newsGrid').style.display = 'none';
+                document.getElementById('emptyState').style.display = 'flex';
+            }
+
+            // Afficher/cacher les catégories selon les préférences
+            document.querySelectorAll('.news-category').forEach(cat => {
+                const category = cat.dataset.category;
+                cat.style.display = userPreferences[category] !== false ? 'block' : 'none';
+            });
+        };
+
+        // Gérer les changements de catégorie
+        document.querySelectorAll('.category-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', async (e) => {
+                const category = e.target.dataset.category;
+                const isActive = e.target.checked;
+                
+                userPreferences[category] = isActive;
+                await saveUserPreferences(currentUser.id, category, isActive);
+                
+                updateNewsGridVisibility();
+
+                // Recharger les news pour cette catégorie si activée
+                if (isActive) {
+                    const articles = await fetchNewsForCategory(category);
+                    displayNews(`${category}-news`, articles);
+                }
+            });
+        });
+
+        // Bouton rafraîchir
+        document.getElementById('refreshNewsBtn').addEventListener('click', async () => {
+            document.getElementById('refreshNewsBtn').style.transform = 'rotate(360deg)';
+            await loadAllNews();
+            setTimeout(() => {
+                document.getElementById('refreshNewsBtn').style.transform = 'rotate(0deg)';
+            }, 500);
+        });
+
+        // Bouton déconnexion
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            await supabase.auth.signOut();
+            window.location.href = 'index.html';
+        });
+
+        // Initialiser
+        checkAuth();
+    </script>
+</body>
+</html>
