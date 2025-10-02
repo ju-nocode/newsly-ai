@@ -6,8 +6,8 @@
 // CONFIGURATION SUPABASE
 // ================================================
 // ⚠️ REMPLACEZ PAR VOS VRAIES CLÉS SUPABASE
-const SUPABASE_URL = 'VOTRE_PROJECT_URL_ICI'; // ex: https://xxxxx.supabase.co
-const SUPABASE_ANON_KEY = 'VOTRE_ANON_PUBLIC_KEY_ICI'; // La longue clé qui commence par eyJ...
+const SUPABASE_URL = 'https://krsivglhqdpnpbffsupd.supabase.co'; // ex: https://xxxxx.supabase.co
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtyc2l2Z2xocWRwbnBiZmZzdXBkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkzNjYxMDgsImV4cCI6MjA3NDk0MjEwOH0.0jKKBN8MRNdrSv-2kfFrXuD5ZbDfeh_h4Wp-mcbYPKk'; // La longue clé qui commence par eyJ...
 
 // Initialiser Supabase
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
