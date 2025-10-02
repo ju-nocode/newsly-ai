@@ -1,1 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - Newsly AI</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">📰</span>
+                <span class="logo-text">Newsly AI</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Accueil</a>
+                <a href="signup.html" class="btn-primary">Créer un compte</a>
+            </div>
+        </div>
+    </nav>
 
+    <!-- Login Form -->
+    <section class="auth-section">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <h1 class="auth-title">Bon retour ! 👋</h1>
+                    <p class="auth-subtitle">Connectez-vous pour accéder à votre NewsWall personnalisé</p>
+                </div>
+
+                <form id="loginForm" class="auth-form">
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            class="form-input" 
+                            placeholder="votre@email.com"
+                            required
+                            autocomplete="email"
+                        >
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label for="password" class="form-label">Mot de passe</label>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            class="form-input" 
+                            placeholder="••••••••"
+                            required
+                            autocomplete="current-password"
+                        >
+                    </div>
+
+                    <!-- Remember me & Forgot password -->
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="remember" name="remember">
+                            <span>Se souvenir de moi</span>
+                        </label>
+                        <a href="#" class="link-secondary">Mot de passe oublié ?</a>
+                    </div>
+
+                    <!-- Error Message -->
+                    <div id="errorMessage" class="error-message" style="display: none;"></div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-submit" id="loginBtn">
+                        <span id="loginBtnText">Se connecter</span>
+                        <span id="loginBtnLoader" class="btn-loader" style="display: none;">
+                            <span class="loader"></span>
+                        </span>
+                    </button>
+                </form>
+
+                <!-- Signup Link -->
+                <div class="auth-footer">
+                    <p class="auth-footer-text">
+                        Pas encore de compte ? 
+                        <a href="signup.html" class="link-primary">Créer un compte</a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Benefits Side -->
+            <div class="auth-benefits">
+                <h2 class="benefits-title">Accédez à votre NewsWall personnalisé</h2>
+                <ul class="benefits-list">
+                    <li class="benefit-item">
+                        <span class="benefit-icon">✅</span>
+                        <span>Actualités en temps réel filtrées par IA</span>
+                    </li>
+                    <li class="benefit-item">
+                        <span class="benefit-icon">✅</span>
+                        <span>Catégories personnalisables selon vos intérêts</span>
+                    </li>
+                    <li class="benefit-item">
+                        <span class="benefit-icon">✅</span>
+                        <span>Sauvegardez vos articles favoris</span>
+                    </li>
+                    <li class="benefit-item">
+                        <span class="benefit-icon">✅</span>
+                        <span>Accès depuis tous vos appareils</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <script type="module">
+        import { supabase, showError, showSuccess } from './app.js';
+
+        // Vérifier si l'utilisateur est déjà connecté
+        const checkAuth = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) {
+                window.location.href = 'dashboard.html';
+            }
+        };
+
+        checkAuth();
+
+        // Gérer la soumission du formulaire
+        const loginForm = document.getElementById('loginForm');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginBtnText = document.getElementById('loginBtnText');
+        const loginBtnLoader = document.getElementById('loginBtnLoader');
+        const errorMessage = document.getElementById('errorMessage');
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Désactiver le bouton et afficher le loader
+            loginBtn.disabled = true;
+            loginBtnText.style.display = 'none';
+            loginBtnLoader.style.display = 'inline-block';
+            errorMessage.style.display = 'none';
+
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email,
+                    password
+                });
+
+                if (error) throw error;
+
+                // Succès - rediriger vers le dashboard
+                showSuccess('Connexion réussie ! Redirection...');
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1000);
+
+            } catch (error) {
+                console.error('Erreur de connexion:', error);
+                errorMessage.textContent = error.message === 'Invalid login credentials' 
+                    ? 'Email ou mot de passe incorrect' 
+                    : error.message;
+                errorMessage.style.display = 'block';
+
+                // Réactiver le bouton
+                loginBtn.disabled = false;
+                loginBtnText.style.display = 'inline';
+                loginBtnLoader.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
