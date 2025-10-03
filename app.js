@@ -103,7 +103,7 @@ export const signup = async (email, password, username) => {
 // Déconnexion
 export const logout = () => {
     clearSession();
-    window.location.href = '/login.html';
+    window.location.href = 'login.html';
 };
 
 // ================================================
@@ -250,14 +250,14 @@ export const checkAuth = () => {
     const currentPage = window.location.pathname.split('/').pop();
 
     if (protectedPages.includes(currentPage) && !isAuthenticated) {
-        window.location.href = '/login.html';
+        window.location.href = 'login.html';
         return false;
     }
 
     // Rediriger vers dashboard si déjà connecté sur login/signup
     const authPages = ['login.html', 'signup.html'];
     if (authPages.includes(currentPage) && isAuthenticated) {
-        window.location.href = '/dashboard.html';
+        window.location.href = 'dashboard.html';
         return false;
     }
 
