@@ -179,7 +179,7 @@ Vercel redéploiera automatiquement ! 🎉
 
 ```
 newsly-ai/
-├── api/                      # Backend (Serverless Functions)
+├── api/                     # Backend (Serverless Functions)
 │   ├── auth/
 │   │   ├── login.js         # Endpoint login
 │   │   └── signup.js        # Endpoint signup
@@ -192,7 +192,8 @@ newsly-ai/
 ├── signup.html              # Page d'inscription
 ├── dashboard.html           # Dashboard utilisateur
 ├── index.html               # Page d'accueil
-├── styles.css               # Styles
+├── css/                     # Styles
+│   └── styles.css           # Feuille de styles
 ├── vercel.json              # Config Vercel
 ├── package.json             # Dépendances
 └── .env.example             # Template variables d'env
