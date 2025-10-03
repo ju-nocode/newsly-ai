@@ -100,6 +100,29 @@ export const signup = async (email, password, username) => {
     }
 };
 
+// Renvoyer l'email de confirmation
+export const resendConfirmation = async (email) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/auth/resend`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || 'Erreur lors du renvoi');
+        }
+
+        return { success: true, message: data.message };
+
+    } catch (error) {
+        console.error('Resend error:', error);
+        return { success: false, error: error.message };
+    }
+};
+
 // Déconnexion
 export const logout = () => {
     clearSession();

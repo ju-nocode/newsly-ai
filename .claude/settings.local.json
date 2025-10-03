@@ -1,11 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm run build:*)",
-      "Bash(vercel:*)",
-      "Bash(git add:*)",
-      "Bash(git commit -m \"$(cat <<''EOF''\nFeat: Ajout de la fonctionnalité de suppression de compte\n\n- Création de l''endpoint API /api/user/delete\n- Ajout de la fonction deleteAccount() dans app.js\n- Ajout du bouton de suppression avec icône 🗑️ dans le dashboard\n- Ajout du style CSS btn-danger pour le bouton de suppression\n- Confirmation avant suppression avec message d''avertissement\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
-      "Bash(git push:*)"
+      "Bash(git commit:*)",
+      "Bash(git rm:*)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []

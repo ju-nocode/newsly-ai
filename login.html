@@ -34,11 +34,11 @@
                     <!-- Email -->
                     <div class="form-group">
                         <label for="email" class="form-label">Email</label>
-                        <input 
-                            type="email" 
-                            id="email" 
-                            name="email" 
-                            class="form-input" 
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            class="form-input"
                             placeholder="votre@email.com"
                             required
                             autocomplete="email"
@@ -72,6 +72,16 @@
                     <!-- Error Message -->
                     <div id="errorMessage" class="error-message" style="display: none;"></div>
 
+                    <!-- Resend Confirmation -->
+                    <div id="resendSection" style="display: none; margin: 1rem 0; text-align: center;">
+                        <p style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
+                            Email de confirmation non reçu ?
+                        </p>
+                        <button type="button" class="btn-secondary" id="resendBtn">
+                            Renvoyer l'email de confirmation
+                        </button>
+                    </div>
+
                     <!-- Submit Button -->
                     <button type="submit" class="btn-submit" id="loginBtn">
                         <span id="loginBtnText">Se connecter</span>
@@ -84,7 +94,7 @@
                 <!-- Signup Link -->
                 <div class="auth-footer">
                     <p class="auth-footer-text">
-                        Pas encore de compte ? 
+                        Pas encore de compte ?
                         <a href="signup.html" class="link-primary">Créer un compte</a>
                     </p>
                 </div>
@@ -116,7 +126,7 @@
     </section>
 
     <script type="module">
-        import { login, checkAuth } from './app.js';
+        import { login, checkAuth, resendConfirmation } from './app.js';
 
         // Vérifier si l'utilisateur est déjà connecté
         checkAuth();
@@ -127,11 +137,16 @@
         const loginBtnText = document.getElementById('loginBtnText');
         const loginBtnLoader = document.getElementById('loginBtnLoader');
         const errorMessage = document.getElementById('errorMessage');
+        const resendSection = document.getElementById('resendSection');
+        const resendBtn = document.getElementById('resendBtn');
+
+        let currentEmail = '';
 
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             const email = document.getElementById('email').value.trim();
+            currentEmail = email;
             const password = document.getElementById('password').value;
 
             // Validation côté client
@@ -161,6 +176,7 @@
             loginBtnText.style.display = 'none';
             loginBtnLoader.style.display = 'inline-block';
             errorMessage.style.display = 'none';
+            resendSection.style.display = 'none';
 
             try {
                 const result = await login(email, password);
@@ -176,9 +192,17 @@
 
             } catch (error) {
                 console.error('Erreur de connexion:', error);
-                errorMessage.textContent = error.message === 'Invalid login credentials'
-                    ? 'Email ou mot de passe incorrect'
-                    : error.message;
+
+                // Si l'email n'est pas confirmé, afficher le bouton de renvoi
+                if (error.message.includes('confirm') || error.message.includes('verification')) {
+                    errorMessage.textContent = 'Veuillez d\'abord confirmer votre email';
+                    resendSection.style.display = 'block';
+                } else {
+                    errorMessage.textContent = error.message === 'Invalid login credentials'
+                        ? 'Email ou mot de passe incorrect'
+                        : error.message;
+                }
+
                 errorMessage.style.display = 'block';
 
                 // Réactiver le bouton
@@ -186,6 +210,24 @@
                 loginBtnText.style.display = 'inline';
                 loginBtnLoader.style.display = 'none';
             }
+        });
+
+        // Gérer le renvoi de l'email de confirmation
+        resendBtn.addEventListener('click', async () => {
+            resendBtn.disabled = true;
+            resendBtn.textContent = 'Envoi en cours...';
+
+            const result = await resendConfirmation(currentEmail);
+
+            if (result.success) {
+                alert('✅ Email de confirmation renvoyé ! Vérifiez votre boîte de réception.');
+                resendSection.style.display = 'none';
+            } else {
+                alert('❌ ' + result.error);
+            }
+
+            resendBtn.disabled = false;
+            resendBtn.textContent = 'Renvoyer l\'email de confirmation';
         });
     </script>
 </body>
