@@ -24,40 +24,30 @@ export default async function handler(req, res) {
 
         const token = authHeader.split(' ')[1];
 
-        const supabase = createClient(
+        // Utiliser la service role key pour les opérations admin
+        const supabaseAdmin = createClient(
             process.env.SUPABASE_URL,
-            process.env.SUPABASE_ANON_KEY,
-            {
-                global: {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-            }
+            process.env.SUPABASE_SERVICE_ROLE_KEY
         );
 
-        // Vérifier le token et récupérer l'utilisateur
-        const { data: { user }, error: authError } = await supabase.auth.getUser(token);
+        // Vérifier le token avec le client anon
+        const supabaseAnon = createClient(
+            process.env.SUPABASE_URL,
+            process.env.SUPABASE_ANON_KEY
+        );
+        
+        const { data: { user }, error: authError } = await supabaseAnon.auth.getUser(token);
 
         if (authError || !user) {
             return res.status(401).json({ error: 'Token invalide' });
         }
 
-        // Supprimer l'utilisateur via l'API REST de Supabase Auth
-        const response = await fetch(
-            `${process.env.SUPABASE_URL}/auth/v1/user`,
-            {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'apikey': process.env.SUPABASE_ANON_KEY
-                }
-            }
-        );
+        // Supprimer l'utilisateur avec le client admin
+        const { error: deleteError } = await supabaseAdmin.auth.admin.deleteUser(user.id);
 
-        if (!response.ok) {
-            const error = await response.json();
-            return res.status(response.status).json({ error: error.message || 'Erreur de suppression' });
+        if (deleteError) {
+            console.error('Delete error:', deleteError);
+            return res.status(400).json({ error: deleteError.message });
         }
 
         return res.status(200).json({
