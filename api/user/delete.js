@@ -24,10 +24,9 @@ export default async function handler(req, res) {
 
         const token = authHeader.split(' ')[1];
 
-        // Utiliser la clé service role pour les opérations admin
         const supabase = createClient(
             process.env.SUPABASE_URL,
-            process.env.SUPABASE_SERVICE_ROLE_KEY
+            process.env.SUPABASE_ANON_KEY
         );
 
         // Vérifier le token et récupérer l'utilisateur
@@ -37,8 +36,21 @@ export default async function handler(req, res) {
             return res.status(401).json({ error: 'Token invalide' });
         }
 
-        // Supprimer l'utilisateur (nécessite la clé service role)
-        const { error: deleteError } = await supabase.auth.admin.deleteUser(user.id);
+        // Créer un client Supabase avec le token de l'utilisateur
+        const supabaseWithAuth = createClient(
+            process.env.SUPABASE_URL,
+            process.env.SUPABASE_ANON_KEY,
+            {
+                global: {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            }
+        );
+
+        // L'utilisateur se supprime lui-même
+        const { error: deleteError } = await supabaseWithAuth.rpc('delete_user');
 
         if (deleteError) {
             return res.status(400).json({ error: deleteError.message });
