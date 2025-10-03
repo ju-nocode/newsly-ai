@@ -23,11 +23,6 @@
             <h2>📰 Newsly AI</h2>
             <button id="refreshNewsBtn" class="btn-icon" title="Rafraîchir">🔄</button>
         </div>
-
-        <div class="sidebar-header">
-            <button id="toggle-btn">☰</button>
-            <button id="pin-btn">📌</button>
-        </div>
         
         <!-- Search Bar Section -->
         <div class="sidebar-search-section">
@@ -418,24 +413,5 @@
         // Initialiser
         checkAuth();
     </script>
-    <script>
-  const sidebar = document.getElementById('sidebar');
-  const toggleBtn = document.getElementById('toggle-btn');
-  const pinBtn = document.getElementById('pin-btn');
-  
-  let isPinned = false;
-
-  toggleBtn.addEventListener('click', () => {
-    if (!isPinned) {
-      sidebar.classList.toggle('collapsed');
-    }
-  });
-
-  pinBtn.addEventListener('click', () => {
-    isPinned = !isPinned;
-    pinBtn.textContent = isPinned ? "📍" : "📌"; // Change l’icône
-  });
-</script>
-
 </body>
 </html>
