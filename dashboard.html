@@ -93,7 +93,7 @@
             const result = await getUserProfile();
             if (result.success) {
                 const userName = result.profile.username || result.profile.email.split('@')[0];
-                document.getElementById('userNameDisplay').textContent = `Bonjour, ${escapeHtml(userName)}`;
+                document.getElementById('userNameDisplay').textContent = `Yo! ${escapeHtml(userName)}`;
             }
         };
 
