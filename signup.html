@@ -175,18 +175,44 @@
         signupForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const fullName = document.getElementById('fullName').value;
-            const email = document.getElementById('email').value;
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
             const terms = document.getElementById('terms').checked;
 
-            // Validation
+            // Validation des champs requis
+            if (!fullName || !email || !password || !confirmPassword) {
+                showError('Tous les champs sont requis', errorMessage);
+                return;
+            }
+
+            // Validation du nom
+            if (fullName.length < 2 || fullName.length > 100) {
+                showError('Le nom doit contenir entre 2 et 100 caractères', errorMessage);
+                return;
+            }
+
+            // Validation de l'email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email) || email.length > 254) {
+                showError('Adresse email invalide', errorMessage);
+                return;
+            }
+
+            // Validation du mot de passe
+            if (password.length < 6 || password.length > 128) {
+                showError('Le mot de passe doit contenir entre 6 et 128 caractères', errorMessage);
+                return;
+            }
+
+            // Validation de la correspondance des mots de passe
             if (password !== confirmPassword) {
                 showError('Les mots de passe ne correspondent pas', errorMessage);
                 return;
             }
 
+            // Validation des conditions
             if (!terms) {
                 showError('Vous devez accepter les conditions d\'utilisation', errorMessage);
                 return;

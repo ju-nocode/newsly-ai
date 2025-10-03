@@ -161,7 +161,7 @@
     </div>
 
     <script type="module">
-        import { supabase, loadUserProfile, loadUserPreferences, saveUserPreferences, fetchNewsForCategory, displayNews } from './app.js';
+        import { supabase, loadUserProfile, loadUserPreferences, saveUserPreferences, fetchNewsForCategory, displayNews, escapeHtml, validateInput, rateLimiter } from './app.js';
 
         let currentUser = null;
         let userPreferences = {};
@@ -187,16 +187,29 @@
 
         searchInput.addEventListener('input', (e) => {
             const query = e.target.value.trim().toLowerCase();
-            
+
+            // Validation de la longueur pour prévenir les abus
+            if (query.length > 100) {
+                console.warn('Recherche trop longue');
+                return;
+            }
+
             clearTimeout(searchTimeout);
-            
+
             if (query.length < 2) {
                 searchResults.classList.remove('active');
                 return;
             }
 
+            // Rate limiting
+            if (!rateLimiter.isAllowed('search', 30, 60000)) {
+                searchResults.innerHTML = '<div class="search-empty">Trop de recherches. Veuillez patienter.</div>';
+                searchResults.classList.add('active');
+                return;
+            }
+
             searchTimeout = setTimeout(() => {
-                const filtered = availableTopics.filter(topic => 
+                const filtered = availableTopics.filter(topic =>
                     topic.title.toLowerCase().includes(query) ||
                     topic.desc.toLowerCase().includes(query)
                 );
@@ -206,21 +219,32 @@
         });
 
         function displaySearchResults(results, query) {
+            // Sanitization de la query pour l'affichage
+            const safeQuery = escapeHtml(query);
+
             if (results.length === 0) {
-                searchResults.innerHTML = '<div class="search-empty">Aucun topic trouvé pour "' + query + '"</div>';
+                searchResults.innerHTML = `<div class="search-empty">Aucun topic trouvé pour "${safeQuery}"</div>`;
                 searchResults.classList.add('active');
                 return;
             }
 
-            searchResults.innerHTML = results.map(topic => `
-                <div class="search-result-item" data-topic="${topic.id}">
-                    <span class="search-result-icon">${topic.icon}</span>
-                    <div class="search-result-text">
-                        <div class="search-result-title">${topic.title}</div>
-                        <div class="search-result-desc">${topic.desc}</div>
+            searchResults.innerHTML = results.map(topic => {
+                // Validation et sanitization
+                const safeId = validateInput(topic.id, 'category') ? topic.id : '';
+                const safeIcon = escapeHtml(topic.icon);
+                const safeTitle = escapeHtml(topic.title);
+                const safeDesc = escapeHtml(topic.desc);
+
+                return `
+                    <div class="search-result-item" data-topic="${safeId}">
+                        <span class="search-result-icon">${safeIcon}</span>
+                        <div class="search-result-text">
+                            <div class="search-result-title">${safeTitle}</div>
+                            <div class="search-result-desc">${safeDesc}</div>
+                        </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
 
             searchResults.classList.add('active');
 
@@ -244,12 +268,24 @@
 
         // Ajouter une nouvelle catégorie de topic
         async function addTopicCategory(topicId) {
+            // Validation de l'ID
+            if (!validateInput(topicId, 'category')) {
+                console.error('ID de topic invalide');
+                return;
+            }
+
             const topic = availableTopics.find(t => t.id === topicId);
             if (!topic) return;
 
             // Vérifier si la catégorie existe déjà
             if (document.querySelector(`[data-category="${topicId}"]`)) {
                 alert('Cette catégorie est déjà ajoutée !');
+                return;
+            }
+
+            // Rate limiting pour éviter les abus
+            if (!rateLimiter.isAllowed('addCategory', 5, 60000)) {
+                alert('Trop de catégories ajoutées. Veuillez patienter.');
                 return;
             }
 
@@ -327,10 +363,12 @@
         // Initialiser le dashboard
         const initDashboard = async () => {
             const profile = await loadUserProfile(currentUser.id);
-            
+
             if (profile) {
-                document.getElementById('userNameDisplay').textContent = profile.full_name || profile.email;
-                document.getElementById('welcomeTitle').textContent = `Bienvenue ${profile.full_name || ''} 👋`;
+                // Sanitization des données utilisateur
+                const safeName = escapeHtml(profile.full_name || profile.email || 'Utilisateur');
+                document.getElementById('userNameDisplay').textContent = safeName;
+                document.getElementById('welcomeTitle').textContent = `Bienvenue ${safeName} 👋`;
             }
 
             userPreferences = await loadUserPreferences(currentUser.id);

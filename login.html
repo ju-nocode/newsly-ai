@@ -137,8 +137,30 @@
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const email = document.getElementById('email').value;
+            const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
+
+            // Validation côté client
+            if (!email || !password) {
+                errorMessage.textContent = 'Tous les champs sont requis';
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            // Validation de l'email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email) || email.length > 254) {
+                errorMessage.textContent = 'Adresse email invalide';
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            // Validation du mot de passe
+            if (password.length < 6 || password.length > 128) {
+                errorMessage.textContent = 'Mot de passe invalide';
+                errorMessage.style.display = 'block';
+                return;
+            }
 
             // Désactiver le bouton et afficher le loader
             loginBtn.disabled = true;
