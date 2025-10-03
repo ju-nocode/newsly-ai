@@ -21,10 +21,12 @@
     <aside class="dashboard-sidebar">
         <div class="sidebar-header">
             <h2>📰 Newsly AI</h2>
-            
-            <!-- Search Bar -->
+            <button id="refreshNewsBtn" class="btn-icon" title="Rafraîchir">🔄</button>
+        </div>
+        
+        <!-- Search Bar Section -->
+        <div class="sidebar-search-section">
             <div class="sidebar-search">
-                <span class="search-icon">🔍</span>
                 <input 
                     type="text" 
                     class="search-input" 
@@ -32,6 +34,7 @@
                     placeholder="Rechercher un topic..." 
                     autocomplete="off"
                 >
+                <span class="search-icon">🔍</span>
                 
                 <!-- Search Results Dropdown -->
                 <div class="search-results" id="searchResults">
@@ -389,6 +392,16 @@
                     displayNews(`${category}-news`, articles);
                 }
             });
+        });
+
+        // Bouton rafraîchir
+        document.getElementById('refreshNewsBtn').addEventListener('click', async () => {
+            const btn = document.getElementById('refreshNewsBtn');
+            btn.style.transform = 'rotate(360deg)';
+            await loadAllNews();
+            setTimeout(() => {
+                btn.style.transform = 'rotate(0deg)';
+            }, 500);
         });
 
         // Bouton déconnexion
