@@ -115,16 +115,9 @@
     </section>
 
     <script type="module">
-        import { supabase, showError, showSuccess } from './app.js';
+        import { login, checkAuth } from './app.js';
 
         // Vérifier si l'utilisateur est déjà connecté
-        const checkAuth = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session) {
-                window.location.href = 'dashboard.html';
-            }
-        };
-
         checkAuth();
 
         // Gérer la soumission du formulaire
@@ -169,23 +162,21 @@
             errorMessage.style.display = 'none';
 
             try {
-                const { data, error } = await supabase.auth.signInWithPassword({
-                    email,
-                    password
-                });
+                const result = await login(email, password);
 
-                if (error) throw error;
+                if (!result.success) {
+                    throw new Error(result.error);
+                }
 
                 // Succès - rediriger vers le dashboard
-                showSuccess('Connexion réussie ! Redirection...');
                 setTimeout(() => {
                     window.location.href = 'dashboard.html';
-                }, 1000);
+                }, 500);
 
             } catch (error) {
                 console.error('Erreur de connexion:', error);
-                errorMessage.textContent = error.message === 'Invalid login credentials' 
-                    ? 'Email ou mot de passe incorrect' 
+                errorMessage.textContent = error.message === 'Invalid login credentials'
+                    ? 'Email ou mot de passe incorrect'
                     : error.message;
                 errorMessage.style.display = 'block';
 

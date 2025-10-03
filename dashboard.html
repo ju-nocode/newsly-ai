@@ -10,6 +10,10 @@
     <!-- Navigation Top Bar -->
     <nav class="navbar dashboard-nav">
         <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">📰</span>
+                <span class="logo-text">Newsly AI</span>
+            </div>
             <div class="nav-links">
                 <span id="userNameDisplay" class="user-name"></span>
                 <button id="logoutBtn" class="btn-secondary">Déconnexion</button>
@@ -17,439 +21,147 @@
         </div>
     </nav>
 
-    <!-- Sidebar -->
-    <aside class="dashboard-sidebar">
-        <div class="sidebar-header">
-            <h2>📰 Newsly AI</h2>
-            <button id="refreshNewsBtn" class="btn-icon" title="Rafraîchir">🔄</button>
-        </div>
-        
-        <!-- Search Bar Section -->
-        <div class="sidebar-search-section">
-            <div class="sidebar-search">
-                <input 
-                    type="text" 
-                    class="search-input" 
-                    id="topicSearch"
-                    placeholder="Rechercher un topic..." 
-                    autocomplete="off"
-                >
-                <span class="search-icon">🔍</span>
-                
-                <!-- Search Results Dropdown -->
-                <div class="search-results" id="searchResults">
-                    <!-- Résultats dynamiques -->
-                </div>
-            </div>
-        </div>
-
-        <div class="categories-list">
-            <label class="category-toggle">
-                <input type="checkbox" class="category-checkbox" data-category="ai" checked>
-                <span class="category-label">
-                    <span class="category-icon">🤖</span>
-                    <span>Intelligence Artificielle</span>
-                </span>
-            </label>
-
-            <label class="category-toggle">
-                <input type="checkbox" class="category-checkbox" data-category="world" checked>
-                <span class="category-label">
-                    <span class="category-icon">🌍</span>
-                    <span>Actualités Mondiales</span>
-                </span>
-            </label>
-
-            <label class="category-toggle">
-                <input type="checkbox" class="category-checkbox" data-category="finance" checked>
-                <span class="category-label">
-                    <span class="category-icon">💹</span>
-                    <span>Finance</span>
-                </span>
-            </label>
-
-            <label class="category-toggle">
-                <input type="checkbox" class="category-checkbox" data-category="science" checked>
-                <span class="category-label">
-                    <span class="category-icon">🔬</span>
-                    <span>Science</span>
-                </span>
-            </label>
-        </div>
-
-        <div class="sidebar-footer">
-            <p class="sidebar-info">💡 Activez/désactivez les catégories pour personnaliser votre NewsWall</p>
-        </div>
-    </aside>
-
-    <!-- Dashboard Content -->
+    <!-- Main Content -->
     <div class="dashboard-container">
+        <aside class="dashboard-sidebar">
+            <div class="sidebar-header">
+                <h2>Catégories</h2>
+                <button id="refreshNewsBtn" class="btn-icon" title="Rafraîchir">🔄</button>
+            </div>
+
+            <div class="categories-list">
+                <button class="category-btn active" data-category="general">
+                    <span class="category-icon">📰</span>
+                    <span class="category-label">Général</span>
+                </button>
+                <button class="category-btn" data-category="business">
+                    <span class="category-icon">💼</span>
+                    <span class="category-label">Business</span>
+                </button>
+                <button class="category-btn" data-category="technology">
+                    <span class="category-icon">💻</span>
+                    <span class="category-label">Technologie</span>
+                </button>
+                <button class="category-btn" data-category="science">
+                    <span class="category-icon">🔬</span>
+                    <span class="category-label">Science</span>
+                </button>
+                <button class="category-btn" data-category="health">
+                    <span class="category-icon">🏥</span>
+                    <span class="category-label">Santé</span>
+                </button>
+                <button class="category-btn" data-category="sports">
+                    <span class="category-icon">⚽</span>
+                    <span class="category-label">Sports</span>
+                </button>
+                <button class="category-btn" data-category="entertainment">
+                    <span class="category-icon">🎬</span>
+                    <span class="category-label">Divertissement</span>
+                </button>
+            </div>
+        </aside>
+
         <main class="dashboard-main">
-            <div class="dashboard-header">
-                <h1 id="welcomeTitle">Bienvenue sur votre NewsWall 🎯</h1>
-                <p class="dashboard-subtitle">Actualités en temps réel personnalisées par IA</p>
-            </div>
-
-            <!-- Loading State -->
-            <div id="loadingState" class="loading-state">
-                <div class="loader-big"></div>
-                <p>Chargement de vos actualités...</p>
-            </div>
-
-            <!-- News Grid -->
-            <div id="newsGrid" class="news-grid" style="display: none;">
-                <!-- AI Category -->
-                <div class="news-category" id="ai-category" data-category="ai">
-                    <div class="category-header">
-                        <div class="category-title-group">
-                            <span class="category-icon">🤖</span>
-                            <h2 class="category-title">Intelligence Artificielle</h2>
-                        </div>
-                    </div>
-                    <div class="news-items" id="ai-news">
-                        <div class="loading">Chargement...</div>
-                    </div>
-                </div>
-
-                <!-- World Category -->
-                <div class="news-category" id="world-category" data-category="world">
-                    <div class="category-header">
-                        <div class="category-title-group">
-                            <span class="category-icon">🌍</span>
-                            <h2 class="category-title">Actualités Mondiales</h2>
-                        </div>
-                    </div>
-                    <div class="news-items" id="world-news">
-                        <div class="loading">Chargement...</div>
-                    </div>
-                </div>
-
-                <!-- Finance Category -->
-                <div class="news-category" id="finance-category" data-category="finance">
-                    <div class="category-header">
-                        <div class="category-title-group">
-                            <span class="category-icon">💹</span>
-                            <h2 class="category-title">Finance</h2>
-                        </div>
-                    </div>
-                    <div class="news-items" id="finance-news">
-                        <div class="loading">Chargement...</div>
-                    </div>
-                </div>
-
-                <!-- Science Category -->
-                <div class="news-category" id="science-category" data-category="science">
-                    <div class="category-header">
-                        <div class="category-title-group">
-                            <span class="category-icon">🔬</span>
-                            <h2 class="category-title">Science</h2>
-                        </div>
-                    </div>
-                    <div class="news-items" id="science-news">
-                        <div class="loading">Chargement...</div>
-                    </div>
+            <div class="news-header">
+                <h1 id="categoryTitle">Actualités Générales</h1>
+                <div id="loadingIndicator" class="loading-indicator" style="display: none;">
+                    Chargement...
                 </div>
             </div>
 
-            <!-- Empty State -->
-            <div id="emptyState" class="empty-state" style="display: none;">
-                <div class="empty-state-icon">📭</div>
-                <h2>Aucune catégorie sélectionnée</h2>
-                <p>Activez au moins une catégorie dans la barre latérale pour voir les actualités</p>
+            <div id="newsContainer" class="news-grid">
+                <!-- Les actualités seront chargées ici -->
             </div>
         </main>
     </div>
 
     <script type="module">
-        import { supabase, loadUserProfile, loadUserPreferences, saveUserPreferences, fetchNewsForCategory, displayNews, escapeHtml, validateInput, rateLimiter } from './app.js';
+        import { checkAuth, logout, getUserProfile, fetchNews, currentUser } from './app.js';
+        import { displayNews, escapeHtml, showError, showSuccess } from './dashboard-utils.js';
 
-        let currentUser = null;
-        let userPreferences = {};
-        let searchTimeout = null;
-
-        // Liste des topics suggérés
-        const availableTopics = [
-            { id: 'ai', icon: '🤖', title: 'Intelligence Artificielle', desc: 'IA, ML, Deep Learning' },
-            { id: 'blockchain', icon: '⛓️', title: 'Blockchain', desc: 'Crypto, Web3, NFT' },
-            { id: 'climate', icon: '🌡️', title: 'Climat', desc: 'Environnement, Écologie' },
-            { id: 'space', icon: '🚀', title: 'Espace', desc: 'Astronomie, NASA, SpaceX' },
-            { id: 'health', icon: '🏥', title: 'Santé', desc: 'Médecine, Biotechnologie' },
-            { id: 'tech', icon: '💻', title: 'Technologie', desc: 'Startups, Innovation' },
-            { id: 'gaming', icon: '🎮', title: 'Gaming', desc: 'Jeux vidéo, Esports' },
-            { id: 'sports', icon: '⚽', title: 'Sports', desc: 'Football, Basketball, Tennis' },
-            { id: 'politics', icon: '🏛️', title: 'Politique', desc: 'Gouvernements, Élections' },
-            { id: 'economy', icon: '📊', title: 'Économie', desc: 'Marchés, Trading' }
-        ];
-
-        // Search functionality
-        const searchInput = document.getElementById('topicSearch');
-        const searchResults = document.getElementById('searchResults');
-
-        searchInput.addEventListener('input', (e) => {
-            const query = e.target.value.trim().toLowerCase();
-
-            // Validation de la longueur pour prévenir les abus
-            if (query.length > 100) {
-                console.warn('Recherche trop longue');
-                return;
-            }
-
-            clearTimeout(searchTimeout);
-
-            if (query.length < 2) {
-                searchResults.classList.remove('active');
-                return;
-            }
-
-            // Rate limiting
-            if (!rateLimiter.isAllowed('search', 30, 60000)) {
-                searchResults.innerHTML = '<div class="search-empty">Trop de recherches. Veuillez patienter.</div>';
-                searchResults.classList.add('active');
-                return;
-            }
-
-            searchTimeout = setTimeout(() => {
-                const filtered = availableTopics.filter(topic =>
-                    topic.title.toLowerCase().includes(query) ||
-                    topic.desc.toLowerCase().includes(query)
-                );
-
-                displaySearchResults(filtered, query);
-            }, 300);
-        });
-
-        function displaySearchResults(results, query) {
-            // Sanitization de la query pour l'affichage
-            const safeQuery = escapeHtml(query);
-
-            if (results.length === 0) {
-                searchResults.innerHTML = `<div class="search-empty">Aucun topic trouvé pour "${safeQuery}"</div>`;
-                searchResults.classList.add('active');
-                return;
-            }
-
-            searchResults.innerHTML = results.map(topic => {
-                // Validation et sanitization
-                const safeId = validateInput(topic.id, 'category') ? topic.id : '';
-                const safeIcon = escapeHtml(topic.icon);
-                const safeTitle = escapeHtml(topic.title);
-                const safeDesc = escapeHtml(topic.desc);
-
-                return `
-                    <div class="search-result-item" data-topic="${safeId}">
-                        <span class="search-result-icon">${safeIcon}</span>
-                        <div class="search-result-text">
-                            <div class="search-result-title">${safeTitle}</div>
-                            <div class="search-result-desc">${safeDesc}</div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-
-            searchResults.classList.add('active');
-
-            // Ajouter les event listeners sur les résultats
-            document.querySelectorAll('.search-result-item').forEach(item => {
-                item.addEventListener('click', async () => {
-                    const topicId = item.dataset.topic;
-                    await addTopicCategory(topicId);
-                    searchInput.value = '';
-                    searchResults.classList.remove('active');
-                });
-            });
-        }
-
-        // Fermer les résultats quand on clique ailleurs
-        document.addEventListener('click', (e) => {
-            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
-                searchResults.classList.remove('active');
-            }
-        });
-
-        // Ajouter une nouvelle catégorie de topic
-        async function addTopicCategory(topicId) {
-            // Validation de l'ID
-            if (!validateInput(topicId, 'category')) {
-                console.error('ID de topic invalide');
-                return;
-            }
-
-            const topic = availableTopics.find(t => t.id === topicId);
-            if (!topic) return;
-
-            // Vérifier si la catégorie existe déjà
-            if (document.querySelector(`[data-category="${topicId}"]`)) {
-                alert('Cette catégorie est déjà ajoutée !');
-                return;
-            }
-
-            // Rate limiting pour éviter les abus
-            if (!rateLimiter.isAllowed('addCategory', 5, 60000)) {
-                alert('Trop de catégories ajoutées. Veuillez patienter.');
-                return;
-            }
-
-            // Ajouter la checkbox dans la sidebar
-            const categoriesList = document.querySelector('.categories-list');
-            const newCategory = document.createElement('label');
-            newCategory.className = 'category-toggle';
-            newCategory.innerHTML = `
-                <input type="checkbox" class="category-checkbox" data-category="${topicId}" checked>
-                <span class="category-label">
-                    <span class="category-icon">${topic.icon}</span>
-                    <span>${topic.title}</span>
-                </span>
-            `;
-            categoriesList.appendChild(newCategory);
-
-            // Ajouter la carte de news dans la grille
-            const newsGrid = document.getElementById('newsGrid');
-            const newNewsCategory = document.createElement('div');
-            newNewsCategory.className = 'news-category';
-            newNewsCategory.id = `${topicId}-category`;
-            newNewsCategory.dataset.category = topicId;
-            newNewsCategory.innerHTML = `
-                <div class="category-header">
-                    <div class="category-title-group">
-                        <span class="category-icon">${topic.icon}</span>
-                        <h2 class="category-title">${topic.title}</h2>
-                    </div>
-                </div>
-                <div class="news-items" id="${topicId}-news">
-                    <div class="loading">Chargement...</div>
-                </div>
-            `;
-            newsGrid.appendChild(newNewsCategory);
-
-            // Charger les news pour ce topic
-            const articles = await fetchNewsForCategory(topicId);
-            displayNews(`${topicId}-news`, articles);
-
-            // Sauvegarder la préférence
-            userPreferences[topicId] = true;
-            await saveUserPreferences(currentUser.id, topicId, true);
-
-            // Ajouter l'event listener pour la nouvelle checkbox
-            const checkbox = newCategory.querySelector('.category-checkbox');
-            checkbox.addEventListener('change', async (e) => {
-                const category = e.target.dataset.category;
-                const isActive = e.target.checked;
-                
-                userPreferences[category] = isActive;
-                await saveUserPreferences(currentUser.id, category, isActive);
-                
-                updateNewsGridVisibility();
-
-                if (isActive) {
-                    const articles = await fetchNewsForCategory(category);
-                    displayNews(`${category}-news`, articles);
-                }
-            });
-        }
+        let currentCategory = 'general';
 
         // Vérifier l'authentification
-        const checkAuth = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            
-            if (!session) {
-                window.location.href = 'login.html';
-                return;
+        const isAuth = checkAuth();
+        if (!isAuth) {
+            window.location.href = '/login.html';
+        }
+
+        // Charger le profil utilisateur
+        const loadProfile = async () => {
+            const result = await getUserProfile();
+            if (result.success) {
+                const userName = result.profile.username || result.profile.email.split('@')[0];
+                document.getElementById('userNameDisplay').textContent = `Bonjour, ${escapeHtml(userName)}`;
             }
-
-            currentUser = session.user;
-            await initDashboard();
         };
 
-        // Initialiser le dashboard
-        const initDashboard = async () => {
-            const profile = await loadUserProfile(currentUser.id);
+        // Charger les actualités
+        const loadNews = async (category = 'general') => {
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const newsContainer = document.getElementById('newsContainer');
 
-            if (profile) {
-                // Sanitization des données utilisateur
-                const safeName = escapeHtml(profile.full_name || profile.email || 'Utilisateur');
-                document.getElementById('userNameDisplay').textContent = safeName;
-                document.getElementById('welcomeTitle').textContent = `Bienvenue ${safeName} 👋`;
-            }
+            loadingIndicator.style.display = 'block';
+            newsContainer.innerHTML = '';
 
-            userPreferences = await loadUserPreferences(currentUser.id);
-            updateCheckboxes();
-            await loadAllNews();
+            try {
+                const result = await fetchNews(category, 'us', 1);
 
-            document.getElementById('loadingState').style.display = 'none';
-            updateNewsGridVisibility();
-        };
-
-        const updateCheckboxes = () => {
-            document.querySelectorAll('.category-checkbox').forEach(checkbox => {
-                const category = checkbox.dataset.category;
-                checkbox.checked = userPreferences[category] !== false;
-            });
-        };
-
-        const loadAllNews = async () => {
-            const categories = ['ai', 'world', 'finance', 'science'];
-            
-            for (const category of categories) {
-                if (userPreferences[category] !== false) {
-                    const articles = await fetchNewsForCategory(category);
-                    displayNews(`${category}-news`, articles);
+                if (!result.success) {
+                    throw new Error(result.error);
                 }
+
+                displayNews(result.articles, 'newsContainer');
+
+            } catch (error) {
+                console.error('Erreur chargement news:', error);
+                newsContainer.innerHTML = `
+                    <div class="news-empty">
+                        <p>❌ Erreur lors du chargement des actualités</p>
+                        <p class="error-details">${escapeHtml(error.message)}</p>
+                        <button onclick="location.reload()" class="btn-primary">Réessayer</button>
+                    </div>
+                `;
+            } finally {
+                loadingIndicator.style.display = 'none';
             }
         };
 
-        const updateNewsGridVisibility = () => {
-            const anyActive = Object.values(userPreferences).some(val => val !== false);
-            
-            if (anyActive) {
-                document.getElementById('newsGrid').style.display = 'grid';
-                document.getElementById('emptyState').style.display = 'none';
-            } else {
-                document.getElementById('newsGrid').style.display = 'none';
-                document.getElementById('emptyState').style.display = 'flex';
-            }
+        // Gérer les clics sur les catégories
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Retirer la classe active de tous les boutons
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
 
-            document.querySelectorAll('.news-category').forEach(cat => {
-                const category = cat.dataset.category;
-                cat.style.display = userPreferences[category] !== false ? 'block' : 'none';
-            });
-        };
+                // Ajouter la classe active au bouton cliqué
+                btn.classList.add('active');
 
-        // Gérer les changements de catégorie
-        document.querySelectorAll('.category-checkbox').forEach(checkbox => {
-            checkbox.addEventListener('change', async (e) => {
-                const category = e.target.dataset.category;
-                const isActive = e.target.checked;
-                
-                userPreferences[category] = isActive;
-                await saveUserPreferences(currentUser.id, category, isActive);
-                
-                updateNewsGridVisibility();
+                // Charger les news de cette catégorie
+                const category = btn.dataset.category;
+                currentCategory = category;
 
-                if (isActive) {
-                    const articles = await fetchNewsForCategory(category);
-                    displayNews(`${category}-news`, articles);
-                }
+                // Mettre à jour le titre
+                const title = btn.querySelector('.category-label').textContent;
+                document.getElementById('categoryTitle').textContent = `Actualités ${title}`;
+
+                loadNews(category);
             });
         });
 
-        // Bouton rafraîchir
-        document.getElementById('refreshNewsBtn').addEventListener('click', async () => {
-            const btn = document.getElementById('refreshNewsBtn');
-            btn.style.transform = 'rotate(360deg)';
-            await loadAllNews();
-            setTimeout(() => {
-                btn.style.transform = 'rotate(0deg)';
-            }, 500);
+        // Gérer le bouton de rafraîchissement
+        document.getElementById('refreshNewsBtn').addEventListener('click', () => {
+            loadNews(currentCategory);
+            showSuccess('Actualités rafraîchies !');
         });
 
-        // Bouton déconnexion
-        document.getElementById('logoutBtn').addEventListener('click', async () => {
-            await supabase.auth.signOut();
-            window.location.href = 'index.html';
+        // Gérer la déconnexion
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            logout();
         });
 
         // Initialiser
-        checkAuth();
+        loadProfile();
+        loadNews('general');
     </script>
 </body>
 </html>

@@ -78,8 +78,9 @@ config.js
 # Vercel
 .vercel
 
-# Local development files
+# Local development files - Backup versions
 app-old.js
+dashboard-old.html
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache

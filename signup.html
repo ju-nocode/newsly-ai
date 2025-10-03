@@ -152,17 +152,16 @@
     </section>
 
     <script type="module">
-        import { supabase, showError, showSuccess } from './app.js';
+        import { signup, checkAuth } from './app.js';
 
         // Vérifier si l'utilisateur est déjà connecté
-        const checkAuth = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session) {
-                window.location.href = 'dashboard.html';
-            }
-        };
-
         checkAuth();
+
+        // Helper pour afficher les erreurs
+        const showError = (message, element) => {
+            element.textContent = message;
+            element.style.display = 'block';
+        };
 
         // Gérer la soumission du formulaire
         const signupForm = document.getElementById('signupForm');
@@ -201,8 +200,8 @@
             }
 
             // Validation du mot de passe
-            if (password.length < 6 || password.length > 128) {
-                showError('Le mot de passe doit contenir entre 6 et 128 caractères', errorMessage);
+            if (password.length < 8 || password.length > 128) {
+                showError('Le mot de passe doit contenir entre 8 et 128 caractères', errorMessage);
                 return;
             }
 
@@ -226,17 +225,11 @@
             successMessage.style.display = 'none';
 
             try {
-                const { data, error } = await supabase.auth.signUp({
-                    email,
-                    password,
-                    options: {
-                        data: {
-                            full_name: fullName
-                        }
-                    }
-                });
+                const result = await signup(email, password, fullName);
 
-                if (error) throw error;
+                if (!result.success) {
+                    throw new Error(result.error);
+                }
 
                 // Succès
                 successMessage.textContent = 'Compte créé avec succès ! Redirection...';
@@ -249,12 +242,12 @@
 
             } catch (error) {
                 console.error('Erreur d\'inscription:', error);
-                
+
                 let errorText = 'Une erreur est survenue';
                 if (error.message.includes('already registered')) {
                     errorText = 'Cet email est déjà utilisé';
                 } else if (error.message.includes('Password should be at least')) {
-                    errorText = 'Le mot de passe doit contenir au moins 6 caractères';
+                    errorText = 'Le mot de passe doit contenir au moins 8 caractères';
                 } else {
                     errorText = error.message;
                 }

@@ -115,64 +115,57 @@
     </section>
 
     <script type="module">
-        import { supabase, showError, showSuccess } from './app.js';
+        import { login, checkAuth } from './app.js';
 
         // Vérifier si l'utilisateur est déjà connecté
-        const checkAuth = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session) {
-                window.location.href = 'dashboard.html';
-            }
-        };
-
         checkAuth();
 
-        // Gérer la soumission du formulaire
+        // Gérer la soumission du formulaire (si présent sur index.html)
         const loginForm = document.getElementById('loginForm');
-        const loginBtn = document.getElementById('loginBtn');
-        const loginBtnText = document.getElementById('loginBtnText');
-        const loginBtnLoader = document.getElementById('loginBtnLoader');
-        const errorMessage = document.getElementById('errorMessage');
+        if (loginForm) {
+            const loginBtn = document.getElementById('loginBtn');
+            const loginBtnText = document.getElementById('loginBtnText');
+            const loginBtnLoader = document.getElementById('loginBtnLoader');
+            const errorMessage = document.getElementById('errorMessage');
 
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
 
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
 
-            // Désactiver le bouton et afficher le loader
-            loginBtn.disabled = true;
-            loginBtnText.style.display = 'none';
-            loginBtnLoader.style.display = 'inline-block';
-            errorMessage.style.display = 'none';
+                // Désactiver le bouton et afficher le loader
+                loginBtn.disabled = true;
+                loginBtnText.style.display = 'none';
+                loginBtnLoader.style.display = 'inline-block';
+                errorMessage.style.display = 'none';
 
-            try {
-                const { data, error } = await supabase.auth.signInWithPassword({
-                    email,
-                    password
-                });
+                try {
+                    const result = await login(email, password);
 
-                if (error) throw error;
+                    if (!result.success) {
+                        throw new Error(result.error);
+                    }
 
-                // Succès - rediriger vers le dashboard
-                showSuccess('Connexion réussie ! Redirection...');
-                setTimeout(() => {
-                    window.location.href = 'dashboard.html';
-                }, 1000);
+                    // Succès - rediriger vers le dashboard
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 500);
 
-            } catch (error) {
-                console.error('Erreur de connexion:', error);
-                errorMessage.textContent = error.message === 'Invalid login credentials' 
-                    ? 'Email ou mot de passe incorrect' 
-                    : error.message;
-                errorMessage.style.display = 'block';
+                } catch (error) {
+                    console.error('Erreur de connexion:', error);
+                    errorMessage.textContent = error.message === 'Invalid login credentials'
+                        ? 'Email ou mot de passe incorrect'
+                        : error.message;
+                    errorMessage.style.display = 'block';
 
-                // Réactiver le bouton
-                loginBtn.disabled = false;
-                loginBtnText.style.display = 'inline';
-                loginBtnLoader.style.display = 'none';
-            }
-        });
+                    // Réactiver le bouton
+                    loginBtn.disabled = false;
+                    loginBtnText.style.display = 'inline';
+                    loginBtnLoader.style.display = 'none';
+                }
+            });
+        }
     </script>
 </body>
 </html>
