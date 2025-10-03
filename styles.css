@@ -992,3 +992,33 @@ body {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
 }
+
+/* Sidebar normale */
+#sidebar {
+  width: 220px;
+  transition: width 0.3s ease;
+  overflow: hidden;
+}
+
+/* Réduite */
+#sidebar.collapsed {
+  width: 60px;
+}
+
+/* Pour que le contenu principal s’ajuste */
+#main {
+  margin-left: 220px;
+  transition: margin-left 0.3s ease;
+}
+
+#sidebar.collapsed ~ #main {
+  margin-left: 60px;
+}
+
+/* Header des boutons */
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+}
