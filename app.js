@@ -192,6 +192,37 @@ export const updateUserProfile = async (username) => {
     }
 };
 
+// Supprimer le compte
+export const deleteAccount = async () => {
+    if (!authToken) {
+        return { success: false, error: 'Non authentifié' };
+    }
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/user/delete`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            }
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || 'Erreur de suppression du compte');
+        }
+
+        // Effacer la session locale
+        clearSession();
+
+        return { success: true, message: data.message };
+
+    } catch (error) {
+        console.error('Delete account error:', error);
+        return { success: false, error: error.message };
+    }
+};
+
 // ================================================
 // DARK/LIGHT MODE
 // ================================================

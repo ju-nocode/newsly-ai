@@ -148,6 +148,22 @@ body {
   transition: all 0.2s;
 }
 
+.btn-danger {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-danger:hover {
+  background: #dc2626;
+  transform: scale(1.05);
+}
+
 .btn-secondary:hover {
   background: var(--bg-tertiary);
   color: var(--text-primary);

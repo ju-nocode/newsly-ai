@@ -16,6 +16,7 @@
             </div>
             <div class="nav-links">
                 <span id="userNameDisplay" class="user-name"></span>
+                <button id="deleteAccountBtn" class="btn-danger" title="Supprimer mon compte">🗑️</button>
                 <button id="logoutBtn" class="btn-secondary">Déconnexion</button>
             </div>
         </div>
@@ -76,7 +77,7 @@
     </div>
 
     <script type="module">
-        import { checkAuth, logout, getUserProfile, fetchNews, currentUser } from './app.js';
+        import { checkAuth, logout, getUserProfile, fetchNews, deleteAccount, currentUser } from './app.js';
         import { displayNews, escapeHtml, showError, showSuccess } from './dashboard-utils.js';
 
         let currentCategory = 'general';
@@ -155,6 +156,24 @@
         });
 
         // Gérer la déconnexion
+        // Gérer la suppression du compte
+        document.getElementById('deleteAccountBtn').addEventListener('click', async () => {
+            if (confirm('⚠️ Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible !')) {
+                try {
+                    const result = await deleteAccount();
+                    if (result.success) {
+                        alert('✅ Compte supprimé avec succès');
+                        window.location.href = 'index.html';
+                    } else {
+                        alert('❌ ' + result.error);
+                    }
+                } catch (error) {
+                    alert('❌ Erreur lors de la suppression du compte');
+                }
+            }
+        });
+
+
         document.getElementById('logoutBtn').addEventListener('click', () => {
             logout();
         });
