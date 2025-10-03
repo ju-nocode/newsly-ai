@@ -26,19 +26,6 @@ export default async function handler(req, res) {
 
         const supabase = createClient(
             process.env.SUPABASE_URL,
-            process.env.SUPABASE_ANON_KEY
-        );
-
-        // Vérifier le token et récupérer l'utilisateur
-        const { data: { user }, error: authError } = await supabase.auth.getUser(token);
-
-        if (authError || !user) {
-            return res.status(401).json({ error: 'Token invalide' });
-        }
-
-        // Créer un client Supabase avec le token de l'utilisateur
-        const supabaseWithAuth = createClient(
-            process.env.SUPABASE_URL,
             process.env.SUPABASE_ANON_KEY,
             {
                 global: {
@@ -49,11 +36,28 @@ export default async function handler(req, res) {
             }
         );
 
-        // L'utilisateur se supprime lui-même
-        const { error: deleteError } = await supabaseWithAuth.rpc('delete_user');
+        // Vérifier le token et récupérer l'utilisateur
+        const { data: { user }, error: authError } = await supabase.auth.getUser(token);
 
-        if (deleteError) {
-            return res.status(400).json({ error: deleteError.message });
+        if (authError || !user) {
+            return res.status(401).json({ error: 'Token invalide' });
+        }
+
+        // Supprimer l'utilisateur via l'API REST de Supabase Auth
+        const response = await fetch(
+            `${process.env.SUPABASE_URL}/auth/v1/user`,
+            {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'apikey': process.env.SUPABASE_ANON_KEY
+                }
+            }
+        );
+
+        if (!response.ok) {
+            const error = await response.json();
+            return res.status(response.status).json({ error: error.message || 'Erreur de suppression' });
         }
 
         return res.status(200).json({
