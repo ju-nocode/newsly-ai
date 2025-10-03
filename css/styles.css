@@ -95,21 +95,6 @@ body {
    NAVIGATION TOP BAR
 ================================================ */
 
-.navbar {
-  position: fixed;
-  top: 0;
-  left: var(--sidebar-width);
-  right: 0;
-  height: var(--navbar-height);
-  background: var(--bg-primary);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  padding: 0 2rem;
-  z-index: 100;
-  box-shadow: 0 1px 3px var(--shadow);
-}
-
 .nav-container {
   width: 100%;
   display: flex;
@@ -299,7 +284,7 @@ body {
 .dashboard-container {
   margin-left: var(--sidebar-width);
   margin-top: var(--navbar-height);
-  padding: 2rem;
+  padding: 0rem;
   min-height: calc(100vh - var(--navbar-height));
   max-width: 1600px;
   display: block;
