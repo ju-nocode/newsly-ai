@@ -22,32 +22,56 @@
             </div>
 
             <div class="nav-links">
-                <span id="userNameDisplay" class="user-name"></span>
+                <!-- Burger Menu -->
+                <button class="burger-menu" id="burgerBtn">
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
+                </button>
 
-                <!-- User Menu Dropdown -->
-                <div class="dropdown">
-                    <button class="dropdown-toggle" id="userMenuBtn">
-                        ⚙️
-                    </button>
-                    <div class="dropdown-menu" id="userMenu">
-                        <button class="dropdown-item" id="themeToggleBtn">
-                            <span id="themeIcon">🌙</span>
-                            <span id="themeText" data-i18n="nav.darkMode">Mode sombre</span>
-                        </button>
-                        <button class="dropdown-item" id="langToggleBtn">
-                            <span>🌍</span>
-                            <span id="langText" data-i18n="nav.language">Français</span>
-                        </button>
-                        <div class="dropdown-divider"></div>
-                        <button class="dropdown-item" id="settingsBtn">
-                            <span>⚙️</span>
-                            <span data-i18n="nav.settings">Paramètres</span>
-                        </button>
-                        <button class="dropdown-item" id="logoutBtn">
-                            <span>🚪</span>
-                            <span data-i18n="nav.logout">Déconnexion</span>
-                        </button>
+                <!-- Burger Dropdown Menu -->
+                <div class="burger-dropdown" id="burgerMenu">
+                    <div class="burger-user-info">
+                        <span id="userNameDisplay" class="burger-user-name"></span>
                     </div>
+
+                    <div class="burger-divider"></div>
+
+                    <!-- Theme Toggle avec Switch -->
+                    <div class="burger-item">
+                        <div class="burger-item-label">
+                            <span>🌙</span>
+                            <span id="themeText" data-i18n="nav.darkMode">Mode sombre</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="themeToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <!-- Language Toggle avec Switch -->
+                    <div class="burger-item">
+                        <div class="burger-item-label">
+                            <span>🌍</span>
+                            <span id="langLabel">Français / English</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="langToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="burger-divider"></div>
+
+                    <button class="burger-link" id="settingsBtn">
+                        <span>⚙️</span>
+                        <span data-i18n="nav.settings">Paramètres</span>
+                    </button>
+
+                    <button class="burger-link" id="logoutBtn">
+                        <span>🚪</span>
+                        <span data-i18n="nav.logout">Déconnexion</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -180,42 +204,44 @@
             });
         });
 
-        // Gérer le menu dropdown
-        const userMenuBtn = document.getElementById('userMenuBtn');
-        const userMenu = document.getElementById('userMenu');
+        // Gérer le burger menu
+        const burgerBtn = document.getElementById('burgerBtn');
+        const burgerMenu = document.getElementById('burgerMenu');
 
-        userMenuBtn.addEventListener('click', (e) => {
+        burgerBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            userMenu.classList.toggle('show');
+            burgerBtn.classList.toggle('active');
+            burgerMenu.classList.toggle('show');
         });
 
         // Fermer le menu si on clique ailleurs
         document.addEventListener('click', () => {
-            userMenu.classList.remove('show');
+            burgerBtn.classList.remove('active');
+            burgerMenu.classList.remove('show');
+        });
+
+        // Empêcher la fermeture si on clique dans le menu
+        burgerMenu.addEventListener('click', (e) => {
+            e.stopPropagation();
         });
 
         // Gérer le toggle du thème
-        const themeToggleBtn = document.getElementById('themeToggleBtn');
-        const themeIcon = document.getElementById('themeIcon');
-
-        themeToggleBtn.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-
-            themeIcon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
-            themeToggleBtn.querySelector('span:last-child').textContent =
-                newTheme === 'dark' ? 'Mode sombre' : 'Mode clair';
-        });
+        const themeToggle = document.getElementById('themeToggle');
+        const themeText = document.getElementById('themeText');
 
         // Initialiser le thème au chargement
         const savedTheme = localStorage.getItem('theme') || 'light';
         document.documentElement.setAttribute('data-theme', savedTheme);
-        themeIcon.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
-        themeToggleBtn.querySelector('span:last-child').textContent =
-            savedTheme === 'dark' ? 'Mode sombre' : 'Mode clair';
+        themeToggle.checked = savedTheme === 'dark';
+        themeText.textContent = savedTheme === 'dark' ? 'Mode sombre' : 'Mode clair';
+
+        themeToggle.addEventListener('change', () => {
+            const newTheme = themeToggle.checked ? 'dark' : 'light';
+
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeText.textContent = newTheme === 'dark' ? 'Mode sombre' : 'Mode clair';
+        });
 
         // Gérer les topics personnalisés
         const topicSearch = document.getElementById('topicSearch');
@@ -258,15 +284,13 @@
         });
 
         // Gérer le switch de langue
-        const langToggleBtn = document.getElementById('langToggleBtn');
-        const langText = document.getElementById('langText');
+        const langToggle = document.getElementById('langToggle');
         const savedLang = localStorage.getItem('language') || 'fr';
 
-        langText.textContent = savedLang === 'fr' ? 'Français' : 'English';
+        langToggle.checked = savedLang === 'en';
 
-        langToggleBtn.addEventListener('click', () => {
-            const currentLang = localStorage.getItem('language') || 'fr';
-            const newLang = currentLang === 'fr' ? 'en' : 'fr';
+        langToggle.addEventListener('change', () => {
+            const newLang = langToggle.checked ? 'en' : 'fr';
 
             localStorage.setItem('language', newLang);
 

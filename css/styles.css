@@ -50,17 +50,17 @@ NEWSLY AI - Modern SaaS Dashboard Style
 }
 
 [data-theme="dark"] {
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
-  --bg-tertiary: #334155;
-  --bg-sidebar: #020617;
-  --text-primary: #f1f5f9;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
-  --text-sidebar: #cbd5e1;
-  --border: #334155;
-  --shadow: rgba(0, 0, 0, 0.3);
-  --shadow-lg: rgba(0, 0, 0, 0.5);
+  --bg-primary: #1a1d29;
+  --bg-secondary: #13151f;
+  --bg-tertiary: #252938;
+  --bg-sidebar: #0d0f16;
+  --text-primary: #e4e6eb;
+  --text-secondary: #b0b3b8;
+  --text-muted: #8a8d91;
+  --text-sidebar: #b0b3b8;
+  --border: #2d3139;
+  --shadow: rgba(0, 0, 0, 0.4);
+  --shadow-lg: rgba(0, 0, 0, 0.6);
 }
 
 body {
@@ -1191,65 +1191,110 @@ body {
 }
 
 /* ================================================
-   DROPDOWN MENU
+   BURGER MENU
 ================================================ */
 
-.dropdown {
-  position: relative;
-}
-
-.dropdown-toggle {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  color: var(--text-primary);
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-md);
-  font-size: 1.25rem;
+.burger-menu {
+  background: transparent;
+  border: none;
+  width: 32px;
+  height: 32px;
   cursor: pointer;
-  transition: all 0.2s;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  transition: all 0.3s;
 }
 
-.dropdown-toggle:hover {
-  background: var(--bg-tertiary);
-  border-color: var(--primary);
+.burger-line {
+  width: 24px;
+  height: 2px;
+  background: var(--text-primary);
+  border-radius: 2px;
+  transition: all 0.3s;
 }
 
-.dropdown-menu {
+.burger-menu.active .burger-line:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.burger-menu.active .burger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.burger-menu.active .burger-line:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.burger-dropdown {
   position: absolute;
   top: calc(100% + 0.5rem);
-  right: 0;
+  right: 1rem;
   background: var(--bg-primary);
   border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  box-shadow: 0 8px 24px var(--shadow-lg);
-  min-width: 220px;
-  padding: 0.5rem;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 32px var(--shadow-lg);
+  min-width: 280px;
+  padding: 1rem;
   z-index: 10001;
   opacity: 0;
   visibility: hidden;
   transform: translateY(-10px);
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
 }
 
-.dropdown-menu.show {
+.burger-dropdown.show {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
 }
 
-.dropdown-item {
+.burger-user-info {
+  padding: 0.75rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  margin-bottom: 0.75rem;
+}
+
+.burger-user-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.burger-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.875rem 0.75rem;
+  border-radius: var(--radius-md);
+  transition: all 0.2s;
+}
+
+.burger-item:hover {
+  background: var(--bg-secondary);
+}
+
+.burger-item-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+}
+
+.burger-link {
   width: 100%;
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.75rem 1rem;
+  padding: 0.875rem 0.75rem;
   background: transparent;
   border: none;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   color: var(--text-primary);
   font-size: 0.875rem;
   text-align: left;
@@ -1257,22 +1302,61 @@ body {
   transition: all 0.2s;
 }
 
-.dropdown-item:hover {
+.burger-link:hover {
   background: var(--bg-secondary);
 }
 
-.dropdown-item.danger {
-  color: var(--error);
-}
-
-.dropdown-item.danger:hover {
-  background: rgba(239, 68, 68, 0.1);
-}
-
-.dropdown-divider {
+.burger-divider {
   height: 1px;
   background: var(--border);
-  margin: 0.5rem 0;
+  margin: 0.75rem 0;
+}
+
+/* Toggle Switch Apple Style */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--text-muted);
+  transition: 0.3s;
+  border-radius: 24px;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background: white;
+  transition: 0.3s;
+  border-radius: 50%;
+}
+
+.toggle-switch input:checked + .toggle-slider {
+  background: var(--primary);
+}
+
+.toggle-switch input:checked + .toggle-slider:before {
+  transform: translateX(20px);
 }
 
 /* ================================================
