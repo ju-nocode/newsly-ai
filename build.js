@@ -1,11 +1,14 @@
 #!/usr/bin/env node
-import { mkdirSync, copyFileSync, readdirSync, statSync } from 'fs';
-import { join } from 'path';
+import { mkdirSync, copyFileSync, readdirSync, statSync, writeFileSync } from 'fs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 console.log('📦 Building Newsly AI for Vercel...');
 
 // Create output directory structure
-const outputDir = '.vercel/output';
+const outputDir = join(__dirname, '.vercel', 'output');
 const staticDir = join(outputDir, 'static');
 
 try {
@@ -14,11 +17,13 @@ try {
 
   // Copy HTML files
   ['index.html', 'dashboard.html', 'settings.html'].forEach(file => {
-    copyFileSync(file, join(staticDir, file));
+    const src = join(__dirname, file);
+    const dest = join(staticDir, file);
+    copyFileSync(src, dest);
     console.log(`✅ Copied ${file}`);
   });
 
-  // Copy public directory
+  // Copy public directory recursively
   const copyDir = (src, dest) => {
     mkdirSync(dest, { recursive: true });
     const entries = readdirSync(src);
@@ -35,20 +40,22 @@ try {
     });
   };
 
-  copyDir('public', join(staticDir, 'public'));
+  const publicSrc = join(__dirname, 'public');
+  const publicDest = join(staticDir, 'public');
+  copyDir(publicSrc, publicDest);
   console.log('✅ Copied public/ directory');
 
-  // Create config.json for Vercel Build Output API
+  // Create config.json for Vercel Build Output API v3
   const config = {
     version: 3
   };
 
   const configPath = join(outputDir, 'config.json');
-  const { writeFileSync } = await import('fs');
   writeFileSync(configPath, JSON.stringify(config, null, 2));
   console.log('✅ Created config.json');
 
   console.log('🎉 Build completed successfully!');
+  console.log(`📁 Output: ${outputDir}`);
 } catch (error) {
   console.error('❌ Build failed:', error);
   process.exit(1);
