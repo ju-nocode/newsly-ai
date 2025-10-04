@@ -216,9 +216,6 @@
             window.location.href = 'index.html';
         }
 
-        // Initialiser les traductions
-        translatePage();
-
         // Charger le profil utilisateur
         const loadProfile = async () => {
             const result = await getUserProfile();
@@ -311,7 +308,10 @@
         });
 
         // Initialiser
-        loadProfile();
+        (async () => {
+            await translatePage();
+            await loadProfile();
+        })();
     </script>
 </body>
 </html>

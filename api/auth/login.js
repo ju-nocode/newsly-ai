@@ -22,6 +22,17 @@ export default async function handler(req, res) {
             return res.status(400).json({ error: 'Email et mot de passe requis' });
         }
 
+        // Validation email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ error: 'Email invalide' });
+        }
+
+        // Validation longueur mot de passe
+        if (password.length > 100) {
+            return res.status(400).json({ error: 'Mot de passe invalide' });
+        }
+
         // Initialiser Supabase avec les clés sécurisées côté serveur
         const supabase = createClient(
             process.env.SUPABASE_URL,

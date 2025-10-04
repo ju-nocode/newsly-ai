@@ -376,9 +376,11 @@
         });
 
         // Initialiser
-        translatePage(); // Traduire au chargement
-        loadProfile();
-        loadNews('general');
+        (async () => {
+            await translatePage(); // Traduire au chargement
+            await loadProfile();
+            await loadNews('general');
+        })();
     </script>
 </body>
 </html>

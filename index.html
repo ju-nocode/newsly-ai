@@ -135,42 +135,42 @@
     <!-- Categories Preview -->
     <section class="categories-preview">
         <div class="categories-container">
-            <h2 class="section-title">Explorez nos Catégories</h2>
+            <h2 class="section-title category-section-title">Explorez nos Catégories</h2>
             <div class="categories-grid">
                 <div class="category-preview">
                     <div class="category-preview-icon">📰</div>
-                    <h3>Général</h3>
-                    <p>Toutes les actualités importantes</p>
+                    <h3 class="category-name">Général</h3>
+                    <p class="category-desc">Toutes les actualités importantes</p>
                 </div>
                 <div class="category-preview">
                     <div class="category-preview-icon">💼</div>
-                    <h3>Business</h3>
-                    <p>Économie et finance</p>
+                    <h3 class="category-name">Business</h3>
+                    <p class="category-desc">Économie et finance</p>
                 </div>
                 <div class="category-preview">
                     <div class="category-preview-icon">💻</div>
-                    <h3>Technologie</h3>
-                    <p>Innovation et tech</p>
+                    <h3 class="category-name">Technologie</h3>
+                    <p class="category-desc">Innovation et tech</p>
                 </div>
                 <div class="category-preview">
                     <div class="category-preview-icon">🔬</div>
-                    <h3>Science</h3>
-                    <p>Découvertes scientifiques</p>
+                    <h3 class="category-name">Science</h3>
+                    <p class="category-desc">Découvertes scientifiques</p>
                 </div>
                 <div class="category-preview">
                     <div class="category-preview-icon">🏥</div>
-                    <h3>Santé</h3>
-                    <p>Bien-être et médecine</p>
+                    <h3 class="category-name">Santé</h3>
+                    <p class="category-desc">Bien-être et médecine</p>
                 </div>
                 <div class="category-preview">
                     <div class="category-preview-icon">⚽</div>
-                    <h3>Sports</h3>
-                    <p>Résultats et actualités sportives</p>
+                    <h3 class="category-name">Sports</h3>
+                    <p class="category-desc">Résultats et actualités sportives</p>
                 </div>
                 <div class="category-preview">
                     <div class="category-preview-icon">🎬</div>
-                    <h3>Divertissement</h3>
-                    <p>Cinéma, musique, culture</p>
+                    <h3 class="category-name">Divertissement</h3>
+                    <p class="category-desc">Cinéma, musique, culture</p>
                 </div>
             </div>
         </div>
@@ -335,9 +335,25 @@
                 feature5Desc: 'Accédez à des milliers de sources d\'information du monde entier, toutes au même endroit.',
                 feature6Title: '100% Sécurisé',
                 feature6Desc: 'Vos données sont protégées avec les dernières technologies de sécurité.',
+                categoriesTitle: 'Explorez nos Catégories',
+                cat1Name: 'Général',
+                cat1Desc: 'Toutes les actualités importantes',
+                cat2Name: 'Business',
+                cat2Desc: 'Économie et finance',
+                cat3Name: 'Technologie',
+                cat3Desc: 'Innovation et tech',
+                cat4Name: 'Science',
+                cat4Desc: 'Découvertes scientifiques',
+                cat5Name: 'Santé',
+                cat5Desc: 'Bien-être et médecine',
+                cat6Name: 'Sports',
+                cat6Desc: 'Résultats et actualités sportives',
+                cat7Name: 'Divertissement',
+                cat7Desc: 'Cinéma, musique, culture',
                 ctaTitle: 'Prêt à commencer ?',
                 ctaSubtitle: 'Rejoignez des milliers d\'utilisateurs qui restent informés avec Newsly AI',
-                ctaButton: 'Créer mon compte gratuitement'
+                ctaButton: 'Créer mon compte gratuitement',
+                footerTagline: 'Votre NewsWall personnalisé alimenté par l\'intelligence artificielle'
             },
             en: {
                 heroTitle: 'Your Personalized NewsWall',
@@ -358,9 +374,25 @@
                 feature5Desc: 'Access thousands of news sources from around the world, all in one place.',
                 feature6Title: '100% Secure',
                 feature6Desc: 'Your data is protected with the latest security technologies.',
+                categoriesTitle: 'Explore our Categories',
+                cat1Name: 'General',
+                cat1Desc: 'All important news',
+                cat2Name: 'Business',
+                cat2Desc: 'Economy and finance',
+                cat3Name: 'Technology',
+                cat3Desc: 'Innovation and tech',
+                cat4Name: 'Science',
+                cat4Desc: 'Scientific discoveries',
+                cat5Name: 'Health',
+                cat5Desc: 'Wellness and medicine',
+                cat6Name: 'Sports',
+                cat6Desc: 'Sports results and news',
+                cat7Name: 'Entertainment',
+                cat7Desc: 'Movies, music, culture',
                 ctaTitle: 'Ready to get started?',
                 ctaSubtitle: 'Join thousands of users who stay informed with Newsly AI',
-                ctaButton: 'Create my free account'
+                ctaButton: 'Create my free account',
+                footerTagline: 'Your personalized NewsWall powered by artificial intelligence'
             }
         };
 
@@ -401,6 +433,28 @@
             if (featureTitles[5]) featureTitles[5].textContent = t.feature6Title;
             if (featureDescs[5]) featureDescs[5].textContent = t.feature6Desc;
 
+            // Categories section
+            const categoriesTitle = document.querySelector('.category-section-title');
+            if (categoriesTitle) categoriesTitle.textContent = t.categoriesTitle;
+
+            const categoryNames = document.querySelectorAll('.category-name');
+            const categoryDescs = document.querySelectorAll('.category-desc');
+
+            if (categoryNames[0]) categoryNames[0].textContent = t.cat1Name;
+            if (categoryDescs[0]) categoryDescs[0].textContent = t.cat1Desc;
+            if (categoryNames[1]) categoryNames[1].textContent = t.cat2Name;
+            if (categoryDescs[1]) categoryDescs[1].textContent = t.cat2Desc;
+            if (categoryNames[2]) categoryNames[2].textContent = t.cat3Name;
+            if (categoryDescs[2]) categoryDescs[2].textContent = t.cat3Desc;
+            if (categoryNames[3]) categoryNames[3].textContent = t.cat4Name;
+            if (categoryDescs[3]) categoryDescs[3].textContent = t.cat4Desc;
+            if (categoryNames[4]) categoryNames[4].textContent = t.cat5Name;
+            if (categoryDescs[4]) categoryDescs[4].textContent = t.cat5Desc;
+            if (categoryNames[5]) categoryNames[5].textContent = t.cat6Name;
+            if (categoryDescs[5]) categoryDescs[5].textContent = t.cat6Desc;
+            if (categoryNames[6]) categoryNames[6].textContent = t.cat7Name;
+            if (categoryDescs[6]) categoryDescs[6].textContent = t.cat7Desc;
+
             // CTA section
             const ctaTitle = document.querySelector('.cta-title');
             if (ctaTitle) ctaTitle.textContent = t.ctaTitle;
@@ -408,6 +462,10 @@
             if (ctaSubtitle) ctaSubtitle.textContent = t.ctaSubtitle;
             const ctaButton = document.getElementById('ctaSignupBtn');
             if (ctaButton) ctaButton.textContent = t.ctaButton;
+
+            // Footer
+            const footerText = document.querySelector('.footer-text');
+            if (footerText) footerText.textContent = t.footerTagline;
         };
 
         // Initialiser les traductions

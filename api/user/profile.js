@@ -50,27 +50,54 @@ export default async function handler(req, res) {
         if (req.method === 'PUT') {
             const { username, full_name, phone, bio, avatar_url } = req.body;
 
-            const updateData = {};
-
+            // Validation des données
             if (username !== undefined) {
-                updateData.username = username;
-                updateData.display_name = username;
+                if (typeof username !== 'string' || username.trim().length < 1 || username.trim().length > 50) {
+                    return res.status(400).json({ error: 'Username invalide (1-50 caractères)' });
+                }
             }
 
             if (full_name !== undefined) {
-                updateData.full_name = full_name;
+                if (typeof full_name !== 'string' || full_name.length > 100) {
+                    return res.status(400).json({ error: 'Nom complet invalide (max 100 caractères)' });
+                }
+            }
+
+            if (phone !== undefined && phone.length > 20) {
+                return res.status(400).json({ error: 'Numéro de téléphone invalide (max 20 caractères)' });
+            }
+
+            if (bio !== undefined && bio.length > 500) {
+                return res.status(400).json({ error: 'Bio trop longue (max 500 caractères)' });
+            }
+
+            if (avatar_url !== undefined && avatar_url.length > 0) {
+                if (avatar_url.length > 500 || !avatar_url.match(/^https?:\/\/.+/)) {
+                    return res.status(400).json({ error: 'URL d\'avatar invalide' });
+                }
+            }
+
+            const updateData = {};
+
+            if (username !== undefined) {
+                updateData.username = username.trim();
+                updateData.display_name = username.trim();
+            }
+
+            if (full_name !== undefined) {
+                updateData.full_name = full_name.trim();
             }
 
             if (phone !== undefined) {
-                updateData.phone = phone;
+                updateData.phone = phone.trim();
             }
 
             if (bio !== undefined) {
-                updateData.bio = bio;
+                updateData.bio = bio.trim();
             }
 
             if (avatar_url !== undefined) {
-                updateData.avatar_url = avatar_url;
+                updateData.avatar_url = avatar_url.trim();
             }
 
             const { data, error } = await supabase.auth.updateUser({

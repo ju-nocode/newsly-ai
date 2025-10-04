@@ -16,13 +16,30 @@ export default async function handler(req, res) {
     try {
         const { category = 'general', country = 'us', page = 1 } = req.query;
 
+        // Validation stricte des paramètres pour éviter les injections
+        const validCategories = ['general', 'business', 'technology', 'science', 'health', 'sports', 'entertainment'];
+        const validCountries = ['us', 'fr', 'gb', 'ca', 'de'];
+
+        if (!validCategories.includes(category)) {
+            return res.status(400).json({ error: 'Invalid category' });
+        }
+
+        if (!validCountries.includes(country)) {
+            return res.status(400).json({ error: 'Invalid country' });
+        }
+
+        const pageNum = parseInt(page);
+        if (isNaN(pageNum) || pageNum < 1 || pageNum > 10) {
+            return res.status(400).json({ error: 'Invalid page number' });
+        }
+
         // Vérifier que la clé API existe
         if (!process.env.NEWS_API_KEY) {
             return res.status(500).json({ error: 'NewsAPI key not configured' });
         }
 
         // Appel à NewsAPI avec la clé sécurisée côté serveur
-        const url = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&page=${page}&pageSize=20&apiKey=${process.env.NEWS_API_KEY}`;
+        const url = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&page=${pageNum}&pageSize=20&apiKey=${process.env.NEWS_API_KEY}`;
 
         const response = await fetch(url);
         const data = await response.json();

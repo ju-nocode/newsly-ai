@@ -22,9 +22,19 @@ export default async function handler(req, res) {
             return res.status(400).json({ error: 'Email et mot de passe requis' });
         }
 
-        // Validation basique
+        // Validation email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ error: 'Email invalide' });
+        }
+
+        // Validation mot de passe
         if (password.length < 8) {
             return res.status(400).json({ error: 'Le mot de passe doit contenir au moins 8 caractères' });
+        }
+
+        if (password.length > 100) {
+            return res.status(400).json({ error: 'Le mot de passe est trop long (max 100 caractères)' });
         }
 
         const supabase = createClient(
