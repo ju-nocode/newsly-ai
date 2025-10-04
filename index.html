@@ -19,9 +19,6 @@
             </a>
 
             <div class="nav-links">
-                <button class="nav-link" id="openLoginBtn">Connexion</button>
-                <button class="btn-primary" id="openSignupBtn">Créer un compte</button>
-
                 <!-- Burger Menu -->
                 <button class="burger-menu" id="burgerBtnIndex">
                     <span class="burger-line"></span>
@@ -31,6 +28,19 @@
 
                 <!-- Burger Dropdown Menu -->
                 <div class="burger-dropdown" id="burgerMenuIndex">
+                    <!-- Auth Buttons -->
+                    <button class="burger-link" id="openLoginBtn">
+                        <span>🔑</span>
+                        <span data-i18n="auth.login">Connexion</span>
+                    </button>
+
+                    <button class="burger-link" id="openSignupBtn">
+                        <span>✨</span>
+                        <span data-i18n="auth.signup">Créer un compte</span>
+                    </button>
+
+                    <div class="burger-divider"></div>
+
                     <!-- Language Toggle avec Switch -->
                     <div class="burger-item">
                         <div class="burger-item-label">
@@ -289,11 +299,15 @@
 
     <script type="module">
         import { checkAuth, login, signup } from './js/app.js';
+        import { translatePage } from './js/translation-service.js';
 
         // Si l'utilisateur est déjà connecté, rediriger vers le dashboard
         if (checkAuth()) {
             window.location.href = 'dashboard.html';
         }
+
+        // Initialiser les traductions
+        translatePage();
 
         // Gestion du modal
         const authModal = document.getElementById('authModal');
@@ -425,11 +439,11 @@
 
         langToggle.checked = savedLang === 'en';
 
-        langToggle.addEventListener('change', () => {
+        langToggle.addEventListener('change', async () => {
             const newLang = langToggle.checked ? 'en' : 'fr';
             localStorage.setItem('language', newLang);
-            // Recharger pour appliquer les traductions
-            location.reload();
+            // Appliquer les traductions
+            await translatePage();
         });
     </script>
 </body>

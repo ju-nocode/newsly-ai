@@ -26,14 +26,14 @@
 
     <!-- Main Content -->
     <div class="settings-container">
-        <h1 class="settings-title">Paramètres du compte</h1>
+        <h1 class="settings-title" data-i18n="settings.title">Paramètres du compte</h1>
 
         <!-- Profile Section -->
         <div class="settings-card">
-            <h2 class="settings-card-title">Profil</h2>
+            <h2 class="settings-card-title" data-i18n="settings.profile">Profil</h2>
 
             <div class="form-group">
-                <label for="emailDisplay" class="form-label">Email</label>
+                <label for="emailDisplay" class="form-label" data-i18n="settings.email">Email</label>
                 <input
                     type="email"
                     id="emailDisplay"
@@ -44,27 +44,27 @@
             </div>
 
             <div class="form-group">
-                <label for="usernameInput" class="form-label">Nom d'utilisateur</label>
+                <label for="usernameInput" class="form-label" data-i18n="settings.username">Nom d'utilisateur</label>
                 <input
                     type="text"
                     id="usernameInput"
                     class="form-input"
-                    placeholder="Votre nom d'utilisateur"
+                    data-i18n-placeholder="settings.usernamePlaceholder"
                 >
             </div>
 
             <div class="form-group">
-                <label for="fullNameInput" class="form-label">Nom complet</label>
+                <label for="fullNameInput" class="form-label" data-i18n="settings.fullName">Nom complet</label>
                 <input
                     type="text"
                     id="fullNameInput"
                     class="form-input"
-                    placeholder="Votre nom complet"
+                    data-i18n-placeholder="settings.fullNamePlaceholder"
                 >
             </div>
 
             <div class="form-group">
-                <label for="phoneInput" class="form-label">Téléphone</label>
+                <label for="phoneInput" class="form-label" data-i18n="settings.phone">Téléphone</label>
                 <input
                     type="tel"
                     id="phoneInput"
@@ -74,17 +74,17 @@
             </div>
 
             <div class="form-group">
-                <label for="bioInput" class="form-label">Bio</label>
+                <label for="bioInput" class="form-label" data-i18n="settings.bio">Bio</label>
                 <textarea
                     id="bioInput"
                     class="form-input"
-                    placeholder="Parlez-nous de vous..."
+                    data-i18n-placeholder="settings.bioPlaceholder"
                     rows="3"
                 ></textarea>
             </div>
 
             <div class="form-group">
-                <label for="avatarUrlInput" class="form-label">URL de l'avatar</label>
+                <label for="avatarUrlInput" class="form-label" data-i18n="settings.avatarUrl">URL de l'avatar</label>
                 <input
                     type="url"
                     id="avatarUrlInput"
@@ -93,14 +93,14 @@
                 >
             </div>
 
-            <button id="updateProfileBtn" class="btn-primary">
+            <button id="updateProfileBtn" class="btn-primary" data-i18n="settings.updateProfile">
                 Mettre à jour le profil
             </button>
         </div>
 
         <!-- Security Section -->
         <div class="settings-card">
-            <h2 class="settings-card-title">Sécurité</h2>
+            <h2 class="settings-card-title" data-i18n="settings.security">Sécurité</h2>
 
             <div class="form-group">
                 <label for="currentPassword" class="form-label">Mot de passe actuel</label>
@@ -208,12 +208,16 @@
     <script type="module">
         import { checkAuth, getUserProfile, updateUserProfile, deleteAccount, logout } from './js/app.js';
         import { escapeHtml, showSuccess, showError } from './js/dashboard-utils.js';
+        import { translatePage } from './js/translation-service.js';
 
         // Vérifier l'authentification
         const isAuth = checkAuth();
         if (!isAuth) {
             window.location.href = 'index.html';
         }
+
+        // Initialiser les traductions
+        translatePage();
 
         // Charger le profil utilisateur
         const loadProfile = async () => {
