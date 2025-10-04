@@ -186,6 +186,11 @@ export const getUserProfile = async () => {
         const data = await response.json();
 
         if (!response.ok) {
+            // Si le token est invalide ou expiré, déconnecter l'utilisateur
+            if (response.status === 401) {
+                clearSession();
+                window.location.href = 'index.html';
+            }
             throw new Error(data.error || 'Erreur de récupération du profil');
         }
 
@@ -216,6 +221,11 @@ export const updateUserProfile = async (profileData) => {
         const data = await response.json();
 
         if (!response.ok) {
+            // Si le token est invalide ou expiré, déconnecter l'utilisateur
+            if (response.status === 401) {
+                clearSession();
+                window.location.href = 'index.html';
+            }
             throw new Error(data.error || 'Erreur de mise à jour du profil');
         }
 
@@ -246,6 +256,11 @@ export const changePassword = async (newPassword) => {
         const data = await response.json();
 
         if (!response.ok) {
+            // Si le token est invalide ou expiré, déconnecter l'utilisateur
+            if (response.status === 401) {
+                clearSession();
+                window.location.href = 'index.html';
+            }
             throw new Error(data.error || 'Erreur lors du changement de mot de passe');
         }
 
@@ -274,6 +289,11 @@ export const deleteAccount = async () => {
         const data = await response.json();
 
         if (!response.ok) {
+            // Si le token est invalide ou expiré, déconnecter l'utilisateur
+            if (response.status === 401) {
+                clearSession();
+                window.location.href = 'index.html';
+            }
             throw new Error(data.error || 'Erreur de suppression du compte');
         }
 
