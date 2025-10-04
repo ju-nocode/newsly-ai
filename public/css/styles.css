@@ -1901,6 +1901,139 @@ body {
 }
 
 /* ================================================
+   COUNTRY FILTER BANNER
+================================================ */
+
+.country-banner {
+  position: sticky;
+  top: var(--navbar-height);
+  z-index: 100;
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.country-banner-toggle {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  transition: all 0.2s;
+}
+
+.country-banner-toggle:hover {
+  background: var(--bg-secondary);
+}
+
+.banner-icon {
+  font-size: 1.25rem;
+}
+
+.banner-arrow {
+  font-size: 0.75rem;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-left: auto;
+}
+
+.country-banner.expanded .banner-arrow {
+  transform: rotate(180deg);
+}
+
+.country-banner-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.country-banner.expanded .country-banner-content {
+  max-height: 200px;
+}
+
+.country-filter-container {
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.country-filter-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+}
+
+.country-options {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.country-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+  user-select: none;
+}
+
+.country-option:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary);
+}
+
+.country-option input[type="checkbox"] {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--primary);
+}
+
+.country-option input[type="checkbox"]:checked + span {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Collapsed state - show only icon */
+.country-banner:not(.expanded) .country-banner-toggle {
+  padding: 0.5rem 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .country-filter-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .country-options {
+    width: 100%;
+  }
+
+  .country-option {
+    flex: 1;
+    min-width: calc(50% - 0.5rem);
+  }
+}
+
+/* ================================================
    UTILITIES
 ================================================ */
 
