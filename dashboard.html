@@ -34,18 +34,18 @@
                             <span id="themeIcon">🌙</span>
                             <span>Mode sombre</span>
                         </button>
+                        <button class="dropdown-item" id="langToggleBtn">
+                            <span>🌍</span>
+                            <span id="langText">Français</span>
+                        </button>
+                        <div class="dropdown-divider"></div>
                         <button class="dropdown-item" id="settingsBtn">
                             <span>⚙️</span>
                             <span>Paramètres</span>
                         </button>
-                        <div class="dropdown-divider"></div>
                         <button class="dropdown-item" id="logoutBtn">
                             <span>🚪</span>
                             <span>Déconnexion</span>
-                        </button>
-                        <button class="dropdown-item danger" id="deleteAccountBtn">
-                            <span>🗑️</span>
-                            <span>Supprimer le compte</span>
                         </button>
                     </div>
                 </div>
@@ -256,26 +256,26 @@
             }
         });
 
+        // Gérer le switch de langue
+        const langToggleBtn = document.getElementById('langToggleBtn');
+        const langText = document.getElementById('langText');
+        const savedLang = localStorage.getItem('language') || 'fr';
+
+        langText.textContent = savedLang === 'fr' ? 'Français' : 'English';
+
+        langToggleBtn.addEventListener('click', () => {
+            const currentLang = localStorage.getItem('language') || 'fr';
+            const newLang = currentLang === 'fr' ? 'en' : 'fr';
+
+            localStorage.setItem('language', newLang);
+            langText.textContent = newLang === 'fr' ? 'Français' : 'English';
+
+            showSuccess(`Language changed to ${newLang === 'fr' ? 'Français' : 'English'}`);
+        });
+
         // Gérer le bouton Settings
         document.getElementById('settingsBtn').addEventListener('click', () => {
             window.location.href = 'settings.html';
-        });
-
-        // Gérer la suppression du compte
-        document.getElementById('deleteAccountBtn').addEventListener('click', async () => {
-            if (confirm('⚠️ Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible !')) {
-                try {
-                    const result = await deleteAccount();
-                    if (result.success) {
-                        alert('✅ Compte supprimé avec succès');
-                        window.location.href = 'index.html';
-                    } else {
-                        alert('❌ ' + result.error);
-                    }
-                } catch (error) {
-                    alert('❌ Erreur lors de la suppression du compte');
-                }
-            }
         });
 
 
