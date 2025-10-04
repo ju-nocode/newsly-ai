@@ -37,7 +37,7 @@ export default async function handler(req, res) {
             return res.status(200).json({
                 id: user.id,
                 email: user.email,
-                username: user.user_metadata?.username || user.email.split('@')[0],
+                username: user.user_metadata?.username || user.user_metadata?.full_name || user.user_metadata?.display_name || user.email.split('@')[0],
                 created_at: user.created_at
             });
         }
@@ -47,7 +47,11 @@ export default async function handler(req, res) {
             const { username } = req.body;
 
             const { data, error } = await supabase.auth.updateUser({
-                data: { username }
+                data: {
+                    username,
+                    full_name: username,
+                    display_name: username
+                }
             });
 
             if (error) {

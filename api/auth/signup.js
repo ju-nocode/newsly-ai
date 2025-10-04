@@ -38,7 +38,9 @@ export default async function handler(req, res) {
             password,
             options: {
                 data: {
-                    username: username || email.split('@')[0]
+                    username: username || email.split('@')[0],
+                    full_name: username || email.split('@')[0],
+                    display_name: username || email.split('@')[0]
                 }
             }
         });
