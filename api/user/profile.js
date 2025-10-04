@@ -39,6 +39,7 @@ export default async function handler(req, res) {
                 email: user.email,
                 username: user.user_metadata?.username || user.user_metadata?.full_name || user.user_metadata?.display_name || user.email.split('@')[0],
                 full_name: user.user_metadata?.full_name || user.user_metadata?.username || '',
+                phone: user.user_metadata?.phone || '',
                 bio: user.user_metadata?.bio || '',
                 avatar_url: user.user_metadata?.avatar_url || '',
                 created_at: user.created_at
@@ -47,7 +48,7 @@ export default async function handler(req, res) {
 
         // PUT - Mettre à jour le profil
         if (req.method === 'PUT') {
-            const { username, full_name, bio, avatar_url } = req.body;
+            const { username, full_name, phone, bio, avatar_url } = req.body;
 
             const updateData = {};
 
@@ -58,6 +59,10 @@ export default async function handler(req, res) {
 
             if (full_name !== undefined) {
                 updateData.full_name = full_name;
+            }
+
+            if (phone !== undefined) {
+                updateData.phone = phone;
             }
 
             if (bio !== undefined) {
