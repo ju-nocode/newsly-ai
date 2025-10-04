@@ -198,7 +198,7 @@ export const getUserProfile = async () => {
 };
 
 // Mettre à jour le profil
-export const updateUserProfile = async (username) => {
+export const updateUserProfile = async (profileData) => {
     if (!authToken) {
         return { success: false, error: 'Non authentifié' };
     }
@@ -210,7 +210,7 @@ export const updateUserProfile = async (username) => {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${authToken}`
             },
-            body: JSON.stringify({ username })
+            body: JSON.stringify(profileData)
         });
 
         const data = await response.json();
@@ -223,6 +223,36 @@ export const updateUserProfile = async (username) => {
 
     } catch (error) {
         console.error('Profile update error:', error);
+        return { success: false, error: error.message };
+    }
+};
+
+// Changer le mot de passe
+export const changePassword = async (newPassword) => {
+    if (!authToken) {
+        return { success: false, error: 'Non authentifié' };
+    }
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/user/change-password`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            },
+            body: JSON.stringify({ newPassword })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || 'Erreur lors du changement de mot de passe');
+        }
+
+        return { success: true, message: data.message };
+
+    } catch (error) {
+        console.error('Password change error:', error);
         return { success: false, error: error.message };
     }
 };
