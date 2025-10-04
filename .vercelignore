@@ -1,0 +1,9 @@
+# Don't upload these to Vercel
+node_modules
+.git
+.claude
+.vscode
+*.md
+!README.md
+.env
+.env.local
