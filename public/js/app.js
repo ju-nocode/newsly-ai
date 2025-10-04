@@ -29,8 +29,8 @@ const loadSession = () => {
             if (tokenSize > 100000) {
                 console.error('❌ Token trop volumineux détecté (' + Math.round(tokenSize/1024) + ' KB), nettoyage...');
                 clearSession();
-                alert('⚠️ Votre session contenait des données trop volumineuses. Veuillez vous reconnecter.');
-                window.location.href = 'index.html';
+                alert('⚠️ Votre session contenait des données trop volumineuses.\n\nAllez sur cette page pour nettoyer votre avatar :\nhttps://prod-julien.vercel.app/reset-avatar.html');
+                window.location.href = 'reset-avatar.html';
                 return false;
             }
 

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nettoyage Avatar - Newsly AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="public/css/styles.css">
+</head>
+<body>
+    <div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; background: var(--bg-secondary);">
+        <div style="max-width: 500px; width: 100%; background: var(--bg-primary); padding: 2.5rem; border-radius: var(--radius-xl); border: 1px solid var(--border); box-shadow: 0 4px 16px var(--shadow-lg);">
+            <h1 style="font-size: 1.875rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-primary);">
+                🔧 Nettoyage d'Avatar
+            </h1>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.6;">
+                Si vous ne pouvez plus vous connecter à cause d'un avatar trop volumineux, cette page va nettoyer votre avatar pour vous permettre de vous reconnecter.
+            </p>
+
+            <div id="errorMsg" style="display: none; padding: 0.75rem 1rem; border-radius: var(--radius-md); font-size: 0.875rem; background: rgba(239, 68, 68, 0.1); color: var(--error); border: 1px solid rgba(239, 68, 68, 0.2); margin-bottom: 1rem;"></div>
+
+            <div id="successMsg" style="display: none; padding: 0.75rem 1rem; border-radius: var(--radius-md); font-size: 0.875rem; background: rgba(16, 185, 129, 0.1); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.2); margin-bottom: 1rem;"></div>
+
+            <form id="resetForm">
+                <div style="margin-bottom: 1.25rem;">
+                    <label for="email" style="font-weight: 600; font-size: 0.875rem; color: var(--text-primary); display: block; margin-bottom: 0.5rem;">
+                        Votre email
+                    </label>
+                    <input
+                        type="email"
+                        id="email"
+                        required
+                        placeholder="exemple@email.com"
+                        style="width: 100%; background: var(--bg-secondary); border: 1px solid var(--border); color: var(--text-primary); padding: 0.75rem 1rem; border-radius: var(--radius-md); font-size: 0.9375rem;"
+                    >
+                </div>
+
+                <button
+                    type="submit"
+                    id="submitBtn"
+                    style="width: 100%; background: var(--primary); color: white; padding: 0.75rem 1.25rem; border-radius: var(--radius-md); font-weight: 600; font-size: 0.875rem; border: none; cursor: pointer; transition: all 0.2s;"
+                >
+                    Nettoyer mon avatar
+                </button>
+            </form>
+
+            <div style="margin-top: 1.5rem; text-align: center; font-size: 0.875rem; color: var(--text-secondary);">
+                <a href="index.html" style="color: var(--primary); text-decoration: none; font-weight: 600;">
+                    ← Retour à l'accueil
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        const API_BASE_URL = window.location.hostname === 'localhost'
+            ? 'http://localhost:3000'
+            : '';
+
+        const form = document.getElementById('resetForm');
+        const emailInput = document.getElementById('email');
+        const submitBtn = document.getElementById('submitBtn');
+        const errorMsg = document.getElementById('errorMsg');
+        const successMsg = document.getElementById('successMsg');
+
+        const showError = (msg) => {
+            errorMsg.textContent = msg;
+            errorMsg.style.display = 'block';
+            successMsg.style.display = 'none';
+        };
+
+        const showSuccess = (msg) => {
+            successMsg.textContent = msg;
+            successMsg.style.display = 'block';
+            errorMsg.style.display = 'none';
+        };
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = emailInput.value.trim();
+
+            if (!email) {
+                showError('Veuillez entrer votre email');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Nettoyage en cours...';
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/user/reset-avatar`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Erreur lors du nettoyage');
+                }
+
+                showSuccess('✅ Avatar nettoyé avec succès ! Vous pouvez maintenant vous reconnecter.');
+                emailInput.value = '';
+
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 2000);
+
+            } catch (error) {
+                showError(error.message);
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Nettoyer mon avatar';
+            }
+        });
+    </script>
+</body>
+</html>
