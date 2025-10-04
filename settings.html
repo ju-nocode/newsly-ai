@@ -19,7 +19,57 @@
             </a>
 
             <div class="nav-links">
-                <a href="dashboard.html" class="btn-secondary">← Retour au Dashboard</a>
+                <!-- Burger Menu -->
+                <button class="burger-menu" id="burgerBtn">
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
+                </button>
+
+                <!-- Burger Dropdown Menu -->
+                <div class="burger-dropdown" id="burgerMenu">
+                    <div class="burger-user-info">
+                        <span id="userNameDisplay" class="burger-user-name"></span>
+                    </div>
+
+                    <div class="burger-divider"></div>
+
+                    <!-- Theme Toggle avec Switch -->
+                    <div class="burger-item">
+                        <div class="burger-item-label">
+                            <span>🌙</span>
+                            <span id="themeText" data-i18n="nav.darkMode">Mode sombre</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="themeToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <!-- Language Toggle avec Switch -->
+                    <div class="burger-item">
+                        <div class="burger-item-label">
+                            <span>🌍</span>
+                            <span id="langLabel">Français / English</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="langToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="burger-divider"></div>
+
+                    <button class="burger-link" id="dashboardBtn">
+                        <span>📊</span>
+                        <span data-i18n="nav.dashboard">Dashboard</span>
+                    </button>
+
+                    <button class="burger-link" id="logoutBtn">
+                        <span>🚪</span>
+                        <span data-i18n="nav.logout">Déconnexion</span>
+                    </button>
+                </div>
             </div>
         </div>
     </nav>
@@ -307,10 +357,78 @@
             }
         });
 
+        // Gérer le burger menu
+        const burgerBtn = document.getElementById('burgerBtn');
+        const burgerMenu = document.getElementById('burgerMenu');
+
+        burgerBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            burgerBtn.classList.toggle('active');
+            burgerMenu.classList.toggle('show');
+        });
+
+        // Fermer le menu si on clique ailleurs
+        document.addEventListener('click', () => {
+            burgerBtn.classList.remove('active');
+            burgerMenu.classList.remove('show');
+        });
+
+        // Empêcher la fermeture si on clique dans le menu
+        burgerMenu.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        // Gérer le toggle du thème
+        const themeToggle = document.getElementById('themeToggle');
+        const themeText = document.getElementById('themeText');
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        themeToggle.checked = savedTheme === 'dark';
+        themeText.textContent = savedTheme === 'dark' ? 'Mode sombre' : 'Mode clair';
+
+        themeToggle.addEventListener('change', () => {
+            const newTheme = themeToggle.checked ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeText.textContent = newTheme === 'dark' ? 'Mode sombre' : 'Mode clair';
+        });
+
+        // Gérer le switch de langue
+        const langToggle = document.getElementById('langToggle');
+        const savedLang = localStorage.getItem('language') || 'fr';
+        langToggle.checked = savedLang === 'en';
+
+        langToggle.addEventListener('change', () => {
+            const newLang = langToggle.checked ? 'en' : 'fr';
+            localStorage.setItem('language', newLang);
+            translatePage();
+        });
+
+        // Bouton Dashboard
+        document.getElementById('dashboardBtn').addEventListener('click', () => {
+            window.location.href = 'dashboard.html';
+        });
+
+        // Bouton Logout
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            logout();
+        });
+
+        // Charger le nom utilisateur pour le burger
+        const loadUserName = async () => {
+            const result = await getUserProfile();
+            if (result.success) {
+                const userName = result.profile.username || result.profile.email.split('@')[0];
+                document.getElementById('userNameDisplay').textContent = `Yo! ${escapeHtml(userName)}`;
+            }
+        };
+
         // Initialiser
         (async () => {
             await translatePage();
             await loadProfile();
+            await loadUserName();
         })();
     </script>
 </body>

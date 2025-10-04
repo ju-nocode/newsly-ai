@@ -1431,16 +1431,16 @@ body {
 ================================================ */
 
 .settings-container {
-  max-width: 800px;
+  max-width: 700px;
   margin: 0 auto;
-  padding: 2rem;
-  padding-top: calc(var(--navbar-height) + 2rem);
+  padding: 1.5rem;
+  padding-top: calc(var(--navbar-height) + 1.5rem);
 }
 
 .settings-title {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   color: var(--text-primary);
 }
 
@@ -1448,22 +1448,23 @@ body {
   background: var(--bg-primary);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 2rem;
-  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
   box-shadow: 0 1px 3px var(--shadow);
 }
 
 .settings-card-title {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   font-weight: 600;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
   color: var(--text-primary);
 }
 
 .settings-description {
   color: var(--text-secondary);
-  margin-bottom: 1.5rem;
-  line-height: 1.6;
+  margin-bottom: 1.25rem;
+  line-height: 1.5;
+  font-size: 0.875rem;
 }
 
 .theme-selector {
@@ -1677,6 +1678,23 @@ body {
     width: 100%;
     justify-content: center;
   }
+
+  .settings-container {
+    padding: 1rem;
+    padding-top: calc(var(--navbar-height) + 1rem);
+  }
+
+  .settings-title {
+    font-size: 1.25rem;
+  }
+
+  .settings-card {
+    padding: 1.25rem;
+  }
+
+  .settings-card-title {
+    font-size: 1rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -1752,6 +1770,46 @@ body {
 
   .section-title {
     font-size: 1.5rem;
+  }
+
+  .settings-container {
+    padding: 0.75rem;
+    padding-top: calc(var(--navbar-height) + 0.75rem);
+  }
+
+  .settings-title {
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
+  }
+
+  .settings-card {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .settings-card-title {
+    font-size: 0.9375rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-group {
+    gap: 0.375rem;
+    margin-bottom: 0.875rem;
+  }
+
+  .form-label {
+    font-size: 0.8125rem;
+  }
+
+  .form-input {
+    font-size: 0.875rem;
+    padding: 0.625rem 0.875rem;
+  }
+
+  .btn-primary,
+  .btn-danger {
+    font-size: 0.8125rem;
+    padding: 0.625rem 1rem;
   }
 }
 
