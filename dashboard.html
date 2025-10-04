@@ -14,10 +14,41 @@
                 <span class="logo-icon">📰</span>
                 <span class="logo-text">Newsly AI</span>
             </div>
+
+            <!-- Search Bar -->
+            <div class="search-container">
+                <input type="text" id="topicSearch" class="search-input" placeholder="Rechercher un sujet..." />
+                <button id="addTopicBtn" class="btn-search">+</button>
+            </div>
+
             <div class="nav-links">
                 <span id="userNameDisplay" class="user-name"></span>
-                <button id="deleteAccountBtn" class="btn-danger" title="Supprimer mon compte">🗑️</button>
-                <button id="logoutBtn" class="btn-secondary">Déconnexion</button>
+
+                <!-- User Menu Dropdown -->
+                <div class="dropdown">
+                    <button class="dropdown-toggle" id="userMenuBtn">
+                        ⚙️
+                    </button>
+                    <div class="dropdown-menu" id="userMenu">
+                        <button class="dropdown-item" id="themeToggleBtn">
+                            <span id="themeIcon">🌙</span>
+                            <span>Mode sombre</span>
+                        </button>
+                        <button class="dropdown-item" id="settingsBtn">
+                            <span>⚙️</span>
+                            <span>Paramètres</span>
+                        </button>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item" id="logoutBtn">
+                            <span>🚪</span>
+                            <span>Déconnexion</span>
+                        </button>
+                        <button class="dropdown-item danger" id="deleteAccountBtn">
+                            <span>🗑️</span>
+                            <span>Supprimer le compte</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -27,7 +58,6 @@
         <aside class="dashboard-sidebar">
             <div class="sidebar-header">
                 <h2>Catégories</h2>
-                <button id="refreshNewsBtn" class="btn-icon" title="Rafraîchir">🔄</button>
             </div>
 
             <div class="categories-list">
@@ -149,13 +179,88 @@
             });
         });
 
-        // Gérer le bouton de rafraîchissement
-        document.getElementById('refreshNewsBtn').addEventListener('click', () => {
-            loadNews(currentCategory);
-            showSuccess('Actualités rafraîchies !');
+        // Gérer le menu dropdown
+        const userMenuBtn = document.getElementById('userMenuBtn');
+        const userMenu = document.getElementById('userMenu');
+
+        userMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            userMenu.classList.toggle('show');
         });
 
-        // Gérer la déconnexion
+        // Fermer le menu si on clique ailleurs
+        document.addEventListener('click', () => {
+            userMenu.classList.remove('show');
+        });
+
+        // Gérer le toggle du thème
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const themeIcon = document.getElementById('themeIcon');
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+
+            themeIcon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+            themeToggleBtn.querySelector('span:last-child').textContent =
+                newTheme === 'dark' ? 'Mode sombre' : 'Mode clair';
+        });
+
+        // Initialiser le thème au chargement
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        themeIcon.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+        themeToggleBtn.querySelector('span:last-child').textContent =
+            savedTheme === 'dark' ? 'Mode sombre' : 'Mode clair';
+
+        // Gérer les topics personnalisés
+        const topicSearch = document.getElementById('topicSearch');
+        const addTopicBtn = document.getElementById('addTopicBtn');
+
+        addTopicBtn.addEventListener('click', () => {
+            const topic = topicSearch.value.trim();
+            if (!topic) return;
+
+            // Créer un nouveau bouton de catégorie
+            const categoriesList = document.querySelector('.categories-list');
+            const newCategory = document.createElement('button');
+            newCategory.className = 'category-btn';
+            newCategory.dataset.category = topic;
+            newCategory.innerHTML = `
+                <span class="category-icon">🔖</span>
+                <span class="category-label">${escapeHtml(topic)}</span>
+            `;
+
+            // Ajouter l'événement de clic
+            newCategory.addEventListener('click', () => {
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                newCategory.classList.add('active');
+
+                currentCategory = topic;
+                document.getElementById('categoryTitle').textContent = `Actualités ${escapeHtml(topic)}`;
+                loadNews(topic);
+            });
+
+            categoriesList.appendChild(newCategory);
+            topicSearch.value = '';
+            showSuccess(`Topic "${topic}" ajouté !`);
+        });
+
+        // Permettre l'ajout avec Enter
+        topicSearch.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addTopicBtn.click();
+            }
+        });
+
+        // Gérer le bouton Settings
+        document.getElementById('settingsBtn').addEventListener('click', () => {
+            window.location.href = 'settings.html';
+        });
+
         // Gérer la suppression du compte
         document.getElementById('deleteAccountBtn').addEventListener('click', async () => {
             if (confirm('⚠️ Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible !')) {

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paramètres - Newsly AI</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="dashboard-body">
+    <!-- Navigation Top Bar -->
+    <nav class="navbar dashboard-nav">
+        <div class="nav-container">
+            <div class="logo" style="cursor: default;">
+                <span class="logo-icon">📰</span>
+                <span class="logo-text">Newsly AI</span>
+            </div>
+
+            <div class="nav-links">
+                <a href="dashboard.html" class="btn-secondary">← Retour au Dashboard</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="settings-container">
+        <h1 class="settings-title">Paramètres du compte</h1>
+
+        <!-- Profile Section -->
+        <div class="settings-card">
+            <h2 class="settings-card-title">Profil</h2>
+
+            <div class="form-group">
+                <label for="emailDisplay" class="form-label">Email</label>
+                <input
+                    type="email"
+                    id="emailDisplay"
+                    class="form-input"
+                    disabled
+                    readonly
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="usernameInput" class="form-label">Nom d'utilisateur</label>
+                <input
+                    type="text"
+                    id="usernameInput"
+                    class="form-input"
+                    placeholder="Votre nom d'utilisateur"
+                >
+            </div>
+
+            <button id="updateProfileBtn" class="btn-primary">
+                Mettre à jour le profil
+            </button>
+        </div>
+
+        <!-- Appearance Section -->
+        <div class="settings-card">
+            <h2 class="settings-card-title">Apparence</h2>
+
+            <div class="theme-selector">
+                <button class="theme-option" data-theme="light">
+                    <span class="theme-icon">☀️</span>
+                    <span>Mode clair</span>
+                </button>
+                <button class="theme-option" data-theme="dark">
+                    <span class="theme-icon">🌙</span>
+                    <span>Mode sombre</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Account Section -->
+        <div class="settings-card">
+            <h2 class="settings-card-title">Compte</h2>
+
+            <p class="settings-description">
+                Une fois votre compte supprimé, toutes vos données seront définitivement effacées.
+                Cette action est irréversible.
+            </p>
+
+            <button id="deleteAccountBtn" class="btn-danger">
+                Supprimer mon compte
+            </button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { checkAuth, getUserProfile, updateUserProfile, deleteAccount, logout } from './app.js';
+        import { escapeHtml, showSuccess, showError } from './dashboard-utils.js';
+
+        // Vérifier l'authentification
+        const isAuth = checkAuth();
+        if (!isAuth) {
+            window.location.href = '/login.html';
+        }
+
+        // Charger le profil utilisateur
+        const loadProfile = async () => {
+            const result = await getUserProfile();
+            if (result.success) {
+                document.getElementById('emailDisplay').value = result.profile.email;
+                document.getElementById('usernameInput').value = result.profile.username || '';
+            }
+        };
+
+        // Mettre à jour le profil
+        document.getElementById('updateProfileBtn').addEventListener('click', async () => {
+            const username = document.getElementById('usernameInput').value.trim();
+
+            if (!username) {
+                showError('Le nom d\'utilisateur ne peut pas être vide');
+                return;
+            }
+
+            const result = await updateUserProfile(username);
+
+            if (result.success) {
+                showSuccess('Profil mis à jour avec succès !');
+            } else {
+                showError(result.error || 'Erreur lors de la mise à jour');
+            }
+        });
+
+        // Gérer le thème
+        const themeOptions = document.querySelectorAll('.theme-option');
+        const savedTheme = localStorage.getItem('theme') || 'light';
+
+        // Marquer le thème actuel
+        document.querySelector(`[data-theme="${savedTheme}"]`)?.classList.add('active');
+
+        themeOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const theme = option.dataset.theme;
+
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+
+                themeOptions.forEach(o => o.classList.remove('active'));
+                option.classList.add('active');
+
+                showSuccess(`Thème ${theme === 'dark' ? 'sombre' : 'clair'} activé`);
+            });
+        });
+
+        // Supprimer le compte
+        document.getElementById('deleteAccountBtn').addEventListener('click', async () => {
+            if (confirm('⚠️ Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible !')) {
+                if (confirm('🚨 DERNIÈRE CONFIRMATION : Toutes vos données seront perdues. Continuer ?')) {
+                    const result = await deleteAccount();
+                    if (result.success) {
+                        alert('✅ Compte supprimé avec succès');
+                        window.location.href = 'index.html';
+                    } else {
+                        showError(result.error || 'Erreur lors de la suppression');
+                    }
+                }
+            }
+        });
+
+        // Initialiser
+        loadProfile();
+    </script>
+</body>
+</html>
