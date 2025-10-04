@@ -23,11 +23,17 @@ const loadSession = () => {
             const data = JSON.parse(session);
             currentUser = data.user;
             authToken = data.access_token;
+            console.log('✅ Session chargée:', {
+                userId: currentUser?.id,
+                tokenPresent: !!authToken,
+                tokenLength: authToken?.length
+            });
             return true;
         } catch (e) {
-            console.error('Erreur chargement session:', e);
+            console.error('❌ Erreur chargement session:', e);
         }
     }
+    console.log('⚠️ Aucune session trouvée dans localStorage');
     return false;
 };
 
@@ -36,6 +42,12 @@ const saveSession = (user, token) => {
     currentUser = user;
     authToken = token;
     localStorage.setItem('session', JSON.stringify({ user, access_token: token }));
+    console.log('💾 Session sauvegardée:', {
+        userId: user?.id,
+        email: user?.email,
+        tokenPresent: !!token,
+        tokenLength: token?.length
+    });
 };
 
 // Effacer la session
@@ -175,25 +187,50 @@ export const fetchNews = async (category = 'general', country = 'us', page = 1) 
 // Récupérer le profil
 export const getUserProfile = async () => {
     if (!authToken) {
+        console.warn('⚠️ getUserProfile: Pas de token disponible');
         return { success: false, error: 'Non authentifié' };
     }
+
+    console.log('🔍 getUserProfile: Envoi requête avec token', {
+        tokenPresent: !!authToken,
+        tokenLength: authToken?.length,
+        tokenStart: authToken?.substring(0, 20) + '...'
+    });
 
     try {
         const response = await fetch(`${API_BASE_URL}/api/user/profile`, {
             headers: { 'Authorization': `Bearer ${authToken}` }
         });
 
+        console.log('📥 getUserProfile: Réponse reçue', {
+            status: response.status,
+            statusText: response.statusText,
+            contentType: response.headers.get('content-type')
+        });
+
+        // Si le token est invalide ou expiré, déconnecter l'utilisateur
+        if (response.status === 401) {
+            console.error('❌ Token invalide ou expiré, déconnexion...');
+            clearSession();
+            window.location.href = 'index.html';
+            return { success: false, error: 'Session expirée' };
+        }
+
+        // Vérifier si la réponse est du JSON
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            console.error('❌ Réponse non-JSON reçue:', contentType);
+            throw new Error(`Réponse invalide du serveur (${response.status})`);
+        }
+
         const data = await response.json();
 
         if (!response.ok) {
-            // Si le token est invalide ou expiré, déconnecter l'utilisateur
-            if (response.status === 401) {
-                clearSession();
-                window.location.href = 'index.html';
-            }
+            console.error('❌ Erreur API:', data.error);
             throw new Error(data.error || 'Erreur de récupération du profil');
         }
 
+        console.log('✅ getUserProfile: Succès', { email: data.email });
         return { success: true, profile: data };
 
     } catch (error) {
@@ -218,14 +255,22 @@ export const updateUserProfile = async (profileData) => {
             body: JSON.stringify(profileData)
         });
 
+        // Si le token est invalide ou expiré, déconnecter l'utilisateur
+        if (response.status === 401) {
+            clearSession();
+            window.location.href = 'index.html';
+            return { success: false, error: 'Session expirée' };
+        }
+
+        // Vérifier si la réponse est du JSON
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            throw new Error(`Réponse invalide du serveur (${response.status})`);
+        }
+
         const data = await response.json();
 
         if (!response.ok) {
-            // Si le token est invalide ou expiré, déconnecter l'utilisateur
-            if (response.status === 401) {
-                clearSession();
-                window.location.href = 'index.html';
-            }
             throw new Error(data.error || 'Erreur de mise à jour du profil');
         }
 
@@ -253,14 +298,22 @@ export const changePassword = async (newPassword) => {
             body: JSON.stringify({ newPassword })
         });
 
+        // Si le token est invalide ou expiré, déconnecter l'utilisateur
+        if (response.status === 401) {
+            clearSession();
+            window.location.href = 'index.html';
+            return { success: false, error: 'Session expirée' };
+        }
+
+        // Vérifier si la réponse est du JSON
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            throw new Error(`Réponse invalide du serveur (${response.status})`);
+        }
+
         const data = await response.json();
 
         if (!response.ok) {
-            // Si le token est invalide ou expiré, déconnecter l'utilisateur
-            if (response.status === 401) {
-                clearSession();
-                window.location.href = 'index.html';
-            }
             throw new Error(data.error || 'Erreur lors du changement de mot de passe');
         }
 
@@ -286,14 +339,22 @@ export const deleteAccount = async () => {
             }
         });
 
+        // Si le token est invalide ou expiré, déconnecter l'utilisateur
+        if (response.status === 401) {
+            clearSession();
+            window.location.href = 'index.html';
+            return { success: false, error: 'Session expirée' };
+        }
+
+        // Vérifier si la réponse est du JSON
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            throw new Error(`Réponse invalide du serveur (${response.status})`);
+        }
+
         const data = await response.json();
 
         if (!response.ok) {
-            // Si le token est invalide ou expiré, déconnecter l'utilisateur
-            if (response.status === 401) {
-                clearSession();
-                window.location.href = 'index.html';
-            }
             throw new Error(data.error || 'Erreur de suppression du compte');
         }
 
