@@ -17,7 +17,7 @@
 
             <!-- Search Bar -->
             <div class="search-container">
-                <input type="text" id="topicSearch" class="search-input" placeholder="Rechercher un sujet..." />
+                <input type="text" id="topicSearch" class="search-input" data-i18n-placeholder="nav.search" />
                 <button id="addTopicBtn" class="btn-search">+</button>
             </div>
 
@@ -32,20 +32,20 @@
                     <div class="dropdown-menu" id="userMenu">
                         <button class="dropdown-item" id="themeToggleBtn">
                             <span id="themeIcon">🌙</span>
-                            <span>Mode sombre</span>
+                            <span id="themeText" data-i18n="nav.darkMode">Mode sombre</span>
                         </button>
                         <button class="dropdown-item" id="langToggleBtn">
                             <span>🌍</span>
-                            <span id="langText">Français</span>
+                            <span id="langText" data-i18n="nav.language">Français</span>
                         </button>
                         <div class="dropdown-divider"></div>
                         <button class="dropdown-item" id="settingsBtn">
                             <span>⚙️</span>
-                            <span>Paramètres</span>
+                            <span data-i18n="nav.settings">Paramètres</span>
                         </button>
                         <button class="dropdown-item" id="logoutBtn">
                             <span>🚪</span>
-                            <span>Déconnexion</span>
+                            <span data-i18n="nav.logout">Déconnexion</span>
                         </button>
                     </div>
                 </div>
@@ -57,37 +57,37 @@
     <div class="dashboard-container">
         <aside class="dashboard-sidebar">
             <div class="sidebar-header">
-                <h2>Catégories</h2>
+                <h2 data-i18n="sidebar.categories">Catégories</h2>
             </div>
 
             <div class="categories-list">
                 <button class="category-btn active" data-category="general">
                     <span class="category-icon">📰</span>
-                    <span class="category-label">Général</span>
+                    <span class="category-label" data-i18n="category.general">Général</span>
                 </button>
                 <button class="category-btn" data-category="business">
                     <span class="category-icon">💼</span>
-                    <span class="category-label">Business</span>
+                    <span class="category-label" data-i18n="category.business">Business</span>
                 </button>
                 <button class="category-btn" data-category="technology">
                     <span class="category-icon">💻</span>
-                    <span class="category-label">Technologie</span>
+                    <span class="category-label" data-i18n="category.technology">Technologie</span>
                 </button>
                 <button class="category-btn" data-category="science">
                     <span class="category-icon">🔬</span>
-                    <span class="category-label">Science</span>
+                    <span class="category-label" data-i18n="category.science">Science</span>
                 </button>
                 <button class="category-btn" data-category="health">
                     <span class="category-icon">🏥</span>
-                    <span class="category-label">Santé</span>
+                    <span class="category-label" data-i18n="category.health">Santé</span>
                 </button>
                 <button class="category-btn" data-category="sports">
                     <span class="category-icon">⚽</span>
-                    <span class="category-label">Sports</span>
+                    <span class="category-label" data-i18n="category.sports">Sports</span>
                 </button>
                 <button class="category-btn" data-category="entertainment">
                     <span class="category-icon">🎬</span>
-                    <span class="category-label">Divertissement</span>
+                    <span class="category-label" data-i18n="category.entertainment">Divertissement</span>
                 </button>
             </div>
         </aside>
@@ -109,6 +109,7 @@
     <script type="module">
         import { checkAuth, logout, getUserProfile, fetchNews, deleteAccount, currentUser } from './app.js';
         import { displayNews, escapeHtml, showError, showSuccess } from './dashboard-utils.js';
+        import { t, translatePage } from './translations.js';
 
         let currentCategory = 'general';
 
@@ -268,9 +269,20 @@
             const newLang = currentLang === 'fr' ? 'en' : 'fr';
 
             localStorage.setItem('language', newLang);
-            langText.textContent = newLang === 'fr' ? 'Français' : 'English';
 
-            showSuccess(`Language changed to ${newLang === 'fr' ? 'Français' : 'English'}`);
+            // Traduire toute la page
+            translatePage();
+
+            // Mettre à jour le titre de la catégorie actuelle
+            const activeBtn = document.querySelector('.category-btn.active');
+            if (activeBtn) {
+                const categoryKey = activeBtn.dataset.category;
+                const translatedCategory = t(`category.${categoryKey}`);
+                document.getElementById('categoryTitle').textContent =
+                    `${t('dashboard.title')} ${translatedCategory}`;
+            }
+
+            showSuccess(`${t('msg.languageChanged')} ${newLang === 'fr' ? 'Français' : 'English'}`);
         });
 
         // Gérer le bouton Settings
@@ -284,6 +296,7 @@
         });
 
         // Initialiser
+        translatePage(); // Traduire au chargement
         loadProfile();
         loadNews('general');
     </script>
