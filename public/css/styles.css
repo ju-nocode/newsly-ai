@@ -710,11 +710,12 @@ body {
 }
 
 /* ================================================
-   FEATURES & CATEGORIES
+   FEATURES & CATEGORIES & HOW IT WORKS
 ================================================ */
 
 .features,
-.categories-preview {
+.categories-preview,
+.how-it-works {
   padding: 4rem 2rem;
 }
 
@@ -726,8 +727,13 @@ body {
   background: var(--bg-secondary);
 }
 
+.how-it-works {
+  background: var(--bg-primary);
+}
+
 .features-container,
-.categories-container {
+.categories-container,
+.how-it-works-container {
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -736,6 +742,13 @@ body {
   text-align: center;
   font-size: 2.25rem;
   font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.section-subtitle {
+  text-align: center;
+  font-size: 1.125rem;
+  color: var(--text-secondary);
   margin-bottom: 3rem;
 }
 
@@ -796,6 +809,68 @@ body {
 .category-preview p {
   color: var(--text-secondary);
   font-size: 0.9375rem;
+}
+
+/* How It Works Section */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.step-card {
+  background: var(--bg-secondary);
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  text-align: center;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.step-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px var(--shadow);
+  border-color: var(--primary);
+}
+
+.step-number {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  background: var(--primary);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.25rem;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.step-icon {
+  width: 80px;
+  height: 80px;
+  margin: 1.5rem auto 1rem;
+  filter: var(--icon-filter, none);
+  opacity: 0.8;
+}
+
+.step-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+}
+
+.step-description {
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+  line-height: 1.6;
 }
 
 /* ================================================
