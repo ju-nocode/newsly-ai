@@ -17,17 +17,31 @@
                 <span class="logo-icon">📰</span>
                 <span class="logo-text">Newsly AI</span>
             </a>
+
             <div class="nav-links">
                 <button class="nav-link" id="openLoginBtn">Connexion</button>
                 <button class="btn-primary" id="openSignupBtn">Créer un compte</button>
 
-                <!-- Language Toggle -->
-                <div class="lang-toggle-container">
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="langToggleIndex">
-                        <span class="toggle-slider"></span>
-                    </label>
-                    <span class="lang-label" id="langLabelIndex">FR</span>
+                <!-- Burger Menu -->
+                <button class="burger-menu" id="burgerBtnIndex">
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
+                </button>
+
+                <!-- Burger Dropdown Menu -->
+                <div class="burger-dropdown" id="burgerMenuIndex">
+                    <!-- Language Toggle avec Switch -->
+                    <div class="burger-item">
+                        <div class="burger-item-label">
+                            <span>🌍</span>
+                            <span id="langLabel">Français / English</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="langToggleIndex">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -383,18 +397,37 @@
             signupFormDiv.style.display = 'block';
         });
 
+        // Gérer le burger menu
+        const burgerBtnIndex = document.getElementById('burgerBtnIndex');
+        const burgerMenuIndex = document.getElementById('burgerMenuIndex');
+
+        burgerBtnIndex.addEventListener('click', (e) => {
+            e.stopPropagation();
+            burgerBtnIndex.classList.toggle('active');
+            burgerMenuIndex.classList.toggle('show');
+        });
+
+        // Fermer le menu si on clique ailleurs
+        document.addEventListener('click', () => {
+            burgerBtnIndex.classList.remove('active');
+            burgerMenuIndex.classList.remove('show');
+        });
+
+        // Empêcher la fermeture si on clique dans le menu
+        burgerMenuIndex.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
         // Language toggle
         const langToggle = document.getElementById('langToggleIndex');
-        const langLabel = document.getElementById('langLabelIndex');
+        const langLabel = document.getElementById('langLabel');
         const savedLang = localStorage.getItem('language') || 'fr';
 
         langToggle.checked = savedLang === 'en';
-        langLabel.textContent = savedLang.toUpperCase();
 
         langToggle.addEventListener('change', () => {
             const newLang = langToggle.checked ? 'en' : 'fr';
             localStorage.setItem('language', newLang);
-            langLabel.textContent = newLang.toUpperCase();
             // Recharger pour appliquer les traductions
             location.reload();
         });
