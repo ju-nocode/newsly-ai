@@ -1,0 +1,83 @@
+{
+  "nav": {
+    "search": "Rechercher un sujet...",
+    "settings": "Paramètres",
+    "logout": "Déconnexion",
+    "darkMode": "Mode sombre",
+    "lightMode": "Mode clair",
+    "backToDashboard": "← Retour au Dashboard",
+    "dashboard": "Dashboard"
+  },
+  "sidebar": {
+    "categories": "Catégories",
+    "countries": "Pays",
+    "allCountries": "Tous"
+  },
+  "category": {
+    "general": "Général",
+    "business": "Business",
+    "technology": "Technologie",
+    "science": "Science",
+    "health": "Santé",
+    "sports": "Sports",
+    "entertainment": "Divertissement"
+  },
+  "dashboard": {
+    "title": "Actualités",
+    "loading": "Chargement...",
+    "noNews": "Aucune actualité disponible.",
+    "error": "Erreur lors du chargement",
+    "retry": "Réessayer",
+    "topicAdded": "Topic ajouté !"
+  },
+  "settings": {
+    "title": "Paramètres du compte",
+    "profile": "Profil",
+    "email": "Email",
+    "username": "Nom d'utilisateur",
+    "usernamePlaceholder": "Votre nom d'utilisateur",
+    "fullName": "Nom complet",
+    "fullNamePlaceholder": "Votre nom complet",
+    "phone": "Téléphone",
+    "bio": "Bio",
+    "bioPlaceholder": "Parlez-nous de vous...",
+    "avatar": "Photo de profil",
+    "avatarHint": "Cliquez sur l'avatar pour changer (max 2MB)",
+    "security": "Sécurité",
+    "currentPassword": "Mot de passe actuel",
+    "currentPasswordPlaceholder": "Entrez votre mot de passe actuel",
+    "newPassword": "Nouveau mot de passe",
+    "newPasswordPlaceholder": "Nouveau mot de passe (min. 8 caractères)",
+    "confirmPassword": "Confirmer le mot de passe",
+    "confirmPasswordPlaceholder": "Confirmez le nouveau mot de passe",
+    "changePassword": "Changer le mot de passe",
+    "updateProfile": "Mettre à jour le profil",
+    "appearance": "Apparence",
+    "account": "Compte",
+    "deleteWarning": "Une fois votre compte supprimé, toutes vos données seront définitivement effacées.",
+    "deleteAccount": "Supprimer mon compte",
+    "profileUpdated": "Profil mis à jour !",
+    "usernameEmpty": "Le nom d'utilisateur ne peut pas être vide",
+    "updateError": "Erreur lors de la mise à jour"
+  },
+  "auth": {
+    "login": "Connexion",
+    "signup": "Créer un compte",
+    "email": "Email",
+    "password": "Mot de passe",
+    "loginTitle": "Connexion",
+    "loginSubtitle": "Connectez-vous à votre compte",
+    "loginBtn": "Se connecter",
+    "signupTitle": "Créer un compte",
+    "signupSubtitle": "Rejoignez Newsly AI",
+    "signupBtn": "Créer mon compte",
+    "noAccount": "Pas de compte ?",
+    "createAccount": "Créer un compte",
+    "hasAccount": "Déjà un compte ?",
+    "loginLink": "Se connecter"
+  },
+  "msg": {
+    "languageChanged": "Langue changée en",
+    "newsRefreshed": "Actualités rafraîchies !"
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "nav": {
+    "search": "Search a topic...",
+    "settings": "Settings",
+    "logout": "Logout",
+    "darkMode": "Dark mode",
+    "lightMode": "Light mode",
+    "backToDashboard": "← Back to Dashboard",
+    "dashboard": "Dashboard"
+  },
+  "sidebar": {
+    "categories": "Categories",
+    "countries": "Countries",
+    "allCountries": "All"
+  },
+  "category": {
+    "general": "General",
+    "business": "Business",
+    "technology": "Technology",
+    "science": "Science",
+    "health": "Health",
+    "sports": "Sports",
+    "entertainment": "Entertainment"
+  },
+  "dashboard": {
+    "title": "News",
+    "loading": "Loading...",
+    "noNews": "No news available.",
+    "error": "Error loading news",
+    "retry": "Retry",
+    "topicAdded": "Topic added!"
+  },
+  "settings": {
+    "title": "Account Settings",
+    "profile": "Profile",
+    "email": "Email",
+    "username": "Username",
+    "usernamePlaceholder": "Your username",
+    "fullName": "Full name",
+    "fullNamePlaceholder": "Your full name",
+    "phone": "Phone",
+    "bio": "Bio",
+    "bioPlaceholder": "Tell us about yourself...",
+    "avatar": "Profile picture",
+    "avatarHint": "Click on avatar to change (max 2MB)",
+    "security": "Security",
+    "currentPassword": "Current password",
+    "currentPasswordPlaceholder": "Enter your current password",
+    "newPassword": "New password",
+    "newPasswordPlaceholder": "New password (min. 8 characters)",
+    "confirmPassword": "Confirm password",
+    "confirmPasswordPlaceholder": "Confirm new password",
+    "changePassword": "Change password",
+    "updateProfile": "Update profile",
+    "appearance": "Appearance",
+    "account": "Account",
+    "deleteWarning": "Once your account is deleted, all your data will be permanently erased.",
+    "deleteAccount": "Delete my account",
+    "profileUpdated": "Profile updated!",
+    "usernameEmpty": "Username cannot be empty",
+    "updateError": "Error during update"
+  },
+  "auth": {
+    "login": "Login",
+    "signup": "Sign up",
+    "email": "Email",
+    "password": "Password",
+    "loginTitle": "Login",
+    "loginSubtitle": "Sign in to your account",
+    "loginBtn": "Sign in",
+    "signupTitle": "Create account",
+    "signupSubtitle": "Join Newsly AI",
+    "signupBtn": "Create my account",
+    "noAccount": "No account?",
+    "createAccount": "Create account",
+    "hasAccount": "Already have an account?",
+    "loginLink": "Sign in"
+  },
+  "msg": {
+    "languageChanged": "Language changed to",
+    "newsRefreshed": "News refreshed!"
+  }
+}
