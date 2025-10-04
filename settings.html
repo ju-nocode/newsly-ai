@@ -278,12 +278,26 @@
             const result = await getUserProfile();
             if (result.success) {
                 const profile = result.profile;
+
+                // Email (toujours présent)
                 document.getElementById('emailDisplay').value = profile.email;
-                document.getElementById('usernameInput').value = profile.username || '';
-                document.getElementById('fullNameInput').value = profile.full_name || '';
-                document.getElementById('phoneInput').value = profile.phone || '';
-                document.getElementById('bioInput').value = profile.bio || '';
-                document.getElementById('avatarUrlInput').value = profile.avatar_url || '';
+
+                // Autres champs: ne mettre la valeur que si elle existe (pour garder le placeholder sinon)
+                if (profile.username) {
+                    document.getElementById('usernameInput').value = profile.username;
+                }
+                if (profile.full_name) {
+                    document.getElementById('fullNameInput').value = profile.full_name;
+                }
+                if (profile.phone) {
+                    document.getElementById('phoneInput').value = profile.phone;
+                }
+                if (profile.bio) {
+                    document.getElementById('bioInput').value = profile.bio;
+                }
+                if (profile.avatar_url) {
+                    document.getElementById('avatarUrlInput').value = profile.avatar_url;
+                }
             }
         };
 
