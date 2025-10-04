@@ -226,7 +226,6 @@
                 displayNews(result.articles, 'newsContainer');
 
             } catch (error) {
-                console.error('Erreur chargement news:', error);
                 newsContainer.innerHTML = `
                     <div class="news-empty">
                         <p>❌ Erreur lors du chargement des actualités</p>
