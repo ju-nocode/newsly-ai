@@ -126,7 +126,7 @@ export const resendConfirmation = async (email) => {
 // Déconnexion
 export const logout = () => {
     clearSession();
-    window.location.href = 'login.html';
+    window.location.href = 'index.html';
 };
 
 // ================================================
@@ -300,17 +300,16 @@ export const checkAuth = () => {
     const isAuthenticated = loadSession();
 
     // Pages qui nécessitent une authentification
-    const protectedPages = ['dashboard.html'];
+    const protectedPages = ['dashboard.html', 'settings.html'];
     const currentPage = window.location.pathname.split('/').pop();
 
     if (protectedPages.includes(currentPage) && !isAuthenticated) {
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
         return false;
     }
 
-    // Rediriger vers dashboard si déjà connecté sur login/signup
-    const authPages = ['login.html', 'signup.html'];
-    if (authPages.includes(currentPage) && isAuthenticated) {
+    // Rediriger vers dashboard si déjà connecté sur index
+    if (currentPage === 'index.html' && isAuthenticated) {
         window.location.href = 'dashboard.html';
         return false;
     }
