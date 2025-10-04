@@ -14,7 +14,8 @@
       "Bash(done)",
       "Bash(tree:*)",
       "WebFetch(domain:prod-julien.vercel.app)",
-      "Bash(git pull:*)"
+      "Bash(git pull:*)",
+      "WebFetch(domain:icons8.com)"
     ],
     "deny": [],
     "ask": []

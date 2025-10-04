@@ -139,6 +139,22 @@ body {
   font-size: 1.25rem;
 }
 
+.logo-icon-img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  filter: var(--icon-filter, none);
+}
+
+/* Icon filters for theme adaptation */
+:root {
+  --icon-filter: none;
+}
+
+[data-theme="dark"] {
+  --icon-filter: brightness(0) invert(1);
+}
+
 .logo-text {
   font-weight: 700;
   background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
@@ -289,9 +305,11 @@ body {
 }
 
 .category-icon {
-  font-size: 1rem;
-  width: 18px;
-  text-align: center;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+  /* White icons in sidebar - no filter needed as they're already FFFFFF */
 }
 
 .sidebar-footer {
@@ -707,9 +725,12 @@ body {
 
 .feature-icon,
 .category-preview-icon {
-  font-size: 2.5rem;
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
   margin-bottom: 1rem;
   display: inline-block;
+  filter: var(--icon-filter, none);
 }
 
 .feature-title {
@@ -813,6 +834,13 @@ body {
   margin-bottom: 0.5rem;
 }
 
+.footer-logo-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  filter: var(--icon-filter, none);
+}
+
 .footer-text {
   color: var(--text-secondary);
   font-size: 0.875rem;
@@ -862,8 +890,16 @@ body {
 
 .footer-social a {
   text-decoration: none;
-  font-size: 1.25rem;
   transition: transform 0.2s;
+  display: inline-block;
+}
+
+.footer-social a img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  vertical-align: middle;
+  filter: var(--icon-filter, none);
 }
 
 .footer-social a:hover {
@@ -1065,6 +1101,14 @@ body {
   font-weight: 600;
   color: var(--text-primary);
   flex: 1;
+}
+
+.burger-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: var(--icon-filter, none);
 }
 
 .burger-item {
