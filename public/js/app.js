@@ -23,14 +23,26 @@ const loadSession = () => {
             const data = JSON.parse(session);
             currentUser = data.user;
             authToken = data.access_token;
+
+            // Vérifier si le token n'est pas trop gros (limite Vercel: ~16KB)
+            const tokenSize = authToken?.length || 0;
+            if (tokenSize > 100000) {
+                console.error('❌ Token trop volumineux détecté (' + Math.round(tokenSize/1024) + ' KB), nettoyage...');
+                clearSession();
+                alert('⚠️ Votre session contenait des données trop volumineuses. Veuillez vous reconnecter.');
+                window.location.href = 'index.html';
+                return false;
+            }
+
             console.log('✅ Session chargée:', {
                 userId: currentUser?.id,
                 tokenPresent: !!authToken,
-                tokenLength: authToken?.length
+                tokenLength: tokenSize
             });
             return true;
         } catch (e) {
             console.error('❌ Erreur chargement session:', e);
+            clearSession();
         }
     }
     console.log('⚠️ Aucune session trouvée dans localStorage');

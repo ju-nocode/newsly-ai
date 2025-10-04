@@ -74,8 +74,9 @@ export default async function handler(req, res) {
             if (avatar_url !== undefined && avatar_url.length > 0) {
                 // Accepter les URLs http/https et les data URLs (base64)
                 const isValidUrl = avatar_url.match(/^https?:\/\/.+/) || avatar_url.match(/^data:image\/.+;base64,.+/);
-                if (avatar_url.length > 2000000 || !isValidUrl) {
-                    return res.status(400).json({ error: 'URL d\'avatar invalide (max 2MB, format URL ou base64)' });
+                // Limite stricte à 50KB pour éviter les tokens trop gros
+                if (avatar_url.length > 50000 || !isValidUrl) {
+                    return res.status(400).json({ error: 'Avatar invalide (max 50KB en base64 ou URL)' });
                 }
             }
 
