@@ -489,16 +489,22 @@
         const burgerBtn = document.getElementById('burgerBtn');
         const burgerMenu = document.getElementById('burgerMenu');
 
+        // Empêcher l'auto-ouverture au chargement
+        let burgerInitialized = false;
+
         burgerBtn.addEventListener('click', (e) => {
             e.stopPropagation();
+            burgerInitialized = true;
             burgerBtn.classList.toggle('active');
             burgerMenu.classList.toggle('show');
         });
 
-        // Fermer le menu si on clique ailleurs
+        // Fermer le menu si on clique ailleurs (mais seulement si initialisé)
         document.addEventListener('click', () => {
-            burgerBtn.classList.remove('active');
-            burgerMenu.classList.remove('show');
+            if (burgerInitialized) {
+                burgerBtn.classList.remove('active');
+                burgerMenu.classList.remove('show');
+            }
         });
 
         // Empêcher la fermeture si on clique dans le menu

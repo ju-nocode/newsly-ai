@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page non trouvée - Newsly AI</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📰</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="public/css/styles.css">
+</head>
+<body>
+    <div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; background: var(--bg-secondary);">
+        <div style="max-width: 600px; width: 100%; text-align: center; background: var(--bg-primary); padding: 3rem 2rem; border-radius: var(--radius-xl); border: 1px solid var(--border); box-shadow: 0 4px 16px var(--shadow-lg);">
+
+            <!-- Icône 404 -->
+            <div style="font-size: 6rem; margin-bottom: 1.5rem; opacity: 0.4;">
+                🔍
+            </div>
+
+            <!-- Titre -->
+            <h1 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-primary);">
+                404
+            </h1>
+
+            <h2 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; color: var(--text-primary);">
+                Page non trouvée
+            </h2>
+
+            <!-- Description -->
+            <p style="color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.6; font-size: 1rem;">
+                Oups ! La page que vous recherchez semble introuvable.
+            </p>
+
+            <!-- Compteur -->
+            <div style="margin-bottom: 2rem;">
+                <p style="color: var(--text-muted); font-size: 0.875rem; margin-bottom: 0.5rem;">
+                    Redirection automatique dans
+                </p>
+                <div style="font-size: 2rem; font-weight: 700; color: var(--primary);">
+                    <span id="countdown">10</span>s
+                </div>
+            </div>
+
+            <!-- Bouton -->
+            <a
+                href="index.html"
+                style="display: inline-flex; align-items: center; gap: 0.5rem; background: var(--primary); color: white; padding: 0.75rem 1.5rem; border-radius: var(--radius-md); font-weight: 600; font-size: 0.9375rem; text-decoration: none; transition: all 0.2s;"
+                onmouseover="this.style.background='var(--primary-dark)'; this.style.transform='translateY(-2px)'"
+                onmouseout="this.style.background='var(--primary)'; this.style.transform='translateY(0)'"
+            >
+                🏠 Retour à l'accueil
+            </a>
+        </div>
+    </div>
+
+    <script>
+        let timeLeft = 10;
+        const countdownEl = document.getElementById('countdown');
+
+        const timer = setInterval(() => {
+            timeLeft--;
+            countdownEl.textContent = timeLeft;
+
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                window.location.href = 'index.html';
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
