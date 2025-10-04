@@ -4,7 +4,6 @@
   "type": "module",
   "description": "AI-powered news aggregator with secure backend",
   "scripts": {
-    "build": "node build.js",
     "dev": "vercel dev",
     "deploy": "vercel"
   },
