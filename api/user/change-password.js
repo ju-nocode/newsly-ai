@@ -46,10 +46,20 @@ export default async function handler(req, res) {
             return res.status(400).json({ error: 'Le mot de passe doit contenir au moins 8 caractères' });
         }
 
-        // Mettre à jour le mot de passe avec Supabase
-        const { data, error } = await supabase.auth.updateUser({
-            password: newPassword
-        });
+        if (newPassword.length > 100) {
+            return res.status(400).json({ error: 'Le mot de passe est trop long (max 100 caractères)' });
+        }
+
+        // Utiliser le Service Role pour mettre à jour le mot de passe
+        const supabaseAdmin = createClient(
+            process.env.SUPABASE_URL,
+            process.env.SUPABASE_SERVICE_ROLE_KEY
+        );
+
+        const { data, error } = await supabaseAdmin.auth.admin.updateUserById(
+            user.id,
+            { password: newPassword }
+        );
 
         if (error) {
             return res.status(400).json({ error: error.message });
