@@ -38,20 +38,38 @@ export default async function handler(req, res) {
                 id: user.id,
                 email: user.email,
                 username: user.user_metadata?.username || user.user_metadata?.full_name || user.user_metadata?.display_name || user.email.split('@')[0],
+                full_name: user.user_metadata?.full_name || user.user_metadata?.username || '',
+                bio: user.user_metadata?.bio || '',
+                avatar_url: user.user_metadata?.avatar_url || '',
                 created_at: user.created_at
             });
         }
 
         // PUT - Mettre à jour le profil
         if (req.method === 'PUT') {
-            const { username } = req.body;
+            const { username, full_name, bio, avatar_url } = req.body;
+
+            const updateData = {};
+
+            if (username !== undefined) {
+                updateData.username = username;
+                updateData.display_name = username;
+            }
+
+            if (full_name !== undefined) {
+                updateData.full_name = full_name;
+            }
+
+            if (bio !== undefined) {
+                updateData.bio = bio;
+            }
+
+            if (avatar_url !== undefined) {
+                updateData.avatar_url = avatar_url;
+            }
 
             const { data, error } = await supabase.auth.updateUser({
-                data: {
-                    username,
-                    full_name: username,
-                    display_name: username
-                }
+                data: updateData
             });
 
             if (error) {

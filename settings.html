@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paramètres - Newsly AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="dashboard-body">
@@ -50,8 +53,77 @@
                 >
             </div>
 
+            <div class="form-group">
+                <label for="fullNameInput" class="form-label">Nom complet</label>
+                <input
+                    type="text"
+                    id="fullNameInput"
+                    class="form-input"
+                    placeholder="Votre nom complet"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="bioInput" class="form-label">Bio</label>
+                <textarea
+                    id="bioInput"
+                    class="form-input"
+                    placeholder="Parlez-nous de vous..."
+                    rows="3"
+                ></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="avatarUrlInput" class="form-label">URL de l'avatar</label>
+                <input
+                    type="url"
+                    id="avatarUrlInput"
+                    class="form-input"
+                    placeholder="https://example.com/avatar.jpg"
+                >
+            </div>
+
             <button id="updateProfileBtn" class="btn-primary">
                 Mettre à jour le profil
+            </button>
+        </div>
+
+        <!-- Security Section -->
+        <div class="settings-card">
+            <h2 class="settings-card-title">Sécurité</h2>
+
+            <div class="form-group">
+                <label for="currentPassword" class="form-label">Mot de passe actuel</label>
+                <input
+                    type="password"
+                    id="currentPassword"
+                    class="form-input"
+                    placeholder="Entrez votre mot de passe actuel"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="newPassword" class="form-label">Nouveau mot de passe</label>
+                <input
+                    type="password"
+                    id="newPassword"
+                    class="form-input"
+                    placeholder="Nouveau mot de passe (min. 6 caractères)"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword" class="form-label">Confirmer le mot de passe</label>
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    class="form-input"
+                    placeholder="Confirmez le nouveau mot de passe"
+                >
+            </div>
+
+            <button id="changePasswordBtn" class="btn-primary">
+                Changer le mot de passe
             </button>
         </div>
 
@@ -84,27 +156,69 @@
         const loadProfile = async () => {
             const result = await getUserProfile();
             if (result.success) {
-                document.getElementById('emailDisplay').value = result.profile.email;
-                document.getElementById('usernameInput').value = result.profile.username || '';
+                const profile = result.profile;
+                document.getElementById('emailDisplay').value = profile.email;
+                document.getElementById('usernameInput').value = profile.username || '';
+                document.getElementById('fullNameInput').value = profile.full_name || '';
+                document.getElementById('bioInput').value = profile.bio || '';
+                document.getElementById('avatarUrlInput').value = profile.avatar_url || '';
             }
         };
 
         // Mettre à jour le profil
         document.getElementById('updateProfileBtn').addEventListener('click', async () => {
             const username = document.getElementById('usernameInput').value.trim();
+            const fullName = document.getElementById('fullNameInput').value.trim();
+            const bio = document.getElementById('bioInput').value.trim();
+            const avatarUrl = document.getElementById('avatarUrlInput').value.trim();
 
             if (!username) {
                 showError('Le nom d\'utilisateur ne peut pas être vide');
                 return;
             }
 
-            const result = await updateUserProfile(username);
+            const result = await updateUserProfile({
+                username,
+                full_name: fullName,
+                bio,
+                avatar_url: avatarUrl
+            });
 
             if (result.success) {
                 showSuccess('Profil mis à jour avec succès !');
             } else {
                 showError(result.error || 'Erreur lors de la mise à jour');
             }
+        });
+
+        // Changer le mot de passe
+        document.getElementById('changePasswordBtn').addEventListener('click', async () => {
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (!currentPassword || !newPassword || !confirmPassword) {
+                showError('Veuillez remplir tous les champs');
+                return;
+            }
+
+            if (newPassword.length < 6) {
+                showError('Le mot de passe doit contenir au moins 6 caractères');
+                return;
+            }
+
+            if (newPassword !== confirmPassword) {
+                showError('Les mots de passe ne correspondent pas');
+                return;
+            }
+
+            // For now, just show a message (Supabase password change would require additional setup)
+            showError('La fonctionnalité de changement de mot de passe nécessite une configuration supplémentaire');
+
+            // Clear fields
+            document.getElementById('currentPassword').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
         });
 
         // Supprimer le compte

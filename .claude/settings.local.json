@@ -5,7 +5,8 @@
       "Bash(git rm:*)",
       "Bash(cat:*)",
       "Bash(git add:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "WebFetch(domain:supabase.com)"
     ],
     "deny": [],
     "ask": []
