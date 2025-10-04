@@ -100,9 +100,16 @@ export default async function handler(req, res) {
                 updateData.avatar_url = avatar_url.trim();
             }
 
-            const { data, error } = await supabase.auth.updateUser({
-                data: updateData
-            });
+            // Utiliser le Service Role pour mettre à jour les métadonnées
+            const supabaseAdmin = createClient(
+                process.env.SUPABASE_URL,
+                process.env.SUPABASE_SERVICE_ROLE_KEY
+            );
+
+            const { data, error } = await supabaseAdmin.auth.admin.updateUserById(
+                user.id,
+                { user_metadata: updateData }
+            );
 
             if (error) {
                 return res.status(400).json({ error: error.message });
