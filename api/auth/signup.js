@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     }
 
     try {
-        const { email, password, username } = req.body;
+        const { email, password, metadata, username } = req.body;
 
         if (!email || !password) {
             return res.status(400).json({ error: 'Email et mot de passe requis' });
@@ -32,16 +32,22 @@ export default async function handler(req, res) {
             process.env.SUPABASE_ANON_KEY
         );
 
+        // Préparer les métadonnées utilisateur
+        const userMetadata = metadata || {
+            username: username || email.split('@')[0],
+            full_name: username || email.split('@')[0],
+            display_name: username || email.split('@')[0],
+            phone: '',
+            bio: '',
+            avatar_url: ''
+        };
+
         // Inscription
         const { data, error } = await supabase.auth.signUp({
             email,
             password,
             options: {
-                data: {
-                    username: username || email.split('@')[0],
-                    full_name: username || email.split('@')[0],
-                    display_name: username || email.split('@')[0]
-                }
+                data: userMetadata
             }
         });
 

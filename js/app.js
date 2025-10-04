@@ -74,12 +74,24 @@ export const login = async (email, password) => {
 };
 
 // Inscription
-export const signup = async (email, password, username) => {
+export const signup = async (email, password, metadata) => {
     try {
+        // Si metadata est une string (ancien format), convertir en objet
+        const userMetadata = typeof metadata === 'string'
+            ? { username: metadata, full_name: metadata, display_name: metadata }
+            : {
+                username: metadata.username || email.split('@')[0],
+                full_name: metadata.full_name || metadata.username || email.split('@')[0],
+                display_name: metadata.username || email.split('@')[0],
+                phone: metadata.phone || '',
+                bio: metadata.bio || '',
+                avatar_url: metadata.avatar_url || ''
+            };
+
         const response = await fetch(`${API_BASE_URL}/api/auth/signup`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password, username })
+            body: JSON.stringify({ email, password, metadata: userMetadata })
         });
 
         const data = await response.json();
