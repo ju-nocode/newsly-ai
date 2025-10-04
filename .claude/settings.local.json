@@ -12,7 +12,9 @@
       "Bash(do echo \"=== $file ===\")",
       "Bash(grep:*)",
       "Bash(done)",
-      "Bash(tree:*)"
+      "Bash(tree:*)",
+      "WebFetch(domain:prod-julien.vercel.app)",
+      "Bash(git pull:*)"
     ],
     "deny": [],
     "ask": []
