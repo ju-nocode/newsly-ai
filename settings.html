@@ -90,13 +90,38 @@
     </nav>
 
     <!-- Main Content -->
-    <div class="settings-container">
-        <h1 class="settings-title" data-i18n="settings.title">Paramètres du compte</h1>
+    <div class="settings-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="settings-nav">
+            <h1 class="settings-nav-title">Paramètres</h1>
+            <nav class="settings-nav-menu">
+                <button class="settings-nav-item active" data-section="profile">
+                    <img src="https://img.icons8.com/ios-filled/50/000000/user.png" alt="Profile" class="settings-nav-icon">
+                    <span>Profil</span>
+                </button>
+                <button class="settings-nav-item" data-section="account">
+                    <img src="https://img.icons8.com/ios-filled/50/000000/settings.png" alt="Account" class="settings-nav-icon">
+                    <span>Compte</span>
+                </button>
+                <button class="settings-nav-item" data-section="security">
+                    <img src="https://img.icons8.com/ios-filled/50/000000/lock.png" alt="Security" class="settings-nav-icon">
+                    <span>Sécurité</span>
+                </button>
+                <button class="settings-nav-item" data-section="users" id="usersNavBtn" style="display: none;">
+                    <img src="https://img.icons8.com/ios-filled/50/000000/user-group-man-man.png" alt="Users" class="settings-nav-icon">
+                    <span>Utilisateurs</span>
+                </button>
+            </nav>
+        </aside>
 
-        <!-- Profile Section -->
-        <div class="settings-card">
-            <h2 class="settings-card-title" data-i18n="settings.profile">Profil</h2>
+        <!-- Content Area -->
+        <div class="settings-content">
+            <!-- Profile Section -->
+            <section id="section-profile" class="settings-section active">
+                <h2 class="settings-section-title">Profil</h2>
+                <p class="settings-section-desc">Gérez vos informations personnelles</p>
 
+                <div class="settings-card">
             <!-- Avatar Section -->
             <div class="form-group">
                 <label class="form-label" data-i18n="settings.avatar">Photo de profil</label>
@@ -171,10 +196,48 @@
                 Mettre à jour le profil
             </button>
         </div>
+            </section>
 
-        <!-- Security Section -->
-        <div class="settings-card">
-            <h2 class="settings-card-title" data-i18n="settings.security">Sécurité</h2>
+            <!-- Account Section -->
+            <section id="section-account" class="settings-section">
+                <h2 class="settings-section-title">Compte</h2>
+                <p class="settings-section-desc">Gérez les paramètres de votre compte</p>
+
+                <div class="settings-card">
+                    <div class="form-group">
+                        <label class="form-label">Préférences de langue</label>
+                        <select id="languageSelect" class="form-input">
+                            <option value="fr">Français</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Thème</label>
+                        <select id="themeSelect" class="form-input">
+                            <option value="light">Clair</option>
+                            <option value="dark">Sombre</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="settings-card" style="margin-top: 2rem; border-color: var(--error);">
+                    <h3 style="color: var(--error); margin-bottom: 0.5rem;">Zone de danger</h3>
+                    <p class="settings-description">
+                        Une fois votre compte supprimé, toutes vos données seront définitivement effacées. Cette action est irréversible.
+                    </p>
+                    <button id="deleteAccountBtn" class="btn-danger">
+                        Supprimer mon compte
+                    </button>
+                </div>
+            </section>
+
+            <!-- Security Section -->
+            <section id="section-security" class="settings-section">
+                <h2 class="settings-section-title">Sécurité</h2>
+                <p class="settings-section-desc">Protégez votre compte</p>
+
+                <div class="settings-card">
 
             <div class="form-group">
                 <label for="currentPassword" class="form-label" data-i18n="settings.currentPassword">Mot de passe actuel</label>
@@ -213,19 +276,21 @@
                 Changer le mot de passe
             </button>
         </div>
+            </section>
 
-        <!-- Account Section -->
-        <div class="settings-card">
-            <h2 class="settings-card-title" data-i18n="settings.account">Compte</h2>
+            <!-- Users Management Section (Admin only) -->
+            <section id="section-users" class="settings-section">
+                <h2 class="settings-section-title">Gestion des utilisateurs</h2>
+                <p class="settings-section-desc">Gérez les utilisateurs et leurs rôles</p>
 
-            <p class="settings-description" data-i18n="settings.deleteWarning">
-                Une fois votre compte supprimé, toutes vos données seront définitivement effacées.
-                Cette action est irréversible.
-            </p>
+                <div class="settings-card">
+                    <div id="usersTableContainer">
+                        <!-- Users table will be loaded here -->
+                        <p style="text-align: center; color: var(--text-muted);">Chargement des utilisateurs...</p>
+                    </div>
+                </div>
+            </section>
 
-            <button id="deleteAccountBtn" class="btn-danger" data-i18n="settings.deleteAccount">
-                Supprimer mon compte
-            </button>
         </div>
     </div>
 
@@ -687,11 +752,170 @@
             }
         };
 
+        // ================================================
+        // SETTINGS NAVIGATION
+        // ================================================
+
+        // Get all navigation items and sections
+        const navItems = document.querySelectorAll('.settings-nav-item');
+        const sections = document.querySelectorAll('.settings-section');
+        const usersNavBtn = document.getElementById('usersNavBtn');
+        const usersSection = document.getElementById('section-users');
+
+        // Handle section switching
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const sectionId = item.dataset.section;
+
+                // Remove active class from all nav items
+                navItems.forEach(nav => nav.classList.remove('active'));
+
+                // Add active class to clicked item
+                item.classList.add('active');
+
+                // Hide all sections
+                sections.forEach(section => section.classList.remove('active'));
+
+                // Show selected section
+                const targetSection = document.getElementById(`section-${sectionId}`);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                }
+            });
+        });
+
+        // Show/hide Users section based on role
+        const checkAdminAccess = async () => {
+            const result = await getUserProfile();
+            if (result.success && result.profile.role === 'admin') {
+                usersNavBtn.style.display = 'flex';
+
+                // Load users list for admin
+                loadUsersList();
+            }
+        };
+
+        // Load users list (admin only)
+        const loadUsersList = async () => {
+            const usersContainer = document.getElementById('usersTableContainer');
+
+            try {
+                // Import Supabase client
+                const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+                const supabase = createClient(
+                    'https://mauulkejlnlubdzmhirq.supabase.co',
+                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1hdXVsa2VqbG5sdWJkem1oaXJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY5NTQwNzksImV4cCI6MjA2MjUzMDA3OX0.hC0jOBK3rKKj8Fq1P3ITjsZqtaPzzD7EYc7jPVb_Hvs'
+                );
+
+                // Fetch all users
+                const { data: users, error } = await supabase
+                    .from('profiles')
+                    .select('id, email, username, role, created_at, last_sign_in_at')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                if (!users || users.length === 0) {
+                    usersContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Aucun utilisateur trouvé</p>';
+                    return;
+                }
+
+                // Create users table
+                let tableHTML = `
+                    <table class="users-table">
+                        <thead>
+                            <tr>
+                                <th>Utilisateur</th>
+                                <th>Email</th>
+                                <th>Rôle</th>
+                                <th>Dernière connexion</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+
+                const currentUser = await getUserProfile();
+                const currentEmail = currentUser.profile?.email;
+
+                users.forEach(user => {
+                    const isCurrentUser = user.email === currentEmail;
+                    const isSuperUser = user.email === 'ju.richard.33@gmail.com';
+                    const displayName = user.username || user.email.split('@')[0];
+                    const lastSignIn = user.last_sign_in_at
+                        ? new Date(user.last_sign_in_at).toLocaleDateString('fr-FR', {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                          })
+                        : 'Jamais';
+
+                    tableHTML += `
+                        <tr>
+                            <td><strong>${escapeHtml(displayName)}</strong></td>
+                            <td>${escapeHtml(user.email)}</td>
+                            <td>
+                                <span class="role-badge ${user.role}">${user.role}</span>
+                            </td>
+                            <td>${lastSignIn}</td>
+                            <td>
+                                ${!isSuperUser ? `
+                                    <button class="btn-role-toggle" data-user-id="${user.id}" data-current-role="${user.role}" ${isCurrentUser ? 'disabled' : ''}>
+                                        Changer rôle
+                                    </button>
+                                ` : '<span style="color: var(--text-muted); font-size: 0.875rem;">Super Admin</span>'}
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                tableHTML += `
+                        </tbody>
+                    </table>
+                `;
+
+                usersContainer.innerHTML = tableHTML;
+
+                // Add event listeners for role toggle buttons
+                document.querySelectorAll('.btn-role-toggle').forEach(btn => {
+                    btn.addEventListener('click', async () => {
+                        const userId = btn.dataset.userId;
+                        const currentRole = btn.dataset.currentRole;
+                        const newRole = currentRole === 'admin' ? 'user' : 'admin';
+
+                        if (confirm(`Changer le rôle vers "${newRole}" ?`)) {
+                            try {
+                                const { error } = await supabase
+                                    .from('profiles')
+                                    .update({ role: newRole })
+                                    .eq('id', userId);
+
+                                if (error) throw error;
+
+                                showSuccess('Rôle mis à jour avec succès');
+                                loadUsersList(); // Reload the list
+                            } catch (error) {
+                                showError('Erreur lors du changement de rôle');
+                                console.error(error);
+                            }
+                        }
+                    });
+                });
+
+            } catch (error) {
+                console.error('Erreur lors du chargement des utilisateurs:', error);
+                usersContainer.innerHTML = '<p style="text-align: center; color: var(--error);">Erreur lors du chargement des utilisateurs</p>';
+            }
+        };
+
         // Initialiser
         (async () => {
             await translatePage();
             await loadProfile();
             await loadUserName();
+            await checkAdminAccess();
         })();
     </script>
 </body>
