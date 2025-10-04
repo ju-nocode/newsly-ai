@@ -116,6 +116,7 @@
 
         <!-- Content Area -->
         <div class="settings-content">
+            <div class="settings-content-inner">
             <!-- Profile Section -->
             <section id="section-profile" class="settings-section active">
                 <h2 class="settings-section-title">Profil</h2>
@@ -219,6 +220,10 @@
                             <option value="dark">Sombre</option>
                         </select>
                     </div>
+
+                    <button id="saveAccountBtn" class="btn-primary">
+                        Enregistrer les préférences
+                    </button>
                 </div>
 
                 <div class="settings-card" style="margin-top: 2rem; border-color: var(--error);">
@@ -291,6 +296,7 @@
                 </div>
             </section>
 
+            </div>
         </div>
     </div>
 
@@ -698,6 +704,41 @@
 
         // Refresh weather every 10 minutes
         setInterval(loadWeather, 10 * 60 * 1000);
+
+        // ================================================
+        // ACCOUNT SETTINGS
+        // ================================================
+
+        // Load current preferences in Account section
+        const languageSelect = document.getElementById('languageSelect');
+        const themeSelect = document.getElementById('themeSelect');
+
+        const savedThemeForSelect = localStorage.getItem('theme') || 'light';
+        const savedLangForSelect = localStorage.getItem('language') || 'fr';
+
+        themeSelect.value = savedThemeForSelect;
+        languageSelect.value = savedLangForSelect;
+
+        // Save account preferences button
+        document.getElementById('saveAccountBtn').addEventListener('click', () => {
+            const newTheme = themeSelect.value;
+            const newLang = languageSelect.value;
+
+            // Apply theme
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+
+            // Apply language
+            localStorage.setItem('language', newLang);
+
+            // Update burger menu toggles
+            themeToggle.checked = newTheme === 'dark';
+            themeText.textContent = newTheme === 'dark' ? 'Mode sombre' : 'Mode clair';
+            langToggle.checked = newLang === 'en';
+
+            showSuccess('Préférences enregistrées avec succès !');
+            translatePage();
+        });
 
         // Gérer le toggle du thème
         const themeToggle = document.getElementById('themeToggle');
