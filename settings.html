@@ -82,6 +82,21 @@
         <div class="settings-card">
             <h2 class="settings-card-title" data-i18n="settings.profile">Profil</h2>
 
+            <!-- Avatar Section -->
+            <div class="form-group">
+                <label class="form-label" data-i18n="settings.avatar">Photo de profil</label>
+                <div class="avatar-upload-container">
+                    <div class="avatar-preview" id="avatarPreview">
+                        <img id="avatarImage" src="https://ui-avatars.com/api/?name=User&background=3ecf8e&color=fff&size=200" alt="Avatar">
+                        <div class="avatar-overlay" id="avatarOverlay">
+                            <span class="avatar-edit-icon">✏️</span>
+                        </div>
+                    </div>
+                    <input type="file" id="avatarInput" accept="image/*" style="display: none;">
+                    <p class="form-hint" data-i18n="settings.avatarHint">Cliquez sur l'avatar pour changer (max 2MB)</p>
+                </div>
+            </div>
+
             <div class="form-group">
                 <label for="emailDisplay" class="form-label" data-i18n="settings.email">Email</label>
                 <input
@@ -135,16 +150,6 @@
                     data-i18n-placeholder="settings.bioPlaceholder"
                     rows="3"
                 ></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="avatarUrlInput" class="form-label" data-i18n="settings.avatarUrl">URL de l'avatar</label>
-                <input
-                    type="url"
-                    id="avatarUrlInput"
-                    class="form-input"
-                    placeholder="https://example.com/avatar.jpg"
-                >
             </div>
 
             <button id="updateProfileBtn" class="btn-primary" data-i18n="settings.updateProfile">
@@ -273,6 +278,9 @@
             window.location.href = 'index.html';
         }
 
+        // Variable globale pour stocker l'avatar
+        let currentAvatarUrl = null;
+
         // Charger le profil utilisateur
         const loadProfile = async () => {
             const result = await getUserProfile();
@@ -281,6 +289,16 @@
 
                 // Email (toujours présent)
                 document.getElementById('emailDisplay').value = profile.email;
+
+                // Avatar
+                if (profile.avatar_url) {
+                    currentAvatarUrl = profile.avatar_url;
+                    document.getElementById('avatarImage').src = profile.avatar_url;
+                } else {
+                    // Avatar par défaut avec initiales
+                    const name = profile.username || profile.email.split('@')[0];
+                    document.getElementById('avatarImage').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=3ecf8e&color=fff&size=200`;
+                }
 
                 // Autres champs: ne mettre la valeur que si elle existe (pour garder le placeholder sinon)
                 if (profile.username) {
@@ -295,11 +313,46 @@
                 if (profile.bio) {
                     document.getElementById('bioInput').value = profile.bio;
                 }
-                if (profile.avatar_url) {
-                    document.getElementById('avatarUrlInput').value = profile.avatar_url;
-                }
             }
         };
+
+        // Gestion de l'upload d'avatar
+        const avatarPreview = document.getElementById('avatarPreview');
+        const avatarInput = document.getElementById('avatarInput');
+        const avatarImage = document.getElementById('avatarImage');
+
+        // Cliquer sur l'avatar ouvre le sélecteur de fichier
+        avatarPreview.addEventListener('click', () => {
+            avatarInput.click();
+        });
+
+        // Gérer la sélection d'image
+        avatarInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Validation: type d'image
+            if (!file.type.startsWith('image/')) {
+                showError('Veuillez sélectionner une image valide');
+                return;
+            }
+
+            // Validation: taille max 2MB
+            const maxSize = 2 * 1024 * 1024; // 2MB en bytes
+            if (file.size > maxSize) {
+                showError('L\'image ne doit pas dépasser 2 MB');
+                return;
+            }
+
+            // Prévisualisation locale
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                avatarImage.src = event.target.result;
+                currentAvatarUrl = event.target.result; // Stocke en base64 temporairement
+                showSuccess('Image sélectionnée ! Cliquez sur "Mettre à jour le profil" pour sauvegarder');
+            };
+            reader.readAsDataURL(file);
+        });
 
         // Mettre à jour le profil
         document.getElementById('updateProfileBtn').addEventListener('click', async () => {
@@ -307,7 +360,6 @@
             const fullName = document.getElementById('fullNameInput').value.trim();
             const phone = document.getElementById('phoneInput').value.trim();
             const bio = document.getElementById('bioInput').value.trim();
-            const avatarUrl = document.getElementById('avatarUrlInput').value.trim();
 
             if (!username) {
                 showError('Le nom d\'utilisateur ne peut pas être vide');
@@ -319,7 +371,7 @@
                 full_name: fullName,
                 phone,
                 bio,
-                avatar_url: avatarUrl
+                avatar_url: currentAvatarUrl
             });
 
             if (result.success) {
