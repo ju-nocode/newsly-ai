@@ -1,4 +1,4 @@
-# 📰 Newsly AI - Your AI-Powered NewsWall
+# 📰 Newsly AI - AI-Powered NewsWall
 
 > Votre agrégateur d'actualités personnalisé alimenté par l'intelligence artificielle
 
@@ -7,350 +7,134 @@
 
 ## 🌟 Fonctionnalités
 
-### 🔐 Authentification & Profil
-- **Inscription/Connexion** sécurisée avec Supabase Auth
-- **Gestion de profil** complète (username, nom complet, téléphone, bio, avatar)
-- **Changement de mot de passe** sécurisé
-- **Suppression de compte** avec double confirmation
-- **Session persistante** avec localStorage
+### 🔐 Authentification
+- Inscription/Connexion sécurisée (Supabase Auth)
+- Gestion de profil (avatar compressé, bio, téléphone)
+- Changement de mot de passe
+- Session persistante
 
 ### 📰 Actualités
-- **Agrégation d'actualités** via NewsAPI
-- **7 catégories** : Général, Business, Technologie, Science, Santé, Sports, Divertissement
-- **Topics personnalisés** : Ajoutez vos propres sujets d'intérêt
-- **Actualisation en temps réel**
-- **Affichage carte** avec image, titre, description, source et date
+- Agrégation d'actualités (NewsAPI)
+- 7 catégories + topics personnalisés
+- Affichage en temps réel
 
-### 🌍 Multilingue
-- **Traduction complète** FR/EN
-- **Switch langue** dynamique sans rechargement
-- **Système de traduction** avec fallback local
+### 🎨 Interface
+- Mode Dark/Light
+- Multilingue (FR/EN)
+- Design moderne responsive
+- Burger menu avec avatar
 
-### 🎨 Thème
-- **Mode Dark/Light** avec switch élégant
-- **Persistance** du thème sélectionné
-- **Design moderne** inspiré de Supabase
-- **Responsive** mobile-first
+## 🚀 Stack
 
-### 🔒 Sécurité
-- ✅ **Validation stricte** de tous les inputs (API + Frontend)
-- ✅ **Protection XSS** avec `escapeHtml()`
-- ✅ **Headers de sécurité** (CORS, CSP, X-Frame-Options, HSTS)
-- ✅ **Rate limiting** client & serveur
-- ✅ **Service Role Key** pour opérations admin
-- ✅ **HTTPS** automatique via Vercel
-- ✅ **Pas d'exposition** des clés API côté client
+**Frontend:** HTML5, CSS3, Vanilla JS (ES6 Modules)
+**Backend:** Vercel Serverless Functions
+**Database:** Supabase (PostgreSQL)
+**Auth:** Supabase Auth
+**Deployment:** Vercel
 
-## 🚀 Stack Technique
-
-### Frontend
-- **HTML5** + **CSS3** (Variables CSS, Grid, Flexbox)
-- **Vanilla JavaScript** (ES6 Modules)
-- **Architecture modulaire** : app.js, dashboard-utils.js, translation-service.js
-
-### Backend
-- **Vercel Serverless Functions** (Node.js)
-- **API Routes** : `/api/auth/*`, `/api/user/*`, `/api/news`
-- **Build Output API v3** pour déploiement optimisé
-
-### Services
-- **Supabase** - Authentification & stockage (user_metadata)
-- **NewsAPI** - Agrégation d'actualités
-- **Vercel** - Hébergement & déploiement
-
-## 📁 Structure du Projet
+## 📁 Structure
 
 ```
 newsly-ai/
-├── api/                          # API Serverless Functions
-│   ├── _middleware/
-│   │   └── security.js          # Fonctions de sécurité (validation, sanitization)
-│   ├── auth/
-│   │   ├── login.js             # POST /api/auth/login
-│   │   ├── signup.js            # POST /api/auth/signup
-│   │   └── resend.js            # POST /api/auth/resend
-│   ├── user/
-│   │   ├── profile.js           # GET/PUT /api/user/profile
-│   │   ├── change-password.js   # POST /api/user/change-password
-│   │   └── delete.js            # DELETE /api/user/delete
-│   └── news.js                   # GET /api/news
-│
-├── public/                       # Assets statiques
-│   ├── css/
-│   │   └── styles.css           # CSS global (30KB)
-│   ├── js/
-│   │   ├── app.js               # Logique principale + Auth
-│   │   ├── dashboard-utils.js   # Utilitaires + Protection XSS
-│   │   └── translation-service.js  # Système de traduction
-│   ├── images/                  # Images (vide, prêt à utiliser)
-│   └── fonts/                   # Polices (vide, prêt à utiliser)
-│
-├── docs/                         # Documentation
-│   ├── ARCHITECTURE.md          # Architecture technique détaillée
-│   └── SECURITY_IMPLEMENTATION.md  # Guide de sécurité complet
-│
-├── index.html                    # Page d'accueil + Auth modale
-├── dashboard.html                # Dashboard principal
-├── settings.html                 # Paramètres utilisateur
-│
-├── build.js                      # Script de build pour Vercel
-├── vercel.json                   # Configuration Vercel
-├── package.json                  # Dépendances
-├── .env.example                  # Template variables d'environnement
-├── .gitignore                    # Fichiers ignorés par Git
-└── .vercelignore                 # Fichiers ignorés par Vercel
+├── api/                    # Serverless functions
+│   ├── auth/              # login, signup, resend
+│   ├── user/              # profile, change-password, delete
+│   └── news.js            # NewsAPI aggregation
+├── public/
+│   ├── css/styles.css     # Styles globaux
+│   └── js/
+│       ├── app.js         # Auth & API calls
+│       ├── dashboard-utils.js
+│       └── translation-service.js
+├── index.html             # Landing page
+├── dashboard.html         # News dashboard
+├── settings.html          # User settings
+├── 404.html               # Error page
+└── vercel.json            # Vercel config
 ```
 
-## 🛠️ Installation & Déploiement
+## ⚙️ Installation
 
-### Prérequis
-- Node.js >= 18.0.0
-- Compte Vercel (gratuit)
-- Compte Supabase (gratuit)
-- Compte NewsAPI (gratuit)
-
-### 1. Cloner le projet
-
-```bash
-git clone https://github.com/ju-nocode/newsly-ai.git
-cd newsly-ai
-npm install
-```
+### 1. Prérequis
+- Node.js 18+
+- Compte Supabase
+- Compte Vercel
+- Clé NewsAPI
 
 ### 2. Configuration Supabase
 
-1. Créez un projet sur [Supabase](https://supabase.com)
-2. Allez dans **Settings → API**
-3. Copiez :
-   - `Project URL` → `SUPABASE_URL`
-   - `anon public` → `SUPABASE_ANON_KEY`
-4. Allez dans **Settings → API → Service Role Key**
-5. Copiez `service_role` → `SUPABASE_SERVICE_ROLE_KEY`
+Créez une table `profiles` :
+```sql
+CREATE TABLE profiles (
+  id UUID PRIMARY KEY REFERENCES auth.users(id),
+  email TEXT NOT NULL,
+  username TEXT,
+  full_name TEXT,
+  phone TEXT,
+  bio TEXT,
+  avatar_url TEXT,
+  is_admin BOOLEAN DEFAULT false,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
 
-**Important** : Le projet utilise `user_metadata` JSON. **Aucune table SQL n'est nécessaire** !
+-- Trigger auto-création profil
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO public.profiles (id, email, username, full_name)
+  VALUES (
+    NEW.id,
+    NEW.email,
+    COALESCE(NEW.raw_user_meta_data->>'username', split_part(NEW.email, '@', 1)),
+    COALESCE(NEW.raw_user_meta_data->>'full_name', NEW.raw_user_meta_data->>'username')
+  );
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
 
-### 3. Configuration NewsAPI
-
-1. Créez un compte sur [NewsAPI](https://newsapi.org)
-2. Copiez votre API Key → `NEWS_API_KEY`
-
-### 4. Variables d'environnement
-
-Dans Vercel Dashboard → Settings → Environment Variables :
-
-```env
-SUPABASE_URL=https://xxxxx.supabase.co
-SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-NEWS_API_KEY=xxxxxxxxxxxxxxxxxxxxx
+CREATE TRIGGER on_auth_user_created
+  AFTER INSERT ON auth.users
+  FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
 ```
 
-### 5. Déploiement Vercel
-
-#### Via Interface (Recommandé)
-
-1. Importez le repo sur [Vercel](https://vercel.com/new)
-2. Framework Preset : **Other**
-3. Build Command : Laissez vide (auto-détecté)
-4. Ajoutez les variables d'environnement
-5. Deploy ! 🚀
-
-#### Via CLI
+### 3. Variables d'environnement Vercel
 
 ```bash
-npm install -g vercel
-vercel login
-vercel
+SUPABASE_URL=https://xxx.supabase.co
+SUPABASE_ANON_KEY=eyJxxx...
+SUPABASE_SERVICE_ROLE_KEY=eyJxxx...
+NEWSAPI_KEY=xxx
 ```
 
-### 6. Développement Local
+### 4. Déploiement
 
 ```bash
-npm run dev
-# Ouvre http://localhost:3000
+# Cloner
+git clone https://github.com/ju-nocode/newsly-ai.git
+cd newsly-ai
+
+# Déployer
+vercel --prod
 ```
 
-## 🔑 API Routes
+## 🔒 Sécurité
 
-### Authentification
+- ✅ Validation stricte inputs (API + Frontend)
+- ✅ Protection XSS avec `escapeHtml()`
+- ✅ Headers sécurisés (CORS, HSTS)
+- ✅ Compression avatars (max 50KB)
+- ✅ Détection tokens volumineux
+- ✅ HTTPS automatique (Vercel)
 
-| Route | Method | Auth | Description |
-|-------|--------|------|-------------|
-| `/api/auth/login` | POST | ❌ | Connexion utilisateur |
-| `/api/auth/signup` | POST | ❌ | Inscription utilisateur |
-| `/api/auth/resend` | POST | ❌ | Renvoyer email de confirmation |
-
-**Body (login)** :
-```json
-{
-  "email": "user@example.com",
-  "password": "password123"
-}
-```
-
-**Body (signup)** :
-```json
-{
-  "email": "user@example.com",
-  "password": "password123",
-  "metadata": {
-    "username": "john_doe",
-    "full_name": "John Doe",
-    "phone": "+33612345678"
-  }
-}
-```
-
-### Utilisateur
-
-| Route | Method | Auth | Description |
-|-------|--------|------|-------------|
-| `/api/user/profile` | GET | ✅ | Récupérer profil |
-| `/api/user/profile` | PUT | ✅ | Modifier profil |
-| `/api/user/change-password` | POST | ✅ | Changer mot de passe |
-| `/api/user/delete` | DELETE | ✅ | Supprimer compte |
-
-**Headers (authentifié)** :
-```
-Authorization: Bearer <access_token>
-```
-
-### Actualités
-
-| Route | Method | Auth | Description |
-|-------|--------|------|-------------|
-| `/api/news` | GET | ❌ | Récupérer actualités |
-
-**Query params** :
-- `category` : general, business, technology, science, health, sports, entertainment
-- `country` : us, fr, gb, ca, de
-- `page` : 1-10
-
-**Exemple** :
-```
-GET /api/news?category=technology&country=us&page=1
-```
-
-## 📊 Base de Données
-
-### Structure Supabase
-
-Le projet utilise **user_metadata JSON** au lieu de tables SQL :
-
-```json
-{
-  "username": "john_doe",
-  "display_name": "john_doe",
-  "full_name": "John Doe",
-  "phone": "+33612345678",
-  "bio": "Developer & Tech Enthusiast",
-  "avatar_url": "https://example.com/avatar.jpg"
-}
-```
-
-**Avantages** :
-- ✅ Pas de migration SQL
-- ✅ Flexible et extensible
-- ✅ Intégré nativement dans Supabase Auth
-- ✅ Row-level security automatique
-
-## 🔧 Scripts NPM
-
-```bash
-npm run dev      # Développement local (Vercel Dev)
-npm run build    # Build pour production (copie fichiers statiques)
-npm run deploy   # Déploiement Vercel
-```
-
-## 🎨 Personnalisation
-
-### Couleurs (CSS Variables)
-
-Modifiez `public/css/styles.css` :
-
-```css
-:root[data-theme="dark"] {
-  --color-primary: #3ecf8e;      /* Vert principal */
-  --color-bg: #0a0a0a;           /* Fond noir */
-  --color-surface: #1a1a1a;      /* Surfaces */
-  /* ... */
-}
-```
-
-### Traductions
-
-Ajoutez des traductions dans `public/js/translation-service.js` :
-
-```javascript
-const fallbackTranslations = {
-  fr: {
-    'new.key': 'Nouvelle traduction'
-  },
-  en: {
-    'new.key': 'New translation'
-  }
-};
-```
-
-## 📚 Documentation Complète
-
-- [📖 ARCHITECTURE.md](docs/ARCHITECTURE.md) - Architecture technique détaillée
-- [🔒 SECURITY_IMPLEMENTATION.md](docs/SECURITY_IMPLEMENTATION.md) - Guide de sécurité complet
-- [🚀 DEPLOYMENT.md](DEPLOYMENT.md) - Guide de déploiement
-- [🔐 SECURITY.md](SECURITY.md) - Politique de sécurité
-- [📦 SUPABASE.md](SUPABASE.md) - Configuration Supabase
-
-## 🐛 Debugging
-
-### Problème : 404 Not Found
-
-- Vérifiez que le build s'est bien passé dans Vercel Deployments
-- Vérifiez `build.js` copie bien les fichiers dans `.vercel/output/static/`
-
-### Problème : API Routes ne fonctionnent pas
-
-```bash
-# Vérifiez les logs Vercel
-vercel logs
-
-# Vérifiez les variables d'environnement
-vercel env ls
-```
-
-### Problème : "Auth session missing"
-
-- Vérifiez que `SUPABASE_SERVICE_ROLE_KEY` est bien configurée
-- Cette clé est nécessaire pour update profile et change password
-
-## 🤝 Contribution
-
-Les contributions sont les bienvenues !
-
-1. Fork le projet
-2. Créez une branche (`git checkout -b feature/AmazingFeature`)
-3. Commit vos changements (`git commit -m 'Add AmazingFeature'`)
-4. Push sur la branche (`git push origin feature/AmazingFeature`)
-5. Ouvrez une Pull Request
+Voir [SECURITY.md](SECURITY.md) pour plus de détails.
 
 ## 📝 License
 
-Ce projet est sous licence MIT. Voir [LICENSE](LICENSE) pour plus d'informations.
+MIT © 2025 Newsly AI
 
-## 🙏 Remerciements
+## 🤝 Support
 
-- [Supabase](https://supabase.com) - Backend as a Service
-- [Vercel](https://vercel.com) - Hébergement & Déploiement
-- [NewsAPI](https://newsapi.org) - Agrégation d'actualités
-- [Claude Code](https://claude.com/claude-code) - Développement assisté par IA
-
-## 📞 Support
-
-- 🐛 **Issues** : [GitHub Issues](https://github.com/ju-nocode/newsly-ai/issues)
-- 📧 **Email** : security@newsly-ai.com
-- 🌐 **Demo** : [https://prod-julien.vercel.app](https://prod-julien.vercel.app)
-
----
-
-**Développé avec ❤️ par Claude Code**
-
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
+- 🐛 [Issues](https://github.com/ju-nocode/newsly-ai/issues)
+- 📧 Email: support@newsly.ai
+- 🌐 [Live Demo](https://prod-julien.vercel.app)
