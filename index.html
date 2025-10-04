@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion - Newsly AI</title>
+    <title>Newsly AI - Votre NewsWall Personnalisé Alimenté par IA</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -15,156 +15,166 @@
                 <span class="logo-text">Newsly AI</span>
             </a>
             <div class="nav-links">
-                <a href="index.html" class="btn-primary">Accueil</a>
+                <a href="login.html" class="nav-link">Connexion</a>
                 <a href="signup.html" class="btn-primary">Créer un compte</a>
             </div>
         </div>
     </nav>
 
-    <!-- Login Form -->
-    <section class="auth-section">
-        <div class="auth-container">
-            <div class="auth-card">
-                <div class="auth-header">
-                    <h1 class="auth-title">Bon retour ! 👋</h1>
-                    <p class="auth-subtitle">Connectez-vous pour accéder à votre NewsWall personnalisé</p>
-                </div>
-
-                <form id="loginForm" class="auth-form">
-                    <!-- Email -->
-                    <div class="form-group">
-                        <label for="email" class="form-label">Email</label>
-                        <input 
-                            type="email" 
-                            id="email" 
-                            name="email" 
-                            class="form-input" 
-                            placeholder="votre@email.com"
-                            required
-                            autocomplete="email"
-                        >
-                    </div>
-
-                    <!-- Password -->
-                    <div class="form-group">
-                        <label for="password" class="form-label">Mot de passe</label>
-                        <input 
-                            type="password" 
-                            id="password" 
-                            name="password" 
-                            class="form-input" 
-                            placeholder="••••••••"
-                            required
-                            autocomplete="current-password"
-                        >
-                    </div>
-
-                    <!-- Remember me & Forgot password -->
-                    <div class="form-options">
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="remember" name="remember">
-                            <span>Se souvenir de moi</span>
-                        </label>
-                        <a href="#" class="link-secondary">Mot de passe oublié ?</a>
-                    </div>
-
-                    <!-- Error Message -->
-                    <div id="errorMessage" class="error-message" style="display: none;"></div>
-
-                    <!-- Submit Button -->
-                    <button type="submit" class="btn-submit" id="loginBtn">
-                        <span id="loginBtnText">Se connecter</span>
-                        <span id="loginBtnLoader" class="btn-loader" style="display: none;">
-                            <span class="loader"></span>
-                        </span>
-                    </button>
-                </form>
-
-                <!-- Signup Link -->
-                <div class="auth-footer">
-                    <p class="auth-footer-text">
-                        Pas encore de compte ? 
-                        <a href="signup.html" class="link-primary">Créer un compte</a>
-                    </p>
-                </div>
-            </div>
-
-            <!-- Benefits Side -->
-            <div class="auth-benefits">
-                <h2 class="benefits-title">Accédez à votre NewsWall personnalisé</h2>
-                <ul class="benefits-list">
-                    <li class="benefit-item">
-                        <span class="benefit-icon">✅</span>
-                        <span>Actualités en temps réel filtrées par IA</span>
-                    </li>
-                    <li class="benefit-item">
-                        <span class="benefit-icon">✅</span>
-                        <span>Catégories personnalisables selon vos intérêts</span>
-                    </li>
-                    <li class="benefit-item">
-                        <span class="benefit-icon">✅</span>
-                        <span>Sauvegardez vos articles favoris</span>
-                    </li>
-                    <li class="benefit-item">
-                        <span class="benefit-icon">✅</span>
-                        <span>Accès depuis tous vos appareils</span>
-                    </li>
-                </ul>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <h1 class="hero-title">
+                Votre NewsWall Personnalisé<br>
+                <span class="gradient-text">Alimenté par l'IA</span>
+            </h1>
+            <p class="hero-subtitle">
+                Restez informé avec des actualités filtrées intelligemment selon vos centres d'intérêt.
+                NewslyAI analyse et organise les informations pour vous.
+            </p>
+            <div class="hero-cta">
+                <a href="signup.html" class="btn-hero">Commencer Gratuitement</a>
+                <a href="login.html" class="btn-secondary">Se Connecter</a>
             </div>
         </div>
     </section>
 
+    <!-- Features Section -->
+    <section class="features">
+        <div class="features-container">
+            <h2 class="section-title">Pourquoi choisir Newsly AI ?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3 class="feature-title">Filtrage Intelligent par IA</h3>
+                    <p class="feature-description">
+                        Notre IA analyse et filtre les actualités pour ne vous présenter que l'essentiel,
+                        adapté à vos préférences.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">Personnalisation Avancée</h3>
+                    <p class="feature-description">
+                        Choisissez vos catégories favorites : technologie, business, science, sports et bien plus.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Mises à jour en Temps Réel</h3>
+                    <p class="feature-description">
+                        Restez toujours à jour avec les dernières actualités rafraîchies en temps réel.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💾</div>
+                    <h3 class="feature-title">Sauvegardez vos Favoris</h3>
+                    <p class="feature-description">
+                        Gardez une trace des articles importants et accédez-y à tout moment.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3 class="feature-title">Sources Multiples</h3>
+                    <p class="feature-description">
+                        Accédez à des milliers de sources d'information du monde entier, toutes au même endroit.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="feature-title">100% Sécurisé</h3>
+                    <p class="feature-description">
+                        Vos données sont protégées avec les dernières technologies de sécurité.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Preview -->
+    <section class="categories-preview">
+        <div class="categories-container">
+            <h2 class="section-title">Explorez nos Catégories</h2>
+            <div class="categories-grid">
+                <div class="category-preview">
+                    <div class="category-preview-icon">📰</div>
+                    <h3>Général</h3>
+                    <p>Toutes les actualités importantes</p>
+                </div>
+                <div class="category-preview">
+                    <div class="category-preview-icon">💼</div>
+                    <h3>Business</h3>
+                    <p>Économie et finance</p>
+                </div>
+                <div class="category-preview">
+                    <div class="category-preview-icon">💻</div>
+                    <h3>Technologie</h3>
+                    <p>Innovation et tech</p>
+                </div>
+                <div class="category-preview">
+                    <div class="category-preview-icon">🔬</div>
+                    <h3>Science</h3>
+                    <p>Découvertes scientifiques</p>
+                </div>
+                <div class="category-preview">
+                    <div class="category-preview-icon">🏥</div>
+                    <h3>Santé</h3>
+                    <p>Bien-être et médecine</p>
+                </div>
+                <div class="category-preview">
+                    <div class="category-preview-icon">⚽</div>
+                    <h3>Sports</h3>
+                    <p>Résultats et actualités sportives</p>
+                </div>
+                <div class="category-preview">
+                    <div class="category-preview-icon">🎬</div>
+                    <h3>Divertissement</h3>
+                    <p>Cinéma, musique, culture</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-container">
+            <h2 class="cta-title">Prêt à commencer ?</h2>
+            <p class="cta-subtitle">
+                Rejoignez des milliers d'utilisateurs qui restent informés avec Newsly AI
+            </p>
+            <a href="signup.html" class="btn-hero">Créer mon compte gratuitement</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-icon">📰</span>
+                    <span>Newsly AI</span>
+                </div>
+                <p class="footer-text">
+                    Votre NewsWall personnalisé alimenté par l'intelligence artificielle
+                </p>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Newsly AI. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
     <script type="module">
-        import { login, checkAuth } from './app.js';
+        import { checkAuth } from './app.js';
 
-        // Vérifier si l'utilisateur est déjà connecté
-        checkAuth();
-
-        // Gérer la soumission du formulaire (si présent sur index.html)
-        const loginForm = document.getElementById('loginForm');
-        if (loginForm) {
-            const loginBtn = document.getElementById('loginBtn');
-            const loginBtnText = document.getElementById('loginBtnText');
-            const loginBtnLoader = document.getElementById('loginBtnLoader');
-            const errorMessage = document.getElementById('errorMessage');
-
-            loginForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-
-                const email = document.getElementById('email').value;
-                const password = document.getElementById('password').value;
-
-                // Désactiver le bouton et afficher le loader
-                loginBtn.disabled = true;
-                loginBtnText.style.display = 'none';
-                loginBtnLoader.style.display = 'inline-block';
-                errorMessage.style.display = 'none';
-
-                try {
-                    const result = await login(email, password);
-
-                    if (!result.success) {
-                        throw new Error(result.error);
-                    }
-
-                    // Succès - rediriger vers le dashboard
-                    setTimeout(() => {
-                        window.location.href = 'dashboard.html';
-                    }, 500);
-
-                } catch (error) {
-                    console.error('Erreur de connexion:', error);
-                    errorMessage.textContent = error.message === 'Invalid login credentials'
-                        ? 'Email ou mot de passe incorrect'
-                        : error.message;
-                    errorMessage.style.display = 'block';
-
-                    // Réactiver le bouton
-                    loginBtn.disabled = false;
-                    loginBtnText.style.display = 'inline';
-                    loginBtnLoader.style.display = 'none';
-                }
-            });
+        // Si l'utilisateur est déjà connecté, rediriger vers le dashboard
+        if (checkAuth()) {
+            window.location.href = 'dashboard.html';
         }
     </script>
 </body>
