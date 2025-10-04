@@ -35,6 +35,7 @@
                 <!-- Burger Dropdown Menu -->
                 <div class="burger-dropdown" id="burgerMenu">
                     <div class="burger-user-info">
+                        <img id="burgerAvatarImage" class="burger-user-avatar" src="https://ui-avatars.com/api/?name=User&background=3ecf8e&color=fff&size=72" alt="Avatar">
                         <span id="userNameDisplay" class="burger-user-name"></span>
                     </div>
 
@@ -205,6 +206,13 @@
             if (result.success) {
                 const userName = result.profile.username || result.profile.email.split('@')[0];
                 document.getElementById('userNameDisplay').textContent = `Yo! ${escapeHtml(userName)}`;
+
+                // Charger l'avatar dans le burger
+                if (result.profile.avatar_url) {
+                    document.getElementById('burgerAvatarImage').src = result.profile.avatar_url;
+                } else {
+                    document.getElementById('burgerAvatarImage').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=3ecf8e&color=fff&size=72`;
+                }
             }
         };
 

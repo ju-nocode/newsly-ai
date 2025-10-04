@@ -1332,12 +1332,25 @@ body {
   background: var(--bg-secondary);
   border-radius: var(--radius-md);
   margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.burger-user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border);
+  flex-shrink: 0;
 }
 
 .burger-user-name {
   font-size: 0.875rem;
   font-weight: 600;
   color: var(--text-primary);
+  flex: 1;
 }
 
 .burger-item {
@@ -1455,8 +1468,8 @@ body {
 
 .avatar-preview {
   position: relative;
-  width: 120px;
-  height: 120px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
   overflow: hidden;
   cursor: pointer;
@@ -1878,12 +1891,12 @@ body {
   }
 
   .avatar-preview {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
   }
 
   .avatar-edit-icon {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
   }
 }
 
