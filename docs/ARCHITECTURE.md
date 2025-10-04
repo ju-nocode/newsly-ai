@@ -17,26 +17,26 @@ newsly-ai/
 │   │   └── delete.js           # DELETE /api/user/delete
 │   └── news.js                  # GET /api/news
 │
-├── js/                          # JavaScript Frontend
-│   ├── app.js                  # Logique principale + Auth
-│   ├── dashboard-utils.js      # Utilitaires + Protection XSS
-│   └── translation-service.js  # Système de traduction FR/EN
-│
-├── css/                         # Styles
-│   └── styles.css              # CSS global avec dark/light mode
-│
-├── components/                  # Composants réutilisables
-│   └── footer.html             # Footer
+├── pages/                       # Pages HTML
+│   ├── index.html              # Page d'accueil + Auth modale
+│   ├── dashboard.html          # Dashboard principal
+│   └── settings.html           # Paramètres utilisateur
 │
 ├── public/                      # Assets statiques
+│   ├── css/
+│   │   └── styles.css          # CSS global avec dark/light mode
+│   ├── js/
+│   │   ├── app.js              # Logique principale + Auth
+│   │   ├── dashboard-utils.js  # Utilitaires + Protection XSS
+│   │   └── translation-service.js  # Système de traduction FR/EN
+│   ├── images/                 # Images et logos
+│   └── fonts/                  # Polices personnalisées
 │
 ├── docs/                        # Documentation
 │   ├── ARCHITECTURE.md         # Ce fichier
 │   └── SECURITY_IMPLEMENTATION.md  # Documentation sécurité
 │
-├── index.html                   # Page d'accueil + Auth modale
-├── dashboard.html               # Dashboard principal
-├── settings.html                # Paramètres utilisateur
+├── index.html                   # Redirection vers pages/
 │
 ├── .env.example                 # Template variables d'env
 ├── vercel.json                  # Config Vercel

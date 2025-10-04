@@ -1,4 +1,9 @@
 {
+  "rewrites": [
+    { "source": "/", "destination": "/pages/index.html" },
+    { "source": "/dashboard", "destination": "/pages/dashboard.html" },
+    { "source": "/settings", "destination": "/pages/settings.html" }
+  ],
   "headers": [
     {
       "source": "/api/(.*)",

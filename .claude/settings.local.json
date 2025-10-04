@@ -7,7 +7,12 @@
       "Bash(git add:*)",
       "Bash(git push:*)",
       "WebFetch(domain:supabase.com)",
-      "Bash(git mv:*)"
+      "Bash(git mv:*)",
+      "Bash(for file in api/**/*.js)",
+      "Bash(do echo \"=== $file ===\")",
+      "Bash(grep:*)",
+      "Bash(done)",
+      "Bash(tree:*)"
     ],
     "deny": [],
     "ask": []
