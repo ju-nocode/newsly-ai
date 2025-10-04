@@ -45,8 +45,8 @@
                 NewslyAI analyse et organise les informations pour vous.
             </p>
             <div class="hero-cta">
-                <a href="signup.html" class="btn-hero">Commencer Gratuitement</a>
-                <a href="login.html" class="btn-secondary">Se Connecter</a>
+                <button class="btn-hero" id="heroSignupBtn">Commencer Gratuitement</button>
+                <button class="btn-secondary" id="heroLoginBtn">Se Connecter</button>
             </div>
         </div>
     </section>
@@ -159,7 +159,7 @@
             <p class="cta-subtitle">
                 Rejoignez des milliers d'utilisateurs qui restent informés avec Newsly AI
             </p>
-            <a href="signup.html" class="btn-hero">Créer mon compte gratuitement</a>
+            <button class="btn-hero" id="ctaSignupBtn">Créer mon compte gratuitement</button>
         </div>
     </section>
 
@@ -327,6 +327,25 @@
                 errorDiv.textContent = result.error;
                 errorDiv.style.display = 'block';
             }
+        });
+
+        // Hero buttons
+        document.getElementById('heroSignupBtn').addEventListener('click', () => {
+            authModal.classList.add('show');
+            loginFormDiv.style.display = 'none';
+            signupFormDiv.style.display = 'block';
+        });
+
+        document.getElementById('heroLoginBtn').addEventListener('click', () => {
+            authModal.classList.add('show');
+            loginFormDiv.style.display = 'block';
+            signupFormDiv.style.display = 'none';
+        });
+
+        document.getElementById('ctaSignupBtn').addEventListener('click', () => {
+            authModal.classList.add('show');
+            loginFormDiv.style.display = 'none';
+            signupFormDiv.style.display = 'block';
         });
 
         // Language toggle
