@@ -314,7 +314,105 @@
             window.location.href = 'dashboard.html';
         }
 
+        // Traductions spécifiques à index.html
+        const indexTranslations = {
+            fr: {
+                heroTitle: 'Votre NewsWall Personnalisé',
+                heroTitleAI: 'Alimenté par l\'IA',
+                heroSubtitle: 'Restez informé avec des actualités filtrées intelligemment selon vos centres d\'intérêt. NewslyAI analyse et organise les informations pour vous.',
+                heroSignup: 'Commencer Gratuitement',
+                heroLogin: 'Se Connecter',
+                featuresTitle: 'Pourquoi choisir Newsly AI ?',
+                feature1Title: 'Filtrage Intelligent par IA',
+                feature1Desc: 'Notre IA analyse et filtre les actualités pour ne vous présenter que l\'essentiel, adapté à vos préférences.',
+                feature2Title: 'Personnalisation Avancée',
+                feature2Desc: 'Choisissez vos catégories favorites : technologie, business, science, sports et bien plus.',
+                feature3Title: 'Mises à jour en Temps Réel',
+                feature3Desc: 'Restez toujours à jour avec les dernières actualités rafraîchies en temps réel.',
+                feature4Title: 'Sauvegardez vos Favoris',
+                feature4Desc: 'Gardez une trace des articles importants et accédez-y à tout moment.',
+                feature5Title: 'Sources Multiples',
+                feature5Desc: 'Accédez à des milliers de sources d\'information du monde entier, toutes au même endroit.',
+                feature6Title: '100% Sécurisé',
+                feature6Desc: 'Vos données sont protégées avec les dernières technologies de sécurité.',
+                ctaTitle: 'Prêt à commencer ?',
+                ctaSubtitle: 'Rejoignez des milliers d\'utilisateurs qui restent informés avec Newsly AI',
+                ctaButton: 'Créer mon compte gratuitement'
+            },
+            en: {
+                heroTitle: 'Your Personalized NewsWall',
+                heroTitleAI: 'Powered by AI',
+                heroSubtitle: 'Stay informed with intelligently filtered news based on your interests. NewslyAI analyzes and organizes information for you.',
+                heroSignup: 'Start Free',
+                heroLogin: 'Sign In',
+                featuresTitle: 'Why choose Newsly AI?',
+                feature1Title: 'Intelligent AI Filtering',
+                feature1Desc: 'Our AI analyzes and filters news to present you only the essentials, tailored to your preferences.',
+                feature2Title: 'Advanced Personalization',
+                feature2Desc: 'Choose your favorite categories: technology, business, science, sports and much more.',
+                feature3Title: 'Real-Time Updates',
+                feature3Desc: 'Stay always up to date with the latest news refreshed in real time.',
+                feature4Title: 'Save Your Favorites',
+                feature4Desc: 'Keep track of important articles and access them anytime.',
+                feature5Title: 'Multiple Sources',
+                feature5Desc: 'Access thousands of news sources from around the world, all in one place.',
+                feature6Title: '100% Secure',
+                feature6Desc: 'Your data is protected with the latest security technologies.',
+                ctaTitle: 'Ready to get started?',
+                ctaSubtitle: 'Join thousands of users who stay informed with Newsly AI',
+                ctaButton: 'Create my free account'
+            }
+        };
+
+        const applyIndexTranslations = (lang) => {
+            const t = indexTranslations[lang];
+            if (!t) return;
+
+            // Hero section
+            const heroTitle = document.querySelector('.hero-title');
+            if (heroTitle) {
+                heroTitle.innerHTML = `${t.heroTitle}<br><span class="gradient-text">${t.heroTitleAI}</span>`;
+            }
+            const heroSubtitle = document.querySelector('.hero-subtitle');
+            if (heroSubtitle) heroSubtitle.textContent = t.heroSubtitle;
+
+            const heroSignupBtn = document.getElementById('heroSignupBtn');
+            if (heroSignupBtn) heroSignupBtn.textContent = t.heroSignup;
+            const heroLoginBtn = document.getElementById('heroLoginBtn');
+            if (heroLoginBtn) heroLoginBtn.textContent = t.heroLogin;
+
+            // Features section
+            const featuresTitle = document.querySelector('.features .section-title');
+            if (featuresTitle) featuresTitle.textContent = t.featuresTitle;
+
+            const featureTitles = document.querySelectorAll('.feature-title');
+            const featureDescs = document.querySelectorAll('.feature-description');
+
+            if (featureTitles[0]) featureTitles[0].textContent = t.feature1Title;
+            if (featureDescs[0]) featureDescs[0].textContent = t.feature1Desc;
+            if (featureTitles[1]) featureTitles[1].textContent = t.feature2Title;
+            if (featureDescs[1]) featureDescs[1].textContent = t.feature2Desc;
+            if (featureTitles[2]) featureTitles[2].textContent = t.feature3Title;
+            if (featureDescs[2]) featureDescs[2].textContent = t.feature3Desc;
+            if (featureTitles[3]) featureTitles[3].textContent = t.feature4Title;
+            if (featureDescs[3]) featureDescs[3].textContent = t.feature4Desc;
+            if (featureTitles[4]) featureTitles[4].textContent = t.feature5Title;
+            if (featureDescs[4]) featureDescs[4].textContent = t.feature5Desc;
+            if (featureTitles[5]) featureTitles[5].textContent = t.feature6Title;
+            if (featureDescs[5]) featureDescs[5].textContent = t.feature6Desc;
+
+            // CTA section
+            const ctaTitle = document.querySelector('.cta-title');
+            if (ctaTitle) ctaTitle.textContent = t.ctaTitle;
+            const ctaSubtitle = document.querySelector('.cta-subtitle');
+            if (ctaSubtitle) ctaSubtitle.textContent = t.ctaSubtitle;
+            const ctaButton = document.getElementById('ctaSignupBtn');
+            if (ctaButton) ctaButton.textContent = t.ctaButton;
+        };
+
         // Initialiser les traductions
+        const currentLang = localStorage.getItem('language') || 'fr';
+        applyIndexTranslations(currentLang);
         translatePage();
 
         // Gestion du modal
@@ -457,6 +555,7 @@
             const newLang = langToggle.checked ? 'en' : 'fr';
             localStorage.setItem('language', newLang);
             // Appliquer les traductions
+            applyIndexTranslations(newLang);
             await translatePage();
         });
     </script>
