@@ -17,11 +17,6 @@ newsly-ai/
 │   │   └── delete.js           # DELETE /api/user/delete
 │   └── news.js                  # GET /api/news
 │
-├── pages/                       # Pages HTML
-│   ├── index.html              # Page d'accueil + Auth modale
-│   ├── dashboard.html          # Dashboard principal
-│   └── settings.html           # Paramètres utilisateur
-│
 ├── public/                      # Assets statiques
 │   ├── css/
 │   │   └── styles.css          # CSS global avec dark/light mode
@@ -36,7 +31,9 @@ newsly-ai/
 │   ├── ARCHITECTURE.md         # Ce fichier
 │   └── SECURITY_IMPLEMENTATION.md  # Documentation sécurité
 │
-├── index.html                   # Redirection vers pages/
+├── index.html                   # Page d'accueil + Auth modale
+├── dashboard.html               # Dashboard principal
+├── settings.html                # Paramètres utilisateur
 │
 ├── .env.example                 # Template variables d'env
 ├── vercel.json                  # Config Vercel

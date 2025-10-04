@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../public/css/styles.css">
+    <link rel="stylesheet" href="public/css/styles.css">
 </head>
 <body class="dashboard-body">
     <!-- Navigation Top Bar -->
@@ -187,9 +187,9 @@
     </footer>
 
     <script type="module">
-        import { checkAuth, logout, getUserProfile, fetchNews, deleteAccount, currentUser } from '../public/js/app.js';
-        import { displayNews, escapeHtml, showError, showSuccess } from '../public/js/dashboard-utils.js';
-        import { tSync as t, translatePage } from '../public/js/translation-service.js';
+        import { checkAuth, logout, getUserProfile, fetchNews, deleteAccount, currentUser } from 'public/js/app.js';
+        import { displayNews, escapeHtml, showError, showSuccess } from 'public/js/dashboard-utils.js';
+        import { tSync as t, translatePage } from 'public/js/translation-service.js';
 
         let currentCategory = 'general';
 
