@@ -2517,6 +2517,55 @@ body:has(.settings-layout) .footer {
   }
 }
 
+/* ================================================
+   SIGNUP FLIP CARD ANIMATION
+================================================ */
+
+.signup-flip-container {
+  perspective: 1000px;
+  width: 100%;
+  min-height: 500px;
+}
+
+.signup-flip-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+.signup-flip-card.flipped {
+  transform: rotateY(180deg);
+}
+
+.signup-flip-face {
+  position: absolute;
+  width: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.signup-flip-front {
+  z-index: 2;
+  transform: rotateY(0deg);
+}
+
+.signup-flip-back {
+  transform: rotateY(180deg);
+}
+
+/* Responsive flip card */
+@media (max-width: 768px) {
+  .signup-flip-container {
+    min-height: 600px;
+  }
+
+  .signup-flip-card {
+    min-height: 600px;
+  }
+}
 
 /* ================================================
    MOBILE LANDSCAPE ORIENTATION

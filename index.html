@@ -290,39 +290,82 @@
                 </p>
             </div>
 
-            <!-- Signup Form -->
+            <!-- Signup Form (Flip Card) -->
             <div class="modal-content" id="signupForm" style="display: none;">
-                <h2 class="modal-title" data-i18n="auth.signupTitle">Créer un compte</h2>
-                <p class="modal-subtitle" data-i18n="auth.signupSubtitle">Rejoignez Newsly AI</p>
+                <div class="signup-flip-container">
+                    <div class="signup-flip-card" id="signupFlipCard">
 
-                <form class="auth-form" id="signupFormElement">
-                    <div class="form-group">
-                        <label class="form-label" data-i18n="settings.username">Nom d'utilisateur</label>
-                        <input type="text" class="form-input" id="signupUsername" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" data-i18n="settings.fullName">Nom complet</label>
-                        <input type="text" class="form-input" id="signupFullName">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" data-i18n="auth.email">Email</label>
-                        <input type="email" class="form-input" id="signupEmail" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" data-i18n="settings.phone">Téléphone</label>
-                        <input type="tel" class="form-input" id="signupPhone" placeholder="+33 6 12 34 56 78">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" data-i18n="auth.password">Mot de passe</label>
-                        <input type="password" class="form-input" id="signupPassword" required>
-                    </div>
-                    <div id="signupError" class="error-message" style="display: none;"></div>
-                    <button type="submit" class="btn-submit" data-i18n="auth.signupBtn">Créer mon compte</button>
-                </form>
+                        <!-- FACE AVANT - Étape 1: Email & Password -->
+                        <div class="signup-flip-face signup-flip-front">
+                            <h2 class="modal-title">Créer un compte</h2>
+                            <p class="modal-subtitle">Étape 1/2 - Informations de connexion</p>
 
-                <p class="modal-footer">
-                    <span data-i18n="auth.hasAccount">Déjà un compte ?</span> <a href="#" id="switchToLogin" data-i18n="auth.loginLink">Se connecter</a>
-                </p>
+                            <form class="auth-form" id="signupStep1Form">
+                                <div class="form-group">
+                                    <label class="form-label">Email <span style="color: var(--error);">*</span></label>
+                                    <input type="email" class="form-input" id="signupEmail" required placeholder="exemple@email.com">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Mot de passe <span style="color: var(--error);">*</span></label>
+                                    <input type="password" class="form-input" id="signupPassword" required placeholder="Min. 8 caractères">
+                                    <p class="form-hint">Le mot de passe doit contenir au moins 8 caractères</p>
+                                </div>
+                                <div id="signupStep1Error" class="error-message" style="display: none;"></div>
+                                <button type="submit" class="btn-submit">Suivant →</button>
+                            </form>
+
+                            <p class="modal-footer">
+                                <span>Déjà un compte ?</span> <a href="#" id="switchToLogin">Se connecter</a>
+                            </p>
+                        </div>
+
+                        <!-- FACE ARRIÈRE - Étape 2: Profil complet -->
+                        <div class="signup-flip-face signup-flip-back">
+                            <h2 class="modal-title">Compléter votre profil</h2>
+                            <p class="modal-subtitle">Étape 2/2 - Informations personnelles</p>
+
+                            <form class="auth-form" id="signupStep2Form">
+                                <div class="form-group">
+                                    <label class="form-label">Nom d'utilisateur <span style="color: var(--error);">*</span></label>
+                                    <input type="text" class="form-input" id="signupUsername" required placeholder="@MonNom">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Nom complet <span style="color: var(--error);">*</span></label>
+                                    <input type="text" class="form-input" id="signupFullName" required placeholder="Julien RICHARD">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Pays <span style="color: var(--error);">*</span></label>
+                                    <select class="form-input" id="signupCountry" required>
+                                        <option value="">-- Sélectionnez --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Ville <span style="color: var(--error);">*</span></label>
+                                    <input type="text" class="form-input" id="signupCity" required placeholder="Bordeaux">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Téléphone (optionnel)</label>
+                                    <div style="display: flex; gap: 0.5rem;">
+                                        <select id="signupPhoneCode" class="form-input" style="width: 120px;">
+                                            <option value="+33">🇫🇷 +33</option>
+                                            <option value="+32">🇧🇪 +32</option>
+                                            <option value="+41">🇨🇭 +41</option>
+                                            <option value="+1">🇺🇸 +1</option>
+                                            <option value="+44">🇬🇧 +44</option>
+                                        </select>
+                                        <input type="tel" class="form-input" id="signupPhone" placeholder="6 12 34 56 78" style="flex: 1;">
+                                    </div>
+                                </div>
+                                <div id="signupStep2Error" class="error-message" style="display: none;"></div>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <button type="button" class="btn-secondary" id="signupBackBtn" style="flex: 1;">← Retour</button>
+                                    <button type="submit" class="btn-submit" id="signupFinalBtn" style="flex: 2;">Créer mon compte</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
