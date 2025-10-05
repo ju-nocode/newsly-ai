@@ -46,6 +46,7 @@ NEWSLY AI - Modern SaaS Dashboard Style
 
   /* Sidebar */
   --sidebar-width: 220px;
+  --settings-sidebar-width: 280px;
   --navbar-height: 56px;
 
   /* Animated Dot Grid Background */
@@ -969,7 +970,7 @@ body > * {
 }
 
 body:has(.settings-layout) .footer {
-  margin-left: 280px;
+  margin-left: var(--settings-sidebar-width);
 }
 
 .footer-container {
@@ -1443,7 +1444,7 @@ body:has(.settings-layout) .footer {
 }
 
 .settings-nav {
-  width: 280px;
+  width: var(--settings-sidebar-width);
   background: var(--bg-primary);
   border-right: 1px solid var(--border);
   padding: 2rem 1.5rem;
@@ -1508,7 +1509,7 @@ body:has(.settings-layout) .footer {
 
 .settings-content {
   flex: 1;
-  margin-left: 280px;
+  margin-left: var(--settings-sidebar-width);
   padding: 3rem;
   display: flex;
   justify-content: center;
@@ -1961,9 +1962,14 @@ body:has(.settings-layout) .footer {
 @media (max-width: 1024px) {
   :root {
     --sidebar-width: 0px;
+    --settings-sidebar-width: 0px;
   }
 
   .dashboard-sidebar {
+    transform: translateX(-100%);
+  }
+
+  .settings-nav {
     transform: translateX(-100%);
   }
 
@@ -1973,6 +1979,10 @@ body:has(.settings-layout) .footer {
   }
 
   .dashboard-container {
+    margin-left: 0;
+  }
+
+  .settings-content {
     margin-left: 0;
   }
 
