@@ -1413,9 +1413,15 @@
                 // Clear the container
                 particlesContainer.innerHTML = '';
 
-                // Reinitialize
+                // Reinitialize with theme-adjusted colors
                 setTimeout(() => {
-                    window.particlesJS('particles-js', config);
+                    const adjustedConfig = adjustColorsForTheme(config);
+                    window.particlesJS('particles-js', adjustedConfig);
+
+                    // Apply blur if set
+                    if (config.customBlur && config.customBlur > 0) {
+                        particlesContainer.style.filter = `blur(${config.customBlur}px)`;
+                    }
                 }, 50);
             } catch (error) {
                 console.error('Particles reload error:', error);
@@ -1475,9 +1481,10 @@
                 // Clear the container
                 particlesContainer.innerHTML = '';
 
-                // Reinitialize with default config
+                // Reinitialize with default config (theme-adjusted)
                 setTimeout(() => {
-                    window.particlesJS('particles-js', defaultParticlesConfig);
+                    const adjustedDefault = adjustColorsForTheme(defaultParticlesConfig);
+                    window.particlesJS('particles-js', adjustedDefault);
                 }, 50);
             } catch (error) {
                 console.error('Reset error:', error);
