@@ -543,5 +543,10 @@ document.addEventListener('DOMContentLoaded', () => {
     loadSession(); // Recharger pour être sûr
 });
 
+// Expose getParticlesConfig globally for particles-config.js
+if (typeof window !== 'undefined') {
+    window.getParticlesConfigFromDB = getParticlesConfig;
+}
+
 // Exporter les fonctions utiles
 export { currentUser, authToken, loadSession };

@@ -457,8 +457,10 @@
         import { translatePage } from './public/js/translation-service.js';
         import { initParticles } from './public/js/particles-config.js';
 
-        // Initialize particles
-        initParticles('particles-js');
+        // Initialize particles (async to load from DB)
+        (async () => {
+            await initParticles('particles-js');
+        })();
 
         // Vérifier l'authentification
         const isAuth = checkAuth();

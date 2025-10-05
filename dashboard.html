@@ -244,8 +244,10 @@
         import { tSync as t, translatePage } from './public/js/translation-service.js';
         import { initParticles } from './public/js/particles-config.js';
 
-        // Initialize particles
-        initParticles('particles-js');
+        // Initialize particles (async to load from DB)
+        (async () => {
+            await initParticles('particles-js');
+        })();
 
         let currentCategory = 'general';
         let selectedCountries = ['us']; // Par défaut : États-Unis
