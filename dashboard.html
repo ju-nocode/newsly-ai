@@ -182,6 +182,20 @@
                     <span data-i18n="country.de">🇩🇪 Allemagne</span>
                 </label>
             </div>
+
+            <!-- Paramètres Section -->
+            <div class="collapse-header collapse-header-separator" data-collapse-id="settings">
+                <img src="https://img.icons8.com/ios-filled/50/FFFFFF/settings.png" alt="Settings" class="collapse-header-icon">
+                <h2 data-i18n="nav.settings">Paramètres</h2>
+                <span class="collapse-icon">▼</span>
+            </div>
+
+            <div class="collapse-content" data-collapse-target="settings">
+                <button class="category-btn" id="settingsAccountBtn">
+                    <img src="https://img.icons8.com/ios-filled/50/FFFFFF/user.png" alt="Account" class="category-icon">
+                    <span class="category-label" data-i18n="settings.title">Paramètre du compte</span>
+                </button>
+            </div>
         </aside>
 
         <main class="dashboard-main">
@@ -627,11 +641,15 @@
             showSuccess(`${t('msg.languageChanged')} ${newLang === 'fr' ? 'Français' : 'English'}`);
         });
 
-        // Gérer le bouton Settings
+        // Gérer le bouton Settings (burger menu)
         document.getElementById('settingsBtn').addEventListener('click', () => {
             window.location.href = 'settings.html';
         });
 
+        // Gérer le bouton Settings (sidebar)
+        document.getElementById('settingsAccountBtn').addEventListener('click', () => {
+            window.location.href = 'settings.html';
+        });
 
         document.getElementById('logoutBtn').addEventListener('click', () => {
             logout();
