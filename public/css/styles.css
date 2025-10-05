@@ -1178,10 +1178,6 @@ input[type="color"]::-moz-color-swatch {
 
 body:has(.settings-layout) .footer {
   margin-left: var(--settings-sidebar-width);
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
 }
 
 .footer-container {
