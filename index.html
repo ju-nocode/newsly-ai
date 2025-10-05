@@ -233,7 +233,7 @@
                     </ul>
                 </div>
 
-                <div class="footer-section">
+                <div class="footer-section" id="appLinksSection" style="display: none;">
                     <h3 class="footer-title">Application</h3>
                     <ul class="footer-links">
                         <li><a href="dashboard.html">Dashboard</a></li>
@@ -333,6 +333,12 @@
         // Si l'utilisateur est déjà connecté, rediriger vers le dashboard
         if (checkAuth()) {
             window.location.href = 'dashboard.html';
+        } else {
+            // Hide app links in footer when not logged in
+            const appLinksSection = document.getElementById('appLinksSection');
+            if (appLinksSection) {
+                appLinksSection.style.display = 'none';
+            }
         }
 
         // Traductions spécifiques à index.html

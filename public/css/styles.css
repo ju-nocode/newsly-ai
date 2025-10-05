@@ -103,8 +103,7 @@ body {
 .settings-layout,
 .features,
 .how-it-works,
-.categories-preview,
-.auth-section {
+.categories-preview {
   pointer-events: none;
 }
 
@@ -114,6 +113,8 @@ body {
 .nav-container > *,
 .feature-card,
 .category-preview,
+.auth-section,
+.auth-container,
 .auth-buttons,
 .btn-hero,
 .btn-secondary,
@@ -942,7 +943,9 @@ input[type="color"]::-moz-color-swatch {
 
 .feature-card,
 .category-preview {
-  background: transparent;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   padding: 1.25rem;
   border-radius: var(--radius-lg);
   text-align: center;
@@ -972,6 +975,11 @@ input[type="color"]::-moz-color-swatch {
   font-weight: 600;
   margin-bottom: 0.5rem;
   color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 0.5rem;
+  border-radius: var(--radius-md);
 }
 
 .feature-description,
@@ -1042,7 +1050,9 @@ input[type="color"]::-moz-color-swatch {
 }
 
 .step-card {
-  background: var(--bg-secondary);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   padding: 2rem;
   border-radius: var(--radius-lg);
   border: 1px solid var(--border);

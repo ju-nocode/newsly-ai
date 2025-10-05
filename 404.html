@@ -15,7 +15,7 @@
     <div id="particles-js"></div>
 
     <div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem;">
-        <div style="max-width: 600px; width: 100%; text-align: center; background: var(--bg-primary); padding: 3rem 2rem; border-radius: var(--radius-xl); border: 1px solid var(--border); box-shadow: 0 4px 16px var(--shadow-lg);">
+        <div style="max-width: 600px; width: 100%; text-align: center; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 3rem 2rem; border-radius: var(--radius-xl); border: 1px solid var(--border); box-shadow: 0 4px 16px var(--shadow-lg);">
 
             <!-- Icône 404 -->
             <div style="margin-bottom: 1.5rem; opacity: 0.4;">
@@ -77,11 +77,11 @@
     <!-- Particles.js Library -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script type="module">
-        import { initParticles } from './public/js/particles-config.js';
+        import { defaultParticlesConfig } from './public/js/particles-config.js';
 
-        // Initialize particles on page load
+        // Initialize particles on page load with default config
         window.addEventListener('DOMContentLoaded', () => {
-            initParticles('particles-js');
+            window.particlesJS('particles-js', defaultParticlesConfig);
         });
     </script>
 </body>
