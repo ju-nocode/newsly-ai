@@ -431,6 +431,28 @@ input[type="color"]::-moz-color-swatch {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  cursor: default;
+}
+
+.sidebar-header.collapsible {
+  cursor: pointer;
+  transition: background 0.2s;
+  user-select: none;
+}
+
+.sidebar-header.collapsible:hover {
+  background: rgba(62, 207, 142, 0.05);
+}
+
+.sidebar-header .collapse-icon {
+  margin-left: auto;
+  font-size: 0.75rem;
+  transition: transform 0.3s ease;
+  color: var(--text-muted);
+}
+
+.sidebar-header.collapsed .collapse-icon {
+  transform: rotate(-90deg);
 }
 
 .sidebar-header-icon {
@@ -448,6 +470,20 @@ input[type="color"]::-moz-color-swatch {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   flex: 1;
+}
+
+.collapsible-content {
+  max-height: 2000px;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
+  opacity: 1;
+}
+
+.collapsible-content.collapsed {
+  max-height: 0 !important;
+  opacity: 0;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 

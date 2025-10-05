@@ -115,6 +115,16 @@ const fallbackTranslations = {
         'settings.profileUpdated': 'Profil mis à jour !',
         'settings.usernameEmpty': 'Le nom d\'utilisateur ne peut pas être vide',
         'settings.updateError': 'Erreur lors de la mise à jour',
+        'settings.languagePreferences': 'Préférences de langue',
+        'settings.french': 'Français',
+        'settings.english': 'English',
+        'settings.theme': 'Thème',
+        'settings.light': 'Clair',
+        'settings.dark': 'Sombre',
+        'settings.savePreferences': 'Enregistrer les préférences',
+        'settings.dangerZone': 'Zone de danger',
+        'settings.dangerZoneDesc': 'Une fois votre compte supprimé, toutes vos données seront définitivement effacées. Cette action est irréversible.',
+        'settings.protectAccount': 'Protégez votre compte',
 
         'auth.login': 'Connexion',
         'auth.signup': 'Créer un compte',
@@ -190,6 +200,16 @@ const fallbackTranslations = {
         'settings.profileUpdated': 'Profile updated!',
         'settings.usernameEmpty': 'Username cannot be empty',
         'settings.updateError': 'Error during update',
+        'settings.languagePreferences': 'Language preferences',
+        'settings.french': 'French',
+        'settings.english': 'English',
+        'settings.theme': 'Theme',
+        'settings.light': 'Light',
+        'settings.dark': 'Dark',
+        'settings.savePreferences': 'Save preferences',
+        'settings.dangerZone': 'Danger zone',
+        'settings.dangerZoneDesc': 'Once your account is deleted, all your data will be permanently erased. This action is irreversible.',
+        'settings.protectAccount': 'Protect your account',
 
         'auth.login': 'Login',
         'auth.signup': 'Sign up',
@@ -264,6 +284,9 @@ export const translatePage = async () => {
         if (translation && translation !== key) {
             if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
                 element.placeholder = translation;
+            } else if (element.tagName === 'OPTION') {
+                // Pour les options de select, traduire le textContent
+                element.textContent = translation;
             } else {
                 element.textContent = translation;
             }
