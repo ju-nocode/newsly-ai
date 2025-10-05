@@ -482,12 +482,20 @@ export const getParticlesConfig = async () => {
 
 // Save particles config to database
 export const saveParticlesConfigToDB = async (config) => {
+    console.log('[saveParticlesConfigToDB] authToken présent:', !!authToken);
+    console.log('[saveParticlesConfigToDB] authToken length:', authToken?.length || 0);
+
     if (!authToken) {
-        return { success: false, error: 'Non authentifié' };
+        console.error('[saveParticlesConfigToDB] Pas de token - rechargement session...');
+        loadSession(); // Reload session
+        if (!authToken) {
+            return { success: false, error: 'Non authentifié - veuillez vous reconnecter' };
+        }
     }
 
     try {
-        console.log('[saveParticlesConfigToDB] Sending config to API:', config);
+        console.log('[saveParticlesConfigToDB] Sending config to API');
+        console.log('[saveParticlesConfigToDB] API URL:', `${API_BASE_URL}/api/particles/config`);
         const response = await fetch(`${API_BASE_URL}/api/particles/config`, {
             method: 'POST',
             headers: {
@@ -516,10 +524,13 @@ export const saveParticlesConfigToDB = async (config) => {
 // INITIALISATION
 // ================================================
 
+// Charger la session immédiatement au chargement du module
+loadSession();
+
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     createThemeToggle();
-    loadSession(); // Charger la session au démarrage
+    loadSession(); // Recharger pour être sûr
 });
 
 // Exporter les fonctions utiles
