@@ -8,6 +8,12 @@ NEWSLY AI - Modern SaaS Dashboard Style
   box-sizing: border-box;
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  scroll-behavior: smooth;
+}
+
 :root {
   /* Light Mode - Supabase inspired */
   --bg-primary: #ffffff;
@@ -228,11 +234,15 @@ textarea,
 
 /* Icon filters for theme adaptation */
 :root {
-  --icon-filter: none;
+  --icon-filter: brightness(0) saturate(100%);
 }
 
 [data-theme="dark"] {
   --icon-filter: brightness(0) invert(1);
+}
+
+[data-theme="light"] {
+  --icon-filter: brightness(0) saturate(100%);
 }
 
 .logo-text {
@@ -476,10 +486,15 @@ input[type="color"]::-moz-color-swatch {
   transition: all 0.15s ease;
   width: 100%;
   text-align: left;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  line-height: 1.4;
 }
 
 .category-btn:hover {
   background: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 .category-btn.active {
@@ -493,10 +508,6 @@ input[type="color"]::-moz-color-swatch {
   align-items: center;
   gap: 0.625rem;
   flex: 1;
-  font-size: 0.8125rem;
-  color: var(--text-secondary);
-  font-weight: 400;
-  line-height: 1.4;
 }
 
 .category-btn.active .category-label {
@@ -2216,6 +2227,7 @@ body:has(.settings-layout) .footer {
 @media (max-width: 768px) {
   .news-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
   .dashboard-container {
@@ -2224,6 +2236,7 @@ body:has(.settings-layout) .footer {
 
   .hero-title {
     font-size: 2rem;
+    line-height: 1.2;
   }
 
   .section-title {
@@ -2239,7 +2252,7 @@ body:has(.settings-layout) .footer {
   }
 
   .nav-user-greeting {
-    display: none; /* Masquer sur mobile */
+    display: none;
   }
 
   .weather-widget {
@@ -2247,7 +2260,7 @@ body:has(.settings-layout) .footer {
   }
 
   .weather-city {
-    display: none; /* Afficher seulement temp sur mobile */
+    display: none;
   }
 
   .burger-dropdown {
@@ -2257,17 +2270,23 @@ body:has(.settings-layout) .footer {
   .hero-cta {
     flex-direction: column;
     width: 100%;
+    gap: 1rem;
   }
 
   .hero-cta .btn-hero,
   .hero-cta .btn-secondary {
     width: 100%;
     justify-content: center;
+    min-height: 48px;
   }
 
   .settings-container {
     padding: 1rem;
     padding-top: calc(var(--navbar-height) + 1rem);
+  }
+
+  .settings-content {
+    padding: 1.5rem 1rem 150px 1rem;
   }
 
   .settings-title {
@@ -2280,6 +2299,24 @@ body:has(.settings-layout) .footer {
 
   .settings-card-title {
     font-size: 1rem;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .btn-danger {
+    min-height: 44px;
+    padding: 0.75rem 1.25rem;
+  }
+
+  .news-card {
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .category-btn,
+  .country-option-sidebar,
+  .settings-nav-item {
+    min-height: 44px;
   }
 }
 
@@ -2302,13 +2339,13 @@ body:has(.settings-layout) .footer {
   }
 
   .search-input {
-    font-size: 0.8125rem;
-    padding: 0.4rem 0.75rem;
+    font-size: 0.875rem;
+    padding: 0.5rem 0.75rem;
   }
 
   .btn-search {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     font-size: 1.125rem;
   }
 
@@ -2317,10 +2354,15 @@ body:has(.settings-layout) .footer {
     right: 0.5rem;
     margin: 0.5rem;
     min-width: auto;
+    width: calc(100% - 1rem);
   }
 
   .dashboard-container {
     padding: 1rem 0.75rem;
+  }
+
+  .news-header h1 {
+    font-size: 1.5rem;
   }
 
   .hero {
@@ -2329,15 +2371,19 @@ body:has(.settings-layout) .footer {
 
   .hero-title {
     font-size: 1.75rem;
+    line-height: 1.2;
   }
 
   .hero-subtitle {
     font-size: 1rem;
+    line-height: 1.5;
   }
 
   .modal-container {
     width: 95%;
+    max-width: 95%;
     padding: 1.5rem;
+    margin: 0.5rem;
   }
 
   .modal-title {
@@ -2357,6 +2403,10 @@ body:has(.settings-layout) .footer {
   .settings-container {
     padding: 0.75rem;
     padding-top: calc(var(--navbar-height) + 0.75rem);
+  }
+
+  .settings-content {
+    padding: 1rem 0.75rem 100px 0.75rem;
   }
 
   .settings-title {
@@ -2381,6 +2431,29 @@ body:has(.settings-layout) .footer {
 
   .form-label {
     font-size: 0.8125rem;
+  }
+
+  .form-input,
+  .form-textarea,
+  .form-select {
+    font-size: 1rem;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .btn-danger {
+    font-size: 0.9375rem;
+    padding: 0.875rem 1rem;
+  }
+
+  .news-card-title {
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  .news-card-description {
+    font-size: 0.875rem;
+    line-height: 1.5;
   }
 
   .form-input {
@@ -2417,30 +2490,31 @@ body:has(.settings-layout) .footer {
   padding: 1rem 0;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.125rem;
 }
 
 .country-option-sidebar {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1rem;
+  gap: 0.625rem;
+  padding: 0.5rem 0.75rem;
   background: transparent;
   border: none;
   border-radius: var(--radius-md);
   cursor: pointer;
-  transition: all 0.2s;
-  width: calc(100% - 0.5rem);
-  margin: 0 0.25rem;
+  transition: all 0.15s ease;
+  width: 100%;
   text-align: left;
-  font-size: 0.9375rem;
+  font-size: 0.8125rem;
   color: var(--text-secondary);
-  font-weight: 500;
+  font-weight: 400;
+  line-height: 1.4;
   user-select: none;
 }
 
 .country-option-sidebar:hover {
   background: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 .country-option-sidebar input[type="checkbox"] {
@@ -2454,9 +2528,73 @@ body:has(.settings-layout) .footer {
   accent-color: var(--primary);
 }
 
-.country-option-sidebar input[type="checkbox"]:checked + span {
+.country-option-sidebar:has(input[type="checkbox"]:checked) {
   color: var(--text-primary);
-  font-weight: 600;
+  font-weight: 500;
+}
+
+/* ================================================
+   MOBILE LANDSCAPE ORIENTATION
+================================================ */
+
+@media (max-width: 900px) and (orientation: landscape) {
+  .hero {
+    padding: 2rem 1rem;
+  }
+
+  .hero-title {
+    font-size: 1.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.9375rem;
+  }
+
+  .modal-container {
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .settings-container {
+    padding-top: calc(var(--navbar-height) + 0.5rem);
+  }
+
+  .dashboard-container {
+    padding: 1.5rem 1rem;
+  }
+}
+
+/* ================================================
+   TOUCH DEVICE OPTIMIZATIONS
+================================================ */
+
+@media (hover: none) and (pointer: coarse) {
+  button,
+  .btn-primary,
+  .btn-secondary,
+  .btn-danger,
+  .category-btn,
+  .country-option-sidebar,
+  .settings-nav-item {
+    -webkit-tap-highlight-color: rgba(62, 207, 142, 0.1);
+  }
+
+  .news-card {
+    -webkit-tap-highlight-color: rgba(62, 207, 142, 0.05);
+  }
+
+  .category-btn:active,
+  .settings-nav-item:active,
+  .country-option-sidebar:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
 }
 
 /* ================================================
