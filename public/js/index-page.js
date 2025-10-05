@@ -359,7 +359,15 @@ if (signupStep2Form) {
         });
 
         if (result.success) {
-            window.location.href = 'dashboard.html';
+            // Cacher l'erreur
+            errorDiv.style.display = 'none';
+
+            // FLIP vers Step 3 (confirmation email)
+            document.getElementById('signupFlipCard').classList.remove('flipped');
+            document.getElementById('signupFlipCard').classList.add('flipped-twice');
+
+            // Ne pas rediriger, attendre que l'utilisateur confirme son email
+            // window.location.href = 'dashboard.html';
         } else {
             errorDiv.textContent = result.error;
             errorDiv.style.display = 'block';
@@ -390,6 +398,23 @@ const validateSignupStep2 = () => {
         element.addEventListener('input', validateSignupStep2);
     }
 });
+
+// Bouton Fermer après signup (Step 3)
+const closeModalAfterSignupBtn = document.getElementById('closeModalAfterSignup');
+if (closeModalAfterSignupBtn) {
+    closeModalAfterSignupBtn.addEventListener('click', () => {
+        // Fermer la modal
+        authModal.classList.remove('show');
+
+        // Reset le flip pour la prochaine fois
+        setTimeout(() => {
+            document.getElementById('signupFlipCard').classList.remove('flipped', 'flipped-twice');
+            // Reset les formulaires
+            document.getElementById('signupStep1Form').reset();
+            document.getElementById('signupStep2Form').reset();
+        }, 300);
+    });
+}
 
 // Hero buttons
 document.getElementById('heroSignupBtn').addEventListener('click', () => {

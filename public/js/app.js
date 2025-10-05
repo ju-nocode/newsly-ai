@@ -109,13 +109,24 @@ export const signup = async (email, password, metadata) => {
                 display_name: metadata.username || email.split('@')[0],
                 phone: metadata.phone || '',
                 bio: metadata.bio || '',
-                avatar_url: metadata.avatar_url || ''
+                avatar_url: metadata.avatar_url || '',
+                country: metadata.country || 'France',
+                city: metadata.city || 'Paris'
             };
 
         const response = await fetch(`${API_BASE_URL}/api/auth/signup`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password, metadata: userMetadata })
+            body: JSON.stringify({
+                email,
+                password,
+                metadata: userMetadata,
+                username: metadata.username,
+                full_name: metadata.full_name,
+                country: metadata.country,
+                city: metadata.city,
+                phone: metadata.phone
+            })
         });
 
         const data = await response.json();
