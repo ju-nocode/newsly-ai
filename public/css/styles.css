@@ -2386,7 +2386,7 @@ body:has(.settings-layout) .footer {
 ================================================ */
 
 .country-filter-sidebar {
-  padding: 1rem 0;
+  padding: 0.5rem 1.5rem 1.5rem 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.125rem;
