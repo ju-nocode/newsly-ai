@@ -1986,6 +1986,8 @@ body:has(.settings-layout) .footer {
   padding: 1.5rem;
   margin-bottom: 1.5rem;
   box-shadow: 0 1px 2px var(--shadow);
+  max-width: 650px; /* Limite la largeur pour éviter espace vide */
+  width: 100%;
 }
 
 .settings-card .form-input:not([type="color"]):not([type="range"]):not([type="checkbox"]) {
@@ -2046,11 +2048,19 @@ body:has(.settings-layout) .footer {
   grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
   align-items: start;
+  max-width: 1320px; /* 2 cartes de 650px + gap */
 }
 
 #section-security .security-grid .settings-card {
   margin-bottom: 0;
   height: 100%;
+  max-width: none; /* Permet à la grille de gérer la largeur */
+}
+
+@media (max-width: 1024px) {
+  #section-security .security-grid {
+    grid-template-columns: 1fr; /* Une seule colonne sur tablette */
+  }
 }
 
 @media (max-width: 768px) {
