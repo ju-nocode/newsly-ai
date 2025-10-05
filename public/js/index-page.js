@@ -246,16 +246,18 @@ if (signupCountrySelect) {
 }
 
 // Peupler le dropdown des indicatifs téléphoniques
-const signupPhoneCountrySelect = document.getElementById('signupPhoneCountry');
-if (signupPhoneCountrySelect) {
+const signupPhoneCodeSelect = document.getElementById('signupPhoneCode');
+if (signupPhoneCodeSelect) {
+    // Vider les options existantes
+    signupPhoneCodeSelect.innerHTML = '';
     countries.forEach(country => {
         const option = document.createElement('option');
         option.value = country.dial_code;
         option.textContent = `${country.emoji} ${country.dial_code}`;
-        signupPhoneCountrySelect.appendChild(option);
+        signupPhoneCodeSelect.appendChild(option);
     });
     // Sélectionner +33 (France) par défaut
-    signupPhoneCountrySelect.value = '+33';
+    signupPhoneCodeSelect.value = '+33';
 }
 
 // Variables pour stocker les données de Step 1
@@ -315,8 +317,8 @@ if (signupStep2Form) {
         const fullName = document.getElementById('signupFullName').value.trim();
         const country = document.getElementById('signupCountry').value;
         const city = document.getElementById('signupCity').value.trim();
-        const phoneCountry = document.getElementById('signupPhoneCountry').value;
-        const phoneNumber = document.getElementById('signupPhoneNumber').value.trim();
+        const phoneCode = document.getElementById('signupPhoneCode').value;
+        const phoneNumber = document.getElementById('signupPhone').value.trim();
         const errorDiv = document.getElementById('signupStep2Error');
 
         // Validation
@@ -345,7 +347,7 @@ if (signupStep2Form) {
         }
 
         // Construire le numéro de téléphone complet (optionnel)
-        const phone = phoneNumber ? `${phoneCountry} ${phoneNumber}` : '';
+        const phone = phoneNumber ? `${phoneCode} ${phoneNumber}` : '';
 
         // Créer le compte avec toutes les données
         const result = await signup(step1Email, step1Password, {
