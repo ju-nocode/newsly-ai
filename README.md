@@ -3,30 +3,7 @@
 > Votre agrégateur d'actualités personnalisé alimenté par l'intelligence artificielle
 
 [![Live Demo](https://img.shields.io/badge/demo-live-success)](https://prod-julien.vercel.app)
-[![License](https://img.shields.io/badge/license-Proprietary-red.svg)](LICENSE)
-[![All Rights Reserved](https://img.shields.io/badge/copyright-All_Rights_Reserved-critical)](NOTICE.md)
 [![Portfolio](https://img.shields.io/badge/portfolio-Julien_Richard-blue)](https://www.linkedin.com/in/fr-richard-julien/)
-
----
-
-## ⚖️ AVIS LEGAL
-
-> **🔒 PROPRIÉTÉ PRIVÉE** - Ce projet est sous **licence propriétaire**. Le code source est visible **uniquement** à des fins de démonstration, d'apprentissage et de portfolio professionnel.
-
-### ✅ Autorisé
-- Consultation du code pour apprentissage
-- Étude de l'architecture et des concepts
-- Signalement de bugs et suggestions
-
-### ❌ INTERDIT sans autorisation écrite
-- Utilisation commerciale
-- Déploiement en production
-- Copie ou redistribution du code
-- Création d'œuvres dérivées
-
-**📄 Pour toute utilisation, voir :** [NOTICE.md](NOTICE.md) | [LICENSE](LICENSE) | [CONTRIBUTING.md](CONTRIBUTING.md)
-
-**📧 Licence commerciale :** ju.richard.33@gmail.com
 
 ---
 
@@ -108,15 +85,12 @@ newsly-ai/
 ├── settings.html                 # Paramètres utilisateur
 ├── 404.html                      # Page erreur 404
 ├── vercel.json                   # Configuration Vercel
-├── README.md                     # Documentation
-└── SECURITY.md                   # Guide sécurité
+└── README.md                     # Documentation
 ```
 
 ## ⚙️ Installation
 
-> ⚠️ **Attention** : Ce code est fourni **à titre de référence uniquement**. Vous ne pouvez pas déployer ou utiliser ce projet sans autorisation écrite préalable. Pour toute demande de licence commerciale, contactez ju.richard.33@gmail.com
-
-### 1. Prérequis (pour consultation uniquement)
+### 1. Prérequis
 - Node.js 18+
 - Compte Supabase
 - Compte Vercel
@@ -269,27 +243,6 @@ Voir [SECURITY.md](SECURITY.md) pour le guide complet.
 - [ ] Mode offline avec cache
 - [ ] Application mobile (React Native)
 - [ ] Partage social d'articles
-
-## 📝 License
-
-**Proprietary License - All Rights Reserved**
-
-© 2025 Julien Richard - Tous droits réservés
-
-Ce projet est sous licence propriétaire. Le code source est visible à des fins éducatives et de démonstration uniquement. Toute utilisation commerciale, redistribution ou modification nécessite une autorisation écrite explicite.
-
-**Autorisé :**
-- ✅ Consultation du code pour apprentissage
-- ✅ Étude des concepts et de l'architecture
-- ✅ Rapport de bugs et suggestions
-
-**Interdit sans autorisation :**
-- ❌ Utilisation commerciale
-- ❌ Redistribution ou revente
-- ❌ Déploiement en production
-- ❌ Copie de portions significatives du code
-
-Pour obtenir une licence commerciale : **ju.richard.33@gmail.com**
 
 ## 🤝 Support & Contact
 
