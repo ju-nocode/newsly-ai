@@ -65,6 +65,36 @@ export default async function handler(req, res) {
             return res.status(400).json({ error: error.message });
         }
 
+        // Créer/Mettre à jour le profil dans la table profiles
+        if (data.user) {
+            const supabaseAdmin = createClient(
+                process.env.SUPABASE_URL,
+                process.env.SUPABASE_SERVICE_ROLE_KEY
+            );
+
+            // Upsert dans profiles (insert ou update si existe déjà)
+            const { error: profileError } = await supabaseAdmin
+                .from('profiles')
+                .upsert({
+                    id: data.user.id,
+                    email: data.user.email,
+                    username: userMetadata.username || userMetadata.full_name || email.split('@')[0],
+                    full_name: userMetadata.full_name || userMetadata.username || email.split('@')[0],
+                    phone: userMetadata.phone || null,
+                    bio: userMetadata.bio || null,
+                    avatar_url: userMetadata.avatar_url || null,
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString()
+                }, {
+                    onConflict: 'id'
+                });
+
+            if (profileError) {
+                console.error('Profile creation error:', profileError);
+                // Ne pas bloquer l'inscription même si la création du profil échoue
+            }
+        }
+
         return res.status(200).json({
             user: data.user,
             session: data.session,
