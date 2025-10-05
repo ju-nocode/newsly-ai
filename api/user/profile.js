@@ -84,12 +84,18 @@ export default async function handler(req, res) {
                 return res.status(400).json({ error: 'Bio trop longue (max 500 caractères)' });
             }
 
-            if (avatar_url !== undefined && avatar_url !== null && avatar_url.length > 0) {
+            if (avatar_url !== undefined && avatar_url !== null && avatar_url.trim().length > 0) {
+                const trimmedUrl = avatar_url.trim();
+
                 // Accepter les URLs http/https et les data URLs (base64)
-                const isValidUrl = avatar_url.match(/^https?:\/\/.+/) || avatar_url.match(/^data:image\/.+;base64,.+/);
-                // Limite stricte à 50KB pour éviter les tokens trop gros
-                if (avatar_url.length > 50000 || !isValidUrl) {
-                    return res.status(400).json({ error: 'Avatar invalide (max 50KB en base64 ou URL)' });
+                const isValidUrl = trimmedUrl.match(/^https?:\/\/.+/) || trimmedUrl.match(/^data:image\/.+;base64,.+/);
+
+                if (!isValidUrl) {
+                    // Si ce n'est pas une URL valide, mettre à null au lieu de rejeter
+                    avatar_url = null;
+                } else if (trimmedUrl.length > 50000) {
+                    // Limite stricte à 50KB pour éviter les tokens trop gros
+                    return res.status(400).json({ error: 'Avatar trop volumineux (max 50KB en base64 ou URL)' });
                 }
             }
 
