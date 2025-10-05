@@ -248,54 +248,56 @@
                 <h2 class="settings-section-title">Sécurité</h2>
                 <p class="settings-section-desc">Protégez votre compte</p>
 
-                <div class="settings-card">
-                    <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-primary);">Changement de mot de passe</h3>
-                    <div class="form-group">
-                        <label for="currentPassword" class="form-label" data-i18n="settings.currentPassword">Mot de passe actuel</label>
-                        <input
-                            type="password"
-                            id="currentPassword"
-                            class="form-input"
-                            placeholder="••••••••"
-                            data-i18n-placeholder="settings.currentPasswordPlaceholder"
-                        >
+                <div class="security-grid">
+                    <div class="settings-card">
+                        <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-primary);">Changement de mot de passe</h3>
+                        <div class="form-group">
+                            <label for="currentPassword" class="form-label" data-i18n="settings.currentPassword">Mot de passe actuel</label>
+                            <input
+                                type="password"
+                                id="currentPassword"
+                                class="form-input"
+                                placeholder="••••••••"
+                                data-i18n-placeholder="settings.currentPasswordPlaceholder"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="newPassword" class="form-label" data-i18n="settings.newPassword">Nouveau mot de passe</label>
+                            <input
+                                type="password"
+                                id="newPassword"
+                                class="form-input"
+                                placeholder="••••••••"
+                                data-i18n-placeholder="settings.newPasswordPlaceholder"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmPassword" class="form-label" data-i18n="settings.confirmPassword">Confirmer le mot de passe</label>
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                class="form-input"
+                                placeholder="••••••••"
+                                data-i18n-placeholder="settings.confirmPasswordPlaceholder"
+                            >
+                        </div>
+
+                        <button id="changePasswordBtn" class="btn-primary" data-i18n="settings.changePassword">
+                            Changer le mot de passe
+                        </button>
                     </div>
 
-                    <div class="form-group">
-                        <label for="newPassword" class="form-label" data-i18n="settings.newPassword">Nouveau mot de passe</label>
-                        <input
-                            type="password"
-                            id="newPassword"
-                            class="form-input"
-                            placeholder="••••••••"
-                            data-i18n-placeholder="settings.newPasswordPlaceholder"
-                        >
-                    </div>
-
-                    <div class="form-group">
-                        <label for="confirmPassword" class="form-label" data-i18n="settings.confirmPassword">Confirmer le mot de passe</label>
-                        <input
-                            type="password"
-                            id="confirmPassword"
-                            class="form-input"
-                            placeholder="••••••••"
-                            data-i18n-placeholder="settings.confirmPasswordPlaceholder"
-                        >
-                    </div>
-
-                    <button id="changePasswordBtn" class="btn-primary" data-i18n="settings.changePassword">
-                        Changer le mot de passe
-                    </button>
-                </div>
-
-                <!-- Security Audit Card -->
-                <div class="settings-card">
-                    <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-primary);">Audit de sécurité</h3>
-                    <p class="settings-description">
-                        Consultez l'historique des activités de sécurité de votre compte
-                    </p>
-                    <div id="securityAuditContainer">
-                        <p style="text-align: center; color: var(--text-muted);">Chargement de l'audit...</p>
+                    <!-- Security Audit Card -->
+                    <div class="settings-card">
+                        <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-primary);">Audit de sécurité</h3>
+                        <p class="settings-description">
+                            Consultez l'historique des activités de sécurité de votre compte
+                        </p>
+                        <div id="securityAuditContainer">
+                            <p style="text-align: center; color: var(--text-muted);">Chargement de l'audit...</p>
+                        </div>
                     </div>
                 </div>
             </section>
