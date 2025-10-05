@@ -389,9 +389,6 @@
                         <button id="resetParticlesBtn" class="btn-secondary">
                             Réinitialiser
                         </button>
-                        <button id="applyParticlesBtn" class="btn-secondary">
-                            Appliquer (aperçu)
-                        </button>
                     </div>
                 </div>
             </section>
@@ -1278,39 +1275,6 @@
             applyLivePreview();
         });
 
-        // Apply (preview) button
-        document.getElementById('applyParticlesBtn').addEventListener('click', () => {
-            const config = getParticlesConfig();
-
-            try {
-                // Clear and reinitialize particles
-                const particlesContainer = document.getElementById('particles-js');
-
-                // Destroy existing particles
-                if (window.pJSDom && window.pJSDom.length > 0) {
-                    try {
-                        window.pJSDom[0].pJS.fn.vendors.destroypJS();
-                        window.pJSDom = [];
-                    } catch (e) {
-                        console.warn('Error destroying particles:', e);
-                    }
-                }
-
-                // Clear the container
-                particlesContainer.innerHTML = '';
-
-                // Reinitialize
-                setTimeout(() => {
-                    window.particlesJS('particles-js', config);
-                    showSuccess('Aperçu appliqué !');
-                }, 50);
-            } catch (error) {
-                console.error('Apply preview error:', error);
-                showError('Erreur lors de l\'application. Rechargement...');
-                setTimeout(() => location.reload(), 1000);
-            }
-        });
-
         // Save button
         document.getElementById('saveParticlesBtn').addEventListener('click', async () => {
             const config = getParticlesConfig();
@@ -1364,14 +1328,15 @@
             // Save default config to database
             const dbResult = await saveParticlesConfigToDB(defaultParticlesConfig);
 
+            // Reload form values with default config (this moves the sliders)
+            await loadParticlesSettings();
+
             if (dbResult.success) {
                 showSuccess('Paramètres réinitialisés et enregistrés en base de données !');
             } else {
                 console.error('DB save error:', dbResult.error);
                 showSuccess('Paramètres réinitialisés localement !');
             }
-
-            await loadParticlesSettings();
 
             try {
                 const particlesContainer = document.getElementById('particles-js');
@@ -1389,7 +1354,7 @@
                 // Clear the container
                 particlesContainer.innerHTML = '';
 
-                // Reinitialize
+                // Reinitialize with default config
                 setTimeout(() => {
                     window.particlesJS('particles-js', defaultParticlesConfig);
                 }, 50);
