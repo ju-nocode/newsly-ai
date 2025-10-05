@@ -2175,27 +2175,41 @@ body:has(.settings-layout) .footer {
 
   /* Sidebars cachées par défaut sur mobile */
   .dashboard-sidebar {
-    transform: translateX(-100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height pour mobile */
+    transform: translate3d(-100%, 0, 0); /* GPU acceleration */
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 1000;
     box-shadow: 2px 0 20px var(--shadow-lg);
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling iOS */
+    will-change: transform; /* Optimisation performance */
   }
 
   /* Sidebar visible quand menu mobile ouvert */
   .dashboard-sidebar.mobile-open {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
 
   .settings-nav {
-    transform: translateX(-100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height pour mobile */
+    transform: translate3d(-100%, 0, 0); /* GPU acceleration */
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 1000;
     box-shadow: 2px 0 20px var(--shadow-lg);
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling iOS */
+    will-change: transform; /* Optimisation performance */
   }
 
   /* Settings nav visible quand menu mobile ouvert */
   .settings-nav.mobile-open {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
 
   /* Overlay pour fermer le menu en cliquant à côté */
@@ -2205,11 +2219,14 @@ body:has(.settings-layout) .footer {
     left: 0;
     width: 100%;
     height: 100%;
+    height: 100dvh; /* Dynamic viewport pour mobile */
     background: rgba(0, 0, 0, 0.5);
     z-index: 999;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    -webkit-tap-highlight-color: transparent; /* Pas de highlight iOS */
+    touch-action: none; /* Empêche scroll sous overlay */
   }
 
   .mobile-overlay.show {
@@ -2228,19 +2245,23 @@ body:has(.settings-layout) .footer {
     cursor: pointer;
     padding: 0.5rem;
     margin-right: 0.5rem;
-    width: 36px;
-    height: 36px;
+    width: 44px; /* Taille minimum tactile 44px */
+    height: 44px;
     border-radius: var(--radius-md);
     transition: background 0.2s;
+    -webkit-tap-highlight-color: rgba(62, 207, 142, 0.1); /* Highlight vert iOS */
+    touch-action: manipulation; /* Meilleure réactivité tactile */
   }
 
-  .mobile-menu-btn:hover {
+  .mobile-menu-btn:active {
     background: var(--bg-secondary);
+    transform: scale(0.95);
   }
 
   .mobile-menu-btn svg {
     width: 24px;
     height: 24px;
+    pointer-events: none; /* Events passent au bouton parent */
   }
 
   .navbar.dashboard-nav {

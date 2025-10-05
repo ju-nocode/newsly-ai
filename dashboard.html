@@ -649,28 +649,54 @@
         const mobileOverlay = document.getElementById('mobileOverlay');
         const dashboardSidebar = document.querySelector('.dashboard-sidebar');
 
-        // Ouvrir/Fermer sidebar mobile
+        // Fonction pour fermer le menu mobile
+        const closeMobileMenu = () => {
+            dashboardSidebar.classList.remove('mobile-open');
+            mobileOverlay.classList.remove('show');
+            document.body.style.overflow = ''; // Réactiver scroll
+        };
+
+        // Fonction pour ouvrir le menu mobile
+        const openMobileMenu = () => {
+            dashboardSidebar.classList.add('mobile-open');
+            mobileOverlay.classList.add('show');
+            document.body.style.overflow = 'hidden'; // Empêcher scroll background
+        };
+
+        // Toggle menu avec le bouton burger
         if (mobileSidebarBtn) {
-            mobileSidebarBtn.addEventListener('click', () => {
-                dashboardSidebar.classList.toggle('mobile-open');
-                mobileOverlay.classList.toggle('show');
+            mobileSidebarBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                if (dashboardSidebar.classList.contains('mobile-open')) {
+                    closeMobileMenu();
+                } else {
+                    openMobileMenu();
+                }
             });
+
+            // Support touch events pour iOS
+            mobileSidebarBtn.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                mobileSidebarBtn.click();
+            }, { passive: false });
         }
 
-        // Fermer en cliquant sur l'overlay
+        // Fermer avec overlay (click et touch)
         if (mobileOverlay) {
-            mobileOverlay.addEventListener('click', () => {
-                dashboardSidebar.classList.remove('mobile-open');
-                mobileOverlay.classList.remove('show');
-            });
+            mobileOverlay.addEventListener('click', closeMobileMenu);
+            mobileOverlay.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                closeMobileMenu();
+            }, { passive: false });
         }
 
         // Fermer sidebar après sélection catégorie sur mobile
         document.querySelectorAll('.category-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (window.innerWidth <= 1024) {
-                    dashboardSidebar.classList.remove('mobile-open');
-                    mobileOverlay.classList.remove('show');
+                    setTimeout(closeMobileMenu, 100); // Petit délai pour UX
                 }
             });
         });
@@ -679,10 +705,16 @@
         document.querySelectorAll('.country-option-sidebar').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (window.innerWidth <= 1024) {
-                    dashboardSidebar.classList.remove('mobile-open');
-                    mobileOverlay.classList.remove('show');
+                    setTimeout(closeMobileMenu, 100); // Petit délai pour UX
                 }
             });
+        });
+
+        // Fermer avec touche Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && dashboardSidebar.classList.contains('mobile-open')) {
+                closeMobileMenu();
+            }
         });
 
         // Initialiser

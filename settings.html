@@ -897,30 +897,63 @@
         const mobileOverlay = document.getElementById('mobileOverlay');
         const settingsNav = document.querySelector('.settings-nav');
 
-        // Ouvrir/Fermer settings nav mobile
+        // Fonction pour fermer le menu settings mobile
+        const closeSettingsMobileMenu = () => {
+            settingsNav.classList.remove('mobile-open');
+            mobileOverlay.classList.remove('show');
+            document.body.style.overflow = ''; // Réactiver scroll
+        };
+
+        // Fonction pour ouvrir le menu settings mobile
+        const openSettingsMobileMenu = () => {
+            settingsNav.classList.add('mobile-open');
+            mobileOverlay.classList.add('show');
+            document.body.style.overflow = 'hidden'; // Empêcher scroll background
+        };
+
+        // Toggle menu avec le bouton burger
         if (mobileSettingsNavBtn) {
-            mobileSettingsNavBtn.addEventListener('click', () => {
-                settingsNav.classList.toggle('mobile-open');
-                mobileOverlay.classList.toggle('show');
+            mobileSettingsNavBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                if (settingsNav.classList.contains('mobile-open')) {
+                    closeSettingsMobileMenu();
+                } else {
+                    openSettingsMobileMenu();
+                }
             });
+
+            // Support touch events pour iOS
+            mobileSettingsNavBtn.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                mobileSettingsNavBtn.click();
+            }, { passive: false });
         }
 
-        // Fermer en cliquant sur l'overlay
+        // Fermer avec overlay (click et touch)
         if (mobileOverlay) {
-            mobileOverlay.addEventListener('click', () => {
-                settingsNav.classList.remove('mobile-open');
-                mobileOverlay.classList.remove('show');
-            });
+            mobileOverlay.addEventListener('click', closeSettingsMobileMenu);
+            mobileOverlay.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                closeSettingsMobileMenu();
+            }, { passive: false });
         }
 
         // Fermer nav après sélection section sur mobile
         document.querySelectorAll('.settings-nav-item').forEach(item => {
             item.addEventListener('click', () => {
                 if (window.innerWidth <= 1024) {
-                    settingsNav.classList.remove('mobile-open');
-                    mobileOverlay.classList.remove('show');
+                    setTimeout(closeSettingsMobileMenu, 100); // Petit délai pour UX
                 }
             });
+        });
+
+        // Fermer avec touche Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && settingsNav.classList.contains('mobile-open')) {
+                closeSettingsMobileMenu();
+            }
         });
 
         // Charger le nom utilisateur pour le burger
