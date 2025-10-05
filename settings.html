@@ -107,10 +107,16 @@
     <div class="settings-layout">
         <!-- Sidebar Navigation -->
         <aside class="settings-nav">
-            <h1 class="settings-nav-title">Paramètres</h1>
             <nav class="settings-nav-menu">
-                <!-- Section Général -->
-                <div class="sidebar-header collapsible" id="settingsGeneralHeader">
+                <!-- Section Settings -->
+                <div class="sidebar-header collapsible" id="settingsMainHeader">
+                    <img src="https://img.icons8.com/ios-filled/50/000000/settings.png" alt="Settings" class="sidebar-header-icon">
+                    <h2 data-i18n="settings.title">Paramètres</h2>
+                    <span class="collapse-icon">▼</span>
+                </div>
+                <div class="collapsible-content" id="settingsMainContent">
+                    <!-- Section Général -->
+                    <div class="sidebar-header collapsible sidebar-header-separator" id="settingsGeneralHeader">
                     <img src="https://img.icons8.com/ios-filled/50/000000/settings.png" alt="General" class="sidebar-header-icon">
                     <h2 data-i18n="settings.general">Général</h2>
                     <span class="collapse-icon">▼</span>
@@ -145,6 +151,7 @@
                         <img src="https://img.icons8.com/ios-filled/50/000000/sparkling.png" alt="Particles" class="settings-nav-icon">
                         <span data-i18n="settings.particles">Particules</span>
                     </button>
+                </div>
                 </div>
             </nav>
         </aside>
@@ -443,17 +450,9 @@
                 </div>
 
                 <div class="footer-section">
-                    <h3 class="footer-title">Produit</h3>
+                    <h3 class="footer-title">Navigation</h3>
                     <ul class="footer-links">
                         <li><a href="index.html">Accueil</a></li>
-                        <li><a href="index.html#features">Fonctionnalités</a></li>
-                        <li><a href="index.html#how-it-works">Comment ça marche</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h3 class="footer-title">Application</h3>
-                    <ul class="footer-links">
                         <li><a href="dashboard.html">Dashboard</a></li>
                         <li><a href="settings.html">Paramètres</a></li>
                     </ul>
@@ -1510,13 +1509,15 @@
             // SETTINGS NAVIGATION COLLAPSIBLE
             // ================================================
 
+            const settingsMainHeader = document.getElementById('settingsMainHeader');
+            const settingsMainContent = document.getElementById('settingsMainContent');
             const settingsGeneralHeader = document.getElementById('settingsGeneralHeader');
             const settingsGeneralContent = document.getElementById('settingsGeneralContent');
             const settingsAdvancedHeader = document.getElementById('settingsAdvancedHeader');
             const settingsAdvancedContent = document.getElementById('settingsAdvancedContent');
 
             // Vérifier que les éléments existent
-            if (!settingsGeneralHeader || !settingsGeneralContent || !settingsAdvancedHeader || !settingsAdvancedContent) {
+            if (!settingsMainHeader || !settingsMainContent || !settingsGeneralHeader || !settingsGeneralContent || !settingsAdvancedHeader || !settingsAdvancedContent) {
                 console.error('❌ Éléments collapsibles settings non trouvés');
                 return;
             }
@@ -1524,8 +1525,14 @@
             console.log('✅ Éléments collapsibles settings trouvés, initialisation...');
 
             // Charger l'état sauvegardé
+            const mainCollapsed = localStorage.getItem('settingsMainCollapsed') === 'true';
             const generalCollapsed = localStorage.getItem('settingsGeneralCollapsed') === 'true';
             const advancedCollapsed = localStorage.getItem('settingsAdvancedCollapsed') === 'true';
+
+            if (mainCollapsed) {
+                settingsMainHeader.classList.add('collapsed');
+                settingsMainContent.classList.add('collapsed');
+            }
 
             if (generalCollapsed) {
                 settingsGeneralHeader.classList.add('collapsed');
@@ -1536,6 +1543,16 @@
                 settingsAdvancedHeader.classList.add('collapsed');
                 settingsAdvancedContent.classList.add('collapsed');
             }
+
+            // Toggle section Main
+            settingsMainHeader.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('🔄 Toggle Paramètres');
+                settingsMainHeader.classList.toggle('collapsed');
+                settingsMainContent.classList.toggle('collapsed');
+                localStorage.setItem('settingsMainCollapsed', settingsMainHeader.classList.contains('collapsed'));
+            });
 
             // Toggle section Général
             settingsGeneralHeader.addEventListener('click', (e) => {
