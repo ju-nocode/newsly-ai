@@ -53,7 +53,8 @@ export default async function handler(req, res) {
                 phone: profile?.phone || '',
                 bio: profile?.bio || '',
                 avatar_url: profile?.avatar_url || '',
-                role: profile?.role || 'user',
+                role: profile?.is_admin ? 'admin' : 'user',
+                is_admin: profile?.is_admin || false,
                 created_at: user.created_at
             });
         }
@@ -123,16 +124,52 @@ export default async function handler(req, res) {
                 process.env.SUPABASE_SERVICE_ROLE_KEY
             );
 
+            // Récupérer le profil existant pour éviter d'écraser des données
+            const { data: existingProfile } = await supabaseAdmin
+                .from('profiles')
+                .select('*')
+                .eq('id', user.id)
+                .single();
+
+            // Préparer les données finales en fusionnant avec l'existant
+            const finalData = {
+                id: user.id,
+                email: user.email,
+                username: updateData.username || existingProfile?.username || null,
+                full_name: updateData.full_name || existingProfile?.full_name || user.email.split('@')[0],
+                phone: updateData.phone !== undefined ? updateData.phone : (existingProfile?.phone || null),
+                bio: updateData.bio !== undefined ? updateData.bio : (existingProfile?.bio || null),
+                avatar_url: updateData.avatar_url !== undefined ? updateData.avatar_url : (existingProfile?.avatar_url || null),
+                is_admin: existingProfile?.is_admin || false,
+                created_at: existingProfile?.created_at || new Date().toISOString(),
+                updated_at: new Date().toISOString()
+            };
+
+            console.log('Attempting to upsert profile:', {
+                userId: user.id,
+                finalData: finalData
+            });
+
             const { data, error } = await supabaseAdmin
                 .from('profiles')
-                .update(updateData)
-                .eq('id', user.id)
+                .upsert(finalData, {
+                    onConflict: 'id',
+                    ignoreDuplicates: false
+                })
                 .select()
                 .single();
 
             if (error) {
                 console.error('Profile update error:', error);
-                return res.status(400).json({ error: error.message });
+                console.error('Error code:', error.code);
+                console.error('Error details:', error.details);
+                console.error('Error hint:', error.hint);
+                return res.status(400).json({
+                    error: error.message,
+                    code: error.code,
+                    details: error.details,
+                    hint: error.hint
+                });
             }
 
             // Aussi mettre à jour user_metadata pour garder la cohérence
@@ -158,6 +195,15 @@ export default async function handler(req, res) {
 
     } catch (error) {
         console.error('Profile error:', error);
-        return res.status(500).json({ error: 'Erreur serveur' });
+        console.error('Error details:', {
+            message: error.message,
+            stack: error.stack,
+            code: error.code
+        });
+        return res.status(500).json({
+            error: 'Erreur serveur',
+            details: error.message,
+            code: error.code
+        });
     }
 }

@@ -83,6 +83,7 @@ export default async function handler(req, res) {
                     phone: userMetadata.phone || null,
                     bio: userMetadata.bio || null,
                     avatar_url: userMetadata.avatar_url || null,
+                    is_admin: false,
                     created_at: new Date().toISOString(),
                     updated_at: new Date().toISOString()
                 }, {
