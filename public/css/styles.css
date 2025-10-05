@@ -1574,7 +1574,6 @@ body:has(.settings-layout) .footer {
 .settings-layout {
   display: flex;
   flex: 1;
-  padding-top: var(--navbar-height);
 }
 
 .settings-nav {
