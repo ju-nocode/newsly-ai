@@ -15,10 +15,16 @@ export default async function handler(req, res) {
         // Extract authentication token
         const authHeader = req.headers.authorization;
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            console.log('[Particles API] No auth header');
             return res.status(401).json({ error: 'Non authentifié' });
         }
 
         const token = authHeader.split(' ')[1];
+
+        if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
+            console.error('[Particles API] Missing environment variables');
+            return res.status(500).json({ error: 'Configuration serveur manquante' });
+        }
 
         const supabase = createClient(
             process.env.SUPABASE_URL,
@@ -29,8 +35,11 @@ export default async function handler(req, res) {
         const { data: { user }, error: authError } = await supabase.auth.getUser(token);
 
         if (authError || !user) {
+            console.log('[Particles API] Auth error:', authError?.message);
             return res.status(401).json({ error: 'Token invalide' });
         }
+
+        console.log('[Particles API] User authenticated:', user.id);
 
         // GET - Get particles config
         if (req.method === 'GET') {
@@ -93,12 +102,15 @@ export default async function handler(req, res) {
 
             if (result.error) {
                 console.error('Save particles config error:', result.error);
-                return res.status(500).json({ error: 'Erreur de sauvegarde de la configuration' });
+                return res.status(500).json({
+                    error: 'Erreur de sauvegarde de la configuration',
+                    details: result.error.message
+                });
             }
 
             return res.status(200).json({
                 success: true,
-                config: result.data.config
+                config: result.data?.config || config
             });
         }
 

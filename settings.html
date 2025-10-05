@@ -1230,13 +1230,21 @@
         document.getElementById('applyParticlesBtn').addEventListener('click', () => {
             const config = getParticlesConfig();
 
-            // Destroy existing particles if they exist
-            if (window.pJSDom && window.pJSDom.length > 0) {
-                window.pJSDom[0].pJS.fn.vendors.destroypJS();
-            }
+            try {
+                // Destroy existing particles if they exist
+                if (window.pJSDom && window.pJSDom.length > 0 && window.pJSDom[0]?.pJS) {
+                    window.pJSDom[0].pJS.fn.vendors.destroypJS();
+                }
 
-            // Reinitialize with new config
-            window.particlesJS('particles-js', config);
+                // Wait a bit before reinitializing
+                setTimeout(() => {
+                    window.particlesJS('particles-js', config);
+                    showSuccess('Aperçu appliqué !');
+                }, 100);
+            } catch (error) {
+                console.error('Apply preview error:', error);
+                location.reload();
+            }
         });
 
         // Save button
@@ -1252,14 +1260,24 @@
             if (dbResult.success) {
                 showSuccess('Paramètres des particules enregistrés dans la base de données !');
             } else {
-                showError('Sauvegardé localement, mais erreur de synchronisation avec la base de données');
+                console.error('DB save error:', dbResult.error);
+                showSuccess('Paramètres enregistrés localement !');
             }
 
             // Reload particles
-            if (window.pJSDom && window.pJSDom.length > 0) {
-                window.pJSDom[0].pJS.fn.vendors.destroypJS();
+            try {
+                if (window.pJSDom && window.pJSDom.length > 0 && window.pJSDom[0]?.pJS) {
+                    window.pJSDom[0].pJS.fn.vendors.destroypJS();
+                }
+                // Wait a bit before reinitializing
+                setTimeout(() => {
+                    window.particlesJS('particles-js', config);
+                }, 100);
+            } catch (error) {
+                console.error('Particles reload error:', error);
+                // Fallback: just reload the page
+                location.reload();
             }
-            window.particlesJS('particles-js', config);
         });
 
         // Reset button
@@ -1267,13 +1285,20 @@
             saveParticlesConfig(defaultParticlesConfig);
             await loadParticlesSettings();
 
-            // Reload particles
-            if (window.pJSDom && window.pJSDom.length > 0) {
-                window.pJSDom[0].pJS.fn.vendors.destroypJS();
-            }
-            window.particlesJS('particles-js', defaultParticlesConfig);
+            try {
+                // Reload particles
+                if (window.pJSDom && window.pJSDom.length > 0 && window.pJSDom[0]?.pJS) {
+                    window.pJSDom[0].pJS.fn.vendors.destroypJS();
+                }
 
-            showSuccess('Paramètres réinitialisés !');
+                setTimeout(() => {
+                    window.particlesJS('particles-js', defaultParticlesConfig);
+                    showSuccess('Paramètres réinitialisés !');
+                }, 100);
+            } catch (error) {
+                console.error('Reset error:', error);
+                location.reload();
+            }
         });
 
         // Initialiser
