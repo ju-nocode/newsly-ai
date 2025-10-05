@@ -487,6 +487,7 @@ export const saveParticlesConfigToDB = async (config) => {
     }
 
     try {
+        console.log('[saveParticlesConfigToDB] Sending config to API:', config);
         const response = await fetch(`${API_BASE_URL}/api/particles/config`, {
             method: 'POST',
             headers: {
@@ -496,10 +497,12 @@ export const saveParticlesConfigToDB = async (config) => {
             body: JSON.stringify({ config })
         });
 
+        console.log('[saveParticlesConfigToDB] Response status:', response.status);
         const data = await response.json();
+        console.log('[saveParticlesConfigToDB] Response data:', data);
 
         if (!response.ok) {
-            throw new Error(data.error || 'Erreur de sauvegarde de la config');
+            throw new Error(data.error || data.details || 'Erreur de sauvegarde de la config');
         }
 
         return { success: true, data };
