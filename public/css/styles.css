@@ -436,6 +436,11 @@ input[type="color"]::-moz-color-swatch {
   pointer-events: auto; /* S'assurer que les clics fonctionnent */
 }
 
+.sidebar-header-separator {
+  border-top: 1px solid var(--border);
+  margin-top: 0;
+}
+
 .sidebar-header.collapsible {
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
