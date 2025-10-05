@@ -307,6 +307,28 @@ if (signupBackBtn) {
     });
 }
 
+// Fonction pour générer des confettis
+const createConfetti = () => {
+    const container = document.getElementById('confettiContainer');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = `${Math.random() * 100}%`;
+        confetti.style.top = `${Math.random() * 20}%`;
+        confetti.style.animationDelay = `${Math.random() * 0.5}s`;
+        container.appendChild(confetti);
+    }
+
+    // Nettoyer après l'animation
+    setTimeout(() => {
+        container.innerHTML = '';
+    }, 2500);
+};
+
 // STEP 2 - Profil complet
 const signupStep2Form = document.getElementById('signupStep2Form');
 if (signupStep2Form) {
@@ -346,32 +368,49 @@ if (signupStep2Form) {
             return;
         }
 
-        // Construire le numéro de téléphone complet (optionnel)
-        const phone = phoneNumber ? `${phoneCode} ${phoneNumber}` : '';
+        // Cacher l'erreur
+        errorDiv.style.display = 'none';
 
-        // Créer le compte avec toutes les données
-        const result = await signup(step1Email, step1Password, {
-            username,
-            full_name: fullName,
-            country,
-            city,
-            phone
-        });
+        // ÉTAPE 1: Animation de disparition du formulaire avec flou
+        const flipCard = document.getElementById('signupFlipCard');
+        flipCard.classList.add('submitting');
 
-        if (result.success) {
-            // Cacher l'erreur
-            errorDiv.style.display = 'none';
+        // ÉTAPE 2: Afficher le loader après 800ms (durée de l'animation shrink)
+        setTimeout(() => {
+            // Cacher le flip card
+            flipCard.style.display = 'none';
 
-            // FLIP vers Step 3 (confirmation email)
-            document.getElementById('signupFlipCard').classList.remove('flipped');
-            document.getElementById('signupFlipCard').classList.add('flipped-twice');
+            // Afficher le loader
+            document.getElementById('signupLoader').classList.add('active');
+        }, 800);
 
-            // Ne pas rediriger, attendre que l'utilisateur confirme son email
-            // window.location.href = 'dashboard.html';
-        } else {
-            errorDiv.textContent = result.error;
-            errorDiv.style.display = 'block';
-        }
+        // ÉTAPE 3: Créer le compte (appel API)
+        setTimeout(async () => {
+            // Construire le numéro de téléphone complet (optionnel)
+            const phone = phoneNumber ? `${phoneCode} ${phoneNumber}` : '';
+
+            // Créer le compte avec toutes les données
+            const result = await signup(step1Email, step1Password, {
+                username,
+                full_name: fullName,
+                country,
+                city,
+                phone
+            });
+
+            // Cacher le loader
+            document.getElementById('signupLoader').classList.remove('active');
+
+            // ÉTAPE 4: Afficher succès ou erreur
+            if (result.success) {
+                // SUCCÈS: Afficher animation de succès avec confettis
+                document.getElementById('signupSuccess').classList.add('active');
+                createConfetti();
+            } else {
+                // ERREUR: Afficher message générique (sécurité)
+                document.getElementById('signupError').classList.add('active');
+            }
+        }, 1000);
     });
 }
 
@@ -399,20 +438,46 @@ const validateSignupStep2 = () => {
     }
 });
 
-// Bouton Fermer après signup (Step 3)
+// Fonction de reset complet du signup
+const resetSignupModal = () => {
+    // Cacher tous les écrans
+    document.getElementById('signupSuccess').classList.remove('active');
+    document.getElementById('signupError').classList.remove('active');
+    document.getElementById('signupLoader').classList.remove('active');
+
+    // Réafficher et reset le flip card
+    const flipCard = document.getElementById('signupFlipCard');
+    flipCard.style.display = 'block';
+    flipCard.classList.remove('submitting', 'flipped', 'flipped-twice');
+
+    // Reset les formulaires
+    document.getElementById('signupStep1Form').reset();
+    document.getElementById('signupStep2Form').reset();
+
+    // Reset les variables
+    step1Email = '';
+    step1Password = '';
+
+    // Reset les messages d'erreur
+    document.getElementById('signupStep1Error').style.display = 'none';
+    document.getElementById('signupStep2Error').style.display = 'none';
+};
+
+// Bouton Fermer après signup succès
 const closeModalAfterSignupBtn = document.getElementById('closeModalAfterSignup');
 if (closeModalAfterSignupBtn) {
     closeModalAfterSignupBtn.addEventListener('click', () => {
-        // Fermer la modal
         authModal.classList.remove('show');
+        setTimeout(resetSignupModal, 300);
+    });
+}
 
-        // Reset le flip pour la prochaine fois
-        setTimeout(() => {
-            document.getElementById('signupFlipCard').classList.remove('flipped', 'flipped-twice');
-            // Reset les formulaires
-            document.getElementById('signupStep1Form').reset();
-            document.getElementById('signupStep2Form').reset();
-        }, 300);
+// Bouton Fermer après erreur
+const closeModalAfterErrorBtn = document.getElementById('closeModalAfterError');
+if (closeModalAfterErrorBtn) {
+    closeModalAfterErrorBtn.addEventListener('click', () => {
+        authModal.classList.remove('show');
+        setTimeout(resetSignupModal, 300);
     });
 }
 

@@ -364,30 +364,49 @@
                             </form>
                         </div>
 
-                        <!-- FACE 3 - Confirmation email envoyé -->
-                        <div class="signup-flip-face signup-flip-third">
-                            <div style="text-align: center; padding: 2rem 0;">
-                                <div style="font-size: 4rem; margin-bottom: 1rem;">📧</div>
-                                <h2 class="modal-title">Email de confirmation envoyé !</h2>
-                                <p class="modal-subtitle" style="margin-bottom: 2rem;">
-                                    Nous avons envoyé un email de confirmation à votre adresse.
-                                </p>
-                                <div style="background: var(--card-bg); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border-left: 4px solid var(--primary);">
-                                    <p style="margin: 0; color: var(--text-secondary); line-height: 1.6;">
-                                        <strong>Prochaine étape :</strong><br>
-                                        Vérifiez votre boîte de réception et cliquez sur le lien de confirmation pour activer votre compte.
-                                    </p>
-                                </div>
-                                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 2rem;">
-                                    Vous ne voyez pas l'email ? Vérifiez votre dossier spam ou courrier indésirable.
-                                </p>
-                                <button type="button" class="btn-submit" id="closeModalAfterSignup">
-                                    Fermer
-                                </button>
-                            </div>
-                        </div>
-
                     </div>
+
+                    <!-- LOADER - Chargement -->
+                    <div class="signup-loader" id="signupLoader">
+                        <div class="spinner"></div>
+                        <h3 style="color: var(--text-primary); margin-bottom: 0.5rem;">Création de votre compte...</h3>
+                        <p style="color: var(--text-secondary);">Veuillez patienter</p>
+                    </div>
+
+                    <!-- SUCCESS - Compte créé -->
+                    <div class="signup-success" id="signupSuccess">
+                        <div class="success-checkmark"></div>
+                        <div id="confettiContainer" style="position: absolute; top: 50%; left: 50%; width: 100%; height: 100%; pointer-events: none;"></div>
+                        <h2 class="modal-title" style="color: var(--success);">Compte créé avec succès !</h2>
+                        <p class="modal-subtitle" style="margin-bottom: 2rem;">
+                            Un email de confirmation a été envoyé à votre adresse.
+                        </p>
+                        <div style="background: var(--card-bg); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border-left: 4px solid var(--success);">
+                            <p style="margin: 0; color: var(--text-secondary); line-height: 1.6;">
+                                <strong>Prochaine étape :</strong><br>
+                                Vérifie ta boîte mail et clique sur le lien de confirmation pour activer ton compte.
+                            </p>
+                        </div>
+                        <button type="button" class="btn-submit" id="closeModalAfterSignup">
+                            Fermer
+                        </button>
+                    </div>
+
+                    <!-- ERROR - Erreur générique -->
+                    <div class="signup-error-box" id="signupError">
+                        <div class="error-icon"></div>
+                        <h2 class="modal-title" style="color: var(--error);">Une erreur est survenue</h2>
+                        <p class="modal-subtitle" style="margin-bottom: 2rem;">
+                            Impossible de créer ton compte pour le moment.
+                        </p>
+                        <p style="color: var(--text-secondary); margin-bottom: 2rem;">
+                            Réessaie plus tard ou contacte le support si le problème persiste.
+                        </p>
+                        <button type="button" class="btn-submit" id="closeModalAfterError">
+                            Fermer
+                        </button>
+                    </div>
+
                 </div>
             </div>
         </div>

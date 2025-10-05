@@ -64,7 +64,11 @@ export default async function handler(req, res) {
         });
 
         if (error) {
-            return res.status(400).json({ error: error.message });
+            // Message générique pour la sécurité (ne pas révéler si l'email existe)
+            console.error('Signup error:', error.message);
+            return res.status(400).json({
+                error: 'Impossible de créer le compte. Veuillez réessayer plus tard.'
+            });
         }
 
         // Créer/Mettre à jour le profil dans la table profiles
@@ -97,6 +101,10 @@ export default async function handler(req, res) {
             if (profileError) {
                 console.error('Profile creation error:', profileError);
                 // Ne pas bloquer l'inscription même si la création du profil échoue
+                // Message générique
+                return res.status(400).json({
+                    error: 'Impossible de créer le compte. Veuillez réessayer plus tard.'
+                });
             }
         }
 
@@ -108,6 +116,9 @@ export default async function handler(req, res) {
 
     } catch (error) {
         console.error('Signup error:', error);
-        return res.status(500).json({ error: 'Erreur serveur' });
+        // Message générique pour toutes les erreurs serveur
+        return res.status(500).json({
+            error: 'Une erreur est survenue. Veuillez réessayer plus tard.'
+        });
     }
 }

@@ -2524,7 +2524,7 @@ body:has(.settings-layout) .footer {
 .signup-flip-container {
   perspective: 1000px;
   width: 100%;
-  min-height: 650px;
+  position: relative;
   overflow: visible;
 }
 
@@ -2532,7 +2532,6 @@ body:has(.settings-layout) .footer {
   position: relative;
   width: 100%;
   height: auto;
-  min-height: 650px;
   transform-style: preserve-3d;
   transition: transform 0.8s cubic-bezier(0.4, 0.2, 0.2, 1);
 }
@@ -2546,18 +2545,18 @@ body:has(.settings-layout) .footer {
 }
 
 .signup-flip-face {
-  position: absolute;
   width: 100%;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  position: relative;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.4s ease;
+  min-height: auto;
 }
 
 /* Face 1 visible par défaut */
 .signup-flip-front {
-  z-index: 3;
   transform: rotateY(0deg);
   opacity: 1;
   pointer-events: auto;
@@ -2565,7 +2564,9 @@ body:has(.settings-layout) .footer {
 
 /* Face 2 visible quand flipped */
 .signup-flip-back {
-  z-index: 2;
+  position: absolute;
+  top: 0;
+  left: 0;
   transform: rotateY(180deg);
 }
 
@@ -2577,11 +2578,14 @@ body:has(.settings-layout) .footer {
 .signup-flip-card.flipped .signup-flip-back {
   opacity: 1;
   pointer-events: auto;
+  position: relative;
 }
 
-/* Face 3 visible quand flipped-twice */
+/* Face 3 - Animation de fin */
 .signup-flip-third {
-  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
   transform: rotateY(0deg);
 }
 
@@ -2594,16 +2598,188 @@ body:has(.settings-layout) .footer {
 .signup-flip-card.flipped-twice .signup-flip-third {
   opacity: 1;
   pointer-events: auto;
+  position: relative;
+}
+
+/* ================================================
+   ANIMATIONS DE SOUMISSION
+================================================ */
+
+/* Animation de disparition avec flou vers le centre */
+@keyframes shrinkAndBlur {
+  0% {
+    transform: scale(1);
+    filter: blur(0px);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0);
+    filter: blur(10px);
+    opacity: 0;
+  }
+}
+
+.signup-flip-card.submitting {
+  animation: shrinkAndBlur 0.8s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+  transform-origin: center center;
+}
+
+/* Spinner de chargement */
+.signup-loader {
+  display: none;
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.signup-loader.active {
+  display: block;
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid var(--border);
+  border-top: 4px solid var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1.5rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Animation de succès */
+.signup-success {
+  display: none;
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.signup-success.active {
+  display: block;
+  animation: fadeIn 0.5s ease-in;
+}
+
+.success-checkmark {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  background: var(--success);
+  position: relative;
+  animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.success-checkmark::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  color: white;
+  font-weight: bold;
+}
+
+/* Confettis */
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: var(--primary);
+  animation: confetti-fall 2s ease-out forwards;
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(300px) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.confetti:nth-child(2n) { background: var(--success); animation-delay: 0.1s; }
+.confetti:nth-child(3n) { background: #fbbf24; animation-delay: 0.2s; }
+.confetti:nth-child(4n) { background: #f472b6; animation-delay: 0.15s; }
+
+/* Animation d'erreur */
+.signup-error-box {
+  display: none;
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.signup-error-box.active {
+  display: block;
+  animation: fadeIn 0.5s ease-in;
+}
+
+.error-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  background: var(--error);
+  position: relative;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+.error-icon::before,
+.error-icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 4px;
+  background: white;
+  border-radius: 2px;
+}
+
+.error-icon::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.error-icon::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
 }
 
 /* Responsive flip card */
 @media (max-width: 768px) {
   .signup-flip-container {
-    min-height: 600px;
+    min-height: auto;
   }
 
   .signup-flip-card {
-    min-height: 600px;
+    min-height: auto;
   }
 }
 
