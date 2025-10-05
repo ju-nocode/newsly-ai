@@ -3,10 +3,6 @@
 > Votre agrégateur d'actualités personnalisé alimenté par l'intelligence artificielle
 
 [![Live Demo](https://img.shields.io/badge/🌐_demo-live-success?style=for-the-badge)](https://prod-julien.vercel.app)
-[![Stack](https://img.shields.io/badge/Stack-Supabase%20%7C%20Vercel-blue?style=for-the-badge)](https://github.com)
-[![Made with](https://img.shields.io/badge/Made_with-❤️_&_JavaScript-red?style=for-the-badge)](https://github.com)
-
-![Newsly AI Banner](https://via.placeholder.com/1200x400/3ecf8e/ffffff?text=Newsly+AI+-+Your+Personalized+NewsWall)
 
 ---
 
@@ -331,50 +327,17 @@ Puis configurer les variables d'environnement dans Vercel Dashboard :
 - [ ] Partage social d'articles
 
 ### Futur 🔮
-- [ ] Export PDF des articles
 - [ ] Résumés IA des articles
-- [ ] App mobile (React Native)
+- [ ] App mobile (React Native) Oulà!
 - [ ] Favoris et historique
 - [ ] Filtres avancés par source
 
 ---
 
-## 📸 Captures d'écran
-
-### 🏠 Landing Page
-![Landing](https://via.placeholder.com/800x450/3ecf8e/ffffff?text=Landing+Page)
-
-### 📰 Dashboard
-![Dashboard](https://via.placeholder.com/800x450/3ecf8e/ffffff?text=Dashboard)
-
-### ⚙️ Settings
-![Settings](https://via.placeholder.com/800x450/3ecf8e/ffffff?text=Settings)
-
----
-
-## 🤝 Contribution
-
-Les contributions sont les bienvenues ! Consultez [CONTRIBUTING.md](CONTRIBUTING.md) pour démarrer.
-
-### Comment contribuer ?
-
-1. 🍴 Fork le projet
-2. 🌿 Créer une branche (`git checkout -b feature/AmazingFeature`)
-3. ✍️ Commit les changements (`git commit -m 'feat: Add AmazingFeature'`)
-4. 📤 Push vers la branche (`git push origin feature/AmazingFeature`)
-5. 🔁 Ouvrir une Pull Request
-
----
-
-## 📞 Contact & Support
-
-<div align="center">
-
 ### 👨‍💻 Julien Richard
 
 [![Portfolio](https://img.shields.io/badge/Portfolio-000000?style=for-the-badge&logo=About.me&logoColor=white)](https://www.linkedin.com/in/fr-richard-julien/)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/fr-richard-julien/)
-[![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:ju.richard.33@gmail.com)
 
 **Live Demo:** [prod-julien.vercel.app](https://prod-julien.vercel.app)
 
@@ -383,19 +346,3 @@ Les contributions sont les bienvenues ! Consultez [CONTRIBUTING.md](CONTRIBUTING
 ### 🐛 Signaler un bug
 
 Trouvé un bug ? [Ouvrez une issue](https://github.com/ju-nocode/newsly-ai/issues)
-
----
-
-## 📜 License
-
-**MIT License** - Voir le fichier LICENSE pour plus de détails
-
----
-
-<div align="center">
-
-**Fait avec ❤️ et ☕ par [Julien Richard](https://www.linkedin.com/in/fr-richard-julien/)**
-
-⭐ **Si vous aimez ce projet, n'oubliez pas de lui donner une étoile !** ⭐
-
-</div>
