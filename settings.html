@@ -1153,8 +1153,19 @@
         import { getParticlesConfig as getDBConfig, saveParticlesConfigToDB } from './public/js/app.js';
 
         const loadParticlesSettings = async () => {
-            // Load from localStorage only (not from database)
-            const config = loadParticlesConfig();
+            // Try to load from database first
+            const dbResult = await getDBConfig();
+            let config;
+
+            if (dbResult.success && dbResult.config) {
+                // Config found in database
+                config = dbResult.config;
+                // Also save to localStorage for offline use
+                saveParticlesConfig(config);
+            } else {
+                // Fallback to localStorage or default
+                config = loadParticlesConfig();
+            }
 
             // Load values into form
             document.getElementById('particlesNumber').value = config.particles.number.value;
@@ -1304,9 +1315,18 @@
         document.getElementById('saveParticlesBtn').addEventListener('click', async () => {
             const config = getParticlesConfig();
 
-            // Save to localStorage only (not to database)
+            // Save to localStorage
             saveParticlesConfig(config);
-            showSuccess('Paramètres des particules enregistrés localement !');
+
+            // Save to database
+            const dbResult = await saveParticlesConfigToDB(config);
+
+            if (dbResult.success) {
+                showSuccess('Paramètres des particules enregistrés en base de données !');
+            } else {
+                console.error('DB save error:', dbResult.error);
+                showSuccess('Paramètres enregistrés localement uniquement');
+            }
 
             // Reload particles
             try {
@@ -1338,7 +1358,19 @@
 
         // Reset button
         document.getElementById('resetParticlesBtn').addEventListener('click', async () => {
+            // Save default config to localStorage
             saveParticlesConfig(defaultParticlesConfig);
+
+            // Save default config to database
+            const dbResult = await saveParticlesConfigToDB(defaultParticlesConfig);
+
+            if (dbResult.success) {
+                showSuccess('Paramètres réinitialisés et enregistrés en base de données !');
+            } else {
+                console.error('DB save error:', dbResult.error);
+                showSuccess('Paramètres réinitialisés localement !');
+            }
+
             await loadParticlesSettings();
 
             try {
@@ -1360,7 +1392,6 @@
                 // Reinitialize
                 setTimeout(() => {
                     window.particlesJS('particles-js', defaultParticlesConfig);
-                    showSuccess('Paramètres réinitialisés !');
                 }, 50);
             } catch (error) {
                 console.error('Reset error:', error);
