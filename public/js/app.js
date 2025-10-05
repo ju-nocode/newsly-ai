@@ -458,21 +458,31 @@ export const checkAuth = () => {
 
 // Get particles config from database
 export const getParticlesConfig = async () => {
+    console.log('[getParticlesConfig] authToken présent:', !!authToken);
+
     if (!authToken) {
-        return { success: false, error: 'Non authentifié' };
+        console.error('[getParticlesConfig] Pas de token - rechargement session...');
+        loadSession();
+        if (!authToken) {
+            return { success: false, error: 'Non authentifié' };
+        }
     }
 
     try {
+        console.log('[getParticlesConfig] Fetching from API...');
         const response = await fetch(`${API_BASE_URL}/api/particles/config`, {
             headers: { 'Authorization': `Bearer ${authToken}` }
         });
 
+        console.log('[getParticlesConfig] Response status:', response.status);
         const data = await response.json();
+        console.log('[getParticlesConfig] Response data:', data);
 
         if (!response.ok) {
             throw new Error(data.error || 'Erreur de récupération de la config');
         }
 
+        console.log('[getParticlesConfig] Config retrieved:', data.config ? 'found' : 'null');
         return { success: true, config: data.config };
     } catch (error) {
         console.error('Get particles config error:', error);
