@@ -112,8 +112,19 @@ export const defaultParticlesConfig = {
 
 // Load particles config from localStorage or use default
 export const loadParticlesConfig = () => {
-  const saved = localStorage.getItem('particlesConfig');
-  return saved ? JSON.parse(saved) : defaultParticlesConfig;
+  try {
+    const saved = localStorage.getItem('particlesConfig');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      // Validate that it has the required structure
+      if (parsed && parsed.particles && parsed.interactivity) {
+        return parsed;
+      }
+    }
+  } catch (error) {
+    console.warn('Failed to load particles config from localStorage:', error);
+  }
+  return defaultParticlesConfig;
 };
 
 // Save particles config to localStorage

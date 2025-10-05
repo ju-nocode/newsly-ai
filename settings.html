@@ -1229,7 +1229,13 @@
         // Apply (preview) button
         document.getElementById('applyParticlesBtn').addEventListener('click', () => {
             const config = getParticlesConfig();
-            window.pJSDom[0].pJS.fn.vendors.destroypJS();
+
+            // Destroy existing particles if they exist
+            if (window.pJSDom && window.pJSDom.length > 0) {
+                window.pJSDom[0].pJS.fn.vendors.destroypJS();
+            }
+
+            // Reinitialize with new config
             window.particlesJS('particles-js', config);
         });
 
@@ -1250,17 +1256,21 @@
             }
 
             // Reload particles
-            window.pJSDom[0].pJS.fn.vendors.destroypJS();
+            if (window.pJSDom && window.pJSDom.length > 0) {
+                window.pJSDom[0].pJS.fn.vendors.destroypJS();
+            }
             window.particlesJS('particles-js', config);
         });
 
         // Reset button
-        document.getElementById('resetParticlesBtn').addEventListener('click', () => {
+        document.getElementById('resetParticlesBtn').addEventListener('click', async () => {
             saveParticlesConfig(defaultParticlesConfig);
-            loadParticlesSettings();
+            await loadParticlesSettings();
 
             // Reload particles
-            window.pJSDom[0].pJS.fn.vendors.destroypJS();
+            if (window.pJSDom && window.pJSDom.length > 0) {
+                window.pJSDom[0].pJS.fn.vendors.destroypJS();
+            }
             window.particlesJS('particles-js', defaultParticlesConfig);
 
             showSuccess('Paramètres réinitialisés !');
