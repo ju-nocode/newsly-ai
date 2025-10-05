@@ -1694,20 +1694,22 @@ body:has(.settings-layout) .footer {
   width: var(--settings-sidebar-width);
   background: var(--bg-primary);
   border-right: 1px solid var(--border);
-  padding: 1.5rem;
+  padding: 0;
   position: fixed;
   top: var(--navbar-height);
+  pointer-events: auto;
   left: 0;
   height: calc(100vh - var(--navbar-height));
   overflow-y: auto;
 }
 
 .settings-nav-title {
-  font-size: 0.6875rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+  padding: 1.5rem;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border);
   letter-spacing: 0.1em;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
@@ -1715,7 +1717,7 @@ body:has(.settings-layout) .footer {
 .settings-nav-menu {
   display: flex;
   flex-direction: column;
-  gap: 0.125rem;
+  gap: 0;
 }
 
 .settings-nav-item {

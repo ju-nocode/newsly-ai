@@ -128,6 +128,8 @@ const fallbackTranslations = {
         'settings.users': 'Utilisateurs',
         'settings.particles': 'Particules',
         'settings.manageProfile': 'Gérez vos informations personnelles',
+        'settings.general': 'Général',
+        'settings.advanced': 'Avancé',
 
         'auth.login': 'Connexion',
         'auth.signup': 'Créer un compte',
@@ -216,6 +218,8 @@ const fallbackTranslations = {
         'settings.users': 'Users',
         'settings.particles': 'Particles',
         'settings.manageProfile': 'Manage your personal information',
+        'settings.general': 'General',
+        'settings.advanced': 'Advanced',
 
         'auth.login': 'Login',
         'auth.signup': 'Sign up',

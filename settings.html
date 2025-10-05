@@ -109,26 +109,43 @@
         <aside class="settings-nav">
             <h1 class="settings-nav-title">Paramètres</h1>
             <nav class="settings-nav-menu">
-                <button class="settings-nav-item active" data-section="profile">
-                    <img src="https://img.icons8.com/ios-filled/50/000000/user.png" alt="Profile" class="settings-nav-icon">
-                    <span data-i18n="settings.profile">Profil</span>
-                </button>
-                <button class="settings-nav-item" data-section="account">
-                    <img src="https://img.icons8.com/ios-filled/50/000000/settings.png" alt="Account" class="settings-nav-icon">
-                    <span data-i18n="settings.account">Compte</span>
-                </button>
-                <button class="settings-nav-item" data-section="security">
-                    <img src="https://img.icons8.com/ios-filled/50/000000/lock.png" alt="Security" class="settings-nav-icon">
-                    <span data-i18n="settings.security">Sécurité</span>
-                </button>
-                <button class="settings-nav-item" data-section="users" id="usersNavBtn" style="display: none;">
-                    <img src="https://img.icons8.com/ios-filled/50/000000/user-group-man-man.png" alt="Users" class="settings-nav-icon">
-                    <span data-i18n="settings.users">Utilisateurs</span>
-                </button>
-                <button class="settings-nav-item" data-section="particles">
-                    <img src="https://img.icons8.com/ios-filled/50/000000/sparkling.png" alt="Particles" class="settings-nav-icon">
-                    <span data-i18n="settings.particles">Particules</span>
-                </button>
+                <!-- Section Général -->
+                <div class="sidebar-header collapsible" id="settingsGeneralHeader">
+                    <img src="https://img.icons8.com/ios-filled/50/000000/settings.png" alt="General" class="sidebar-header-icon">
+                    <h2 data-i18n="settings.general">Général</h2>
+                    <span class="collapse-icon">▼</span>
+                </div>
+                <div class="collapsible-content" id="settingsGeneralContent">
+                    <button class="settings-nav-item active" data-section="profile">
+                        <img src="https://img.icons8.com/ios-filled/50/000000/user.png" alt="Profile" class="settings-nav-icon">
+                        <span data-i18n="settings.profile">Profil</span>
+                    </button>
+                    <button class="settings-nav-item" data-section="account">
+                        <img src="https://img.icons8.com/ios-filled/50/000000/settings.png" alt="Account" class="settings-nav-icon">
+                        <span data-i18n="settings.account">Compte</span>
+                    </button>
+                    <button class="settings-nav-item" data-section="security">
+                        <img src="https://img.icons8.com/ios-filled/50/000000/lock.png" alt="Security" class="settings-nav-icon">
+                        <span data-i18n="settings.security">Sécurité</span>
+                    </button>
+                </div>
+
+                <!-- Section Avancé -->
+                <div class="sidebar-header collapsible sidebar-header-separator" id="settingsAdvancedHeader">
+                    <img src="https://img.icons8.com/ios-filled/50/000000/sparkling.png" alt="Advanced" class="sidebar-header-icon">
+                    <h2 data-i18n="settings.advanced">Avancé</h2>
+                    <span class="collapse-icon">▼</span>
+                </div>
+                <div class="collapsible-content" id="settingsAdvancedContent">
+                    <button class="settings-nav-item" data-section="users" id="usersNavBtn" style="display: none;">
+                        <img src="https://img.icons8.com/ios-filled/50/000000/user-group-man-man.png" alt="Users" class="settings-nav-icon">
+                        <span data-i18n="settings.users">Utilisateurs</span>
+                    </button>
+                    <button class="settings-nav-item" data-section="particles">
+                        <img src="https://img.icons8.com/ios-filled/50/000000/sparkling.png" alt="Particles" class="settings-nav-icon">
+                        <span data-i18n="settings.particles">Particules</span>
+                    </button>
+                </div>
             </nav>
         </aside>
 
@@ -1488,6 +1505,57 @@
             await checkAdminAccess();
             await loadSecurityAudit();
             await loadParticlesSettings();
+
+            // ================================================
+            // SETTINGS NAVIGATION COLLAPSIBLE
+            // ================================================
+
+            const settingsGeneralHeader = document.getElementById('settingsGeneralHeader');
+            const settingsGeneralContent = document.getElementById('settingsGeneralContent');
+            const settingsAdvancedHeader = document.getElementById('settingsAdvancedHeader');
+            const settingsAdvancedContent = document.getElementById('settingsAdvancedContent');
+
+            // Vérifier que les éléments existent
+            if (!settingsGeneralHeader || !settingsGeneralContent || !settingsAdvancedHeader || !settingsAdvancedContent) {
+                console.error('❌ Éléments collapsibles settings non trouvés');
+                return;
+            }
+
+            console.log('✅ Éléments collapsibles settings trouvés, initialisation...');
+
+            // Charger l'état sauvegardé
+            const generalCollapsed = localStorage.getItem('settingsGeneralCollapsed') === 'true';
+            const advancedCollapsed = localStorage.getItem('settingsAdvancedCollapsed') === 'true';
+
+            if (generalCollapsed) {
+                settingsGeneralHeader.classList.add('collapsed');
+                settingsGeneralContent.classList.add('collapsed');
+            }
+
+            if (advancedCollapsed) {
+                settingsAdvancedHeader.classList.add('collapsed');
+                settingsAdvancedContent.classList.add('collapsed');
+            }
+
+            // Toggle section Général
+            settingsGeneralHeader.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('🔄 Toggle Général');
+                settingsGeneralHeader.classList.toggle('collapsed');
+                settingsGeneralContent.classList.toggle('collapsed');
+                localStorage.setItem('settingsGeneralCollapsed', settingsGeneralHeader.classList.contains('collapsed'));
+            });
+
+            // Toggle section Avancé
+            settingsAdvancedHeader.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('🔄 Toggle Avancé');
+                settingsAdvancedHeader.classList.toggle('collapsed');
+                settingsAdvancedContent.classList.toggle('collapsed');
+                localStorage.setItem('settingsAdvancedCollapsed', settingsAdvancedHeader.classList.contains('collapsed'));
+            });
         })();
     </script>
 </body>
