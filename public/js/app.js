@@ -458,10 +458,7 @@ export const checkAuth = () => {
 
 // Get particles config from database
 export const getParticlesConfig = async () => {
-    console.log('[getParticlesConfig] authToken présent:', !!authToken);
-
     if (!authToken) {
-        console.error('[getParticlesConfig] Pas de token - rechargement session...');
         loadSession();
         if (!authToken) {
             return { success: false, error: 'Non authentifié' };
@@ -469,20 +466,16 @@ export const getParticlesConfig = async () => {
     }
 
     try {
-        console.log('[getParticlesConfig] Fetching from API...');
         const response = await fetch(`${API_BASE_URL}/api/particles/config`, {
             headers: { 'Authorization': `Bearer ${authToken}` }
         });
 
-        console.log('[getParticlesConfig] Response status:', response.status);
         const data = await response.json();
-        console.log('[getParticlesConfig] Response data:', data);
 
         if (!response.ok) {
             throw new Error(data.error || 'Erreur de récupération de la config');
         }
 
-        console.log('[getParticlesConfig] Config retrieved:', data.config ? 'found' : 'null');
         return { success: true, config: data.config };
     } catch (error) {
         console.error('Get particles config error:', error);
@@ -492,20 +485,14 @@ export const getParticlesConfig = async () => {
 
 // Save particles config to database
 export const saveParticlesConfigToDB = async (config) => {
-    console.log('[saveParticlesConfigToDB] authToken présent:', !!authToken);
-    console.log('[saveParticlesConfigToDB] authToken length:', authToken?.length || 0);
-
     if (!authToken) {
-        console.error('[saveParticlesConfigToDB] Pas de token - rechargement session...');
-        loadSession(); // Reload session
+        loadSession();
         if (!authToken) {
             return { success: false, error: 'Non authentifié - veuillez vous reconnecter' };
         }
     }
 
     try {
-        console.log('[saveParticlesConfigToDB] Sending config to API');
-        console.log('[saveParticlesConfigToDB] API URL:', `${API_BASE_URL}/api/particles/config`);
         const response = await fetch(`${API_BASE_URL}/api/particles/config`, {
             method: 'POST',
             headers: {
@@ -515,9 +502,7 @@ export const saveParticlesConfigToDB = async (config) => {
             body: JSON.stringify({ config })
         });
 
-        console.log('[saveParticlesConfigToDB] Response status:', response.status);
         const data = await response.json();
-        console.log('[saveParticlesConfigToDB] Response data:', data);
 
         if (!response.ok) {
             throw new Error(data.error || data.details || 'Erreur de sauvegarde de la config');

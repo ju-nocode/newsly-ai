@@ -15,14 +15,12 @@ export default async function handler(req, res) {
         // Extract authentication token
         const authHeader = req.headers.authorization;
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
-            console.log('[Particles API] No auth header');
             return res.status(401).json({ error: 'Non authentifié' });
         }
 
         const token = authHeader.split(' ')[1];
 
         if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
-            console.error('[Particles API] Missing environment variables');
             return res.status(500).json({ error: 'Configuration serveur manquante' });
         }
 
@@ -43,11 +41,8 @@ export default async function handler(req, res) {
         const { data: { user }, error: authError } = await supabase.auth.getUser(token);
 
         if (authError || !user) {
-            console.log('[Particles API] Auth error:', authError?.message);
             return res.status(401).json({ error: 'Token invalide' });
         }
-
-        console.log('[Particles API] User authenticated:', user.id);
 
         // GET - Get particles config
         if (req.method === 'GET') {
@@ -72,31 +67,21 @@ export default async function handler(req, res) {
         if (req.method === 'POST') {
             const { config } = req.body;
 
-            console.log('[Particles API] POST - Received config:', JSON.stringify(config).substring(0, 200));
-
             if (!config || typeof config !== 'object') {
-                console.log('[Particles API] Invalid config type:', typeof config);
                 return res.status(400).json({ error: 'Configuration invalide' });
             }
 
             // Check if config exists
-            console.log('[Particles API] Checking if config exists for user:', user.id);
-            const { data: existing, error: checkError } = await supabase
+            const { data: existing } = await supabase
                 .from('particles_config')
                 .select('id')
                 .eq('user_id', user.id)
                 .single();
 
-            console.log('[Particles API] Existing config:', existing ? 'found' : 'not found');
-            if (checkError && checkError.code !== 'PGRST116') {
-                console.log('[Particles API] Check error:', checkError);
-            }
-
             let result;
 
             if (existing) {
                 // Update existing config
-                console.log('[Particles API] Updating existing config');
                 result = await supabase
                     .from('particles_config')
                     .update({
@@ -108,7 +93,6 @@ export default async function handler(req, res) {
                     .single();
             } else {
                 // Insert new config
-                console.log('[Particles API] Inserting new config');
                 result = await supabase
                     .from('particles_config')
                     .insert({
@@ -120,7 +104,6 @@ export default async function handler(req, res) {
             }
 
             if (result.error) {
-                console.error('[Particles API] Save error:', result.error);
                 return res.status(500).json({
                     error: 'Erreur de sauvegarde de la configuration',
                     details: result.error.message,
@@ -128,7 +111,6 @@ export default async function handler(req, res) {
                 });
             }
 
-            console.log('[Particles API] Save successful');
             return res.status(200).json({
                 success: true,
                 config: result.data?.config || config

@@ -155,27 +155,20 @@ export const initParticles = async (elementId, config = null) => {
   let particlesConfig;
 
   if (config) {
-    // Use provided config
     particlesConfig = config;
   } else {
-    // Try to load from database
     try {
-      // Check if we're in a module context with access to app.js
       if (typeof window !== 'undefined' && window.getParticlesConfigFromDB) {
         const dbResult = await window.getParticlesConfigFromDB();
         if (dbResult.success && dbResult.config) {
-          console.log('[Particles] Loaded config from database');
           particlesConfig = dbResult.config;
         } else {
-          console.log('[Particles] No DB config, using default');
           particlesConfig = defaultParticlesConfig;
         }
       } else {
-        // Fallback to default if DB function not available
         particlesConfig = defaultParticlesConfig;
       }
     } catch (error) {
-      console.warn('[Particles] Error loading from DB, using default:', error);
       particlesConfig = defaultParticlesConfig;
     }
   }

@@ -1157,12 +1157,8 @@
             let config;
 
             if (dbResult.success && dbResult.config) {
-                // Config found in database - use it
-                console.log('[Settings] Using config from database');
                 config = dbResult.config;
             } else {
-                // No config in database - use default
-                console.log('[Settings] Using default config');
                 config = defaultParticlesConfig;
             }
 
