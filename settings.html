@@ -1191,6 +1191,13 @@
 
             document.getElementById('repulseDistance').value = config.interactivity.modes.repulse.distance;
             document.getElementById('repulseDistanceValue').textContent = config.interactivity.modes.repulse.distance;
+
+            // Load custom blur if exists
+            if (config.customBlur !== undefined) {
+                document.getElementById('particlesBlur').value = config.customBlur;
+                document.getElementById('particlesBlurValue').textContent = config.customBlur + ' px';
+                document.getElementById('particles-js').style.filter = `blur(${config.customBlur}px)`;
+            }
         };
 
         const getParticlesConfig = () => {
@@ -1205,6 +1212,9 @@
             config.particles.line_linked.opacity = parseFloat(document.getElementById('lineOpacity').value);
             config.interactivity.events.onhover.enable = document.getElementById('hoverEnabled').checked;
             config.interactivity.modes.repulse.distance = parseInt(document.getElementById('repulseDistance').value);
+
+            // Add custom blur property (not part of particles.js standard config)
+            config.customBlur = parseFloat(document.getElementById('particlesBlur').value);
 
             return config;
         };
@@ -1346,6 +1356,11 @@
 
             document.getElementById('repulseDistance').value = defaultParticlesConfig.interactivity.modes.repulse.distance;
             document.getElementById('repulseDistanceValue').textContent = defaultParticlesConfig.interactivity.modes.repulse.distance;
+
+            // Reset blur to default (0)
+            document.getElementById('particlesBlur').value = 0;
+            document.getElementById('particlesBlurValue').textContent = '0 px';
+            document.getElementById('particles-js').style.filter = 'blur(0px)';
 
             showSuccess('Paramètres par défaut appliqués (non enregistrés)');
 

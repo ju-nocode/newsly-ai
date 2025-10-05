@@ -185,6 +185,14 @@ export const initParticles = async (elementId, config = null) => {
 
   if (window.particlesJS) {
     window.particlesJS(elementId, particlesConfig);
+
+    // Apply custom blur if exists
+    if (particlesConfig.customBlur !== undefined && particlesConfig.customBlur > 0) {
+      const container = document.getElementById(elementId);
+      if (container) {
+        container.style.filter = `blur(${particlesConfig.customBlur}px)`;
+      }
+    }
   } else {
     console.error('particles.js not loaded');
   }
