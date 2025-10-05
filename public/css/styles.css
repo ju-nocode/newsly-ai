@@ -423,6 +423,7 @@ input[type="color"]::-moz-color-swatch {
   padding: 0;
   overflow-y: auto;
   z-index: 100;
+  pointer-events: auto; /* Réactiver les événements sur le sidebar */
 }
 
 .sidebar-header {
@@ -432,12 +433,14 @@ input[type="color"]::-moz-color-swatch {
   align-items: center;
   gap: 0.5rem;
   cursor: default;
+  pointer-events: auto; /* S'assurer que les clics fonctionnent */
 }
 
 .sidebar-header.collapsible {
   cursor: pointer;
   transition: background 0.2s;
   user-select: none;
+  pointer-events: auto; /* Réactiver explicitement les clics */
 }
 
 .sidebar-header.collapsible:hover {
