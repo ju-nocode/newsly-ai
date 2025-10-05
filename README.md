@@ -167,7 +167,6 @@ newsly-ai/
 - **Node.js** 18+
 - **Compte Supabase** (gratuit)
 - **Compte Vercel** (gratuit)
-- **Clé NewsAPI** ([newsapi.org](https://newsapi.org/register))
 
 ### 2️⃣ Configuration Supabase
 
@@ -277,7 +276,6 @@ NEWS_API_KEY=votre_cle_newsapi
 
 **📍 Où trouver ces clés ?**
 - **Supabase** : Dashboard → Settings → API
-- **NewsAPI** : [newsapi.org/register](https://newsapi.org/register) (100 req/jour gratuit)
 
 ### 4️⃣ Déploiement sur Vercel
 
