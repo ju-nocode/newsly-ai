@@ -132,9 +132,30 @@ export const saveParticlesConfig = (config) => {
   localStorage.setItem('particlesConfig', JSON.stringify(config));
 };
 
+// Adjust particle colors based on theme
+export const adjustColorsForTheme = (config) => {
+  const theme = document.documentElement.getAttribute('data-theme') || 'light';
+  const adjustedConfig = JSON.parse(JSON.stringify(config));
+
+  if (theme === 'light') {
+    // Dark particles for light mode
+    adjustedConfig.particles.color.value = '#2d3748';
+    adjustedConfig.particles.line_linked.color = '#4a5568';
+    adjustedConfig.particles.line_linked.opacity = 0.2;
+  } else {
+    // Keep original colors for dark mode or use saved colors
+    // Colors are already set from config
+  }
+
+  return adjustedConfig;
+};
+
 // Initialize particles on a given element
 export const initParticles = (elementId, config = null) => {
-  const particlesConfig = config || loadParticlesConfig();
+  let particlesConfig = config || loadParticlesConfig();
+
+  // Auto-adjust colors based on current theme
+  particlesConfig = adjustColorsForTheme(particlesConfig);
 
   if (window.particlesJS) {
     window.particlesJS(elementId, particlesConfig);

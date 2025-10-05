@@ -1143,7 +1143,7 @@
         // ================================================
         // PARTICLES SETTINGS
         // ================================================
-        import { loadParticlesConfig, saveParticlesConfig, defaultParticlesConfig } from './public/js/particles-config.js';
+        import { loadParticlesConfig, saveParticlesConfig, defaultParticlesConfig, adjustColorsForTheme } from './public/js/particles-config.js';
         import { getParticlesConfig as getDBConfig, saveParticlesConfigToDB } from './public/js/app.js';
 
         const loadParticlesSettings = async () => {
@@ -1203,27 +1203,67 @@
             return config;
         };
 
-        // Range value updates
+        // Live preview function
+        const applyLivePreview = () => {
+            let config = getParticlesConfig();
+            // Adjust colors for current theme
+            config = adjustColorsForTheme(config);
+
+            try {
+                const particlesContainer = document.getElementById('particles-js');
+
+                if (window.pJSDom && window.pJSDom.length > 0) {
+                    try {
+                        window.pJSDom[0].pJS.fn.vendors.destroypJS();
+                        window.pJSDom = [];
+                    } catch (e) {
+                        console.warn('Error destroying particles:', e);
+                    }
+                }
+
+                particlesContainer.innerHTML = '';
+                setTimeout(() => {
+                    window.particlesJS('particles-js', config);
+                }, 20);
+            } catch (error) {
+                console.error('Live preview error:', error);
+            }
+        };
+
+        // Range value updates with live preview
         document.getElementById('particlesNumber').addEventListener('input', (e) => {
             document.getElementById('particlesNumberValue').textContent = e.target.value;
+            applyLivePreview();
+        });
+        document.getElementById('particlesColor').addEventListener('input', () => {
+            applyLivePreview();
         });
         document.getElementById('particlesSpeed').addEventListener('input', (e) => {
             document.getElementById('particlesSpeedValue').textContent = e.target.value;
+            applyLivePreview();
         });
         document.getElementById('particlesOpacity').addEventListener('input', (e) => {
             document.getElementById('particlesOpacityValue').textContent = parseFloat(e.target.value).toFixed(2);
+            applyLivePreview();
         });
         document.getElementById('lineDistance').addEventListener('input', (e) => {
             document.getElementById('lineDistanceValue').textContent = e.target.value;
+            applyLivePreview();
+        });
+        document.getElementById('lineColor').addEventListener('input', () => {
+            applyLivePreview();
         });
         document.getElementById('lineOpacity').addEventListener('input', (e) => {
             document.getElementById('lineOpacityValue').textContent = parseFloat(e.target.value).toFixed(2);
+            applyLivePreview();
         });
         document.getElementById('repulseDistance').addEventListener('input', (e) => {
             document.getElementById('repulseDistanceValue').textContent = e.target.value;
+            applyLivePreview();
         });
         document.getElementById('hoverEnabled').addEventListener('change', (e) => {
             document.getElementById('hoverEnabledText').textContent = e.target.checked ? 'Activé' : 'Désactivé';
+            applyLivePreview();
         });
 
         // Apply (preview) button

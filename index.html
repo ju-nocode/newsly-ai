@@ -60,19 +60,13 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-container">
-            <h1 class="hero-title">
-                Votre NewsWall Personnalisé<br>
-                <span class="gradient-text">Alimenté par l'IA</span>
-            </h1>
-            <p class="hero-subtitle">
-                Restez informé avec des actualités filtrées intelligemment selon vos centres d'intérêt.
-                NewslyAI analyse et organise les informations pour vous.
-            </p>
-            <div class="hero-cta">
-                <button class="btn-hero" id="heroSignupBtn">Commencer Gratuitement</button>
+    <!-- Auth Buttons Section -->
+    <section class="auth-section">
+        <div class="auth-container">
+            <h1 class="auth-title">Newsly AI</h1>
+            <p class="auth-subtitle">Votre NewsWall Personnalisé Alimenté par l'IA</p>
+            <div class="auth-buttons">
+                <button class="btn-hero" id="heroSignupBtn">Créer un compte</button>
                 <button class="btn-secondary" id="heroLoginBtn">Se Connecter</button>
             </div>
         </div>
@@ -213,17 +207,6 @@
                     <p class="category-desc">Cinéma, musique, culture</p>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="cta-container">
-            <h2 class="cta-title">Prêt à commencer ?</h2>
-            <p class="cta-subtitle">
-                Rejoignez des milliers d'utilisateurs qui restent informés avec Newsly AI
-            </p>
-            <button class="btn-hero" id="ctaSignupBtn">Créer mon compte gratuitement</button>
         </div>
     </section>
 
@@ -493,14 +476,6 @@
             if (categoryNames[6]) categoryNames[6].textContent = t.cat7Name;
             if (categoryDescs[6]) categoryDescs[6].textContent = t.cat7Desc;
 
-            // CTA section
-            const ctaTitle = document.querySelector('.cta-title');
-            if (ctaTitle) ctaTitle.textContent = t.ctaTitle;
-            const ctaSubtitle = document.querySelector('.cta-subtitle');
-            if (ctaSubtitle) ctaSubtitle.textContent = t.ctaSubtitle;
-            const ctaButton = document.getElementById('ctaSignupBtn');
-            if (ctaButton) ctaButton.textContent = t.ctaButton;
-
             // Footer
             const footerText = document.querySelector('.footer-text');
             if (footerText) footerText.textContent = t.footerTagline;
@@ -613,12 +588,6 @@
             signupFormDiv.style.display = 'none';
         });
 
-        document.getElementById('ctaSignupBtn').addEventListener('click', () => {
-            authModal.classList.add('show');
-            loginFormDiv.style.display = 'none';
-            signupFormDiv.style.display = 'block';
-        });
-
         // Gérer le burger menu
         const burgerBtnIndex = document.getElementById('burgerBtnIndex');
         const burgerMenuIndex = document.getElementById('burgerMenuIndex');
@@ -659,11 +628,11 @@
     <!-- Particles.js Library -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script type="module">
-        import { initParticles } from './public/js/particles-config.js';
+        import { defaultParticlesConfig } from './public/js/particles-config.js';
 
-        // Initialize particles on page load
+        // Initialize particles with default config (not user's saved config)
         window.addEventListener('DOMContentLoaded', () => {
-            initParticles('particles-js');
+            window.particlesJS('particles-js', defaultParticlesConfig);
         });
     </script>
 </body>
