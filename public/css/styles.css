@@ -51,7 +51,7 @@ html {
   --radius-xl: 0.75rem;
 
   /* Sidebar */
-  --sidebar-width: 220px;
+  --sidebar-width: 280px;
   --settings-sidebar-width: 280px;
   --navbar-height: 56px;
 
@@ -2605,6 +2605,59 @@ body:has(.settings-layout) .footer {
 .country-option-sidebar:has(input[type="checkbox"]:checked) {
   color: var(--text-primary);
   font-weight: 500;
+}
+
+/* ================================================
+   SIDEBAR NAVIGATION LINKS (for Settings, etc.)
+================================================ */
+
+.sidebar-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.5rem 1.5rem;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  width: 100%;
+  text-align: left;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  border-left: 3px solid transparent;
+}
+
+.sidebar-nav-link:hover {
+  background: rgba(62, 207, 142, 0.05);
+  color: var(--text-primary);
+}
+
+.sidebar-nav-link.active {
+  background: rgba(62, 207, 142, 0.1);
+  color: var(--primary);
+  font-weight: 500;
+  border-left: 3px solid var(--primary);
+  padding-left: calc(1.5rem - 3px);
+}
+
+.sidebar-nav-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  filter: var(--icon-filter, none);
+  opacity: 0.6;
+}
+
+.sidebar-nav-link:hover .sidebar-nav-icon {
+  opacity: 0.8;
+}
+
+.sidebar-nav-link.active .sidebar-nav-icon {
+  opacity: 1;
+  filter: brightness(0) saturate(100%) invert(70%) sepia(48%) saturate(1356%) hue-rotate(112deg) brightness(95%) contrast(86%);
 }
 
 /* ================================================
