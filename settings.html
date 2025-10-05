@@ -1153,18 +1153,8 @@
         import { getParticlesConfig as getDBConfig, saveParticlesConfigToDB } from './public/js/app.js';
 
         const loadParticlesSettings = async () => {
-            // Try to load from database first
-            const dbResult = await getDBConfig();
-            let config;
-
-            if (dbResult.success && dbResult.config) {
-                config = dbResult.config;
-                // Also save to localStorage for offline use
-                saveParticlesConfig(config);
-            } else {
-                // Fallback to localStorage or default
-                config = loadParticlesConfig();
-            }
+            // Load from localStorage only (not from database)
+            const config = loadParticlesConfig();
 
             // Load values into form
             document.getElementById('particlesNumber').value = config.particles.number.value;
@@ -1314,18 +1304,9 @@
         document.getElementById('saveParticlesBtn').addEventListener('click', async () => {
             const config = getParticlesConfig();
 
-            // Save to localStorage
+            // Save to localStorage only (not to database)
             saveParticlesConfig(config);
-
-            // Save to database
-            const dbResult = await saveParticlesConfigToDB(config);
-
-            if (dbResult.success) {
-                showSuccess('Paramètres des particules enregistrés dans la base de données !');
-            } else {
-                console.error('DB save error:', dbResult.error);
-                showSuccess('Paramètres enregistrés localement !');
-            }
+            showSuccess('Paramètres des particules enregistrés localement !');
 
             // Reload particles
             try {
