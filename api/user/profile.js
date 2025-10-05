@@ -86,13 +86,13 @@ export default async function handler(req, res) {
                 return res.status(400).json({ error: 'Bio trop longue (max 500 caractères)' });
             }
 
-            if (country !== undefined) {
+            if (country !== undefined && country !== null && country !== '') {
                 if (typeof country !== 'string' || country.trim().length < 1 || country.trim().length > 100) {
                     return res.status(400).json({ error: 'Pays invalide (1-100 caractères)' });
                 }
             }
 
-            if (city !== undefined) {
+            if (city !== undefined && city !== null && city !== '') {
                 if (typeof city !== 'string' || city.trim().length < 1 || city.trim().length > 100) {
                     return res.status(400).json({ error: 'Ville invalide (1-100 caractères)' });
                 }

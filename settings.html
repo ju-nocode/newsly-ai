@@ -257,12 +257,28 @@
                     <!-- Phone (Optionnel) -->
                     <div class="form-group">
                         <label for="phoneInput" class="form-label" data-i18n="settings.phone">Téléphone (optionnel)</label>
-                        <input
-                            type="tel"
-                            id="phoneInput"
-                            class="form-input"
-                            placeholder="+33 6 12 34 56 78"
-                        >
+                        <div style="display: flex; gap: 0.5rem;">
+                            <select id="phoneCountryCode" class="form-input" style="width: 120px;">
+                                <option value="+33">🇫🇷 +33</option>
+                                <option value="+32">🇧🇪 +32</option>
+                                <option value="+41">🇨🇭 +41</option>
+                                <option value="+1">🇺🇸 +1</option>
+                                <option value="+44">🇬🇧 +44</option>
+                                <option value="+49">🇩🇪 +49</option>
+                                <option value="+34">🇪🇸 +34</option>
+                                <option value="+39">🇮🇹 +39</option>
+                                <option value="+351">🇵🇹 +351</option>
+                                <option value="+31">🇳🇱 +31</option>
+                            </select>
+                            <input
+                                type="tel"
+                                id="phoneInput"
+                                class="form-input"
+                                placeholder="6 12 34 56 78"
+                                style="flex: 1;"
+                            >
+                        </div>
+                        <p class="form-hint">Le navigateur mémorisera votre numéro</p>
                     </div>
 
                     <!-- Bio (Optionnel) -->
@@ -605,13 +621,23 @@
 
                 // Champs optionnels
                 if (profile.phone) {
-                    document.getElementById('phoneInput').value = profile.phone;
+                    // Séparer l'indicatif du numéro
+                    const phoneMatch = profile.phone.match(/^(\+\d+)\s*(.+)$/);
+                    if (phoneMatch) {
+                        document.getElementById('phoneCountryCode').value = phoneMatch[1];
+                        document.getElementById('phoneInput').value = phoneMatch[2];
+                    } else {
+                        document.getElementById('phoneInput').value = profile.phone;
+                    }
                 }
                 if (profile.bio) {
                     const bioInput = document.getElementById('bioInput');
                     bioInput.value = profile.bio;
                     document.getElementById('bioCount').textContent = profile.bio.length;
                 }
+
+                // Valider le formulaire après chargement
+                validateForm();
             }
         };
 
@@ -628,6 +654,33 @@
         bioInput.addEventListener('input', () => {
             bioCount.textContent = bioInput.value.length;
         });
+
+        // Validation en temps réel et activation/désactivation du bouton
+        const updateProfileBtn = document.getElementById('updateProfileBtn');
+        const validateForm = () => {
+            const username = document.getElementById('usernameInput').value.trim();
+            const fullName = document.getElementById('fullNameInput').value.trim();
+            const country = document.getElementById('countrySelect').value;
+            const city = document.getElementById('cityInput').value.trim();
+
+            const isValid = username && fullName && country && city;
+
+            if (isValid) {
+                updateProfileBtn.disabled = false;
+                updateProfileBtn.style.opacity = '1';
+                updateProfileBtn.style.cursor = 'pointer';
+            } else {
+                updateProfileBtn.disabled = true;
+                updateProfileBtn.style.opacity = '0.5';
+                updateProfileBtn.style.cursor = 'not-allowed';
+            }
+        };
+
+        // Écouter les changements sur les champs obligatoires
+        document.getElementById('usernameInput').addEventListener('input', validateForm);
+        document.getElementById('fullNameInput').addEventListener('input', validateForm);
+        document.getElementById('countrySelect').addEventListener('change', validateForm);
+        document.getElementById('cityInput').addEventListener('input', validateForm);
 
         // Bouton "Changer la photo"
         uploadAvatarBtn.addEventListener('click', () => {
@@ -725,41 +778,41 @@
         });
 
         // Mettre à jour le profil
-        document.getElementById('updateProfileBtn').addEventListener('click', async () => {
+        updateProfileBtn.addEventListener('click', async () => {
             const username = document.getElementById('usernameInput').value.trim();
             const fullName = document.getElementById('fullNameInput').value.trim();
             const country = document.getElementById('countrySelect').value;
             const city = document.getElementById('cityInput').value.trim();
-            const phone = document.getElementById('phoneInput').value.trim();
+            const phoneNumber = document.getElementById('phoneInput').value.trim();
+            const phoneCode = document.getElementById('phoneCountryCode').value;
+            const phone = phoneNumber ? `${phoneCode} ${phoneNumber}` : '';
             const bio = document.getElementById('bioInput').value.trim();
 
-            // Validations
-            if (!username) {
-                showError('Le nom d\'utilisateur est obligatoire');
-                return;
-            }
-            if (!fullName) {
-                showError('Le nom complet est obligatoire');
-                return;
-            }
-            if (!country) {
-                showError('Le pays est obligatoire');
-                return;
-            }
-            if (!city) {
-                showError('La ville est obligatoire');
+            // Validations (déjà faites par le bouton, mais double-check)
+            if (!username || !fullName || !country || !city) {
+                showError('Veuillez remplir tous les champs obligatoires (Username, Nom complet, Pays, Ville)');
                 return;
             }
 
-            const result = await updateUserProfile({
+            // Construire l'objet avec seulement les champs nécessaires
+            const profileData = {
                 username,
                 full_name: fullName,
                 country,
-                city,
-                phone: phone || null,
-                bio: bio || null,
-                avatar_url: currentAvatarUrl
-            });
+                city
+            };
+
+            // Ajouter les champs optionnels seulement s'ils sont remplis
+            if (phone) {
+                profileData.phone = phone;
+            }
+            if (bio) {
+                profileData.bio = bio;
+            }
+            // Avatar peut être null (pour supprimer) ou une URL/base64
+            profileData.avatar_url = currentAvatarUrl;
+
+            const result = await updateUserProfile(profileData);
 
             if (result.success) {
                 showSuccess('Profil mis à jour avec succès !');
