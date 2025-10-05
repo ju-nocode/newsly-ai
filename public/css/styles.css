@@ -2550,19 +2550,50 @@ body:has(.settings-layout) .footer {
   width: 100%;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
 }
 
+/* Face 1 visible par défaut */
 .signup-flip-front {
-  z-index: 2;
+  z-index: 3;
   transform: rotateY(0deg);
+  opacity: 1;
+  pointer-events: auto;
 }
 
+/* Face 2 visible quand flipped */
 .signup-flip-back {
+  z-index: 2;
   transform: rotateY(180deg);
 }
 
+.signup-flip-card.flipped .signup-flip-front {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.signup-flip-card.flipped .signup-flip-back {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Face 3 visible quand flipped-twice */
 .signup-flip-third {
-  transform: rotateY(360deg);
+  z-index: 1;
+  transform: rotateY(0deg);
+}
+
+.signup-flip-card.flipped-twice .signup-flip-front,
+.signup-flip-card.flipped-twice .signup-flip-back {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.signup-flip-card.flipped-twice .signup-flip-third {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* Responsive flip card */
