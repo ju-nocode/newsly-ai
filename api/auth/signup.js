@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     }
 
     try {
-        const { email, password, metadata, username } = req.body;
+        const { email, password, metadata, username, full_name, country, city, phone } = req.body;
 
         if (!email || !password) {
             return res.status(400).json({ error: 'Email et mot de passe requis' });
@@ -43,13 +43,15 @@ export default async function handler(req, res) {
         );
 
         // Préparer les métadonnées utilisateur
-        const userMetadata = metadata || {
-            username: username || email.split('@')[0],
-            full_name: username || email.split('@')[0],
-            display_name: username || email.split('@')[0],
-            phone: '',
-            bio: '',
-            avatar_url: ''
+        const userMetadata = {
+            username: username || metadata?.username || email.split('@')[0],
+            full_name: full_name || metadata?.full_name || username || email.split('@')[0],
+            display_name: username || metadata?.username || email.split('@')[0],
+            phone: phone || metadata?.phone || '',
+            bio: metadata?.bio || '',
+            avatar_url: metadata?.avatar_url || '',
+            country: country || metadata?.country || 'France',
+            city: city || metadata?.city || 'Paris'
         };
 
         // Inscription
@@ -83,6 +85,8 @@ export default async function handler(req, res) {
                     phone: userMetadata.phone || null,
                     bio: userMetadata.bio || null,
                     avatar_url: userMetadata.avatar_url || null,
+                    country: userMetadata.country || 'France',
+                    city: userMetadata.city || 'Paris',
                     is_admin: false,
                     created_at: new Date().toISOString(),
                     updated_at: new Date().toISOString()

@@ -1,6 +1,7 @@
 import { checkAuth, login, signup } from './app.js';
 import { translatePage } from './translation-service.js';
 import { defaultParticlesConfig } from './particles-config.js';
+import { countries } from './countries.js';
 
 // Si l'utilisateur est déjà connecté, rediriger vers le dashboard
 if (checkAuth()) {
@@ -229,27 +230,162 @@ document.getElementById('loginFormElement').addEventListener('submit', async (e)
     }
 });
 
-// Gérer la soumission signup
-document.getElementById('signupFormElement').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const username = document.getElementById('signupUsername').value;
-    const fullName = document.getElementById('signupFullName').value;
-    const email = document.getElementById('signupEmail').value;
-    const phone = document.getElementById('signupPhone').value;
-    const password = document.getElementById('signupPassword').value;
-    const errorDiv = document.getElementById('signupError');
+// ================================================
+// SIGNUP EN 2 ÉTAPES AVEC FLIP
+// ================================================
 
-    const result = await signup(email, password, {
-        username,
-        full_name: fullName,
-        phone
+// Peupler le dropdown des pays dans Step 2
+const signupCountrySelect = document.getElementById('signupCountry');
+if (signupCountrySelect) {
+    countries.forEach(country => {
+        const option = document.createElement('option');
+        option.value = country.name;
+        option.textContent = `${country.emoji} ${country.name}`;
+        signupCountrySelect.appendChild(option);
     });
+}
 
-    if (result.success) {
-        window.location.href = 'dashboard.html';
-    } else {
-        errorDiv.textContent = result.error;
-        errorDiv.style.display = 'block';
+// Peupler le dropdown des indicatifs téléphoniques
+const signupPhoneCountrySelect = document.getElementById('signupPhoneCountry');
+if (signupPhoneCountrySelect) {
+    countries.forEach(country => {
+        const option = document.createElement('option');
+        option.value = country.dial_code;
+        option.textContent = `${country.emoji} ${country.dial_code}`;
+        signupPhoneCountrySelect.appendChild(option);
+    });
+    // Sélectionner +33 (France) par défaut
+    signupPhoneCountrySelect.value = '+33';
+}
+
+// Variables pour stocker les données de Step 1
+let step1Email = '';
+let step1Password = '';
+
+// STEP 1 - Email & Password
+const signupStep1Form = document.getElementById('signupStep1Form');
+if (signupStep1Form) {
+    signupStep1Form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById('signupEmail').value.trim();
+        const password = document.getElementById('signupPassword').value;
+        const errorDiv = document.getElementById('signupStep1Error');
+
+        // Validation
+        if (!email || !email.includes('@')) {
+            errorDiv.textContent = 'Email invalide';
+            errorDiv.style.display = 'block';
+            return;
+        }
+
+        if (password.length < 8) {
+            errorDiv.textContent = 'Le mot de passe doit contenir au moins 8 caractères';
+            errorDiv.style.display = 'block';
+            return;
+        }
+
+        // Stocker les données
+        step1Email = email;
+        step1Password = password;
+
+        // Cacher l'erreur
+        errorDiv.style.display = 'none';
+
+        // FLIP vers Step 2
+        document.getElementById('signupFlipCard').classList.add('flipped');
+    });
+}
+
+// Bouton RETOUR - Flip back to Step 1
+const signupBackBtn = document.getElementById('signupBackBtn');
+if (signupBackBtn) {
+    signupBackBtn.addEventListener('click', () => {
+        document.getElementById('signupFlipCard').classList.remove('flipped');
+    });
+}
+
+// STEP 2 - Profil complet
+const signupStep2Form = document.getElementById('signupStep2Form');
+if (signupStep2Form) {
+    signupStep2Form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const username = document.getElementById('signupUsername').value.trim();
+        const fullName = document.getElementById('signupFullName').value.trim();
+        const country = document.getElementById('signupCountry').value;
+        const city = document.getElementById('signupCity').value.trim();
+        const phoneCountry = document.getElementById('signupPhoneCountry').value;
+        const phoneNumber = document.getElementById('signupPhoneNumber').value.trim();
+        const errorDiv = document.getElementById('signupStep2Error');
+
+        // Validation
+        if (!username) {
+            errorDiv.textContent = 'Le nom d\'utilisateur est obligatoire';
+            errorDiv.style.display = 'block';
+            return;
+        }
+
+        if (!fullName) {
+            errorDiv.textContent = 'Le nom complet est obligatoire';
+            errorDiv.style.display = 'block';
+            return;
+        }
+
+        if (!country) {
+            errorDiv.textContent = 'Le pays est obligatoire';
+            errorDiv.style.display = 'block';
+            return;
+        }
+
+        if (!city) {
+            errorDiv.textContent = 'La ville est obligatoire';
+            errorDiv.style.display = 'block';
+            return;
+        }
+
+        // Construire le numéro de téléphone complet (optionnel)
+        const phone = phoneNumber ? `${phoneCountry} ${phoneNumber}` : '';
+
+        // Créer le compte avec toutes les données
+        const result = await signup(step1Email, step1Password, {
+            username,
+            full_name: fullName,
+            country,
+            city,
+            phone
+        });
+
+        if (result.success) {
+            window.location.href = 'dashboard.html';
+        } else {
+            errorDiv.textContent = result.error;
+            errorDiv.style.display = 'block';
+        }
+    });
+}
+
+// Validation en temps réel pour griser le bouton Step 2
+const validateSignupStep2 = () => {
+    const username = document.getElementById('signupUsername').value.trim();
+    const fullName = document.getElementById('signupFullName').value.trim();
+    const country = document.getElementById('signupCountry').value;
+    const city = document.getElementById('signupCity').value.trim();
+    const submitBtn = signupStep2Form.querySelector('button[type="submit"]');
+
+    const isValid = username && fullName && country && city;
+
+    if (submitBtn) {
+        submitBtn.disabled = !isValid;
+        submitBtn.style.opacity = isValid ? '1' : '0.5';
+    }
+};
+
+// Ajouter les listeners pour la validation en temps réel
+['signupUsername', 'signupFullName', 'signupCountry', 'signupCity'].forEach(id => {
+    const element = document.getElementById(id);
+    if (element) {
+        element.addEventListener('input', validateSignupStep2);
     }
 });
 
