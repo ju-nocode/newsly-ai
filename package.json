@@ -3,14 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "description": "AI-powered news aggregator with secure backend",
-  "scripts": {
-    "dev": "vercel dev",
-    "deploy": "vercel"
-  },
   "dependencies": {
     "@supabase/supabase-js": "^2.39.0"
-  },
-  "devDependencies": {
-    "vercel": "^33.0.0"
   }
 }

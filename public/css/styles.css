@@ -94,13 +94,13 @@ body {
   width: 100%;
   height: 100%;
   z-index: 0;
-  pointer-events: none;
 }
 
 /* Ensure content stays above background */
-body > * {
+body > *:not(#particles-js) {
   position: relative;
   z-index: 1;
+  pointer-events: auto;
 }
 
 /* Scrollbar */

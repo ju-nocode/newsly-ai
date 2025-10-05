@@ -15,7 +15,9 @@
       "Bash(tree:*)",
       "WebFetch(domain:prod-julien.vercel.app)",
       "Bash(git pull:*)",
-      "WebFetch(domain:icons8.com)"
+      "WebFetch(domain:icons8.com)",
+      "Bash(npm ls:*)",
+      "Bash(npm install:*)"
     ],
     "deny": [],
     "ask": []
