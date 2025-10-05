@@ -34,14 +34,26 @@ export default async function handler(req, res) {
 
         // GET - Récupérer le profil
         if (req.method === 'GET') {
+            // Récupérer les données de la table profiles
+            const { data: profile, error: profileError } = await supabase
+                .from('profiles')
+                .select('*')
+                .eq('id', user.id)
+                .single();
+
+            if (profileError && profileError.code !== 'PGRST116') {
+                console.error('Profile fetch error:', profileError);
+            }
+
             return res.status(200).json({
                 id: user.id,
                 email: user.email,
-                username: user.user_metadata?.username || user.user_metadata?.full_name || user.user_metadata?.display_name || user.email.split('@')[0],
-                full_name: user.user_metadata?.full_name || user.user_metadata?.username || '',
-                phone: user.user_metadata?.phone || '',
-                bio: user.user_metadata?.bio || '',
-                avatar_url: user.user_metadata?.avatar_url || '',
+                username: profile?.username || user.user_metadata?.username || user.email.split('@')[0],
+                full_name: profile?.full_name || user.user_metadata?.full_name || '',
+                phone: profile?.phone || '',
+                bio: profile?.bio || '',
+                avatar_url: profile?.avatar_url || '',
+                role: profile?.role || 'user',
                 created_at: user.created_at
             });
         }
@@ -84,7 +96,6 @@ export default async function handler(req, res) {
 
             if (username !== undefined) {
                 updateData.username = username.trim();
-                updateData.display_name = username.trim();
             }
 
             if (full_name !== undefined) {
@@ -103,24 +114,43 @@ export default async function handler(req, res) {
                 updateData.avatar_url = avatar_url.trim();
             }
 
-            // Utiliser le Service Role pour mettre à jour les métadonnées
+            // Mettre à jour updated_at
+            updateData.updated_at = new Date().toISOString();
+
+            // Utiliser le Service Role pour mettre à jour la table profiles
             const supabaseAdmin = createClient(
                 process.env.SUPABASE_URL,
                 process.env.SUPABASE_SERVICE_ROLE_KEY
             );
 
-            const { data, error } = await supabaseAdmin.auth.admin.updateUserById(
-                user.id,
-                { user_metadata: updateData }
-            );
+            const { data, error } = await supabaseAdmin
+                .from('profiles')
+                .update(updateData)
+                .eq('id', user.id)
+                .select()
+                .single();
 
             if (error) {
+                console.error('Profile update error:', error);
                 return res.status(400).json({ error: error.message });
+            }
+
+            // Aussi mettre à jour user_metadata pour garder la cohérence
+            if (username !== undefined) {
+                await supabaseAdmin.auth.admin.updateUserById(
+                    user.id,
+                    {
+                        user_metadata: {
+                            username: username.trim(),
+                            display_name: username.trim()
+                        }
+                    }
+                );
             }
 
             return res.status(200).json({
                 message: 'Profil mis à jour',
-                user: data.user
+                profile: data
             });
         }
 
