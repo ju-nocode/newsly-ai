@@ -130,6 +130,8 @@ const fallbackTranslations = {
         'settings.manageProfile': 'Gérez vos informations personnelles',
         'settings.general': 'Général',
         'settings.advanced': 'Avancé',
+        'settings.country': 'Pays',
+        'settings.city': 'Ville',
 
         'auth.login': 'Connexion',
         'auth.signup': 'Créer un compte',
@@ -220,6 +222,8 @@ const fallbackTranslations = {
         'settings.manageProfile': 'Manage your personal information',
         'settings.general': 'General',
         'settings.advanced': 'Advanced',
+        'settings.country': 'Country',
+        'settings.city': 'City',
 
         'auth.login': 'Login',
         'auth.signup': 'Sign up',

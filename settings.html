@@ -155,21 +155,30 @@
                 <p class="settings-section-desc" data-i18n="settings.manageProfile">Gérez vos informations personnelles</p>
 
                 <div class="settings-card">
-                    <!-- Avatar Section -->
+                    <!-- Avatar Section (Optionnel) -->
                     <div class="form-group">
-                        <label class="form-label" data-i18n="settings.avatar">Photo de profil</label>
+                        <label class="form-label" data-i18n="settings.avatar">Photo de profil (optionnel)</label>
                         <div class="avatar-upload-container">
                             <div class="avatar-preview" id="avatarPreview">
-                                <img id="avatarImage" src="https://ui-avatars.com/api/?name=User&background=3ecf8e&color=fff&size=200" alt="Avatar">
+                                <img id="avatarImage" src="https://ui-avatars.com/api/?name=User&background=3b82f6&color=fff&size=200" alt="Avatar">
                                 <div class="avatar-overlay" id="avatarOverlay">
                                     <span class="avatar-edit-icon">✏️</span>
                                 </div>
                             </div>
                             <input type="file" id="avatarInput" accept="image/*" style="display: none;">
-                            <p class="form-hint" data-i18n="settings.avatarHint">Cliquez sur l'avatar pour changer (max 2MB)</p>
+                            <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                                <button type="button" id="uploadAvatarBtn" class="btn-secondary" style="flex: 1;">
+                                    📷 Changer la photo
+                                </button>
+                                <button type="button" id="removeAvatarBtn" class="btn-danger" style="flex: 1;">
+                                    🗑️ Supprimer
+                                </button>
+                            </div>
+                            <p class="form-hint">Max 2MB - JPG, PNG ou GIF</p>
                         </div>
                     </div>
 
+                    <!-- Email (Read-only) -->
                     <div class="form-group">
                         <label for="emailDisplay" class="form-label" data-i18n="settings.email">Email</label>
                         <input
@@ -180,32 +189,74 @@
                             disabled
                             readonly
                         >
+                        <p class="form-hint">L'email ne peut pas être modifié</p>
                     </div>
 
+                    <!-- Username (Obligatoire) -->
                     <div class="form-group">
-                        <label for="usernameInput" class="form-label" data-i18n="settings.username">Nom d'utilisateur</label>
+                        <label for="usernameInput" class="form-label">
+                            <span data-i18n="settings.username">Nom d'utilisateur</span>
+                            <span style="color: var(--error); margin-left: 0.25rem;">*</span>
+                        </label>
                         <input
                             type="text"
                             id="usernameInput"
                             class="form-input"
-                            placeholder="MonNomUtilisateur"
-                            data-i18n-placeholder="settings.usernamePlaceholder"
+                            placeholder="@MonNomUtilisateur"
+                            required
                         >
+                        <p class="form-hint">Utilisé pour vous identifier sur la plateforme (ex: @julien33)</p>
                     </div>
 
+                    <!-- Full Name (Obligatoire) -->
                     <div class="form-group">
-                        <label for="fullNameInput" class="form-label" data-i18n="settings.fullName">Nom complet</label>
+                        <label for="fullNameInput" class="form-label">
+                            <span data-i18n="settings.fullName">Nom complet</span>
+                            <span style="color: var(--error); margin-left: 0.25rem;">*</span>
+                        </label>
                         <input
                             type="text"
                             id="fullNameInput"
                             class="form-input"
-                            placeholder="Jean Dupont"
-                            data-i18n-placeholder="settings.fullNamePlaceholder"
+                            placeholder="Julien RICHARD"
+                            required
+                        >
+                        <p class="form-hint">Votre nom et prénom réels</p>
+                    </div>
+
+                    <!-- Country (Obligatoire) -->
+                    <div class="form-group">
+                        <label for="countrySelect" class="form-label">
+                            <span data-i18n="settings.country">Pays</span>
+                            <span style="color: var(--error); margin-left: 0.25rem;">*</span>
+                        </label>
+                        <select
+                            id="countrySelect"
+                            class="form-input"
+                            required
+                        >
+                            <option value="">-- Sélectionnez un pays --</option>
+                        </select>
+                    </div>
+
+                    <!-- City (Obligatoire) -->
+                    <div class="form-group">
+                        <label for="cityInput" class="form-label">
+                            <span data-i18n="settings.city">Ville</span>
+                            <span style="color: var(--error); margin-left: 0.25rem;">*</span>
+                        </label>
+                        <input
+                            type="text"
+                            id="cityInput"
+                            class="form-input"
+                            placeholder="Bordeaux"
+                            required
                         >
                     </div>
 
+                    <!-- Phone (Optionnel) -->
                     <div class="form-group">
-                        <label for="phoneInput" class="form-label" data-i18n="settings.phone">Téléphone</label>
+                        <label for="phoneInput" class="form-label" data-i18n="settings.phone">Téléphone (optionnel)</label>
                         <input
                             type="tel"
                             id="phoneInput"
@@ -214,15 +265,18 @@
                         >
                     </div>
 
+                    <!-- Bio (Optionnel) -->
                     <div class="form-group">
-                        <label for="bioInput" class="form-label" data-i18n="settings.bio">Bio</label>
+                        <label for="bioInput" class="form-label" data-i18n="settings.bio">Bio (optionnel)</label>
                         <textarea
                             id="bioInput"
                             class="form-input"
                             placeholder="Parlez-nous de vous..."
                             data-i18n-placeholder="settings.bioPlaceholder"
                             rows="3"
+                            maxlength="500"
                         ></textarea>
+                        <p class="form-hint"><span id="bioCount">0</span>/500 caractères</p>
                     </div>
 
                     <button id="updateProfileBtn" class="btn-primary" data-i18n="settings.updateProfile">
@@ -484,6 +538,7 @@
         import { escapeHtml, showSuccess, showError } from './public/js/dashboard-utils.js';
         import { translatePage } from './public/js/translation-service.js';
         import { initParticles } from './public/js/particles-config.js';
+        import { countries } from './public/js/countries.js';
 
         // Initialize particles (async to load from DB)
         (async () => {
@@ -498,6 +553,15 @@
 
         // Variable globale pour stocker l'avatar
         let currentAvatarUrl = null;
+
+        // Populer le select des pays
+        const countrySelect = document.getElementById('countrySelect');
+        countries.forEach(country => {
+            const option = document.createElement('option');
+            option.value = country.name;
+            option.textContent = `${country.emoji} ${country.name}`;
+            countrySelect.appendChild(option);
+        });
 
         // Charger le profil utilisateur
         const loadProfile = async () => {
@@ -533,18 +597,20 @@
                     document.getElementById('avatarImage').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=3ecf8e&color=fff&size=200`;
                 }
 
-                // Autres champs: ne mettre la valeur que si elle existe (pour garder le placeholder sinon)
-                if (profile.username) {
-                    document.getElementById('usernameInput').value = profile.username;
-                }
-                if (profile.full_name) {
-                    document.getElementById('fullNameInput').value = profile.full_name;
-                }
+                // Champs obligatoires
+                document.getElementById('usernameInput').value = profile.username || '';
+                document.getElementById('fullNameInput').value = profile.full_name || '';
+                document.getElementById('countrySelect').value = profile.country || 'France';
+                document.getElementById('cityInput').value = profile.city || '';
+
+                // Champs optionnels
                 if (profile.phone) {
                     document.getElementById('phoneInput').value = profile.phone;
                 }
                 if (profile.bio) {
-                    document.getElementById('bioInput').value = profile.bio;
+                    const bioInput = document.getElementById('bioInput');
+                    bioInput.value = profile.bio;
+                    document.getElementById('bioCount').textContent = profile.bio.length;
                 }
             }
         };
@@ -553,10 +619,32 @@
         const avatarPreview = document.getElementById('avatarPreview');
         const avatarInput = document.getElementById('avatarInput');
         const avatarImage = document.getElementById('avatarImage');
+        const uploadAvatarBtn = document.getElementById('uploadAvatarBtn');
+        const removeAvatarBtn = document.getElementById('removeAvatarBtn');
 
-        // Cliquer sur l'avatar ouvre le sélecteur de fichier
+        // Compteur de caractères pour la bio
+        const bioInput = document.getElementById('bioInput');
+        const bioCount = document.getElementById('bioCount');
+        bioInput.addEventListener('input', () => {
+            bioCount.textContent = bioInput.value.length;
+        });
+
+        // Bouton "Changer la photo"
+        uploadAvatarBtn.addEventListener('click', () => {
+            avatarInput.click();
+        });
+
+        // Cliquer sur l'avatar ouvre aussi le sélecteur
         avatarPreview.addEventListener('click', () => {
             avatarInput.click();
+        });
+
+        // Bouton "Supprimer la photo"
+        removeAvatarBtn.addEventListener('click', () => {
+            currentAvatarUrl = null;
+            const userName = document.getElementById('usernameInput').value || 'User';
+            avatarImage.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=3b82f6&color=fff&size=200`;
+            showSuccess('Photo supprimée (cliquez sur "Mettre à jour" pour sauvegarder)');
         });
 
         // Fonction pour compresser l'image
@@ -640,19 +728,36 @@
         document.getElementById('updateProfileBtn').addEventListener('click', async () => {
             const username = document.getElementById('usernameInput').value.trim();
             const fullName = document.getElementById('fullNameInput').value.trim();
+            const country = document.getElementById('countrySelect').value;
+            const city = document.getElementById('cityInput').value.trim();
             const phone = document.getElementById('phoneInput').value.trim();
             const bio = document.getElementById('bioInput').value.trim();
 
+            // Validations
             if (!username) {
-                showError('Le nom d\'utilisateur ne peut pas être vide');
+                showError('Le nom d\'utilisateur est obligatoire');
+                return;
+            }
+            if (!fullName) {
+                showError('Le nom complet est obligatoire');
+                return;
+            }
+            if (!country) {
+                showError('Le pays est obligatoire');
+                return;
+            }
+            if (!city) {
+                showError('La ville est obligatoire');
                 return;
             }
 
             const result = await updateUserProfile({
                 username,
                 full_name: fullName,
-                phone,
-                bio,
+                country,
+                city,
+                phone: phone || null,
+                bio: bio || null,
                 avatar_url: currentAvatarUrl
             });
 

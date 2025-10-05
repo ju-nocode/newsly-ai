@@ -53,6 +53,8 @@ export default async function handler(req, res) {
                 phone: profile?.phone || '',
                 bio: profile?.bio || '',
                 avatar_url: profile?.avatar_url || '',
+                country: profile?.country || 'France',
+                city: profile?.city || '',
                 role: profile?.is_admin ? 'admin' : 'user',
                 is_admin: profile?.is_admin || false,
                 created_at: user.created_at
@@ -61,7 +63,7 @@ export default async function handler(req, res) {
 
         // PUT - Mettre à jour le profil
         if (req.method === 'PUT') {
-            const { username, full_name, phone, bio, avatar_url } = req.body;
+            const { username, full_name, phone, bio, avatar_url, country, city } = req.body;
 
             // Validation des données
             if (username !== undefined) {
@@ -82,6 +84,18 @@ export default async function handler(req, res) {
 
             if (bio !== undefined && bio !== null && bio.length > 500) {
                 return res.status(400).json({ error: 'Bio trop longue (max 500 caractères)' });
+            }
+
+            if (country !== undefined) {
+                if (typeof country !== 'string' || country.trim().length < 1 || country.trim().length > 100) {
+                    return res.status(400).json({ error: 'Pays invalide (1-100 caractères)' });
+                }
+            }
+
+            if (city !== undefined) {
+                if (typeof city !== 'string' || city.trim().length < 1 || city.trim().length > 100) {
+                    return res.status(400).json({ error: 'Ville invalide (1-100 caractères)' });
+                }
             }
 
             if (avatar_url !== undefined && avatar_url !== null && avatar_url.trim().length > 0) {
@@ -118,7 +132,15 @@ export default async function handler(req, res) {
             }
 
             if (avatar_url !== undefined) {
-                updateData.avatar_url = avatar_url.trim();
+                updateData.avatar_url = avatar_url === null ? null : avatar_url.trim();
+            }
+
+            if (country !== undefined) {
+                updateData.country = country.trim();
+            }
+
+            if (city !== undefined) {
+                updateData.city = city.trim();
             }
 
             // Mettre à jour updated_at
@@ -169,6 +191,8 @@ export default async function handler(req, res) {
                 phone: updateData.phone !== undefined ? updateData.phone : (existingProfile?.phone || null),
                 bio: updateData.bio !== undefined ? updateData.bio : (existingProfile?.bio || null),
                 avatar_url: updateData.avatar_url !== undefined ? updateData.avatar_url : (existingProfile?.avatar_url || null),
+                country: updateData.country || existingProfile?.country || 'France',
+                city: updateData.city || existingProfile?.city || 'Paris',
                 is_admin: isAdmin,
                 created_at: existingProfile?.created_at || new Date().toISOString(),
                 updated_at: new Date().toISOString()
