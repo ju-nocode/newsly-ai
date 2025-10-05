@@ -1960,15 +1960,13 @@ body:has(.settings-layout) .footer {
 }
 
 /* Security section grid layout */
-#section-security {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0;
+#section-security.active {
+  display: block;
 }
 
 #section-security .settings-section-title,
 #section-security .settings-section-desc {
-  grid-column: 1 / -1;
+  margin-bottom: 1rem;
 }
 
 #section-security .security-grid {

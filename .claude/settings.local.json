@@ -17,7 +17,8 @@
       "Bash(git pull:*)",
       "WebFetch(domain:icons8.com)",
       "Bash(npm ls:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(python:*)"
     ],
     "deny": [],
     "ask": []

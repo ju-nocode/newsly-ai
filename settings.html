@@ -129,79 +129,79 @@
                 <p class="settings-section-desc">Gérez vos informations personnelles</p>
 
                 <div class="settings-card">
-            <!-- Avatar Section -->
-            <div class="form-group">
-                <label class="form-label" data-i18n="settings.avatar">Photo de profil</label>
-                <div class="avatar-upload-container">
-                    <div class="avatar-preview" id="avatarPreview">
-                        <img id="avatarImage" src="https://ui-avatars.com/api/?name=User&background=3ecf8e&color=fff&size=200" alt="Avatar">
-                        <div class="avatar-overlay" id="avatarOverlay">
-                            <span class="avatar-edit-icon">✏️</span>
+                    <!-- Avatar Section -->
+                    <div class="form-group">
+                        <label class="form-label" data-i18n="settings.avatar">Photo de profil</label>
+                        <div class="avatar-upload-container">
+                            <div class="avatar-preview" id="avatarPreview">
+                                <img id="avatarImage" src="https://ui-avatars.com/api/?name=User&background=3ecf8e&color=fff&size=200" alt="Avatar">
+                                <div class="avatar-overlay" id="avatarOverlay">
+                                    <span class="avatar-edit-icon">✏️</span>
+                                </div>
+                            </div>
+                            <input type="file" id="avatarInput" accept="image/*" style="display: none;">
+                            <p class="form-hint" data-i18n="settings.avatarHint">Cliquez sur l'avatar pour changer (max 2MB)</p>
                         </div>
                     </div>
-                    <input type="file" id="avatarInput" accept="image/*" style="display: none;">
-                    <p class="form-hint" data-i18n="settings.avatarHint">Cliquez sur l'avatar pour changer (max 2MB)</p>
-                </div>
-            </div>
 
-            <div class="form-group">
-                <label for="emailDisplay" class="form-label" data-i18n="settings.email">Email</label>
-                <input
-                    type="email"
-                    id="emailDisplay"
-                    class="form-input"
-                    placeholder="exemple@email.com"
-                    disabled
-                    readonly
-                >
-            </div>
+                    <div class="form-group">
+                        <label for="emailDisplay" class="form-label" data-i18n="settings.email">Email</label>
+                        <input
+                            type="email"
+                            id="emailDisplay"
+                            class="form-input"
+                            placeholder="exemple@email.com"
+                            disabled
+                            readonly
+                        >
+                    </div>
 
-            <div class="form-group">
-                <label for="usernameInput" class="form-label" data-i18n="settings.username">Nom d'utilisateur</label>
-                <input
-                    type="text"
-                    id="usernameInput"
-                    class="form-input"
-                    placeholder="MonNomUtilisateur"
-                    data-i18n-placeholder="settings.usernamePlaceholder"
-                >
-            </div>
+                    <div class="form-group">
+                        <label for="usernameInput" class="form-label" data-i18n="settings.username">Nom d'utilisateur</label>
+                        <input
+                            type="text"
+                            id="usernameInput"
+                            class="form-input"
+                            placeholder="MonNomUtilisateur"
+                            data-i18n-placeholder="settings.usernamePlaceholder"
+                        >
+                    </div>
 
-            <div class="form-group">
-                <label for="fullNameInput" class="form-label" data-i18n="settings.fullName">Nom complet</label>
-                <input
-                    type="text"
-                    id="fullNameInput"
-                    class="form-input"
-                    placeholder="Jean Dupont"
-                    data-i18n-placeholder="settings.fullNamePlaceholder"
-                >
-            </div>
+                    <div class="form-group">
+                        <label for="fullNameInput" class="form-label" data-i18n="settings.fullName">Nom complet</label>
+                        <input
+                            type="text"
+                            id="fullNameInput"
+                            class="form-input"
+                            placeholder="Jean Dupont"
+                            data-i18n-placeholder="settings.fullNamePlaceholder"
+                        >
+                    </div>
 
-            <div class="form-group">
-                <label for="phoneInput" class="form-label" data-i18n="settings.phone">Téléphone</label>
-                <input
-                    type="tel"
-                    id="phoneInput"
-                    class="form-input"
-                    placeholder="+33 6 12 34 56 78"
-                >
-            </div>
+                    <div class="form-group">
+                        <label for="phoneInput" class="form-label" data-i18n="settings.phone">Téléphone</label>
+                        <input
+                            type="tel"
+                            id="phoneInput"
+                            class="form-input"
+                            placeholder="+33 6 12 34 56 78"
+                        >
+                    </div>
 
-            <div class="form-group">
-                <label for="bioInput" class="form-label" data-i18n="settings.bio">Bio</label>
-                <textarea
-                    id="bioInput"
-                    class="form-input"
-                    placeholder="Parlez-nous de vous..."
-                    data-i18n-placeholder="settings.bioPlaceholder"
-                    rows="3"
-                ></textarea>
-            </div>
+                    <div class="form-group">
+                        <label for="bioInput" class="form-label" data-i18n="settings.bio">Bio</label>
+                        <textarea
+                            id="bioInput"
+                            class="form-input"
+                            placeholder="Parlez-nous de vous..."
+                            data-i18n-placeholder="settings.bioPlaceholder"
+                            rows="3"
+                        ></textarea>
+                    </div>
 
-            <button id="updateProfileBtn" class="btn-primary" data-i18n="settings.updateProfile">
-                Mettre à jour le profil
-            </button>
+                    <button id="updateProfileBtn" class="btn-primary" data-i18n="settings.updateProfile">
+                        Mettre à jour le profil
+                    </button>
                 </div>
             </section>
 
