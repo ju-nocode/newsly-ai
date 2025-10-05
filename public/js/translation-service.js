@@ -125,6 +125,9 @@ const fallbackTranslations = {
         'settings.dangerZone': 'Zone de danger',
         'settings.dangerZoneDesc': 'Une fois votre compte supprimé, toutes vos données seront définitivement effacées. Cette action est irréversible.',
         'settings.protectAccount': 'Protégez votre compte',
+        'settings.users': 'Utilisateurs',
+        'settings.particles': 'Particules',
+        'settings.manageProfile': 'Gérez vos informations personnelles',
 
         'auth.login': 'Connexion',
         'auth.signup': 'Créer un compte',
@@ -210,6 +213,9 @@ const fallbackTranslations = {
         'settings.dangerZone': 'Danger zone',
         'settings.dangerZoneDesc': 'Once your account is deleted, all your data will be permanently erased. This action is irreversible.',
         'settings.protectAccount': 'Protect your account',
+        'settings.users': 'Users',
+        'settings.particles': 'Particles',
+        'settings.manageProfile': 'Manage your personal information',
 
         'auth.login': 'Login',
         'auth.signup': 'Sign up',
