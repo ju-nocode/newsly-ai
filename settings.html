@@ -1231,19 +1231,31 @@
             const config = getParticlesConfig();
 
             try {
-                // Destroy existing particles if they exist
-                if (window.pJSDom && window.pJSDom.length > 0 && window.pJSDom[0]?.pJS) {
-                    window.pJSDom[0].pJS.fn.vendors.destroypJS();
+                // Clear and reinitialize particles
+                const particlesContainer = document.getElementById('particles-js');
+
+                // Destroy existing particles
+                if (window.pJSDom && window.pJSDom.length > 0) {
+                    try {
+                        window.pJSDom[0].pJS.fn.vendors.destroypJS();
+                        window.pJSDom = [];
+                    } catch (e) {
+                        console.warn('Error destroying particles:', e);
+                    }
                 }
 
-                // Wait a bit before reinitializing
+                // Clear the container
+                particlesContainer.innerHTML = '';
+
+                // Reinitialize
                 setTimeout(() => {
                     window.particlesJS('particles-js', config);
                     showSuccess('Aperçu appliqué !');
-                }, 100);
+                }, 50);
             } catch (error) {
                 console.error('Apply preview error:', error);
-                location.reload();
+                showError('Erreur lors de l\'application. Rechargement...');
+                setTimeout(() => location.reload(), 1000);
             }
         });
 
@@ -1266,17 +1278,29 @@
 
             // Reload particles
             try {
-                if (window.pJSDom && window.pJSDom.length > 0 && window.pJSDom[0]?.pJS) {
-                    window.pJSDom[0].pJS.fn.vendors.destroypJS();
+                const particlesContainer = document.getElementById('particles-js');
+
+                // Destroy existing particles
+                if (window.pJSDom && window.pJSDom.length > 0) {
+                    try {
+                        window.pJSDom[0].pJS.fn.vendors.destroypJS();
+                        window.pJSDom = [];
+                    } catch (e) {
+                        console.warn('Error destroying particles:', e);
+                    }
                 }
-                // Wait a bit before reinitializing
+
+                // Clear the container
+                particlesContainer.innerHTML = '';
+
+                // Reinitialize
                 setTimeout(() => {
                     window.particlesJS('particles-js', config);
-                }, 100);
+                }, 50);
             } catch (error) {
                 console.error('Particles reload error:', error);
-                // Fallback: just reload the page
-                location.reload();
+                showError('Erreur lors du rechargement. Rechargement de la page...');
+                setTimeout(() => location.reload(), 1000);
             }
         });
 
@@ -1286,18 +1310,30 @@
             await loadParticlesSettings();
 
             try {
-                // Reload particles
-                if (window.pJSDom && window.pJSDom.length > 0 && window.pJSDom[0]?.pJS) {
-                    window.pJSDom[0].pJS.fn.vendors.destroypJS();
+                const particlesContainer = document.getElementById('particles-js');
+
+                // Destroy existing particles
+                if (window.pJSDom && window.pJSDom.length > 0) {
+                    try {
+                        window.pJSDom[0].pJS.fn.vendors.destroypJS();
+                        window.pJSDom = [];
+                    } catch (e) {
+                        console.warn('Error destroying particles:', e);
+                    }
                 }
 
+                // Clear the container
+                particlesContainer.innerHTML = '';
+
+                // Reinitialize
                 setTimeout(() => {
                     window.particlesJS('particles-js', defaultParticlesConfig);
                     showSuccess('Paramètres réinitialisés !');
-                }, 100);
+                }, 50);
             } catch (error) {
                 console.error('Reset error:', error);
-                location.reload();
+                showError('Erreur lors de la réinitialisation. Rechargement...');
+                setTimeout(() => location.reload(), 1000);
             }
         });
 
