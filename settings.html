@@ -443,19 +443,20 @@
                 </div>
 
                 <div class="footer-section">
-                    <h3 class="footer-title">À propos</h3>
+                    <h3 class="footer-title">Ressources</h3>
                     <ul class="footer-links">
-                        <li><a href="https://github.com/anthropics/newsly-ai" target="_blank" rel="noopener">GitHub</a></li>
-                        <li><a href="mailto:contact@newsly-ai.com">Contact</a></li>
+                        <li><a href="https://newsapi.org" target="_blank" rel="noopener">NewsAPI</a></li>
+                        <li><a href="https://icons8.com" target="_blank" rel="noopener">Icons8</a></li>
+                        <li><a href="https://particles.js.org" target="_blank" rel="noopener">Particles.js</a></li>
+                        <li><a href="https://supabase.com" target="_blank" rel="noopener">Supabase</a></li>
                     </ul>
                 </div>
             </div>
 
             <div class="footer-bottom">
-                <p>&copy; 2025 Newsly AI. Tous droits réservés. | Développé par <a href="https://www.linkedin.com/in/fr-richard-julien/" target="_blank" rel="noopener" style="color: var(--primary); text-decoration: none;">Julien Richard</a></p>
+                <p>&copy; 2025 Newsly AI. Développé avec ❤️ par <a href="https://www.linkedin.com/in/fr-richard-julien/" target="_blank" rel="noopener" style="color: var(--primary); text-decoration: none;">Julien Richard</a></p>
                 <div class="footer-social">
-                    <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter"><img src="https://img.icons8.com/ios-filled/50/000000/twitter.png" alt="Twitter"></a>
-                    <a href="https://github.com/anthropics/newsly-ai" target="_blank" rel="noopener" aria-label="GitHub"><img src="https://img.icons8.com/ios-filled/50/000000/github.png" alt="GitHub"></a>
+                    <a href="https://github.com/ju-nocode/newsly-ai" target="_blank" rel="noopener" aria-label="GitHub"><img src="https://img.icons8.com/ios-filled/50/000000/github.png" alt="GitHub"></a>
                     <a href="https://www.linkedin.com/in/fr-richard-julien/" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="https://img.icons8.com/ios-filled/50/000000/linkedin.png" alt="LinkedIn"></a>
                 </div>
             </div>
@@ -833,7 +834,7 @@
         languageSelect.value = savedLangForSelect;
 
         // Save account preferences button
-        document.getElementById('saveAccountBtn').addEventListener('click', () => {
+        document.getElementById('saveAccountBtn').addEventListener('click', async () => {
             const newTheme = themeSelect.value;
             const newLang = languageSelect.value;
 
@@ -849,8 +850,10 @@
             themeText.textContent = newTheme === 'dark' ? 'Mode sombre' : 'Mode clair';
             langToggle.checked = newLang === 'en';
 
+            // Traduire d'abord
+            await translatePage();
+
             showSuccess('Préférences enregistrées avec succès !');
-            translatePage();
         });
 
         // Gérer le toggle du thème
@@ -1134,8 +1137,18 @@
         // SECURITY AUDIT
         // ================================================
 
-        const loadSecurityAudit = () => {
+        const loadSecurityAudit = async () => {
             const auditContainer = document.getElementById('securityAuditContainer');
+
+            // Récupérer l'IP publique
+            let publicIP = 'Non disponible';
+            try {
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                publicIP = ipData.ip;
+            } catch (error) {
+                console.warn('Impossible de récupérer l\'IP publique:', error);
+            }
 
             // Get audit events from localStorage (mock data for now)
             const auditEvents = [
@@ -1145,7 +1158,7 @@
                     title: 'Connexion réussie',
                     description: 'Vous vous êtes connecté à votre compte',
                     timestamp: new Date(),
-                    ip: '192.168.1.1',
+                    ip: publicIP,
                     device: 'Chrome sur Windows'
                 },
                 {
@@ -1154,7 +1167,7 @@
                     title: 'Changement de mot de passe',
                     description: 'Votre mot de passe a été modifié avec succès',
                     timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-                    ip: '192.168.1.1',
+                    ip: publicIP,
                     device: 'Chrome sur Windows'
                 },
                 {
@@ -1163,7 +1176,7 @@
                     title: 'Mise à jour du profil',
                     description: 'Vos informations de profil ont été modifiées',
                     timestamp: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
-                    ip: '192.168.1.1',
+                    ip: publicIP,
                     device: 'Chrome sur Windows'
                 },
                 {
@@ -1172,7 +1185,7 @@
                     title: 'Connexion réussie',
                     description: 'Vous vous êtes connecté à votre compte',
                     timestamp: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
-                    ip: '192.168.1.5',
+                    ip: publicIP,
                     device: 'Safari sur macOS'
                 },
                 {
@@ -1473,7 +1486,7 @@
             await loadProfile();
             await loadUserName();
             await checkAdminAccess();
-            loadSecurityAudit();
+            await loadSecurityAudit();
             await loadParticlesSettings();
         })();
     </script>

@@ -837,9 +837,14 @@ input[type="color"]::-moz-color-swatch {
   margin-bottom: 1rem;
 }
 
-/* Range input container */
+/* Range input container - Full width dans la settings-card */
 .settings-card .form-group:has(.form-range) {
-  max-width: 500px;
+  max-width: 100%;
+}
+
+.settings-card .form-range {
+  width: 100%;
+  max-width: 100%;
 }
 
 .form-group:has(.form-range) .form-hint {
@@ -851,12 +856,12 @@ input[type="color"]::-moz-color-swatch {
 
 /* Color input container */
 .settings-card .form-group:has(input[type="color"]) {
-  max-width: 500px;
+  max-width: 100%;
 }
 
 /* Toggle switch container in settings */
 .settings-card .form-group:has(.toggle-switch) {
-  max-width: 500px;
+  max-width: 100%;
 }
 
 .link-primary {
@@ -1991,11 +1996,18 @@ body:has(.settings-layout) .footer {
 }
 
 .settings-card .form-input:not([type="color"]):not([type="range"]):not([type="checkbox"]) {
-  max-width: 500px;
+  max-width: 100%;
+  width: 100%;
 }
 
 .settings-card .form-textarea {
-  max-width: 500px;
+  max-width: 100%;
+  width: 100%;
+}
+
+.settings-card .form-select {
+  max-width: 100%;
+  width: 100%;
 }
 
 .settings-card .btn-primary,

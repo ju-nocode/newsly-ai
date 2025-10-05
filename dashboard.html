@@ -112,12 +112,13 @@
     <!-- Main Content -->
     <div class="dashboard-container">
         <aside class="dashboard-sidebar">
-            <div class="sidebar-header">
+            <div class="sidebar-header collapsible" id="categoriesHeader">
                 <img src="https://img.icons8.com/ios-filled/50/FFFFFF/news.png" alt="Categories" class="sidebar-header-icon">
                 <h2 data-i18n="sidebar.categories">Catégories</h2>
+                <span class="collapse-icon">▼</span>
             </div>
 
-            <div class="categories-list">
+            <div class="categories-list collapsible-content" id="categoriesContent">
                 <button class="category-btn active" data-category="general">
                     <img src="https://img.icons8.com/ios-filled/50/FFFFFF/news.png" alt="News" class="category-icon">
                     <span class="category-label" data-i18n="category.general">Général</span>
@@ -149,12 +150,13 @@
             </div>
 
             <!-- Country Filter Section -->
-            <div class="sidebar-header" style="margin-top: 1rem;">
+            <div class="sidebar-header collapsible" style="margin-top: 1rem;" id="countriesHeader">
                 <img src="https://img.icons8.com/ios-filled/50/FFFFFF/globe.png" alt="Globe" class="sidebar-header-icon">
                 <h2 data-i18n="sidebar.countries">Pays</h2>
+                <span class="collapse-icon">▼</span>
             </div>
 
-            <div class="country-filter-sidebar">
+            <div class="country-filter-sidebar collapsible-content" id="countriesContent">
                 <label class="country-option-sidebar">
                     <input type="checkbox" value="all" id="countryAll" checked>
                     <span data-i18n="country.all">Tous</span>
@@ -228,19 +230,20 @@
                 </div>
 
                 <div class="footer-section">
-                    <h3 class="footer-title">À propos</h3>
+                    <h3 class="footer-title">Ressources</h3>
                     <ul class="footer-links">
-                        <li><a href="https://github.com/anthropics/newsly-ai" target="_blank" rel="noopener">GitHub</a></li>
-                        <li><a href="mailto:contact@newsly-ai.com">Contact</a></li>
+                        <li><a href="https://newsapi.org" target="_blank" rel="noopener">NewsAPI</a></li>
+                        <li><a href="https://icons8.com" target="_blank" rel="noopener">Icons8</a></li>
+                        <li><a href="https://particles.js.org" target="_blank" rel="noopener">Particles.js</a></li>
+                        <li><a href="https://supabase.com" target="_blank" rel="noopener">Supabase</a></li>
                     </ul>
                 </div>
             </div>
 
             <div class="footer-bottom">
-                <p>&copy; 2025 Newsly AI. Tous droits réservés. | Développé par <a href="https://www.linkedin.com/in/fr-richard-julien/" target="_blank" rel="noopener" style="color: var(--primary); text-decoration: none;">Julien Richard</a></p>
+                <p>&copy; 2025 Newsly AI. Développé avec ❤️ par <a href="https://www.linkedin.com/in/fr-richard-julien/" target="_blank" rel="noopener" style="color: var(--primary); text-decoration: none;">Julien Richard</a></p>
                 <div class="footer-social">
-                    <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter"><img src="https://img.icons8.com/ios-filled/50/000000/twitter.png" alt="Twitter"></a>
-                    <a href="https://github.com/anthropics/newsly-ai" target="_blank" rel="noopener" aria-label="GitHub"><img src="https://img.icons8.com/ios-filled/50/000000/github.png" alt="GitHub"></a>
+                    <a href="https://github.com/ju-nocode/newsly-ai" target="_blank" rel="noopener" aria-label="GitHub"><img src="https://img.icons8.com/ios-filled/50/000000/github.png" alt="GitHub"></a>
                     <a href="https://www.linkedin.com/in/fr-richard-julien/" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="https://img.icons8.com/ios-filled/50/000000/linkedin.png" alt="LinkedIn"></a>
                 </div>
             </div>
@@ -715,6 +718,43 @@
             if (e.key === 'Escape' && dashboardSidebar.classList.contains('mobile-open')) {
                 closeMobileMenu();
             }
+        });
+
+        // ================================================
+        // SIDEBAR COLLAPSIBLE
+        // ================================================
+
+        const categoriesHeader = document.getElementById('categoriesHeader');
+        const categoriesContent = document.getElementById('categoriesContent');
+        const countriesHeader = document.getElementById('countriesHeader');
+        const countriesContent = document.getElementById('countriesContent');
+
+        // Charger l'état sauvegardé
+        const categoriesCollapsed = localStorage.getItem('categoriesCollapsed') === 'true';
+        const countriesCollapsed = localStorage.getItem('countriesCollapsed') === 'true';
+
+        if (categoriesCollapsed) {
+            categoriesHeader.classList.add('collapsed');
+            categoriesContent.classList.add('collapsed');
+        }
+
+        if (countriesCollapsed) {
+            countriesHeader.classList.add('collapsed');
+            countriesContent.classList.add('collapsed');
+        }
+
+        // Toggle catégories
+        categoriesHeader.addEventListener('click', () => {
+            categoriesHeader.classList.toggle('collapsed');
+            categoriesContent.classList.toggle('collapsed');
+            localStorage.setItem('categoriesCollapsed', categoriesHeader.classList.contains('collapsed'));
+        });
+
+        // Toggle pays
+        countriesHeader.addEventListener('click', () => {
+            countriesHeader.classList.toggle('collapsed');
+            countriesContent.classList.toggle('collapsed');
+            localStorage.setItem('countriesCollapsed', countriesHeader.classList.contains('collapsed'));
         });
 
         // Initialiser
