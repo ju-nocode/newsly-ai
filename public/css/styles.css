@@ -830,8 +830,15 @@ input[type="color"]::-moz-color-swatch {
   margin-top: 0.25rem;
 }
 
+/* General form-group max width in settings */
+.settings-card .form-group {
+  max-width: 600px;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
 /* Range input container */
-.form-group:has(.form-range) {
+.settings-card .form-group:has(.form-range) {
   max-width: 500px;
 }
 
@@ -843,18 +850,13 @@ input[type="color"]::-moz-color-swatch {
 }
 
 /* Color input container */
-.form-group:has(input[type="color"]) {
+.settings-card .form-group:has(input[type="color"]) {
   max-width: 500px;
 }
 
 /* Toggle switch container in settings */
 .settings-card .form-group:has(.toggle-switch) {
   max-width: 500px;
-}
-
-/* General form-group max width in settings */
-.settings-card .form-group {
-  max-width: 600px;
 }
 
 .link-primary {

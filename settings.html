@@ -125,8 +125,8 @@
             <div>
             <!-- Profile Section -->
             <section id="section-profile" class="settings-section active">
-                <h2 class="settings-section-title">Profil</h2>
-                <p class="settings-section-desc">Gérez vos informations personnelles</p>
+                <h2 class="settings-section-title" data-i18n="settings.profile">Profil</h2>
+                <p class="settings-section-desc" data-i18n="settings.manageProfile">Gérez vos informations personnelles</p>
 
                 <div class="settings-card">
                     <!-- Avatar Section -->
@@ -212,32 +212,32 @@
 
                 <div class="settings-card">
                     <div class="form-group">
-                        <label class="form-label">Préférences de langue</label>
+                        <label class="form-label" data-i18n="settings.languagePreferences">Préférences de langue</label>
                         <select id="languageSelect" class="form-input">
-                            <option value="fr">Français</option>
-                            <option value="en">English</option>
+                            <option value="fr" data-i18n="settings.french">Français</option>
+                            <option value="en" data-i18n="settings.english">English</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Thème</label>
+                        <label class="form-label" data-i18n="settings.theme">Thème</label>
                         <select id="themeSelect" class="form-input">
-                            <option value="light">Clair</option>
-                            <option value="dark">Sombre</option>
+                            <option value="light" data-i18n="settings.light">Clair</option>
+                            <option value="dark" data-i18n="settings.dark">Sombre</option>
                         </select>
                     </div>
 
-                    <button id="saveAccountBtn" class="btn-primary">
+                    <button id="saveAccountBtn" class="btn-primary" data-i18n="settings.savePreferences">
                         Enregistrer les préférences
                     </button>
                 </div>
 
                 <div class="settings-card" style="margin-top: 2rem; border-color: var(--error);">
-                    <h3 style="color: var(--error); margin-bottom: 0.5rem;">Zone de danger</h3>
-                    <p class="settings-description">
+                    <h3 style="color: var(--error); margin-bottom: 0.5rem;" data-i18n="settings.dangerZone">Zone de danger</h3>
+                    <p class="settings-description" data-i18n="settings.dangerZoneDesc">
                         Une fois votre compte supprimé, toutes vos données seront définitivement effacées. Cette action est irréversible.
                     </p>
-                    <button id="deleteAccountBtn" class="btn-danger">
+                    <button id="deleteAccountBtn" class="btn-danger" data-i18n="settings.deleteAccount">
                         Supprimer mon compte
                     </button>
                 </div>
@@ -245,12 +245,12 @@
 
             <!-- Security Section -->
             <section id="section-security" class="settings-section">
-                <h2 class="settings-section-title">Sécurité</h2>
-                <p class="settings-section-desc">Protégez votre compte</p>
+                <h2 class="settings-section-title" data-i18n="settings.security">Sécurité</h2>
+                <p class="settings-section-desc" data-i18n="settings.protectAccount">Protégez votre compte</p>
 
                 <div class="security-grid">
                     <div class="settings-card">
-                        <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-primary);">Changement de mot de passe</h3>
+                        <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-primary);" data-i18n="settings.changePassword">Changement de mot de passe</h3>
                         <div class="form-group">
                             <label for="currentPassword" class="form-label" data-i18n="settings.currentPassword">Mot de passe actuel</label>
                             <input
@@ -284,19 +284,19 @@
                             >
                         </div>
 
-                        <button id="changePasswordBtn" class="btn-primary" data-i18n="settings.changePassword">
+                        <button id="changePasswordBtn" class="btn-primary" data-i18n="settings.changePasswordBtn">
                             Changer le mot de passe
                         </button>
                     </div>
 
                     <!-- Security Audit Card -->
                     <div class="settings-card">
-                        <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-primary);">Audit de sécurité</h3>
-                        <p class="settings-description">
+                        <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-primary);" data-i18n="settings.securityAudit">Audit de sécurité</h3>
+                        <p class="settings-description" data-i18n="settings.securityAuditDesc">
                             Consultez l'historique des activités de sécurité de votre compte
                         </p>
                         <div id="securityAuditContainer">
-                            <p style="text-align: center; color: var(--text-muted);">Chargement de l'audit...</p>
+                            <p style="text-align: center; color: var(--text-muted);" data-i18n="settings.loadingAudit">Chargement de l'audit...</p>
                         </div>
                     </div>
                 </div>
@@ -304,91 +304,91 @@
 
             <!-- Users Management Section (Admin only) -->
             <section id="section-users" class="settings-section">
-                <h2 class="settings-section-title">Gestion des utilisateurs</h2>
-                <p class="settings-section-desc">Gérez les utilisateurs et leurs rôles</p>
+                <h2 class="settings-section-title" data-i18n="settings.users">Gestion des utilisateurs</h2>
+                <p class="settings-section-desc" data-i18n="settings.manageUsers">Gérez les utilisateurs et leurs rôles</p>
 
                 <div class="settings-card">
                     <div id="usersTableContainer">
                         <!-- Users table will be loaded here -->
-                        <p style="text-align: center; color: var(--text-muted);">Chargement des utilisateurs...</p>
+                        <p style="text-align: center; color: var(--text-muted);" data-i18n="settings.loadingUsers">Chargement des utilisateurs...</p>
                     </div>
                 </div>
             </section>
 
             <!-- Particles Section -->
             <section id="section-particles" class="settings-section">
-                <h2 class="settings-section-title">Particules d'arrière-plan</h2>
-                <p class="settings-section-desc">Personnalisez l'effet de particules animées</p>
+                <h2 class="settings-section-title" data-i18n="settings.particles">Particules d'arrière-plan</h2>
+                <p class="settings-section-desc" data-i18n="settings.customizeParticles">Personnalisez l'effet de particules animées</p>
 
                 <div class="settings-card">
                     <div class="form-group">
-                        <label for="particlesNumber" class="form-label">Nombre de particules</label>
+                        <label for="particlesNumber" class="form-label" data-i18n="settings.particlesNumber">Nombre de particules</label>
                         <input type="range" id="particlesNumber" class="form-range" min="10" max="100" value="100">
                         <span id="particlesNumberValue" class="form-hint">100</span>
                     </div>
 
                     <div class="form-group">
-                        <label for="particlesColor" class="form-label">Couleur des particules</label>
+                        <label for="particlesColor" class="form-label" data-i18n="settings.particlesColor">Couleur des particules</label>
                         <input type="color" id="particlesColor" class="form-input" value="#fffe7a">
                     </div>
 
                     <div class="form-group">
-                        <label for="particlesSpeed" class="form-label">Vitesse de déplacement</label>
+                        <label for="particlesSpeed" class="form-label" data-i18n="settings.particlesSpeed">Vitesse de déplacement</label>
                         <input type="range" id="particlesSpeed" class="form-range" min="0" max="10" step="0.1" value="0.5">
                         <span id="particlesSpeedValue" class="form-hint">0.5</span>
                     </div>
 
                     <div class="form-group">
-                        <label for="particlesOpacity" class="form-label">Opacité</label>
+                        <label for="particlesOpacity" class="form-label" data-i18n="settings.particlesOpacity">Opacité</label>
                         <input type="range" id="particlesOpacity" class="form-range" min="0" max="1" step="0.01" value="0.28">
                         <span id="particlesOpacityValue" class="form-hint">0.28</span>
                     </div>
 
                     <div class="form-group">
-                        <label for="lineDistance" class="form-label">Distance des lignes</label>
+                        <label for="lineDistance" class="form-label" data-i18n="settings.lineDistance">Distance des lignes</label>
                         <input type="range" id="lineDistance" class="form-range" min="0" max="150" value="60">
                         <span id="lineDistanceValue" class="form-hint">60</span>
                     </div>
 
                     <div class="form-group">
-                        <label for="lineColor" class="form-label">Couleur des lignes</label>
+                        <label for="lineColor" class="form-label" data-i18n="settings.lineColor">Couleur des lignes</label>
                         <input type="color" id="lineColor" class="form-input" value="#7c9149">
                     </div>
 
                     <div class="form-group">
-                        <label for="lineOpacity" class="form-label">Opacité des lignes</label>
+                        <label for="lineOpacity" class="form-label" data-i18n="settings.lineOpacity">Opacité des lignes</label>
                         <input type="range" id="lineOpacity" class="form-range" min="0" max="1" step="0.01" value="0.39">
                         <span id="lineOpacityValue" class="form-hint">0.39</span>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Interaction au survol</label>
+                        <label class="form-label" data-i18n="settings.hoverInteraction">Interaction au survol</label>
                         <div class="toggle-group">
                             <label class="toggle-switch">
                                 <input type="checkbox" id="hoverEnabled" checked>
                                 <span class="toggle-slider"></span>
                             </label>
-                            <span id="hoverEnabledText" class="form-hint">Activé</span>
+                            <span id="hoverEnabledText" class="form-hint" data-i18n="settings.enabled">Activé</span>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="repulseDistance" class="form-label">Distance de répulsion au survol</label>
+                        <label for="repulseDistance" class="form-label" data-i18n="settings.repulseDistance">Distance de répulsion au survol</label>
                         <input type="range" id="repulseDistance" class="form-range" min="50" max="300" value="100">
                         <span id="repulseDistanceValue" class="form-hint">100</span>
                     </div>
 
                     <div class="form-group">
-                        <label for="particlesBlur" class="form-label">Flou des particules</label>
+                        <label for="particlesBlur" class="form-label" data-i18n="settings.particlesBlur">Flou des particules</label>
                         <input type="range" id="particlesBlur" class="form-range" min="0" max="20" step="0.5" value="0">
                         <span id="particlesBlurValue" class="form-hint">0 px</span>
                     </div>
 
                     <div class="button-group">
-                        <button id="saveParticlesBtn" class="btn-primary">
+                        <button id="saveParticlesBtn" class="btn-primary" data-i18n="settings.saveSettings">
                             Enregistrer les paramètres
                         </button>
-                        <button id="resetParticlesBtn" class="btn-secondary">
+                        <button id="resetParticlesBtn" class="btn-secondary" data-i18n="settings.default">
                             Défaut
                         </button>
                     </div>
