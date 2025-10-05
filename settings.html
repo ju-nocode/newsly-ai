@@ -14,9 +14,21 @@
     <!-- Particles.js Background -->
     <div id="particles-js"></div>
 
+    <!-- Overlay pour menu mobile -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
     <!-- Navigation Top Bar -->
     <nav class="navbar dashboard-nav">
         <div class="nav-container">
+            <!-- Bouton burger pour menu mobile (settings nav) -->
+            <button class="mobile-menu-btn" id="mobileSettingsNavBtn" aria-label="Ouvrir menu paramètres">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+
             <a href="dashboard.html" class="logo">
                 <img src="https://img.icons8.com/ios-filled/50/000000/news.png" alt="News" class="logo-icon-img">
                 <span class="logo-text">Newsly AI</span>
@@ -876,6 +888,39 @@
         // Bouton Logout
         document.getElementById('logoutBtn').addEventListener('click', () => {
             logout();
+        });
+
+        // ================================================
+        // MENU MOBILE - Gestion settings nav responsive
+        // ================================================
+        const mobileSettingsNavBtn = document.getElementById('mobileSettingsNavBtn');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+        const settingsNav = document.querySelector('.settings-nav');
+
+        // Ouvrir/Fermer settings nav mobile
+        if (mobileSettingsNavBtn) {
+            mobileSettingsNavBtn.addEventListener('click', () => {
+                settingsNav.classList.toggle('mobile-open');
+                mobileOverlay.classList.toggle('show');
+            });
+        }
+
+        // Fermer en cliquant sur l'overlay
+        if (mobileOverlay) {
+            mobileOverlay.addEventListener('click', () => {
+                settingsNav.classList.remove('mobile-open');
+                mobileOverlay.classList.remove('show');
+            });
+        }
+
+        // Fermer nav après sélection section sur mobile
+        document.querySelectorAll('.settings-nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                if (window.innerWidth <= 1024) {
+                    settingsNav.classList.remove('mobile-open');
+                    mobileOverlay.classList.remove('show');
+                }
+            });
         });
 
         // Charger le nom utilisateur pour le burger

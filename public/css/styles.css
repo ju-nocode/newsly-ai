@@ -1419,6 +1419,11 @@ body:has(.settings-layout) .footer {
    BURGER MENU
 ================================================ */
 
+/* Bouton burger caché par défaut sur desktop */
+.mobile-menu-btn {
+  display: none;
+}
+
 .burger-menu {
   background: transparent;
   border: none;
@@ -2158,12 +2163,74 @@ body:has(.settings-layout) .footer {
     --settings-sidebar-width: 0px;
   }
 
+  /* Sidebars cachées par défaut sur mobile */
   .dashboard-sidebar {
     transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    box-shadow: 2px 0 20px var(--shadow-lg);
+  }
+
+  /* Sidebar visible quand menu mobile ouvert */
+  .dashboard-sidebar.mobile-open {
+    transform: translateX(0);
   }
 
   .settings-nav {
     transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    box-shadow: 2px 0 20px var(--shadow-lg);
+  }
+
+  /* Settings nav visible quand menu mobile ouvert */
+  .settings-nav.mobile-open {
+    transform: translateX(0);
+  }
+
+  /* Overlay pour fermer le menu en cliquant à côté */
+  .mobile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+  }
+
+  .mobile-overlay.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Bouton burger pour ouvrir sidebar sur mobile */
+  .mobile-menu-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    transition: background 0.2s;
+  }
+
+  .mobile-menu-btn:hover {
+    background: var(--bg-secondary);
+  }
+
+  .mobile-menu-btn svg {
+    width: 24px;
+    height: 24px;
   }
 
   .navbar.dashboard-nav {
