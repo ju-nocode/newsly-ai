@@ -114,8 +114,11 @@ body {
 .feature-card,
 .category-preview,
 .auth-section,
+.auth-section > *,
 .auth-container,
+.auth-container > *,
 .auth-buttons,
+.auth-buttons > *,
 .btn-hero,
 .btn-secondary,
 a,
@@ -943,10 +946,9 @@ input[type="color"]::-moz-color-swatch {
 
 .feature-card,
 .category-preview {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  padding: 1.25rem;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  padding: 1rem;
   border-radius: var(--radius-lg);
   text-align: center;
   transition: all 0.3s;
@@ -962,23 +964,22 @@ input[type="color"]::-moz-color-swatch {
 
 .feature-icon,
 .category-preview-icon {
-  width: 48px;
-  height: 48px;
-  margin: 0 auto 1rem;
+  width: 32px;
+  height: 32px;
+  margin: 0 auto 0.75rem;
   filter: var(--icon-filter);
   opacity: 0.8;
 }
 
 .feature-title,
 .category-name {
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
   color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  padding: 0.5rem;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  padding: 0.4rem;
   border-radius: var(--radius-md);
 }
 
@@ -1050,9 +1051,8 @@ input[type="color"]::-moz-color-swatch {
 }
 
 .step-card {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   padding: 2rem;
   border-radius: var(--radius-lg);
   border: 1px solid var(--border);
@@ -1151,6 +1151,9 @@ input[type="color"]::-moz-color-swatch {
   background: var(--bg-primary);
   border-top: 1px solid var(--border);
   padding: 3rem 2rem 1.5rem;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
 }
 
 .dashboard-body .footer {
@@ -1159,6 +1162,10 @@ input[type="color"]::-moz-color-swatch {
 
 body:has(.settings-layout) .footer {
   margin-left: var(--settings-sidebar-width);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .footer-container {
@@ -1696,10 +1703,10 @@ body:has(.settings-layout) .footer {
 }
 
 .settings-content {
-  flex: 1;
+  flex: auto;
   margin-left: var(--settings-sidebar-width);
-  padding: 3rem;
-  display: flex;
+  padding: 2rem;
+  display: initial;
   justify-content: center;
 }
 

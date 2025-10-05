@@ -12,17 +12,21 @@
 - Gestion de profil (avatar compressé, bio, téléphone)
 - Changement de mot de passe
 - Session persistante
+- Admin user management (superadmin only)
 
 ### 📰 Actualités
 - Agrégation d'actualités (NewsAPI)
 - 7 catégories + topics personnalisés
 - Affichage en temps réel
+- Sauvegarde d'articles favoris
 
 ### 🎨 Interface
 - Mode Dark/Light
 - Multilingue (FR/EN)
 - Design moderne responsive
 - Burger menu avec avatar
+- Particles.js background personnalisable
+- Blur effects et transitions fluides
 
 ## 🚀 Stack
 
@@ -39,13 +43,17 @@ newsly-ai/
 ├── api/                    # Serverless functions
 │   ├── auth/              # login, signup, resend
 │   ├── user/              # profile, change-password, delete
-│   └── news.js            # NewsAPI aggregation
+│   ├── particles/         # particles config management
+│   ├── news.js            # NewsAPI aggregation
+│   └── articles/          # saved articles management
 ├── public/
 │   ├── css/styles.css     # Styles globaux
 │   └── js/
 │       ├── app.js         # Auth & API calls
 │       ├── dashboard-utils.js
-│       └── translation-service.js
+│       ├── translation-service.js
+│       ├── particles-config.js
+│       └── index-page.js
 ├── index.html             # Landing page
 ├── dashboard.html         # News dashboard
 ├── settings.html          # User settings
