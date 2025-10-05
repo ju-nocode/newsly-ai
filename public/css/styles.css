@@ -55,19 +55,19 @@ NEWSLY AI - Modern SaaS Dashboard Style
 }
 
 [data-theme="dark"] {
-  --bg-primary: #0f0f0f;
-  --bg-secondary: #0f0f0f;
-  --bg-tertiary: #0b0b0b;
-  --bg-sidebar: #0a0a0a;
-  --text-primary: #6c6c6c;
-  --text-secondary: #a1a1a1;
+  --bg-primary: #0d0d0d;
+  --bg-secondary: #0a0a0a;
+  --bg-tertiary: #1a1a1a;
+  --bg-sidebar: #050505;
+  --text-primary: #e8e8e8;
+  --text-secondary: #9ca3af;
   --text-muted: #6b7280;
   --text-sidebar: #d1d5db;
+  --border: #1f1f1f;
   /* Animated Dot Grid Background - darker in dark mode */
-  --dot-color: rgba(62, 207, 142, 0.08);
-  --border: #3ecf8e;
-  --shadow: rgba(62, 207, 142, 0.2);
-  --shadow-lg: rgba(0, 0, 0, 0.5);
+  --dot-color: rgba(62, 207, 142, 0.1);
+  --shadow: rgba(0, 0, 0, 0.5);
+  --shadow-lg: rgba(0, 0, 0, 0.8);
 }
 
 body {
