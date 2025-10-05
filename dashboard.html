@@ -720,48 +720,62 @@
             }
         });
 
-        // ================================================
-        // SIDEBAR COLLAPSIBLE
-        // ================================================
-
-        const categoriesHeader = document.getElementById('categoriesHeader');
-        const categoriesContent = document.getElementById('categoriesContent');
-        const countriesHeader = document.getElementById('countriesHeader');
-        const countriesContent = document.getElementById('countriesContent');
-
-        // Charger l'état sauvegardé
-        const categoriesCollapsed = localStorage.getItem('categoriesCollapsed') === 'true';
-        const countriesCollapsed = localStorage.getItem('countriesCollapsed') === 'true';
-
-        if (categoriesCollapsed) {
-            categoriesHeader.classList.add('collapsed');
-            categoriesContent.classList.add('collapsed');
-        }
-
-        if (countriesCollapsed) {
-            countriesHeader.classList.add('collapsed');
-            countriesContent.classList.add('collapsed');
-        }
-
-        // Toggle catégories
-        categoriesHeader.addEventListener('click', () => {
-            categoriesHeader.classList.toggle('collapsed');
-            categoriesContent.classList.toggle('collapsed');
-            localStorage.setItem('categoriesCollapsed', categoriesHeader.classList.contains('collapsed'));
-        });
-
-        // Toggle pays
-        countriesHeader.addEventListener('click', () => {
-            countriesHeader.classList.toggle('collapsed');
-            countriesContent.classList.toggle('collapsed');
-            localStorage.setItem('countriesCollapsed', countriesHeader.classList.contains('collapsed'));
-        });
-
         // Initialiser
         (async () => {
             await translatePage(); // Traduire au chargement
             await loadProfile();
             await loadNews('general');
+
+            // ================================================
+            // SIDEBAR COLLAPSIBLE
+            // ================================================
+
+            const categoriesHeader = document.getElementById('categoriesHeader');
+            const categoriesContent = document.getElementById('categoriesContent');
+            const countriesHeader = document.getElementById('countriesHeader');
+            const countriesContent = document.getElementById('countriesContent');
+
+            // Vérifier que les éléments existent
+            if (!categoriesHeader || !categoriesContent || !countriesHeader || !countriesContent) {
+                console.error('❌ Éléments collapsibles non trouvés');
+                return;
+            }
+
+            console.log('✅ Éléments collapsibles trouvés, initialisation...');
+
+            // Charger l'état sauvegardé
+            const categoriesCollapsed = localStorage.getItem('categoriesCollapsed') === 'true';
+            const countriesCollapsed = localStorage.getItem('countriesCollapsed') === 'true';
+
+            if (categoriesCollapsed) {
+                categoriesHeader.classList.add('collapsed');
+                categoriesContent.classList.add('collapsed');
+            }
+
+            if (countriesCollapsed) {
+                countriesHeader.classList.add('collapsed');
+                countriesContent.classList.add('collapsed');
+            }
+
+            // Toggle catégories
+            categoriesHeader.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('🔄 Toggle catégories');
+                categoriesHeader.classList.toggle('collapsed');
+                categoriesContent.classList.toggle('collapsed');
+                localStorage.setItem('categoriesCollapsed', categoriesHeader.classList.contains('collapsed'));
+            });
+
+            // Toggle pays
+            countriesHeader.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('🔄 Toggle pays');
+                countriesHeader.classList.toggle('collapsed');
+                countriesContent.classList.toggle('collapsed');
+                localStorage.setItem('countriesCollapsed', countriesHeader.classList.contains('collapsed'));
+            });
         })();
     </script>
 </body>
