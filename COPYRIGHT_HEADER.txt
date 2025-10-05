@@ -1,0 +1,18 @@
+/**
+ * ============================================================================
+ * NEWSLY AI - AI-Powered NewsWall Platform
+ * ============================================================================
+ *
+ * Copyright (c) 2025 Julien Richard
+ * All Rights Reserved - Tous droits réservés
+ *
+ * This file is part of Newsly AI, a proprietary software.
+ *
+ * UNAUTHORIZED COPYING, MODIFICATION, DISTRIBUTION, OR USE OF THIS SOFTWARE
+ * IS STRICTLY PROHIBITED WITHOUT EXPLICIT WRITTEN PERMISSION.
+ *
+ * For licensing inquiries: ju.richard.33@gmail.com
+ * Portfolio: https://www.linkedin.com/in/fr-richard-julien/
+ *
+ * ============================================================================
+ */

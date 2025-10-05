@@ -2,8 +2,33 @@
 
 > Votre agrégateur d'actualités personnalisé alimenté par l'intelligence artificielle
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/ju-nocode/newsly-ai)
 [![Live Demo](https://img.shields.io/badge/demo-live-success)](https://prod-julien.vercel.app)
+[![License](https://img.shields.io/badge/license-Proprietary-red.svg)](LICENSE)
+[![All Rights Reserved](https://img.shields.io/badge/copyright-All_Rights_Reserved-critical)](NOTICE.md)
+[![Portfolio](https://img.shields.io/badge/portfolio-Julien_Richard-blue)](https://www.linkedin.com/in/fr-richard-julien/)
+
+---
+
+## ⚖️ AVIS LEGAL
+
+> **🔒 PROPRIÉTÉ PRIVÉE** - Ce projet est sous **licence propriétaire**. Le code source est visible **uniquement** à des fins de démonstration, d'apprentissage et de portfolio professionnel.
+
+### ✅ Autorisé
+- Consultation du code pour apprentissage
+- Étude de l'architecture et des concepts
+- Signalement de bugs et suggestions
+
+### ❌ INTERDIT sans autorisation écrite
+- Utilisation commerciale
+- Déploiement en production
+- Copie ou redistribution du code
+- Création d'œuvres dérivées
+
+**📄 Pour toute utilisation, voir :** [NOTICE.md](NOTICE.md) | [LICENSE](LICENSE) | [CONTRIBUTING.md](CONTRIBUTING.md)
+
+**📧 Licence commerciale :** ju.richard.33@gmail.com
+
+---
 
 ## 🌟 Fonctionnalités
 
@@ -89,7 +114,9 @@ newsly-ai/
 
 ## ⚙️ Installation
 
-### 1. Prérequis
+> ⚠️ **Attention** : Ce code est fourni **à titre de référence uniquement**. Vous ne pouvez pas déployer ou utiliser ce projet sans autorisation écrite préalable. Pour toute demande de licence commerciale, contactez ju.richard.33@gmail.com
+
+### 1. Prérequis (pour consultation uniquement)
 - Node.js 18+
 - Compte Supabase
 - Compte Vercel
@@ -245,7 +272,24 @@ Voir [SECURITY.md](SECURITY.md) pour le guide complet.
 
 ## 📝 License
 
-MIT © 2025 Newsly AI - Développé par [Julien Richard](https://www.linkedin.com/in/fr-richard-julien/)
+**Proprietary License - All Rights Reserved**
+
+© 2025 Julien Richard - Tous droits réservés
+
+Ce projet est sous licence propriétaire. Le code source est visible à des fins éducatives et de démonstration uniquement. Toute utilisation commerciale, redistribution ou modification nécessite une autorisation écrite explicite.
+
+**Autorisé :**
+- ✅ Consultation du code pour apprentissage
+- ✅ Étude des concepts et de l'architecture
+- ✅ Rapport de bugs et suggestions
+
+**Interdit sans autorisation :**
+- ❌ Utilisation commerciale
+- ❌ Redistribution ou revente
+- ❌ Déploiement en production
+- ❌ Copie de portions significatives du code
+
+Pour obtenir une licence commerciale : **ju.richard.33@gmail.com**
 
 ## 🤝 Support & Contact
 
