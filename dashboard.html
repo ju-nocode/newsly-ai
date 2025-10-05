@@ -464,12 +464,12 @@
                 const weatherCode = data.current.weather_code;
                 const icon = getWeatherIcon(weatherCode);
 
-                // Get city name from reverse geocoding
+                // Get city name from reverse geocoding using Nominatim (OpenStreetMap)
                 const geoResponse = await fetch(
-                    `https://geocoding-api.open-meteo.com/v1/search?latitude=${lat}&longitude=${lon}&count=1&language=fr&format=json`
+                    `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=fr`
                 );
                 const geoData = await geoResponse.json();
-                const city = geoData.results?.[0]?.name || 'Inconnu';
+                const city = geoData.address?.city || geoData.address?.town || geoData.address?.village || geoData.address?.state || 'Votre position';
 
                 weatherWidget.innerHTML = `
                     <div class="weather-info">
