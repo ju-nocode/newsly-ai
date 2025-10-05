@@ -328,6 +328,7 @@ textarea,
 
 .form-range {
   width: 100%;
+  max-width: 400px;
   height: 6px;
   background: var(--bg-tertiary);
   border-radius: var(--radius-md);
@@ -385,6 +386,7 @@ textarea,
 /* Color inputs */
 input[type="color"] {
   height: 40px;
+  width: 80px;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   cursor: pointer;
@@ -700,6 +702,7 @@ input[type="color"]::-moz-color-swatch {
   align-items: center;
   gap: 0.5rem;
   line-height: 1.4;
+  white-space: nowrap;
 }
 
 .btn-primary:hover,
@@ -797,7 +800,11 @@ input[type="color"]::-moz-color-swatch {
   transition: all 0.2s;
   line-height: 1.5;
   font-weight: 400;
-  max-width: 100%;
+  width: 100%;
+}
+
+.form-select {
+  max-width: 300px;
 }
 
 .form-input:focus,
@@ -819,6 +826,34 @@ input[type="color"]::-moz-color-swatch {
 .form-hint {
   font-size: 0.8125rem;
   color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+/* Range input container */
+.form-group:has(.form-range) {
+  max-width: 500px;
+}
+
+.form-group:has(.form-range) .form-hint {
+  display: block;
+  margin-top: 0.5rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* Color input container */
+.form-group:has(input[type="color"]) {
+  max-width: 500px;
+}
+
+/* Toggle switch container in settings */
+.settings-card .form-group:has(.toggle-switch) {
+  max-width: 500px;
+}
+
+/* General form-group max width in settings */
+.settings-card .form-group {
+  max-width: 600px;
 }
 
 .link-primary {
@@ -1888,7 +1923,7 @@ body:has(.settings-layout) .footer {
 .avatar-upload-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.75rem;
 }
 
@@ -1943,6 +1978,35 @@ body:has(.settings-layout) .footer {
   padding: 1.5rem;
   margin-bottom: 1.5rem;
   box-shadow: 0 1px 2px var(--shadow);
+}
+
+.settings-card .form-input:not([type="color"]):not([type="range"]):not([type="checkbox"]) {
+  max-width: 500px;
+}
+
+.settings-card .form-textarea {
+  max-width: 500px;
+}
+
+.settings-card .btn-primary,
+.settings-card .btn-secondary,
+.settings-card .btn-danger {
+  align-self: flex-start;
+}
+
+/* Button group */
+.button-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* Toggle group */
+.toggle-group {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 }
 
 .settings-card-title {

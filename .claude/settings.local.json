@@ -18,7 +18,8 @@
       "WebFetch(domain:icons8.com)",
       "Bash(npm ls:*)",
       "Bash(npm install:*)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Read(//c/Users/Reechar D/Desktop/**)"
     ],
     "deny": [],
     "ask": []
