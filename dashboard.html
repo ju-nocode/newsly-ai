@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="public/css/styles.css">
 </head>
 <body class="dashboard-body">
+    <!-- Particles.js Background -->
+    <div id="particles-js"></div>
+
     <!-- Navigation Top Bar -->
     <nav class="navbar dashboard-nav">
         <div class="nav-container">
@@ -232,10 +235,17 @@
         </div>
     </footer>
 
+    <!-- Particles.js Library -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
     <script type="module">
         import { checkAuth, logout, getUserProfile, fetchNews, deleteAccount, currentUser } from './public/js/app.js';
         import { displayNews, escapeHtml, showError, showSuccess } from './public/js/dashboard-utils.js';
         import { tSync as t, translatePage } from './public/js/translation-service.js';
+        import { initParticles } from './public/js/particles-config.js';
+
+        // Initialize particles
+        initParticles('particles-js');
 
         let currentCategory = 'general';
         let selectedCountries = ['us']; // Par défaut : États-Unis

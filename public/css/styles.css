@@ -86,9 +86,8 @@ body {
   flex-direction: column;
 }
 
-/* Animated Dot Grid Background */
-body::before {
-  content: '';
+/* Particles.js Background Container */
+#particles-js {
   position: fixed;
   top: 0;
   left: 0;
@@ -96,20 +95,6 @@ body::before {
   height: 100%;
   z-index: 0;
   pointer-events: none;
-  background-image:
-    radial-gradient(circle, var(--dot-color) var(--dot-size), transparent var(--dot-size));
-  background-size: var(--dot-spacing) var(--dot-spacing);
-  animation: dotGridMove 60s linear infinite;
-  opacity: 1;
-}
-
-@keyframes dotGridMove {
-  0% {
-    transform: translate(0, 0);
-  }
-  100% {
-    transform: translate(var(--dot-spacing), var(--dot-spacing));
-  }
 }
 
 /* Ensure content stays above background */

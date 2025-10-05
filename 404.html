@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="public/css/styles.css">
 </head>
 <body>
+    <!-- Particles.js Background -->
+    <div id="particles-js"></div>
+
     <div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem;">
         <div style="max-width: 600px; width: 100%; text-align: center; background: var(--bg-primary); padding: 3rem 2rem; border-radius: var(--radius-xl); border: 1px solid var(--border); box-shadow: 0 4px 16px var(--shadow-lg);">
 
@@ -69,6 +72,17 @@
                 window.location.href = 'index.html';
             }
         }, 1000);
+    </script>
+
+    <!-- Particles.js Library -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script type="module">
+        import { initParticles } from './public/js/particles-config.js';
+
+        // Initialize particles on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            initParticles('particles-js');
+        });
     </script>
 </body>
 </html>

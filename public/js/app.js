@@ -453,6 +453,63 @@ export const checkAuth = () => {
 };
 
 // ================================================
+// PARTICLES CONFIG - DATABASE
+// ================================================
+
+// Get particles config from database
+export const getParticlesConfig = async () => {
+    if (!authToken) {
+        return { success: false, error: 'Non authentifié' };
+    }
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/particles/config`, {
+            headers: { 'Authorization': `Bearer ${authToken}` }
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || 'Erreur de récupération de la config');
+        }
+
+        return { success: true, config: data.config };
+    } catch (error) {
+        console.error('Get particles config error:', error);
+        return { success: false, error: error.message };
+    }
+};
+
+// Save particles config to database
+export const saveParticlesConfigToDB = async (config) => {
+    if (!authToken) {
+        return { success: false, error: 'Non authentifié' };
+    }
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/particles/config`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${authToken}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ config })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || 'Erreur de sauvegarde de la config');
+        }
+
+        return { success: true, data };
+    } catch (error) {
+        console.error('Save particles config error:', error);
+        return { success: false, error: error.message };
+    }
+};
+
+// ================================================
 // INITIALISATION
 // ================================================
 
