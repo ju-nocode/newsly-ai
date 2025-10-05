@@ -100,10 +100,7 @@ body {
 /* Allow mouse events to pass through containers to particles */
 .navbar,
 .dashboard-container,
-.settings-layout,
-.features,
-.how-it-works,
-.categories-preview {
+.settings-layout {
   pointer-events: none;
 }
 
@@ -753,6 +750,8 @@ input[type="color"]::-moz-color-swatch {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  z-index: 10;
 }
 
 .auth-container {
@@ -1151,9 +1150,9 @@ input[type="color"]::-moz-color-swatch {
   background: var(--bg-primary);
   border-top: 1px solid var(--border);
   padding: 3rem 2rem 1.5rem;
-  position: sticky;
-  bottom: 0;
+  position: relative;
   width: 100%;
+  margin-top: auto;
 }
 
 .dashboard-body .footer {
@@ -1705,9 +1704,10 @@ body:has(.settings-layout) .footer {
 .settings-content {
   flex: auto;
   margin-left: var(--settings-sidebar-width);
-  padding: 2rem;
+  padding: 2rem 2rem 250px 2rem;
   display: initial;
   justify-content: center;
+  min-height: calc(100vh - var(--navbar-height));
 }
 
 .settings-content-inner {
@@ -1914,16 +1914,16 @@ body:has(.settings-layout) .footer {
 }
 
 .settings-section-title {
-  font-size: 1.875rem;
+  font-size: 1.625rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.35rem;
   color: var(--text-primary);
 }
 
 .settings-section-desc {
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   color: var(--text-secondary);
-  margin-bottom: 2rem;
+  margin-bottom: 1.25rem;
 }
 
 .settings-container {
@@ -1996,8 +1996,8 @@ body:has(.settings-layout) .footer {
   background: var(--bg-primary);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 1.5rem;
-  margin-bottom: 1.25rem;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
   box-shadow: 0 1px 3px var(--shadow);
 }
 
