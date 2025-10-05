@@ -26,9 +26,17 @@ export default async function handler(req, res) {
             return res.status(500).json({ error: 'Configuration serveur manquante' });
         }
 
+        // Create Supabase client with user's JWT for RLS
         const supabase = createClient(
             process.env.SUPABASE_URL,
-            process.env.SUPABASE_ANON_KEY
+            process.env.SUPABASE_ANON_KEY,
+            {
+                global: {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            }
         );
 
         // Verify token and get user
