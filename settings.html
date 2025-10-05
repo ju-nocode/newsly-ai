@@ -387,7 +387,7 @@
                             Enregistrer les paramètres
                         </button>
                         <button id="resetParticlesBtn" class="btn-secondary">
-                            Réinitialiser
+                            Défaut
                         </button>
                     </div>
                 </div>
@@ -1150,18 +1150,18 @@
         import { getParticlesConfig as getDBConfig, saveParticlesConfigToDB } from './public/js/app.js';
 
         const loadParticlesSettings = async () => {
-            // Try to load from database first
+            // Load ONLY from database or use default
             const dbResult = await getDBConfig();
             let config;
 
             if (dbResult.success && dbResult.config) {
-                // Config found in database
+                // Config found in database - use it
+                console.log('[Settings] Using config from database');
                 config = dbResult.config;
-                // Also save to localStorage for offline use
-                saveParticlesConfig(config);
             } else {
-                // Fallback to localStorage or default
-                config = loadParticlesConfig();
+                // No config in database - use default
+                console.log('[Settings] Using default config');
+                config = defaultParticlesConfig;
             }
 
             // Load values into form
@@ -1279,17 +1279,14 @@
         document.getElementById('saveParticlesBtn').addEventListener('click', async () => {
             const config = getParticlesConfig();
 
-            // Save to localStorage
-            saveParticlesConfig(config);
-
-            // Save to database
+            // Save to database only (not localStorage)
             const dbResult = await saveParticlesConfigToDB(config);
 
             if (dbResult.success) {
-                showSuccess('Paramètres des particules enregistrés en base de données !');
+                showSuccess('Paramètres des particules enregistrés !');
             } else {
                 console.error('DB save error:', dbResult.error);
-                showSuccess('Paramètres enregistrés localement uniquement');
+                showError('Erreur lors de la sauvegarde : ' + dbResult.error);
             }
 
             // Reload particles
@@ -1320,23 +1317,35 @@
             }
         });
 
-        // Reset button
+        // Default button - restore default settings
         document.getElementById('resetParticlesBtn').addEventListener('click', async () => {
-            // Save default config to localStorage
-            saveParticlesConfig(defaultParticlesConfig);
+            // Load default config values into form (moves the sliders)
+            document.getElementById('particlesNumber').value = defaultParticlesConfig.particles.number.value;
+            document.getElementById('particlesNumberValue').textContent = defaultParticlesConfig.particles.number.value;
 
-            // Save default config to database
-            const dbResult = await saveParticlesConfigToDB(defaultParticlesConfig);
+            document.getElementById('particlesColor').value = defaultParticlesConfig.particles.color.value;
 
-            // Reload form values with default config (this moves the sliders)
-            await loadParticlesSettings();
+            document.getElementById('particlesSpeed').value = defaultParticlesConfig.particles.move.speed;
+            document.getElementById('particlesSpeedValue').textContent = defaultParticlesConfig.particles.move.speed;
 
-            if (dbResult.success) {
-                showSuccess('Paramètres réinitialisés et enregistrés en base de données !');
-            } else {
-                console.error('DB save error:', dbResult.error);
-                showSuccess('Paramètres réinitialisés localement !');
-            }
+            document.getElementById('particlesOpacity').value = defaultParticlesConfig.particles.opacity.value;
+            document.getElementById('particlesOpacityValue').textContent = defaultParticlesConfig.particles.opacity.value.toFixed(2);
+
+            document.getElementById('lineDistance').value = defaultParticlesConfig.particles.line_linked.distance;
+            document.getElementById('lineDistanceValue').textContent = defaultParticlesConfig.particles.line_linked.distance;
+
+            document.getElementById('lineColor').value = defaultParticlesConfig.particles.line_linked.color;
+
+            document.getElementById('lineOpacity').value = defaultParticlesConfig.particles.line_linked.opacity;
+            document.getElementById('lineOpacityValue').textContent = defaultParticlesConfig.particles.line_linked.opacity.toFixed(2);
+
+            document.getElementById('hoverEnabled').checked = defaultParticlesConfig.interactivity.events.onhover.enable;
+            document.getElementById('hoverEnabledText').textContent = defaultParticlesConfig.interactivity.events.onhover.enable ? 'Activé' : 'Désactivé';
+
+            document.getElementById('repulseDistance').value = defaultParticlesConfig.interactivity.modes.repulse.distance;
+            document.getElementById('repulseDistanceValue').textContent = defaultParticlesConfig.interactivity.modes.repulse.distance;
+
+            showSuccess('Paramètres par défaut appliqués (non enregistrés)');
 
             try {
                 const particlesContainer = document.getElementById('particles-js');
