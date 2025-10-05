@@ -443,12 +443,6 @@ export const checkAuth = () => {
         return false;
     }
 
-    // Rediriger vers dashboard si déjà connecté sur index
-    if (currentPage === 'index.html' && isAuthenticated) {
-        window.location.href = 'dashboard.html';
-        return false;
-    }
-
     return isAuthenticated;
 };
 

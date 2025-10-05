@@ -135,6 +135,7 @@ textarea,
 .dashboard-header,
 .dashboard-content,
 .settings-header,
+.settings-nav,
 .settings-content,
 .search-form,
 .filter-tags,
@@ -282,8 +283,8 @@ textarea,
 
 .user-role-badge.user {
   background: var(--bg-tertiary);
-  color: #fffefe;
-  border: 1px solid #9490ff26;
+  color: var(--text-primary);
+  border: 1px solid var(--border);
   padding: 0.1rem 0.5rem;
 }
 
