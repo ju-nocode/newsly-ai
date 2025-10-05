@@ -222,7 +222,6 @@ body > * {
 
 .user-role-badge {
   font-size: 0.75rem;
-  padding: 0.35rem 0.75rem;
   border-radius: var(--radius-md);
   font-weight: 500;
   white-space: nowrap;
@@ -236,8 +235,9 @@ body > * {
 
 .user-role-badge.user {
   background: var(--bg-tertiary);
-  color: var(--text-secondary);
-  border: 1px solid var(--border);
+  color: #fffefe;
+  border: 1px solid #9490ff26;
+  padding: 0.1rem 0.5rem;
 }
 
 .btn-secondary {
