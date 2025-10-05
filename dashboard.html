@@ -118,34 +118,34 @@
                 <span class="collapse-icon">▼</span>
             </div>
 
-            <div class="categories-list collapse-content" data-collapse-target="categories">
-                <button class="category-btn active" data-category="general">
-                    <img src="https://img.icons8.com/ios-filled/50/FFFFFF/news.png" alt="News" class="category-icon">
-                    <span class="category-label" data-i18n="category.general">Général</span>
+            <div class="categories-list collapse-content" data-collapse-target="categories" style="padding: 0;">
+                <button class="settings-nav-item active" data-category="general">
+                    <img src="https://img.icons8.com/ios-filled/50/000000/news.png" alt="News" class="settings-nav-icon">
+                    <span data-i18n="category.general">Général</span>
                 </button>
-                <button class="category-btn" data-category="business">
-                    <img src="https://img.icons8.com/ios-filled/50/FFFFFF/briefcase.png" alt="Business" class="category-icon">
-                    <span class="category-label" data-i18n="category.business">Business</span>
+                <button class="settings-nav-item" data-category="business">
+                    <img src="https://img.icons8.com/ios-filled/50/000000/briefcase.png" alt="Business" class="settings-nav-icon">
+                    <span data-i18n="category.business">Business</span>
                 </button>
-                <button class="category-btn" data-category="technology">
-                    <img src="https://img.icons8.com/ios-filled/50/FFFFFF/laptop.png" alt="Tech" class="category-icon">
-                    <span class="category-label" data-i18n="category.technology">Technologie</span>
+                <button class="settings-nav-item" data-category="technology">
+                    <img src="https://img.icons8.com/ios-filled/50/000000/laptop.png" alt="Tech" class="settings-nav-icon">
+                    <span data-i18n="category.technology">Technologie</span>
                 </button>
-                <button class="category-btn" data-category="science">
-                    <img src="https://img.icons8.com/ios-filled/50/FFFFFF/test-tube.png" alt="Science" class="category-icon">
-                    <span class="category-label" data-i18n="category.science">Science</span>
+                <button class="settings-nav-item" data-category="science">
+                    <img src="https://img.icons8.com/ios-filled/50/000000/test-tube.png" alt="Science" class="settings-nav-icon">
+                    <span data-i18n="category.science">Science</span>
                 </button>
-                <button class="category-btn" data-category="health">
-                    <img src="https://img.icons8.com/ios-filled/50/FFFFFF/heart-with-pulse.png" alt="Health" class="category-icon">
-                    <span class="category-label" data-i18n="category.health">Santé</span>
+                <button class="settings-nav-item" data-category="health">
+                    <img src="https://img.icons8.com/ios-filled/50/000000/heart-with-pulse.png" alt="Health" class="settings-nav-icon">
+                    <span data-i18n="category.health">Santé</span>
                 </button>
-                <button class="category-btn" data-category="sports">
-                    <img src="https://img.icons8.com/ios-filled/50/FFFFFF/football2.png" alt="Sports" class="category-icon">
-                    <span class="category-label" data-i18n="category.sports">Sports</span>
+                <button class="settings-nav-item" data-category="sports">
+                    <img src="https://img.icons8.com/ios-filled/50/000000/football2.png" alt="Sports" class="settings-nav-icon">
+                    <span data-i18n="category.sports">Sports</span>
                 </button>
-                <button class="category-btn" data-category="entertainment">
-                    <img src="https://img.icons8.com/ios-filled/50/FFFFFF/retro-tv.png" alt="Entertainment" class="category-icon">
-                    <span class="category-label" data-i18n="category.entertainment">Divertissement</span>
+                <button class="settings-nav-item" data-category="entertainment">
+                    <img src="https://img.icons8.com/ios-filled/50/000000/retro-tv.png" alt="Entertainment" class="settings-nav-icon">
+                    <span data-i18n="category.entertainment">Divertissement</span>
                 </button>
             </div>
 
@@ -156,28 +156,28 @@
                 <span class="collapse-icon">▼</span>
             </div>
 
-            <div class="country-filter-sidebar collapse-content" data-collapse-target="countries">
-                <label class="country-option-sidebar">
+            <div class="country-filter-sidebar collapse-content" data-collapse-target="countries" style="padding: 0;">
+                <label class="settings-nav-item">
                     <input type="checkbox" value="all" id="countryAll" checked>
                     <span data-i18n="country.all">Tous</span>
                 </label>
-                <label class="country-option-sidebar">
+                <label class="settings-nav-item">
                     <input type="checkbox" class="country-checkbox" value="us" data-name="États-Unis">
                     <span data-i18n="country.us">🇺🇸 États-Unis</span>
                 </label>
-                <label class="country-option-sidebar">
+                <label class="settings-nav-item">
                     <input type="checkbox" class="country-checkbox" value="fr" data-name="France">
                     <span data-i18n="country.fr">🇫🇷 France</span>
                 </label>
-                <label class="country-option-sidebar">
+                <label class="settings-nav-item">
                     <input type="checkbox" class="country-checkbox" value="gb" data-name="Royaume-Uni">
                     <span data-i18n="country.gb">🇬🇧 Royaume-Uni</span>
                 </label>
-                <label class="country-option-sidebar">
+                <label class="settings-nav-item">
                     <input type="checkbox" class="country-checkbox" value="ca" data-name="Canada">
                     <span data-i18n="country.ca">🇨🇦 Canada</span>
                 </label>
-                <label class="country-option-sidebar">
+                <label class="settings-nav-item">
                     <input type="checkbox" class="country-checkbox" value="de" data-name="Allemagne">
                     <span data-i18n="country.de">🇩🇪 Allemagne</span>
                 </label>
@@ -366,10 +366,10 @@
         };
 
         // Gérer les clics sur les catégories
-        document.querySelectorAll('.category-btn').forEach(btn => {
+        document.querySelectorAll('.settings-nav-item[data-category]').forEach(btn => {
             btn.addEventListener('click', () => {
-                // Retirer la classe active de tous les boutons
-                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                // Retirer la classe active de tous les boutons de catégorie
+                document.querySelectorAll('.settings-nav-item[data-category]').forEach(b => b.classList.remove('active'));
 
                 // Ajouter la classe active au bouton cliqué
                 btn.classList.add('active');
@@ -379,7 +379,7 @@
                 currentCategory = category;
 
                 // Mettre à jour le titre
-                const title = btn.querySelector('.category-label').textContent;
+                const title = btn.querySelector('span').textContent;
                 document.getElementById('categoryTitle').textContent = `Actualités ${title}`;
 
                 loadNews(category);
@@ -586,16 +586,16 @@
             // Créer un nouveau bouton de catégorie
             const categoriesList = document.querySelector('.categories-list');
             const newCategory = document.createElement('button');
-            newCategory.className = 'category-btn';
+            newCategory.className = 'settings-nav-item';
             newCategory.dataset.category = topic;
             newCategory.innerHTML = `
-                <span class="category-icon">🔖</span>
-                <span class="category-label">${escapeHtml(topic)}</span>
+                <img src="https://img.icons8.com/ios-filled/50/000000/bookmark.png" alt="Topic" class="settings-nav-icon">
+                <span>${escapeHtml(topic)}</span>
             `;
 
             // Ajouter l'événement de clic
             newCategory.addEventListener('click', () => {
-                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.settings-nav-item[data-category]').forEach(b => b.classList.remove('active'));
                 newCategory.classList.add('active');
 
                 currentCategory = topic;
@@ -630,7 +630,7 @@
             translatePage();
 
             // Mettre à jour le titre de la catégorie actuelle
-            const activeBtn = document.querySelector('.category-btn.active');
+            const activeBtn = document.querySelector('.settings-nav-item[data-category].active');
             if (activeBtn) {
                 const categoryKey = activeBtn.dataset.category;
                 const translatedCategory = t(`category.${categoryKey}`);
@@ -705,17 +705,8 @@
             }, { passive: false });
         }
 
-        // Fermer sidebar après sélection catégorie sur mobile
-        document.querySelectorAll('.category-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                if (window.innerWidth <= 1024) {
-                    setTimeout(closeMobileMenu, 100); // Petit délai pour UX
-                }
-            });
-        });
-
-        // Fermer sidebar après sélection pays sur mobile
-        document.querySelectorAll('.country-option-sidebar').forEach(btn => {
+        // Fermer sidebar après sélection sur mobile
+        document.querySelectorAll('.settings-nav-item').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (window.innerWidth <= 1024) {
                     setTimeout(closeMobileMenu, 100); // Petit délai pour UX

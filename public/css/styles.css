@@ -515,67 +515,6 @@ input[type="color"]::-moz-color-swatch {
 }
 
 
-.categories-list {
-  padding: 0.5rem 1.5rem 1.5rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.125rem;
-}
-
-.category-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.625rem;
-  padding: 0.5rem 0.75rem;
-  background: transparent;
-  border: none;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  transition: all 0.15s ease;
-  width: 100%;
-  text-align: left;
-  font-size: 0.8125rem;
-  font-weight: 400;
-  color: var(--text-secondary);
-  line-height: 1.4;
-}
-
-.category-btn:hover {
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-}
-
-.category-btn.active {
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-  font-weight: 500;
-}
-
-.category-btn .category-label {
-  display: flex;
-  align-items: center;
-  gap: 0.625rem;
-  flex: 1;
-}
-
-.category-btn.active .category-label {
-  color: var(--text-primary);
-  font-weight: 500;
-}
-
-.category-icon {
-  width: 18px;
-  height: 18px;
-  object-fit: contain;
-  flex-shrink: 0;
-  filter: var(--icon-filter, none);
-  opacity: 0.7;
-}
-
-.category-btn.active .category-icon {
-  opacity: 1;
-}
-
 
 /* ================================================
    DASHBOARD LAYOUT
@@ -1756,6 +1695,24 @@ body:has(.settings-layout) .footer {
   filter: brightness(0) saturate(100%) invert(70%) sepia(48%) saturate(1356%) hue-rotate(112deg) brightness(95%) contrast(86%);
 }
 
+/* Settings nav item with checkbox support */
+.settings-nav-item input[type="checkbox"] {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--primary);
+  margin-right: 0.625rem;
+}
+
+.settings-nav-item input[type="checkbox"]:checked {
+  accent-color: var(--primary);
+}
+
+.settings-nav-item:has(input[type="checkbox"]:checked) {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
 .settings-content {
   flex: auto;
   margin-left: var(--settings-sidebar-width);
@@ -2421,8 +2378,6 @@ body:has(.settings-layout) .footer {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
   }
 
-  .category-btn,
-  .country-option-sidebar,
   .settings-nav-item {
     min-height: 44px;
   }
@@ -2556,109 +2511,6 @@ body:has(.settings-layout) .footer {
   }
 }
 
-/* ================================================
-   COUNTRY FILTER SIDEBAR
-================================================ */
-
-.country-filter-sidebar {
-  padding: 0.5rem 1.5rem 1.5rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.125rem;
-}
-
-.country-option-sidebar {
-  display: flex;
-  align-items: center;
-  gap: 0.625rem;
-  padding: 0.5rem 0.75rem;
-  background: transparent;
-  border: none;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  transition: all 0.15s ease;
-  width: 100%;
-  text-align: left;
-  font-size: 0.8125rem;
-  color: var(--text-secondary);
-  font-weight: 400;
-  line-height: 1.4;
-  user-select: none;
-}
-
-.country-option-sidebar:hover {
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-}
-
-.country-option-sidebar input[type="checkbox"] {
-  cursor: pointer;
-  width: 16px;
-  height: 16px;
-  accent-color: var(--primary);
-}
-
-.country-option-sidebar input[type="checkbox"]:checked {
-  accent-color: var(--primary);
-}
-
-.country-option-sidebar:has(input[type="checkbox"]:checked) {
-  color: var(--text-primary);
-  font-weight: 500;
-}
-
-/* ================================================
-   SIDEBAR NAVIGATION LINKS (for Settings, etc.)
-================================================ */
-
-.sidebar-nav-link {
-  display: flex;
-  align-items: center;
-  gap: 0.625rem;
-  padding: 0.5rem 1.5rem;
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  width: 100%;
-  text-align: left;
-  font-size: 0.8125rem;
-  font-weight: 400;
-  color: var(--text-secondary);
-  line-height: 1.4;
-  border-left: 3px solid transparent;
-}
-
-.sidebar-nav-link:hover {
-  background: rgba(62, 207, 142, 0.05);
-  color: var(--text-primary);
-}
-
-.sidebar-nav-link.active {
-  background: rgba(62, 207, 142, 0.1);
-  color: var(--primary);
-  font-weight: 500;
-  border-left: 3px solid var(--primary);
-  padding-left: calc(1.5rem - 3px);
-}
-
-.sidebar-nav-icon {
-  width: 16px;
-  height: 16px;
-  object-fit: contain;
-  filter: var(--icon-filter, none);
-  opacity: 0.6;
-}
-
-.sidebar-nav-link:hover .sidebar-nav-icon {
-  opacity: 0.8;
-}
-
-.sidebar-nav-link.active .sidebar-nav-icon {
-  opacity: 1;
-  filter: brightness(0) saturate(100%) invert(70%) sepia(48%) saturate(1356%) hue-rotate(112deg) brightness(95%) contrast(86%);
-}
 
 /* ================================================
    MOBILE LANDSCAPE ORIENTATION
@@ -2700,8 +2552,6 @@ body:has(.settings-layout) .footer {
   .btn-primary,
   .btn-secondary,
   .btn-danger,
-  .category-btn,
-  .country-option-sidebar,
   .settings-nav-item {
     -webkit-tap-highlight-color: rgba(62, 207, 142, 0.1);
   }
@@ -2710,9 +2560,7 @@ body:has(.settings-layout) .footer {
     -webkit-tap-highlight-color: rgba(62, 207, 142, 0.05);
   }
 
-  .category-btn:active,
-  .settings-nav-item:active,
-  .country-option-sidebar:active {
+  .settings-nav-item:active {
     transform: scale(0.98);
     transition: transform 0.1s ease;
   }
