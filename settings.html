@@ -19,17 +19,16 @@
                 <span class="logo-text">Newsly AI</span>
             </a>
 
-            <!-- User Greeting -->
-            <div class="nav-user-greeting">
-                <span class="greeting-text" id="navGreeting">Bonjour</span>
-                <span class="user-role-badge" id="navUserRole">utilisateur</span>
-            </div>
-
-            <!-- Weather Widget -->
-            <div class="weather-widget" id="weatherWidget">
-                <div class="weather-loading">
-                    <span>☁️</span>
+            <div class="nav-user-weather">
+                <!-- Weather Widget -->
+                <div class="weather-widget" id="weatherWidget">
+                    <div class="weather-loading">
+                        <span>☁️</span>
+                    </div>
                 </div>
+
+                <!-- User Role Badge -->
+                <span class="user-role-badge" id="navUserRole">utilisateur</span>
             </div>
 
             <div class="nav-links">
@@ -384,13 +383,8 @@
                 const userName = profile.username || profile.email.split('@')[0];
                 const userRole = profile.role || 'user';
 
-                // Navbar greeting
-                const navGreeting = document.getElementById('navGreeting');
+                // Navbar role badge
                 const navUserRole = document.getElementById('navUserRole');
-
-                if (navGreeting) {
-                    navGreeting.textContent = `Bonjour ${escapeHtml(userName)}`;
-                }
 
                 if (navUserRole) {
                     if (userRole === 'admin') {
