@@ -81,6 +81,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Animated Dot Grid Background */
@@ -417,7 +420,7 @@ body > * {
 .dashboard-container {
   margin-left: var(--sidebar-width);
   padding: 1.5rem;
-  min-height: calc(100vh - var(--navbar-height));
+  flex: 1;
   max-width: 1600px;
   display: block;
 }
@@ -960,7 +963,14 @@ body > * {
   background: var(--bg-primary);
   border-top: 1px solid var(--border);
   padding: 3rem 2rem 1.5rem;
-  margin-top: auto;
+}
+
+.dashboard-body .footer {
+  margin-left: var(--sidebar-width);
+}
+
+body:has(.settings-layout) .footer {
+  margin-left: 280px;
 }
 
 .footer-container {
@@ -1429,9 +1439,8 @@ body > * {
 
 .settings-layout {
   display: flex;
-  min-height: 100vh;
+  flex: 1;
   padding-top: var(--navbar-height);
-  background: var(--bg-primary);
 }
 
 .settings-nav {
