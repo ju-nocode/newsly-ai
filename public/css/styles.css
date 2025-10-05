@@ -15,24 +15,24 @@ html {
 }
 
 :root {
-  /* Light Mode - Supabase inspired */
+  /* Light Mode - Modern & Professional */
   --bg-primary: #ffffff;
   --bg-secondary: #f8f9fa;
   --bg-tertiary: #edeff1;
   --bg-sidebar: #1c1c1c;
-  --text-primary: #181818;
-  --text-secondary: #6b7280;
-  --text-muted: #9ca3af;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
   --text-sidebar: #e5e7eb;
   --border: #e5e7eb;
   --shadow: rgba(0, 0, 0, 0.04);
   --shadow-lg: rgba(0, 0, 0, 0.1);
 
-  /* Accent - Supabase green */
-  --primary: #3ecf8e;
-  --primary-dark: #2bb673;
-  --primary-light: #5ed9a1;
-  --secondary: #f4fffa;
+  /* Accent - Modern Blue */
+  --primary: #3b82f6;
+  --primary-dark: #2563eb;
+  --primary-light: #60a5fa;
+  --secondary: #eff6ff;
   --success: #10b981;
   --error: #ef4444;
   --warning: #f59e0b;
@@ -66,15 +66,21 @@ html {
   --bg-secondary: #0a0a0a;
   --bg-tertiary: #1a1a1a;
   --bg-sidebar: #050505;
-  --text-primary: #e8e8e8;
-  --text-secondary: #9ca3af;
-  --text-muted: #6b7280;
-  --text-sidebar: #d1d5db;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-sidebar: #e2e8f0;
   --border: #1f1f1f;
   /* Animated Dot Grid Background - darker in dark mode */
-  --dot-color: rgba(62, 207, 142, 0.1);
+  --dot-color: rgba(59, 130, 246, 0.15);
   --shadow: rgba(0, 0, 0, 0.5);
   --shadow-lg: rgba(0, 0, 0, 0.8);
+
+  /* Accent - Brighter blue for dark mode */
+  --primary: #60a5fa;
+  --primary-dark: #3b82f6;
+  --primary-light: #93c5fd;
+  --secondary: #1e3a8a;
 }
 
 body {
@@ -448,7 +454,7 @@ input[type="color"]::-moz-color-swatch {
 }
 
 .collapse-header:hover {
-  background: rgba(62, 207, 142, 0.08);
+  background: rgba(59, 130, 246, 0.08);
   transform: translateX(2px);
 }
 
@@ -1666,12 +1672,12 @@ body:has(.settings-layout) .footer {
 }
 
 .settings-nav-item:hover {
-  background: rgba(62, 207, 142, 0.05);
+  background: rgba(59, 130, 246, 0.05);
   color: var(--text-primary);
 }
 
 .settings-nav-item.active {
-  background: rgba(62, 207, 142, 0.1);
+  background: rgba(59, 130, 246, 0.1);
   color: var(--primary);
   font-weight: 500;
   border-left: 3px solid var(--primary);
@@ -2281,7 +2287,7 @@ body:has(.settings-layout) .footer {
     height: 44px;
     border-radius: var(--radius-md);
     transition: background 0.2s;
-    -webkit-tap-highlight-color: rgba(62, 207, 142, 0.1); /* Highlight vert iOS */
+    -webkit-tap-highlight-color: rgba(59, 130, 246, 0.1); /* Highlight bleu iOS */
     touch-action: manipulation; /* Meilleure réactivité tactile */
   }
 
@@ -2553,11 +2559,11 @@ body:has(.settings-layout) .footer {
   .btn-secondary,
   .btn-danger,
   .settings-nav-item {
-    -webkit-tap-highlight-color: rgba(62, 207, 142, 0.1);
+    -webkit-tap-highlight-color: rgba(59, 130, 246, 0.1);
   }
 
   .news-card {
-    -webkit-tap-highlight-color: rgba(62, 207, 142, 0.05);
+    -webkit-tap-highlight-color: rgba(59, 130, 246, 0.05);
   }
 
   .settings-nav-item:active {
