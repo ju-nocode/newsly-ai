@@ -76,15 +76,15 @@ export default async function handler(req, res) {
                 }
             }
 
-            if (phone !== undefined && phone.length > 20) {
+            if (phone !== undefined && phone !== null && phone.length > 20) {
                 return res.status(400).json({ error: 'Numéro de téléphone invalide (max 20 caractères)' });
             }
 
-            if (bio !== undefined && bio.length > 500) {
+            if (bio !== undefined && bio !== null && bio.length > 500) {
                 return res.status(400).json({ error: 'Bio trop longue (max 500 caractères)' });
             }
 
-            if (avatar_url !== undefined && avatar_url.length > 0) {
+            if (avatar_url !== undefined && avatar_url !== null && avatar_url.length > 0) {
                 // Accepter les URLs http/https et les data URLs (base64)
                 const isValidUrl = avatar_url.match(/^https?:\/\/.+/) || avatar_url.match(/^data:image\/.+;base64,.+/);
                 // Limite stricte à 50KB pour éviter les tokens trop gros
@@ -119,17 +119,40 @@ export default async function handler(req, res) {
             updateData.updated_at = new Date().toISOString();
 
             // Utiliser le Service Role pour mettre à jour la table profiles
+            if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+                console.error('SUPABASE_SERVICE_ROLE_KEY is missing!');
+                return res.status(500).json({
+                    error: 'Configuration serveur manquante',
+                    details: 'SUPABASE_SERVICE_ROLE_KEY non définie'
+                });
+            }
+
             const supabaseAdmin = createClient(
                 process.env.SUPABASE_URL,
                 process.env.SUPABASE_SERVICE_ROLE_KEY
             );
 
             // Récupérer le profil existant pour éviter d'écraser des données
-            const { data: existingProfile } = await supabaseAdmin
+            const { data: existingProfile, error: fetchError } = await supabaseAdmin
                 .from('profiles')
                 .select('*')
                 .eq('id', user.id)
                 .single();
+
+            if (fetchError && fetchError.code !== 'PGRST116') {
+                console.error('Error fetching existing profile:', fetchError);
+                // Continue quand même, on créera un nouveau profil
+            }
+
+            // Convertir is_admin en boolean si c'est une string
+            let isAdmin = false;
+            if (existingProfile?.is_admin !== undefined && existingProfile?.is_admin !== null) {
+                if (typeof existingProfile.is_admin === 'string') {
+                    isAdmin = existingProfile.is_admin === 'true' || existingProfile.is_admin === 't';
+                } else {
+                    isAdmin = Boolean(existingProfile.is_admin);
+                }
+            }
 
             // Préparer les données finales en fusionnant avec l'existant
             const finalData = {
@@ -140,7 +163,7 @@ export default async function handler(req, res) {
                 phone: updateData.phone !== undefined ? updateData.phone : (existingProfile?.phone || null),
                 bio: updateData.bio !== undefined ? updateData.bio : (existingProfile?.bio || null),
                 avatar_url: updateData.avatar_url !== undefined ? updateData.avatar_url : (existingProfile?.avatar_url || null),
-                is_admin: existingProfile?.is_admin || false,
+                is_admin: isAdmin,
                 created_at: existingProfile?.created_at || new Date().toISOString(),
                 updated_at: new Date().toISOString()
             };
