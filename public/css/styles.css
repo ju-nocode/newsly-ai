@@ -426,38 +426,37 @@ input[type="color"]::-moz-color-swatch {
   pointer-events: auto; /* Réactiver les événements sur le sidebar */
 }
 
-.sidebar-header {
+/* ================================================
+   COLLAPSE MENU - Classe unique pour tous les menus déroulants
+================================================ */
+
+.collapse-header {
   padding: 0.75rem 1.25rem;
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  cursor: default;
-  pointer-events: auto; /* S'assurer que les clics fonctionnent */
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+  pointer-events: auto;
 }
 
-.sidebar-header-separator {
+.collapse-header-separator {
   border-top: 1px solid var(--border);
   margin-top: 0;
 }
 
-.sidebar-header.collapsible {
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  user-select: none;
-  pointer-events: auto; /* Réactiver explicitement les clics */
-}
-
-.sidebar-header.collapsible:hover {
+.collapse-header:hover {
   background: rgba(62, 207, 142, 0.08);
   transform: translateX(2px);
 }
 
-.sidebar-header.collapsible:active {
+.collapse-header:active {
   transform: scale(0.98);
 }
 
-.sidebar-header .collapse-icon {
+.collapse-header .collapse-icon {
   margin-left: auto;
   font-size: 0.75rem;
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -465,28 +464,28 @@ input[type="color"]::-moz-color-swatch {
   display: inline-block;
 }
 
-.sidebar-header.collapsed .collapse-icon {
+.collapse-header.collapsed .collapse-icon {
   transform: rotate(-90deg);
 }
 
-.sidebar-header.collapsible:hover .collapse-icon {
+.collapse-header:hover .collapse-icon {
   color: var(--primary);
   transform: scale(1.15);
 }
 
-.sidebar-header.collapsible.collapsed:hover .collapse-icon {
+.collapse-header.collapsed:hover .collapse-icon {
   transform: rotate(-90deg) scale(1.15);
 }
 
-.sidebar-header-icon {
+.collapse-header-icon {
   width: 16px;
   height: 16px;
   object-fit: contain;
   flex-shrink: 0;
-  filter: var(--icon-filter, none);
+  filter: brightness(0) invert(1);
 }
 
-.sidebar-header h2 {
+.collapse-header h2 {
   color: var(--text-muted);
   font-size: 0.6875rem;
   font-weight: 600;
@@ -495,7 +494,7 @@ input[type="color"]::-moz-color-swatch {
   flex: 1;
 }
 
-.collapsible-content {
+.collapse-content {
   max-height: 2000px;
   overflow: hidden;
   transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
@@ -505,7 +504,7 @@ input[type="color"]::-moz-color-swatch {
   transform-origin: top;
 }
 
-.collapsible-content.collapsed {
+.collapse-content.collapsed {
   max-height: 0 !important;
   opacity: 0;
   padding-top: 0 !important;

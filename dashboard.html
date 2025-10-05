@@ -112,13 +112,13 @@
     <!-- Main Content -->
     <div class="dashboard-container">
         <aside class="dashboard-sidebar">
-            <div class="sidebar-header collapsible" id="categoriesHeader">
-                <img src="https://img.icons8.com/ios-filled/50/FFFFFF/news.png" alt="Categories" class="sidebar-header-icon">
+            <div class="collapse-header" data-collapse-id="categories">
+                <img src="https://img.icons8.com/ios-filled/50/FFFFFF/news.png" alt="Categories" class="collapse-header-icon">
                 <h2 data-i18n="sidebar.categories">Catégories</h2>
                 <span class="collapse-icon">▼</span>
             </div>
 
-            <div class="categories-list collapsible-content" id="categoriesContent">
+            <div class="categories-list collapse-content" data-collapse-target="categories">
                 <button class="category-btn active" data-category="general">
                     <img src="https://img.icons8.com/ios-filled/50/FFFFFF/news.png" alt="News" class="category-icon">
                     <span class="category-label" data-i18n="category.general">Général</span>
@@ -150,13 +150,13 @@
             </div>
 
             <!-- Country Filter Section -->
-            <div class="sidebar-header collapsible sidebar-header-separator" id="countriesHeader">
-                <img src="https://img.icons8.com/ios-filled/50/FFFFFF/globe.png" alt="Globe" class="sidebar-header-icon">
+            <div class="collapse-header collapse-header-separator" data-collapse-id="countries">
+                <img src="https://img.icons8.com/ios-filled/50/FFFFFF/globe.png" alt="Globe" class="collapse-header-icon">
                 <h2 data-i18n="sidebar.countries">Pays</h2>
                 <span class="collapse-icon">▼</span>
             </div>
 
-            <div class="country-filter-sidebar collapsible-content" id="countriesContent">
+            <div class="country-filter-sidebar collapse-content" data-collapse-target="countries">
                 <label class="country-option-sidebar">
                     <input type="checkbox" value="all" id="countryAll" checked>
                     <span data-i18n="country.all">Tous</span>
@@ -719,55 +719,11 @@
             await loadNews('general');
 
             // ================================================
-            // SIDEBAR COLLAPSIBLE
+            // SIDEBAR COLLAPSIBLE - Système universel
             // ================================================
 
-            const categoriesHeader = document.getElementById('categoriesHeader');
-            const categoriesContent = document.getElementById('categoriesContent');
-            const countriesHeader = document.getElementById('countriesHeader');
-            const countriesContent = document.getElementById('countriesContent');
-
-            // Vérifier que les éléments existent
-            if (!categoriesHeader || !categoriesContent || !countriesHeader || !countriesContent) {
-                console.error('❌ Éléments collapsibles non trouvés');
-                return;
-            }
-
-            console.log('✅ Éléments collapsibles trouvés, initialisation...');
-
-            // Charger l'état sauvegardé
-            const categoriesCollapsed = localStorage.getItem('categoriesCollapsed') === 'true';
-            const countriesCollapsed = localStorage.getItem('countriesCollapsed') === 'true';
-
-            if (categoriesCollapsed) {
-                categoriesHeader.classList.add('collapsed');
-                categoriesContent.classList.add('collapsed');
-            }
-
-            if (countriesCollapsed) {
-                countriesHeader.classList.add('collapsed');
-                countriesContent.classList.add('collapsed');
-            }
-
-            // Toggle catégories
-            categoriesHeader.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log('🔄 Toggle catégories');
-                categoriesHeader.classList.toggle('collapsed');
-                categoriesContent.classList.toggle('collapsed');
-                localStorage.setItem('categoriesCollapsed', categoriesHeader.classList.contains('collapsed'));
-            });
-
-            // Toggle pays
-            countriesHeader.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log('🔄 Toggle pays');
-                countriesHeader.classList.toggle('collapsed');
-                countriesContent.classList.toggle('collapsed');
-                localStorage.setItem('countriesCollapsed', countriesHeader.classList.contains('collapsed'));
-            });
+            import { initCollapseMenus } from './public/js/collapse-menu.js';
+            initCollapseMenus();
         })();
     </script>
 </body>
