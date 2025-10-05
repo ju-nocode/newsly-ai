@@ -411,7 +411,6 @@ body > * {
 ================================================ */
 
 .dashboard-body {
-  background: var(--bg-secondary);
   padding-top: var(--navbar-height);
 }
 
@@ -763,15 +762,15 @@ body > * {
 }
 
 .features {
-  background: var(--bg-primary);
+  background: transparent;
 }
 
 .categories-preview {
-  background: var(--bg-secondary);
+  background: transparent;
 }
 
 .how-it-works {
-  background: var(--bg-primary);
+  background: transparent;
 }
 
 .features-container,
