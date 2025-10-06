@@ -704,7 +704,7 @@ input[type="color"]::-moz-color-swatch {
 .btn-primary,
 .btn-submit {
   background: var(--primary);
-  color: rgb(255, 255, 255);
+  color: var(--secondary);
   padding: 0.5rem 1rem;
   border-radius: var(--radius-md);
   font-weight: 500;
