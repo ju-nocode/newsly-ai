@@ -1215,10 +1215,11 @@
             });
         });
 
-        // Show/hide Admin section - only for ju.richard.33@gmail.com
+        // Show/hide Admin section - only for specific admin email with is_admin true in DB
         const checkAdminAccess = async () => {
             const result = await getUserProfile();
-            if (result.success && result.profile.email === 'ju.richard.33@gmail.com' && result.profile.role === 'admin') {
+            // Vérifier is_admin directement depuis le profil (colonne profiles.is_admin)
+            if (result.success && result.profile.is_admin === true) {
                 // Show admin section
                 document.getElementById('adminSectionHeader').style.display = 'flex';
                 document.getElementById('adminSectionContent').style.display = 'block';
