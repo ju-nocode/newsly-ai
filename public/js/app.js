@@ -142,7 +142,12 @@ export const signup = async (email, password, metadata) => {
 
         const data = await response.json();
 
+        console.log('Server response:', data);
+        console.log('Response status:', response.status);
+
         if (!response.ok) {
+            console.error('Signup failed with status:', response.status);
+            console.error('Error data:', data);
             throw new Error(data.error || 'Erreur d\'inscription');
         }
 

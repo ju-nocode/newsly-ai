@@ -96,6 +96,17 @@ export default async function handler(req, res) {
                 process.env.SUPABASE_SERVICE_ROLE_KEY
             );
 
+            // ATTENDRE 1 seconde pour que l'utilisateur soit bien dans auth.users
+            console.log('Waiting 1 second for user to be fully created in auth.users...');
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
+            // Vérifier que l'utilisateur existe dans auth.users
+            const { data: authUser, error: authCheckError } = await supabaseAdmin.auth.admin.getUserById(data.user.id);
+            console.log('Auth user check:', authUser ? 'User exists in auth.users' : 'User NOT found in auth.users');
+            if (authCheckError) {
+                console.error('Error checking auth user:', authCheckError);
+            }
+
             const profileData = {
                 id: data.user.id,
                 email: data.user.email,
@@ -113,29 +124,59 @@ export default async function handler(req, res) {
 
             console.log('Profile data to insert:', profileData);
 
-            // Upsert dans profiles (insert ou update si existe déjà)
-            const { error: profileError } = await supabaseAdmin
+            // Vérifier si le profil existe déjà (créé par trigger)
+            const { data: existingProfile } = await supabaseAdmin
                 .from('profiles')
-                .upsert(profileData, {
-                    onConflict: 'id'
-                });
+                .select('id')
+                .eq('id', data.user.id)
+                .maybeSingle();
 
-            if (profileError) {
-                console.error('Profile creation error:', profileError);
-                console.error('Profile error details:', {
-                    code: profileError.code,
-                    message: profileError.message,
-                    details: profileError.details,
-                    hint: profileError.hint
-                });
-                // Ne pas bloquer l'inscription même si la création du profil échoue
-                // Message générique
-                return res.status(400).json({
-                    error: 'Impossible de créer le compte. Veuillez réessayer plus tard.'
-                });
+            if (existingProfile) {
+                console.log('Profile already exists (created by trigger), updating it...');
+                // Le profil existe déjà, on le met à jour
+                const { error: updateError } = await supabaseAdmin
+                    .from('profiles')
+                    .update({
+                        username: profileData.username,
+                        full_name: profileData.full_name,
+                        phone: profileData.phone,
+                        country: profileData.country,
+                        city: profileData.city,
+                        updated_at: profileData.updated_at
+                    })
+                    .eq('id', data.user.id);
+
+                if (updateError) {
+                    console.error('Profile update error:', updateError);
+                } else {
+                    console.log('Profile updated successfully');
+                }
+            } else {
+                console.log('Profile does not exist, creating it...');
+                // Upsert dans profiles (insert ou update si existe déjà)
+                const { error: profileError } = await supabaseAdmin
+                    .from('profiles')
+                    .upsert(profileData, {
+                        onConflict: 'id'
+                    });
+
+                if (profileError) {
+                    console.error('Profile creation error:', profileError);
+                    console.error('Profile error details:', {
+                        code: profileError.code,
+                        message: profileError.message,
+                        details: profileError.details,
+                        hint: profileError.hint
+                    });
+                    // Ne pas bloquer l'inscription même si la création du profil échoue
+                    // Message générique
+                    return res.status(400).json({
+                        error: 'Impossible de créer le compte. Veuillez réessayer plus tard.'
+                    });
+                }
+
+                console.log('Profile created successfully in database');
             }
-
-            console.log('Profile created successfully in database');
         }
 
         return res.status(200).json({
