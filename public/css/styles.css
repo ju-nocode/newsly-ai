@@ -81,6 +81,7 @@ html {
   --primary-dark: #0d0d0d;
   --primary-light: #0d0d0d;
   --secondary: #0d0d0d;
+}
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
