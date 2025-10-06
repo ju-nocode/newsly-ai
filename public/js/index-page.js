@@ -2,6 +2,84 @@ import { checkAuth, login, signup } from './app.js';
 import { translatePage } from './translation-service.js';
 import { defaultParticlesConfig } from './particles-config.js';
 import { countries } from './countries.js';
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+// Vérifier si on arrive depuis une confirmation email
+const checkEmailConfirmation = async () => {
+    const hashParams = new URLSearchParams(window.location.hash.substring(1));
+    const access_token = hashParams.get('access_token');
+    const type = hashParams.get('type');
+
+    if ((type === 'signup' || type === 'email') && access_token) {
+        console.log('🎉 Email confirmé, affichage du message...');
+
+        // Supprimer le hash de l'URL
+        window.history.replaceState(null, null, window.location.pathname);
+
+        // Créer le client Supabase
+        const supabase = createClient(
+            'https://mauulkejlnlubdzmhirq.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1hdXVsa2VqbG5sdWJkem1oaXJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY5NTQwNzksImV4cCI6MjA2MjUzMDA3OX0.hC0jOBK3rKKj8Fq1P3ITjsZqtaPzzD7EYc7jPVb_Hvs'
+        );
+
+        // Établir la session
+        try {
+            const { data, error } = await supabase.auth.setSession({
+                access_token,
+                refresh_token: hashParams.get('refresh_token')
+            });
+
+            if (!error && data.session) {
+                // Sauvegarder la session
+                localStorage.setItem('session', JSON.stringify({
+                    user: data.user,
+                    access_token: data.session.access_token
+                }));
+
+                // Afficher le message de confirmation
+                showEmailConfirmedModal();
+                return true;
+            }
+        } catch (err) {
+            console.error('Erreur confirmation:', err);
+        }
+    }
+    return false;
+};
+
+// Afficher la modal de confirmation email
+const showEmailConfirmedModal = () => {
+    const signupModal = document.getElementById('signupModal');
+    const signupFlipCard = document.getElementById('signupFlipCard');
+    const signupSuccess = document.getElementById('signupSuccess');
+
+    // Masquer le flip card
+    signupFlipCard.style.display = 'none';
+
+    // Modifier le contenu du succès pour la confirmation
+    signupSuccess.innerHTML = `
+        <div class="success-checkmark"></div>
+        <div id="confettiContainer" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden;"></div>
+        <h2 class="modal-title" style="color: var(--success);">✅ Email validé avec succès !</h2>
+        <p class="modal-subtitle" style="margin-bottom: 2rem;">
+            Votre compte est maintenant actif. Vous pouvez vous connecter.
+        </p>
+        <button id="goToLoginBtn" class="btn-primary">Se connecter</button>
+    `;
+
+    // Afficher la modal et le succès
+    signupModal.classList.add('show');
+    signupSuccess.classList.add('active');
+
+    // Confettis
+    createConfetti();
+
+    // Bouton "Se connecter"
+    document.getElementById('goToLoginBtn').addEventListener('click', () => {
+        signupModal.classList.remove('show');
+        document.getElementById('loginModal').classList.add('show');
+    });
+};
 
 // Si l'utilisateur est déjà connecté, rediriger vers le dashboard
 if (checkAuth()) {
@@ -12,6 +90,9 @@ if (checkAuth()) {
     if (appLinksSection) {
         appLinksSection.style.display = 'none';
     }
+
+    // Vérifier la confirmation email au chargement
+    checkEmailConfirmation();
 }
 
 // Traductions spécifiques à index.html
