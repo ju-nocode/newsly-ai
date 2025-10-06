@@ -42,6 +42,16 @@ export default async function handler(req, res) {
             return res.status(401).json({ error: 'Token invalide' });
         }
 
+        // Supprimer d'abord le profil de la table profiles
+        const { error: profileDeleteError } = await supabaseAdmin
+            .from('profiles')
+            .delete()
+            .eq('id', user.id);
+
+        if (profileDeleteError) {
+            console.error('Profile delete error:', profileDeleteError);
+        }
+
         // Supprimer l'utilisateur avec le client admin
         const { error: deleteError } = await supabaseAdmin.auth.admin.deleteUser(user.id);
 
