@@ -4,60 +4,52 @@ import { defaultParticlesConfig } from './particles-config.js';
 import { countries } from './countries.js';
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-// Détection de confirmation email (polling + storage event)
+// Détection de confirmation email via polling API Supabase
 let emailConfirmationInterval = null;
-let storageListener = null;
+let confirmedUserId = null;
 
-const checkEmailConfirmed = () => {
-    const emailConfirmed = localStorage.getItem('emailJustConfirmed');
+const checkEmailConfirmedViaAPI = async () => {
+    try {
+        // Importer createClient si pas déjà fait
+        const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
 
-    if (emailConfirmed === 'true') {
-        console.log('🎉 Email confirmé détecté !');
+        const supabase = createClient(
+            'https://mauulkejlnlubdzmhirq.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1hdXVsa2VqbG5sdWJkem1oaXJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY5NTQwNzksImV4cCI6MjA2MjUzMDA3OX0.hC0jOBK3rKKj8Fq1P3ITjsZqtaPzzD7EYc7jPVb_Hvs'
+        );
 
-        // Arrêter le polling et le listener
-        stopEmailConfirmationPolling();
+        // Vérifier si l'utilisateur a confirmé son email
+        const { data: { user } } = await supabase.auth.getUser();
 
-        // Nettoyer le flag
-        localStorage.removeItem('emailJustConfirmed');
+        if (user && user.email_confirmed_at) {
+            console.log('🎉 Email confirmé détecté via API Supabase !', user.email_confirmed_at);
 
-        // Afficher le succès avec confettis
-        showEmailConfirmedModal();
+            // Arrêter le polling
+            stopEmailConfirmationPolling();
+
+            // Sauvegarder la session
+            const { data: session } = await supabase.auth.getSession();
+            if (session?.session) {
+                localStorage.setItem('session', JSON.stringify({
+                    user: session.session.user,
+                    access_token: session.session.access_token
+                }));
+            }
+
+            // Afficher le succès avec confettis
+            showEmailConfirmedModal();
+        }
+    } catch (error) {
+        console.warn('⚠️ Erreur lors de la vérification:', error);
     }
 };
 
-const startEmailConfirmationPolling = () => {
-    console.log('🔄 Démarrage du polling de confirmation email...');
+const startEmailConfirmationPolling = (userId) => {
+    console.log('🔄 Démarrage du polling confirmation email (vérification toutes les 2s)...');
+    confirmedUserId = userId;
 
-    // 1. Polling (vérifie toutes les secondes dans le même onglet)
-    emailConfirmationInterval = setInterval(checkEmailConfirmed, 1000);
-
-    // 2. Storage Event Listener (détecte les changements depuis d'autres onglets)
-    storageListener = (e) => {
-        console.log('📢 Storage event détecté:', e.key, e.newValue);
-
-        if (e.key === 'emailJustConfirmed' && e.newValue === 'true') {
-            console.log('🎉 Email confirmé détecté via storage event (autre onglet) !');
-            checkEmailConfirmed();
-        }
-    };
-
-    window.addEventListener('storage', storageListener);
-    console.log('👂 Storage listener ajouté pour détecter les changements inter-onglets');
-
-    // 3. BroadcastChannel (communication instantanée entre onglets)
-    try {
-        const channel = new BroadcastChannel('email_confirmation');
-        channel.onmessage = (event) => {
-            console.log('📡 BroadcastChannel: Message reçu', event.data);
-            if (event.data.type === 'EMAIL_CONFIRMED') {
-                console.log('🎉 Email confirmé détecté via BroadcastChannel (instant) !');
-                checkEmailConfirmed();
-            }
-        };
-        console.log('📻 BroadcastChannel actif pour détection instantanée');
-    } catch (e) {
-        console.warn('⚠️ BroadcastChannel non supporté par ce navigateur');
-    }
+    // Polling API toutes les 2 secondes
+    emailConfirmationInterval = setInterval(checkEmailConfirmedViaAPI, 2000);
 };
 
 const stopEmailConfirmationPolling = () => {
@@ -65,12 +57,6 @@ const stopEmailConfirmationPolling = () => {
         clearInterval(emailConfirmationInterval);
         emailConfirmationInterval = null;
         console.log('⏹️ Polling arrêté');
-    }
-
-    if (storageListener) {
-        window.removeEventListener('storage', storageListener);
-        storageListener = null;
-        console.log('⏹️ Storage listener supprimé');
     }
 };
 
@@ -521,8 +507,9 @@ if (signupStep2Form) {
             if (result.success) {
                 // SUCCÈS: Garder le loader actif et démarrer le polling
                 // Le loader reste visible en attendant la confirmation email
-                console.log('📧 Compte créé, en attente de confirmation email...');
-                startEmailConfirmationPolling();
+                console.log('📧 Compte créé, userId:', result.user?.id);
+                console.log('📧 En attente de confirmation email...');
+                startEmailConfirmationPolling(result.user?.id);
                 // Ne PAS cacher le loader - il reste visible
             } else {
                 // ERREUR: Cacher le loader et afficher l'erreur
