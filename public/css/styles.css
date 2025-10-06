@@ -923,7 +923,7 @@ input[type="color"]::-moz-color-swatch {
 .features,
 .categories-preview,
 .how-it-works {
-  padding: 4rem 2rem;
+  padding: 0.5rem 0.5rem;
 }
 
 .features {
@@ -941,16 +941,17 @@ input[type="color"]::-moz-color-swatch {
 .features-container,
 .categories-container,
 .how-it-works-container {
-  max-width: 1200px;
+  max-width: 1800px;
   margin: 0 auto;
+  padding: 46px;
 }
 
 .section-title {
   text-align: center;
   font-size: 2.25rem;
   font-weight: 500;
-  margin-bottom: 1rem;
-  letter-spacing: -0.025em;
+  margin-bottom: 2rem;
+  letter-spacing: 0.1em;
   line-height: 1.2;
 }
 
@@ -966,8 +967,8 @@ input[type="color"]::-moz-color-swatch {
 .features-grid,
 .categories-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 3rem;
 }
 
 @media (max-width: 1200px) {
