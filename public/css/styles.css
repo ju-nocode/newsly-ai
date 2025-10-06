@@ -30,7 +30,7 @@ html {
 
   /* Accent - Modern Blue */
   --primary: #000000;
-  --primary-dark: #ffffff;
+  --primary-dark: #ffffff/;
   --primary-light: #000000;
   --secondary: #eff6ff;
   --success: #10b981;
@@ -128,7 +128,6 @@ body {
 .auth-container > *,
 .auth-buttons,
 .auth-buttons > *,
-.btn-hero,
 .btn-secondary,
 a,
 button,
@@ -703,7 +702,6 @@ input[type="color"]::-moz-color-swatch {
 ================================================ */
 
 .btn-primary,
-.btn-hero,
 .btn-submit {
   background: var(--primary);
   color: white;
@@ -721,8 +719,7 @@ input[type="color"]::-moz-color-swatch {
   white-space: nowrap;
 }
 
-.btn-primary:hover,
-.btn-hero:hover {
+.btn-primary:hover {
   background: var(--primary-dark);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
@@ -1136,12 +1133,12 @@ input[type="color"]::-moz-color-swatch {
   color: rgba(255, 255, 255, 0.9);
 }
 
-.cta-section .btn-hero {
+.cta-section {
   background: white;
   color: var(--primary);
 }
 
-.cta-section .btn-hero:hover {
+.cta-section {
   background: var(--bg-tertiary);
 }
 
