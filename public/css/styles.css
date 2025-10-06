@@ -52,7 +52,6 @@ html {
 
   /* Sidebar */
   --sidebar-width: 280px;
-  --settings-sidebar-width: 280px;
   --navbar-height: 56px;
 
   /* Animated Dot Grid Background */
@@ -141,7 +140,6 @@ textarea,
 .dashboard-header,
 .dashboard-content,
 .settings-header,
-.settings-nav,
 .settings-content,
 .search-form,
 .filter-tags,
@@ -1166,7 +1164,7 @@ input[type="color"]::-moz-color-swatch {
 }
 
 body:has(.settings-layout) .footer {
-  margin-left: var(--settings-sidebar-width);
+  margin-left: var(--sidebar-width);
 }
 
 .footer-container {
@@ -1624,20 +1622,6 @@ body:has(.settings-layout) .footer {
   flex: 1;
 }
 
-.settings-nav {
-  width: var(--settings-sidebar-width);
-  background: var(--bg-primary);
-  border-right: 1px solid var(--border);
-  padding: 0;
-  position: fixed;
-  top: var(--navbar-height);
-  pointer-events: auto;
-  left: 0;
-  height: calc(100vh - var(--navbar-height));
-  overflow-y: auto;
-  z-index: 100;
-}
-
 .settings-nav-menu {
   display: flex;
   flex-direction: column;
@@ -1712,7 +1696,7 @@ body:has(.settings-layout) .footer {
 
 .settings-content {
   flex: auto;
-  margin-left: var(--settings-sidebar-width);
+  margin-left: var(--sidebar-width);
   padding: 3rem 4rem 250px 4rem;
   min-height: calc(100vh - var(--navbar-height));
   display: flex;
@@ -2201,7 +2185,6 @@ body:has(.settings-layout) .footer {
 @media (max-width: 1024px) {
   :root {
     --sidebar-width: 0px;
-    --settings-sidebar-width: 0px;
   }
 
   /* Sidebars cachées par défaut sur mobile */
@@ -2228,7 +2211,7 @@ body:has(.settings-layout) .footer {
     transform: translate3d(0, 0, 0);
   }
 
-  .settings-nav {
+  .settings-layout .dashboard-sidebar {
     position: fixed;
     top: 0;
     left: 0;
@@ -2243,7 +2226,7 @@ body:has(.settings-layout) .footer {
   }
 
   /* Settings nav visible quand menu mobile ouvert */
-  .settings-nav.mobile-open {
+  .settings-layout .dashboard-sidebar.mobile-open {
     transform: translate3d(0, 0, 0);
   }
 
