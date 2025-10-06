@@ -202,6 +202,7 @@ textarea,
   box-shadow: 0 2px 8px var(--shadow);
   z-index: 10000;
   padding: 0;
+  padding-top: env(safe-area-inset-top);
 }
 
 .navbar.dashboard-nav {
@@ -1358,11 +1359,36 @@ body:has(.settings-layout) .footer {
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   transition: all 0.2s;
+  cursor: pointer;
+  position: relative;
 }
 
 .weather-widget:hover {
   background: var(--bg-tertiary);
   box-shadow: 0 2px 8px var(--shadow);
+}
+
+.weather-popup {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 32px var(--shadow-lg);
+  padding: 1rem;
+  min-width: 200px;
+  z-index: 10002;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+}
+
+.weather-popup.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 
 .weather-loading {
@@ -2226,6 +2252,10 @@ body:has(.settings-layout) .footer {
     box-shadow: 2px 0 20px var(--shadow-lg);
     -webkit-overflow-scrolling: touch; /* Smooth scrolling iOS */
     will-change: transform; /* Optimisation performance */
+  }
+
+  .dashboard-sidebar.show {
+    transform: translate3d(0, 0, 0);
   }
 
   /* Sidebar visible quand menu mobile ouvert */
