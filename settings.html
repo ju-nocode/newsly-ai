@@ -616,20 +616,47 @@
                 // Champs obligatoires
                 document.getElementById('usernameInput').value = profile.username || '';
                 document.getElementById('fullNameInput').value = profile.full_name || '';
-                document.getElementById('countrySelect').value = profile.country || 'France';
+
+                // Country - s'assurer que la valeur existe dans le select
+                const countryValue = profile.country || 'France';
+                const countrySelect = document.getElementById('countrySelect');
+                const countryExists = Array.from(countrySelect.options).some(opt => opt.value === countryValue);
+
+                if (countryExists) {
+                    countrySelect.value = countryValue;
+                } else {
+                    console.warn(`Pays "${countryValue}" non trouvé dans la liste, utilisation de France par défaut`);
+                    countrySelect.value = 'France';
+                }
+
                 document.getElementById('cityInput').value = profile.city || '';
 
-                // Champs optionnels
-                if (profile.phone) {
+                // Champs optionnels - Téléphone
+                if (profile.phone && profile.phone.trim() !== '') {
                     // Séparer l'indicatif du numéro
                     const phoneMatch = profile.phone.match(/^(\+\d+)\s*(.+)$/);
                     if (phoneMatch) {
-                        document.getElementById('phoneCountryCode').value = phoneMatch[1];
-                        document.getElementById('phoneInput').value = phoneMatch[2];
+                        const indicatif = phoneMatch[1];
+                        const numero = phoneMatch[2];
+
+                        // Vérifier si l'indicatif existe dans le select
+                        const phoneCodeSelect = document.getElementById('phoneCountryCode');
+                        const codeExists = Array.from(phoneCodeSelect.options).some(opt => opt.value === indicatif);
+
+                        if (codeExists) {
+                            phoneCodeSelect.value = indicatif;
+                        } else {
+                            console.warn(`Indicatif "${indicatif}" non trouvé, utilisation de +33 par défaut`);
+                            phoneCodeSelect.value = '+33';
+                        }
+
+                        document.getElementById('phoneInput').value = numero;
                     } else {
+                        // Format de téléphone invalide, mettre le numéro complet dans le champ
                         document.getElementById('phoneInput').value = profile.phone;
                     }
                 }
+
                 if (profile.bio) {
                     const bioInput = document.getElementById('bioInput');
                     bioInput.value = profile.bio;
