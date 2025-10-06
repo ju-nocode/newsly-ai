@@ -30,8 +30,8 @@ html {
 
   /* Accent - Modern Blue */
   --primary: #000000;
-  --primary-dark: #2563eb;
-  --primary-light: #60a5fa;
+  --primary-dark: #ffffff;
+  --primary-light: #000000;
   --secondary: #eff6ff;
   --success: #10b981;
   --error: #ef4444;
