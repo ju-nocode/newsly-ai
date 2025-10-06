@@ -1800,7 +1800,39 @@ body:has(.settings-layout) .footer {
   letter-spacing: 0.05em;
 }
 
+/* Users Table */
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.users-table thead {
+  background: var(--bg-secondary);
+  border-bottom: 2px solid var(--border);
+}
+
+.users-table th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.users-table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.2s;
+}
+
+.users-table tbody tr:hover {
+  background: var(--bg-secondary);
+}
+
 .users-table td {
+  padding: 1rem;
   color: var(--text-secondary);
   font-size: 0.9375rem;
 }
