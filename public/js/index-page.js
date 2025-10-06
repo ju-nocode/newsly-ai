@@ -64,9 +64,13 @@ const stopEmailConfirmationPolling = () => {
 // Afficher la modal de confirmation email
 const showEmailConfirmedModal = () => {
     // Cacher le loader
-    document.getElementById('signupLoader').classList.remove('active');
+    const signupLoader = document.getElementById('signupLoader');
+    if (signupLoader) {
+        signupLoader.classList.remove('active');
+    }
 
     const signupSuccess = document.getElementById('signupSuccess');
+    if (!signupSuccess) return;
 
     // Modifier le contenu du succès pour la confirmation
     signupSuccess.innerHTML = `
@@ -85,16 +89,23 @@ const showEmailConfirmedModal = () => {
     createConfetti();
 
     // Bouton "Se connecter"
-    document.getElementById('goToLoginBtn').addEventListener('click', () => {
-        document.getElementById('signupModal').classList.remove('show');
-        document.getElementById('loginModal').classList.add('show');
-        stopEmailConfirmationPolling();
-    });
+    const goToLoginBtn = document.getElementById('goToLoginBtn');
+    if (goToLoginBtn) {
+        goToLoginBtn.addEventListener('click', () => {
+            const signupModal = document.getElementById('signupModal');
+            const loginModal = document.getElementById('loginModal');
+            if (signupModal) signupModal.classList.remove('show');
+            if (loginModal) loginModal.classList.add('show');
+            stopEmailConfirmationPolling();
+        });
+    }
 
     // Auto-ouvrir la modal de login après 3 secondes
     setTimeout(() => {
-        document.getElementById('signupModal').classList.remove('show');
-        document.getElementById('loginModal').classList.add('show');
+        const signupModal = document.getElementById('signupModal');
+        const loginModal = document.getElementById('loginModal');
+        if (signupModal) signupModal.classList.remove('show');
+        if (loginModal) loginModal.classList.add('show');
         stopEmailConfirmationPolling();
     }, 3000);
 };
