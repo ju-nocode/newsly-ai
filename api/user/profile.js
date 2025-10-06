@@ -34,10 +34,16 @@ export default async function handler(req, res) {
 
         // GET - Récupérer le profil
         if (req.method === 'GET') {
-            // Récupérer les données de la table profiles
-            const { data: profile, error: profileError } = await supabase
+            // Utiliser le service role pour récupérer toutes les colonnes sans restriction RLS
+            const supabaseAdmin = createClient(
+                process.env.SUPABASE_URL,
+                process.env.SUPABASE_SERVICE_ROLE_KEY
+            );
+
+            // Récupérer les données de la table profiles avec explicitement les colonnes
+            const { data: profile, error: profileError } = await supabaseAdmin
                 .from('profiles')
-                .select('*')
+                .select('id, email, username, full_name, phone, bio, avatar_url, country, city, is_admin, created_at, updated_at')
                 .eq('id', user.id)
                 .single();
 
