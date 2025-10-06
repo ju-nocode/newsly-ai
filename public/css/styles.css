@@ -29,8 +29,8 @@ html {
   --shadow-lg: rgba(0, 0, 0, 0.1);
 
   /* Accent - Modern Blue */
-  --primary: #000000;
-  --primary-dark: #ffffff/;
+  --primary: #ffffff;
+  --primary-dark: #ffffff;
   --primary-light: #000000;
   --secondary: #eff6ff;
   --success: #10b981;
@@ -704,7 +704,7 @@ input[type="color"]::-moz-color-swatch {
 .btn-primary,
 .btn-submit {
   background: var(--primary);
-  color: white;
+  color: rgb(0, 0, 0);
   padding: 0.5rem 1rem;
   border-radius: var(--radius-md);
   font-weight: 500;
