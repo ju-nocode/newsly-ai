@@ -1011,8 +1011,7 @@ input[type="color"]::-moz-color-swatch {
 
 .feature-icon,
 .category-preview-icon {
-  width: 32px;
-  height: 32px;
+  align-content: center;
   margin: 0 auto 0.75rem;
   filter: var(--icon-filter);
   opacity: 0.8;
