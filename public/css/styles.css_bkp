@@ -15,27 +15,24 @@ html {
 }
 
 :root {
-  /* ====== LIGHT MODE - SaaS Pro ====== */
+  /* Light Mode - Modern & Professional */
   --bg-primary: #ffffff;
-  --bg-secondary: #f9fafb;
-  --bg-tertiary: #f1f5f9;
-  --bg-sidebar: #ffffff;
-
-  --text-primary: #0f172a;
-  --text-secondary: #334155;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #edeff1;
+  --bg-sidebar: #000;
+  --text-primary: #000;
+  --text-secondary: #475569;
   --text-muted: #64748b;
-  --text-sidebar: #1e293b;
-
-  --border: #e2e8f0;
+  --text-sidebar: #e5e7eb;
+  --border: #c4c4c4;
   --shadow: rgba(0, 0, 0, 0.04);
-  --shadow-lg: rgba(0, 0, 0, 0.08);
+  --shadow-lg: rgba(0, 0, 0, 0.1);
 
-  /* Accent - SaaS Blue */
-  --primary: #3b82f6;       /* Couleur d’accent principale */
-  --primary-dark: #2563eb;  /* Hover / focus */
-  --primary-light: #60a5fa; /* Éléments secondaires */
-  --secondary: #eff6ff;     /* Surfaces neutres */
-
+  /* Accent - Modern Blue */
+  --primary: #000000;
+  --primary-dark: #ffffff;
+  --primary-light: #000000;
+  --secondary: #eff6ff;
   --success: #10b981;
   --error: #ef4444;
   --warning: #f59e0b;
@@ -53,51 +50,37 @@ html {
   --radius-lg: 0.5rem;
   --radius-xl: 0.75rem;
 
-  /* Layout */
+  /* Sidebar */
   --sidebar-width: 250px;
-  --navbar-height: 48px;
+  --navbar-height: 35px;
 
-  /* Dot grid (fond subtil) */
-  --dot-color: rgba(59, 130, 246, 0.08);
+  /* Animated Dot Grid Background */
+  --dot-color: rgba(62, 207, 142, 0.15);
   --dot-size: 1px;
   --dot-spacing: 30px;
-
-  /* Icons (par défaut sombre) */
-  --icon-filter: brightness(0) saturate(100%);
 }
 
 [data-theme="dark"] {
-  /* ====== DARK MODE - SaaS Pro ====== */
-  --bg-primary: #0f172a;   /* Fond principal */
-  --bg-secondary: #1e293b; /* Sections */
-  --bg-tertiary: #273549;  /* Cartes / blocs */
-  --bg-sidebar: #0f172a;   /* Sidebar uniforme */
+  --bg-primary: #0d0d0d;
+  --bg-secondary: #0d0d0d;
+  --bg-tertiary: #0d0d0d;
+  --bg-sidebar: #0d0d0d;
+  --text-primary: #fff;
+  --text-secondary: #f1f5f9;
+  --text-muted: #f7f7f7;
+  --text-sidebar: #fff;
+  --border: #1f1f1f;
 
-  --text-primary: #f8fafc;
-  --text-secondary: #cbd5e1;
-  --text-muted: #94a3b8;
-  --text-sidebar: #e2e8f0;
-
-  --border: #334155;
-  --shadow: rgba(0, 0, 0, 0.6);
+  /* Animated Dot Grid Background - darker in dark mode */
+  --dot-color: rgba(59, 130, 246, 0.15);
+  --shadow: rgba(0, 0, 0, 0.5);
   --shadow-lg: rgba(0, 0, 0, 0.8);
 
-  /* Accent - légèrement plus clair pour ressortir */
-  --primary: #60a5fa;
-  --primary-dark: #3b82f6;
-  --primary-light: #93c5fd;
-  --secondary: #1e293b;
-
-  /* Statuts */
-  --success: #34d399;
-  --error: #f87171;
-  --warning: #fbbf24;
-
-  /* Fond animé */
-  --dot-color: rgba(96, 165, 250, 0.12);
-
-  /* Icônes inversées pour le dark mode */
-  --icon-filter: brightness(0) invert(1);
+  /* Accent - Brighter blue for dark mode */
+  --primary: #fff;
+  --primary-dark: #0d0d0d;
+  --primary-light: #0d0d0d;
+  --secondary: #0d0d0d;
 }
 
 body {
