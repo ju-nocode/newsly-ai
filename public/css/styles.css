@@ -2076,11 +2076,10 @@ body:has(.settings-layout) .footer {
 .settings-card {
   background: var(--bg-primary);
   border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
   box-shadow: 0 1px 2px var(--shadow);
-  max-width: 650px; /* Limite la largeur pour éviter espace vide */
   width: 100%;
 }
 
