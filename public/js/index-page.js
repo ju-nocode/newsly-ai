@@ -529,7 +529,13 @@ if (signupStep2Form) {
                 if (loader) {
                     const loaderTitle = loader.querySelector('h3');
                     const loaderSubtitle = loader.querySelector('p');
-                    if (loaderTitle) loaderTitle.textContent = '⏳ En attente de confirmation...';
+                    if (loaderTitle) {
+                        loaderTitle.innerHTML = '<span style="font-size: 1.5rem;">⏳</span> En attente de confirmation';
+                        loaderTitle.style.display = 'flex';
+                        loaderTitle.style.alignItems = 'center';
+                        loaderTitle.style.gap = '0.5rem';
+                        loaderTitle.style.justifyContent = 'center';
+                    }
                     if (loaderSubtitle) loaderSubtitle.textContent = 'Cliquez sur le lien dans votre email';
                 }
 

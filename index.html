@@ -17,7 +17,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo">
-                <img src="https://img.icons8.com/ios-filled/50/000000/news.png" alt="News" class="logo-icon-img">
+                <span class="logo-icon" style="font-size: 1.75rem;">📰</span>
                 <span class="logo-text">Newsly AI</span>
             </a>
 
@@ -33,12 +33,12 @@
                 <div class="burger-dropdown" id="burgerMenuIndex">
                     <!-- Auth Buttons -->
                     <button class="burger-link" id="openLoginBtn">
-                        <img src="https://img.icons8.com/ios-filled/50/000000/login-rounded-right.png" alt="Login" class="burger-icon">
+                        <span style="font-size: 1.5rem;">🔐</span>
                         <span data-i18n="auth.login">Connexion</span>
                     </button>
 
                     <button class="burger-link" id="openSignupBtn">
-                        <img src="https://img.icons8.com/ios-filled/50/000000/add-user-male.png" alt="Signup" class="burger-icon">
+                        <span style="font-size: 1.5rem;">✨</span>
                         <span data-i18n="auth.signup">Créer un compte</span>
                     </button>
 
@@ -47,7 +47,7 @@
                     <!-- Language Toggle avec Switch -->
                     <div class="burger-item">
                         <div class="burger-item-label">
-                            <img src="https://img.icons8.com/ios-filled/50/000000/globe.png" alt="Language" class="burger-icon">
+                            <span style="font-size: 1.5rem;">🌍</span>
                             <span id="langLabel">Français / English</span>
                         </div>
                         <label class="toggle-switch">
@@ -78,7 +78,7 @@
             <h2 class="section-title">Pourquoi choisir Newsly AI ?</h2>
             <div class="features-grid">
                 <div class="feature-card">
-                    <img src="https://img.icons8.com/ios-filled/100/000000/bot.png" alt="AI" class="feature-icon">
+                    <div class="feature-icon" style="font-size: 3.5rem;">🤖</div>
                     <h3 class="feature-title">Filtrage Intelligent par IA</h3>
                     <p class="feature-description">
                         Notre IA analyse et filtre les actualités pour ne vous présenter que l'essentiel,
@@ -87,7 +87,7 @@
                 </div>
 
                 <div class="feature-card">
-                    <img src="https://img.icons8.com/ios-filled/100/000000/target.png" alt="Target" class="feature-icon">
+                    <div class="feature-icon" style="font-size: 3.5rem;">🎯</div>
                     <h3 class="feature-title">Personnalisation Avancée</h3>
                     <p class="feature-description">
                         Choisissez vos catégories favorites : technologie, business, science, sports et bien plus.
@@ -95,7 +95,7 @@
                 </div>
 
                 <div class="feature-card">
-                    <img src="https://img.icons8.com/ios-filled/100/000000/lightning-bolt.png" alt="Fast" class="feature-icon">
+                    <div class="feature-icon" style="font-size: 3.5rem;">⚡</div>
                     <h3 class="feature-title">Mises à jour en Temps Réel</h3>
                     <p class="feature-description">
                         Restez toujours à jour avec les dernières actualités rafraîchies en temps réel.
@@ -103,7 +103,7 @@
                 </div>
 
                 <div class="feature-card">
-                    <img src="https://img.icons8.com/ios-filled/100/000000/bookmark-ribbon.png" alt="Bookmark" class="feature-icon">
+                    <div class="feature-icon" style="font-size: 3.5rem;">📌</div>
                     <h3 class="feature-title">Sauvegardez vos Favoris</h3>
                     <p class="feature-description">
                         Gardez une trace des articles importants et accédez-y à tout moment.
@@ -111,7 +111,7 @@
                 </div>
 
                 <div class="feature-card">
-                    <img src="https://img.icons8.com/ios-filled/100/000000/globe.png" alt="Globe" class="feature-icon">
+                    <div class="feature-icon" style="font-size: 3.5rem;">🌍</div>
                     <h3 class="feature-title">Sources Multiples</h3>
                     <p class="feature-description">
                         Accédez à des milliers de sources d'information du monde entier, toutes au même endroit.
@@ -119,7 +119,7 @@
                 </div>
 
                 <div class="feature-card">
-                    <img src="https://img.icons8.com/ios-filled/100/000000/lock.png" alt="Security" class="feature-icon">
+                    <div class="feature-icon" style="font-size: 3.5rem;">🔒</div>
                     <h3 class="feature-title">100% Sécurisé</h3>
                     <p class="feature-description">
                         Vos données sont protégées avec les dernières technologies de sécurité.
@@ -369,14 +369,15 @@
                     <!-- LOADER - Chargement -->
                     <div class="signup-loader" id="signupLoader">
                         <div class="spinner"></div>
-                        <h3 style="color: var(--text-primary); margin-bottom: 0.5rem;">Création de votre compte...</h3>
-                        <p style="color: var(--text-secondary);">Veuillez patienter</p>
-                        <div id="emailSentNotification" style="display: none; margin-top: 1.5rem; padding: 1rem; background: var(--success-light, #d1fae5); border-radius: 8px; border-left: 4px solid var(--success);">
-                            <p style="margin: 0; color: var(--success); font-weight: 500;">
-                                ✉️ Email de confirmation envoyé !
+                        <h3 style="color: var(--text-primary); margin-bottom: 0.5rem; font-size: 1.25rem; font-weight: 600;">Création de votre compte...</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem;">Veuillez patienter</p>
+                        <div id="emailSentNotification" style="display: none; margin-top: 1.5rem; padding: 1.25rem; background: #ecfdf5; border-radius: 12px; border: 2px solid #10b981; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);">
+                            <p style="margin: 0; color: #047857; font-weight: 600; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="font-size: 1.5rem;">📧</span>
+                                Email de confirmation envoyé
                             </p>
-                            <p style="margin: 0.5rem 0 0 0; color: var(--text-secondary); font-size: 0.9rem;">
-                                Vérifiez votre boîte mail et cliquez sur le lien pour activer votre compte.
+                            <p style="margin: 0.75rem 0 0 0; color: #065f46; font-size: 0.9rem; line-height: 1.5;">
+                                Consultez votre boîte mail et cliquez sur le lien pour activer votre compte.
                             </p>
                         </div>
                     </div>
