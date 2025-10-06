@@ -1515,12 +1515,15 @@ body:has(.settings-layout) .footer {
   transform: translateY(-10px);
   transition: all 0.3s ease;
   margin: 0.5rem 1rem;
+  max-height: calc(100vh - var(--navbar-height) - 2rem);
+  overflow-y: auto;
 }
 
 .burger-dropdown.show {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
+  display: block;
 }
 
 .burger-user-info {
@@ -2389,6 +2392,7 @@ body:has(.settings-layout) .footer {
   }
 
   .burger-dropdown {
+    top: calc(var(--navbar-height) + env(safe-area-inset-top, 0px));
     min-width: 260px;
   }
 
@@ -2451,6 +2455,7 @@ body:has(.settings-layout) .footer {
   }
 
   .burger-dropdown {
+    top: calc(var(--navbar-height) + env(safe-area-inset-top, 0px));
     left: 0.5rem;
     right: 0.5rem;
     margin: 0.5rem;
