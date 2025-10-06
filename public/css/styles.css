@@ -16,12 +16,12 @@ html {
 
 :root {
   /* Light Mode - Modern & Professional */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --bg-tertiary: #edeff1;
+  --bg-primary: #0f0f0f;
+  --bg-secondary: #0b0b0b;
+  --bg-tertiary: #1f1f1f;
   --bg-sidebar: #1c1c1c;
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
+  --text-primary: #ffffff;
+  --text-secondary: #ffffff;
   --text-muted: #64748b;
   --text-sidebar: #e5e7eb;
   --border: #c4c4c4;
