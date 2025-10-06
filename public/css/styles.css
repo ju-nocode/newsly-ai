@@ -17,16 +17,16 @@ html {
 :root {
   /* Light Mode - Modern & Professional */
   --bg-primary: #ffffff;
-  --bg-secondary: #ffffff;
-  --bg-tertiary: #ffffff;
-  --bg-sidebar: #ffffff;
-  --text-primary: #000000;
-  --text-secondary: #ffffff;
-  --text-muted: #2e3134;
-  --text-sidebar: #3e424a;
-  --border: #4c4444;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #edeff1;
+  --bg-sidebar: #1c1c1c;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --text-sidebar: #e5e7eb;
+  --border: #c4c4c4;
   --shadow: rgba(0, 0, 0, 0.04);
-  --shadow-lg: rgba(0, 0, 0, 0.1); */
+  --shadow-lg: rgba(0, 0, 0, 0.1);
 
   /* Accent - Modern Blue */
   --primary: #000000;
