@@ -90,6 +90,13 @@ const showEmailConfirmedModal = () => {
         document.getElementById('loginModal').classList.add('show');
         stopEmailConfirmationPolling();
     });
+
+    // Auto-ouvrir la modal de login après 3 secondes
+    setTimeout(() => {
+        document.getElementById('signupModal').classList.remove('show');
+        document.getElementById('loginModal').classList.add('show');
+        stopEmailConfirmationPolling();
+    }, 3000);
 };
 
 // Si l'utilisateur est déjà connecté, rediriger vers le dashboard
