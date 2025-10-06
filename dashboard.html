@@ -42,9 +42,6 @@
                         <span>☁️</span>
                     </div>
                 </div>
-
-                <!-- User Role Badge -->
-                <span class="user-role-badge" id="navUserRole">utilisateur</span>
             </div>
 
             <div class="nav-links">
@@ -60,7 +57,7 @@
                     <!-- User Info -->
                     <div class="burger-user-info">
                         <img id="burgerAvatarImage" class="burger-user-avatar" src="https://ui-avatars.com/api/?name=User&background=3ecf8e&color=fff&size=72" alt="Avatar">
-                        <span id="userNameDisplay" class="burger-user-name">Yo! User</span>
+                        <span id="userNameDisplay" class="burger-user-name">User: User</span>
                     </div>
 
                     <div class="burger-divider"></div>
@@ -283,7 +280,7 @@
                 const userRole = result.profile.role || 'user';
 
                 // Burger menu display
-                document.getElementById('userNameDisplay').textContent = `Yo! ${escapeHtml(userName)}`;
+                document.getElementById('userNameDisplay').textContent = `User: ${escapeHtml(userName)}`;
 
                 // Navbar role badge
                 const navUserRole = document.getElementById('navUserRole');

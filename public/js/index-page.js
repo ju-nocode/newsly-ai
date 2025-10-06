@@ -667,7 +667,7 @@ async function updateBurgerMenuUserInfo() {
         burgerUserInfo.style.display = 'flex';
         burgerAuthButtons.style.display = 'none';
         dashboardLink.style.display = 'flex';
-        userName.textContent = `Yo! ${user.full_name || user.username || 'User'}`;
+        userName.textContent = `User: ${user.full_name || user.username || 'User'}`;
         avatarImg.src = user.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.full_name || user.username || 'User')}&background=3ecf8e&color=fff&size=72`;
     } else {
         // User not logged in - show auth buttons

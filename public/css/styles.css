@@ -207,13 +207,8 @@ textarea,
 
 .navbar.dashboard-nav {
   left: 0;
-  width: calc(100% - var(--sidebar-width));
-  margin-left: var(--sidebar-width);
-}
-
-body:has(.settings-layout) .navbar.dashboard-nav {
-  width: calc(100% - var(--settings-sidebar-width));
-  margin-left: var(--settings-sidebar-width);
+  width: 100%;
+  margin-left: 0;
 }
 
 .nav-container {
@@ -1474,6 +1469,7 @@ body:has(.settings-layout) .footer {
   margin: 0.5rem 1rem;
   max-height: calc(100vh - var(--navbar-height) - 2rem);
   overflow-y: auto;
+  pointer-events: auto;
 }
 
 .burger-dropdown.show {
@@ -1632,6 +1628,7 @@ body:has(.settings-layout) .footer {
   left: 0;
   height: calc(100vh - var(--navbar-height));
   overflow-y: auto;
+  z-index: 100;
 }
 
 .settings-nav-menu {
@@ -2295,11 +2292,6 @@ body:has(.settings-layout) .footer {
     pointer-events: none; /* Events passent au bouton parent */
   }
 
-  .navbar.dashboard-nav {
-    left: 0;
-    width: 100%;
-    margin-left: 0;
-  }
 
   .dashboard-container {
     margin-left: 0;
