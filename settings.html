@@ -480,18 +480,36 @@
             <!-- Users Management Section (Admin only) -->
             <section id="section-users" class="settings-section">
                 <h2 class="settings-section-title" data-i18n="settings.users">Gestion des utilisateurs</h2>
-                <p class="settings-section-desc" data-i18n="settings.manageUsers">Gérez les utilisateurs et leurs rôles</p>
+                <p class="settings-section-desc" data-i18n="settings.manageUsers">Gérez les utilisateurs et leurs comptes</p>
 
-                <div class="settings-card">
-                    <div style="margin-bottom: 1rem;">
-                        <button id="migrateProfilesBtn" class="btn-secondary">
-                            🔄 Migrer les profils (user_metadata → profiles)
-                        </button>
-                        <p class="form-hint">Synchronise les données de user_metadata vers la table profiles</p>
+                <!-- Stats Cards -->
+                <div class="admin-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="totalUsers">-</div>
+                            <div class="stat-label">Utilisateurs</div>
+                        </div>
                     </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">👑</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="totalAdmins">-</div>
+                            <div class="stat-label">Administrateurs</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📅</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="recentUsers">-</div>
+                            <div class="stat-label">Cette semaine</div>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- Users Table -->
+                <div class="settings-card" style="margin-top: 1.5rem;">
                     <div id="usersTableContainer">
-                        <!-- Users table will be loaded here -->
                         <p style="text-align: center; color: var(--text-muted);" data-i18n="settings.loadingUsers">Chargement des utilisateurs...</p>
                     </div>
                 </div>

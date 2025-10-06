@@ -4,7 +4,7 @@ export default async function handler(req, res) {
     // CORS headers
     res.setHeader('Access-Control-Allow-Credentials', true);
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, DELETE, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
     if (req.method === 'OPTIONS') {
@@ -67,7 +67,60 @@ export default async function handler(req, res) {
                 role: u.is_admin ? 'admin' : 'user'
             }));
 
-            return res.status(200).json({ users: formattedUsers });
+            // Calculer les stats
+            const totalUsers = users.length;
+            const totalAdmins = users.filter(u => u.is_admin).length;
+            const oneWeekAgo = new Date();
+            oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+            const recentUsers = users.filter(u => new Date(u.created_at) > oneWeekAgo).length;
+
+            return res.status(200).json({
+                users: formattedUsers,
+                stats: {
+                    totalUsers,
+                    totalAdmins,
+                    recentUsers
+                }
+            });
+        }
+
+        // DELETE - Supprimer un utilisateur (admin only)
+        if (req.method === 'DELETE') {
+            const { userId } = req.query;
+
+            if (!userId) {
+                return res.status(400).json({ error: 'userId requis' });
+            }
+
+            // Vérifier qu'on ne supprime pas son propre compte
+            if (userId === user.id) {
+                return res.status(400).json({ error: 'Vous ne pouvez pas supprimer votre propre compte' });
+            }
+
+            try {
+                // Supprimer le profil
+                const { error: profileError } = await supabaseAdmin
+                    .from('profiles')
+                    .delete()
+                    .eq('id', userId);
+
+                if (profileError) {
+                    console.error('Profile delete error:', profileError);
+                }
+
+                // Supprimer l'utilisateur auth
+                const { error: authError } = await supabaseAdmin.auth.admin.deleteUser(userId);
+
+                if (authError) {
+                    console.error('Auth delete error:', authError);
+                    return res.status(500).json({ error: 'Erreur lors de la suppression du compte auth' });
+                }
+
+                return res.status(200).json({ message: 'Utilisateur supprimé avec succès' });
+            } catch (error) {
+                console.error('Delete user error:', error);
+                return res.status(500).json({ error: error.message });
+            }
         }
 
         return res.status(405).json({ error: 'Method not allowed' });
