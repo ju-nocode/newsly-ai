@@ -95,12 +95,12 @@
             }
 
             // Message à l'utilisateur
-            document.querySelector('.closing').textContent = 'Vous pouvez fermer cette fenêtre...';
+            document.querySelector('.closing').textContent = 'Fenêtre fermée automatiquement...';
 
-            // Fermer après 2 secondes
+            // Fermer immédiatement (500ms pour laisser le temps aux notifications)
             setTimeout(() => {
                 window.close();
-            }, 2000);
+            }, 500);
         } else {
             document.querySelector('h1').textContent = '❌ Lien invalide';
             document.querySelector('p').textContent = 'Le lien de confirmation est invalide ou a expiré.';
