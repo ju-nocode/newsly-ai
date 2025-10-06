@@ -4,60 +4,72 @@ import { defaultParticlesConfig } from './particles-config.js';
 import { countries } from './countries.js';
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-// Détection de confirmation email via polling API Supabase
+// Détection de confirmation email - Écoute localStorage + BroadcastChannel + Polling
 let emailConfirmationInterval = null;
-let confirmedUserId = null;
+let broadcastChannel = null;
 
-const checkEmailConfirmedViaAPI = async () => {
-    try {
-        // Importer createClient si pas déjà fait
-        const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+const checkEmailConfirmed = () => {
+    const confirmed = localStorage.getItem('emailJustConfirmed');
 
-        const supabase = createClient(
-            'https://mauulkejlnlubdzmhirq.supabase.co',
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1hdXVsa2VqbG5sdWJkem1oaXJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY5NTQwNzksImV4cCI6MjA2MjUzMDA3OX0.hC0jOBK3rKKj8Fq1P3ITjsZqtaPzzD7EYc7jPVb_Hvs'
-        );
+    if (confirmed === 'true') {
+        console.log('🎉 Email confirmé détecté via localStorage !');
 
-        // Vérifier si l'utilisateur a confirmé son email
-        const { data: { user } } = await supabase.auth.getUser();
+        // Nettoyer le flag
+        localStorage.removeItem('emailJustConfirmed');
+        localStorage.removeItem('emailJustConfirmedAt');
 
-        if (user && user.email_confirmed_at) {
-            console.log('🎉 Email confirmé détecté via API Supabase !', user.email_confirmed_at);
+        // Arrêter le polling
+        stopEmailConfirmationPolling();
 
-            // Arrêter le polling
-            stopEmailConfirmationPolling();
-
-            // Sauvegarder la session
-            const { data: session } = await supabase.auth.getSession();
-            if (session?.session) {
-                localStorage.setItem('session', JSON.stringify({
-                    user: session.session.user,
-                    access_token: session.session.access_token
-                }));
-            }
-
-            // Afficher le succès avec confettis
-            showEmailConfirmedModal();
-        }
-    } catch (error) {
-        console.warn('⚠️ Erreur lors de la vérification:', error);
+        // Afficher le succès avec confettis
+        showEmailConfirmedModal();
     }
 };
 
-const startEmailConfirmationPolling = (userId) => {
-    console.log('🔄 Démarrage du polling confirmation email (vérification toutes les 2s)...');
-    confirmedUserId = userId;
+const startEmailConfirmationPolling = () => {
+    console.log('🔄 Démarrage de l\'écoute de confirmation email...');
 
-    // Polling API toutes les 2 secondes
-    emailConfirmationInterval = setInterval(checkEmailConfirmedViaAPI, 2000);
+    // 1. BroadcastChannel (instantané)
+    try {
+        broadcastChannel = new BroadcastChannel('email_confirmation');
+        broadcastChannel.onmessage = (event) => {
+            console.log('📡 BroadcastChannel: Message reçu !', event.data);
+            if (event.data.type === 'CONFIRMED') {
+                console.log('🎉 Email confirmé via BroadcastChannel (instantané) !');
+                checkEmailConfirmed();
+            }
+        };
+        console.log('📻 BroadcastChannel activé');
+    } catch (e) {
+        console.warn('⚠️ BroadcastChannel non supporté');
+    }
+
+    // 2. Storage Event (détecte changements depuis autre onglet)
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'emailJustConfirmed' && e.newValue === 'true') {
+            console.log('📢 Email confirmé via Storage Event !');
+            checkEmailConfirmed();
+        }
+    });
+    console.log('👂 Storage listener activé');
+
+    // 3. Polling localStorage (backup, toutes les secondes)
+    emailConfirmationInterval = setInterval(() => {
+        checkEmailConfirmed();
+    }, 1000);
+    console.log('🔄 Polling localStorage activé (toutes les 1s)');
 };
 
 const stopEmailConfirmationPolling = () => {
     if (emailConfirmationInterval) {
         clearInterval(emailConfirmationInterval);
         emailConfirmationInterval = null;
-        console.log('⏹️ Polling arrêté');
     }
+    if (broadcastChannel) {
+        broadcastChannel.close();
+        broadcastChannel = null;
+    }
+    console.log('⏹️ Écoute arrêtée');
 };
 
 // Afficher la modal de confirmation email

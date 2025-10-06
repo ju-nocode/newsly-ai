@@ -74,100 +74,47 @@
         <p class="closing">Cette fenêtre va se fermer automatiquement...</p>
     </div>
 
-    <script type="module">
-        console.log('🚀 SCRIPT CALLBACK DÉMARRÉ !');
+    <script>
+        console.log('🚀 CALLBACK CHARGÉ - Script inline démarré');
 
-        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+        // Récupérer le hash de l'URL
+        const hash = window.location.hash.substring(1);
+        const params = new URLSearchParams(hash);
+        const accessToken = params.get('access_token');
 
-        console.log('📦 Supabase importé avec succès');
+        console.log('🔑 Access token présent:', !!accessToken);
 
-        const supabase = createClient(
-            'https://mauulkejlnlubdzmhirq.supabase.co',
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1hdXVsa2VqbG5sdWJkem1oaXJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY5NTQwNzksImV4cCI6MjA2MjUzMDA3OX0.hC0jOBK3rKKj8Fq1P3ITjsZqtaPzzD7EYc7jPVb_Hvs'
-        );
+        if (accessToken) {
+            console.log('✅ Email confirmé ! Notification de l\'onglet d\'inscription...');
 
-        console.log('✅ Client Supabase créé');
+            // Marquer dans localStorage immédiatement
+            localStorage.setItem('emailJustConfirmed', 'true');
+            localStorage.setItem('emailJustConfirmedAt', new Date().toISOString());
 
-        async function handleEmailConfirmation() {
-            console.log('🔍 Callback chargé, hash:', window.location.hash.substring(0, 50) + '...');
+            console.log('💾 LocalStorage mis à jour');
 
+            // BroadcastChannel pour notifier instantanément
             try {
-                const hashParams = new URLSearchParams(window.location.hash.substring(1));
-                const access_token = hashParams.get('access_token');
-                const refresh_token = hashParams.get('refresh_token');
-
-                console.log('🔑 Tokens récupérés:', {
-                    hasAccessToken: !!access_token,
-                    hasRefreshToken: !!refresh_token
-                });
-
-                if (access_token) {
-                    console.log('📡 Appel setSession avec Supabase...');
-
-                    // Confirmer l'email avec Supabase
-                    const { data, error } = await supabase.auth.setSession({
-                        access_token,
-                        refresh_token
-                    });
-
-                    console.log('📋 Résultat setSession:', {
-                        hasData: !!data,
-                        hasSession: !!data?.session,
-                        hasError: !!error,
-                        errorMessage: error?.message
-                    });
-
-                    if (!error && data.session) {
-                        console.log('✅ Email confirmé avec succès, userId:', data.user.id);
-
-                        // Marquer dans localStorage que l'email est confirmé
-                        localStorage.setItem('emailJustConfirmed', 'true');
-                        localStorage.setItem('confirmedUserId', data.user.id);
-
-                        console.log('💾 LocalStorage mis à jour:', {
-                            emailJustConfirmed: localStorage.getItem('emailJustConfirmed'),
-                            confirmedUserId: localStorage.getItem('confirmedUserId')
-                        });
-
-                        // Utiliser BroadcastChannel pour notifier l'autre onglet immédiatement
-                        try {
-                            const channel = new BroadcastChannel('email_confirmation');
-                            channel.postMessage({
-                                type: 'EMAIL_CONFIRMED',
-                                userId: data.user.id
-                            });
-                            console.log('📡 BroadcastChannel: Message envoyé à l\'autre onglet');
-                            channel.close();
-                        } catch (e) {
-                            console.warn('⚠️ BroadcastChannel non supporté:', e);
-                        }
-                    } else {
-                        console.error('❌ Erreur lors de setSession:', error);
-                    }
-
-                    // Attendre 3 secondes pour laisser le temps au storage event de se propager
-                    console.log('⏱️ Fermeture dans 3 secondes (pour propagation localStorage)...');
-                    setTimeout(() => {
-                        console.log('👋 Tentative de fermeture de l\'onglet');
-                        window.close();
-                        // Si window.close() ne marche pas (dépend du navigateur)
-                        // Rediriger vers index.html
-                        setTimeout(() => {
-                            if (!window.closed) {
-                                console.log('⚠️ window.close() a échoué, redirection vers index.html');
-                                window.location.href = '../index.html';
-                            }
-                        }, 200);
-                    }, 3000);
-                } else {
-                    console.error('❌ Pas de access_token dans l\'URL');
-                }
-            } catch (error) {
-                console.error('❌ Erreur confirmation:', error);
+                const channel = new BroadcastChannel('email_confirmation');
+                channel.postMessage({ type: 'CONFIRMED' });
+                console.log('📡 BroadcastChannel: Message envoyé');
+                channel.close();
+            } catch (e) {
+                console.log('⚠️ BroadcastChannel non supporté');
             }
-        }
 
-        handleEmailConfirmation();
+            // Message à l'utilisateur
+            document.querySelector('.closing').textContent = 'Vous pouvez fermer cette fenêtre...';
+
+            // Fermer après 2 secondes
+            setTimeout(() => {
+                window.close();
+            }, 2000);
+        } else {
+            console.error('❌ Pas de token dans l\'URL');
+            document.querySelector('h1').textContent = '❌ Lien invalide';
+            document.querySelector('p').textContent = 'Le lien de confirmation est invalide ou a expiré.';
+        }
     </script>
 </body>
 </html>
