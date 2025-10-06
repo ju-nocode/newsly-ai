@@ -101,44 +101,18 @@ export default async function handler(req, res) {
                 updated_at: new Date().toISOString()
             };
 
-            // Vérifier si le profil existe déjà (créé par trigger)
-            const { data: existingProfile } = await supabaseAdmin
+            // Upsert dans profiles (insert ou update si existe déjà)
+            const { error: profileError } = await supabaseAdmin
                 .from('profiles')
-                .select('id')
-                .eq('id', data.user.id)
-                .maybeSingle();
+                .upsert(profileData, {
+                    onConflict: 'id'
+                });
 
-            if (existingProfile) {
-                // Le profil existe déjà, on le met à jour
-                const { error: updateError } = await supabaseAdmin
-                    .from('profiles')
-                    .update({
-                        username: profileData.username,
-                        full_name: profileData.full_name,
-                        phone: profileData.phone,
-                        country: profileData.country,
-                        city: profileData.city,
-                        updated_at: profileData.updated_at
-                    })
-                    .eq('id', data.user.id);
-
-                if (updateError) {
-                    console.error('Profile update error:', updateError.message);
-                }
-            } else {
-                // Upsert dans profiles (insert ou update si existe déjà)
-                const { error: profileError } = await supabaseAdmin
-                    .from('profiles')
-                    .upsert(profileData, {
-                        onConflict: 'id'
-                    });
-
-                if (profileError) {
-                    console.error('Profile creation error:', profileError.message);
-                    return res.status(400).json({
-                        error: 'Impossible de créer le compte. Veuillez réessayer plus tard.'
-                    });
-                }
+            if (profileError) {
+                console.error('Profile creation error:', profileError.message);
+                return res.status(400).json({
+                    error: 'Impossible de créer le compte. Veuillez réessayer plus tard.'
+                });
             }
         }
 

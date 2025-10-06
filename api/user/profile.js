@@ -51,14 +51,6 @@ export default async function handler(req, res) {
                 console.error('Profile fetch error:', profileError);
             }
 
-            console.log('📋 Profile récupéré de la DB:', {
-                id: user.id,
-                email: user.email,
-                country: profile?.country,
-                city: profile?.city,
-                phone: profile?.phone
-            });
-
             return res.status(200).json({
                 id: user.id,
                 email: user.email,

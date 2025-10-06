@@ -75,32 +75,23 @@
     </div>
 
     <script>
-        console.log('🚀 CALLBACK CHARGÉ - Script inline démarré');
-
         // Récupérer le hash de l'URL
         const hash = window.location.hash.substring(1);
         const params = new URLSearchParams(hash);
         const accessToken = params.get('access_token');
 
-        console.log('🔑 Access token présent:', !!accessToken);
-
         if (accessToken) {
-            console.log('✅ Email confirmé ! Notification de l\'onglet d\'inscription...');
-
             // Marquer dans localStorage immédiatement
             localStorage.setItem('emailJustConfirmed', 'true');
             localStorage.setItem('emailJustConfirmedAt', new Date().toISOString());
-
-            console.log('💾 LocalStorage mis à jour');
 
             // BroadcastChannel pour notifier instantanément
             try {
                 const channel = new BroadcastChannel('email_confirmation');
                 channel.postMessage({ type: 'CONFIRMED' });
-                console.log('📡 BroadcastChannel: Message envoyé');
                 channel.close();
             } catch (e) {
-                console.log('⚠️ BroadcastChannel non supporté');
+                // BroadcastChannel non supporté
             }
 
             // Message à l'utilisateur
@@ -111,7 +102,6 @@
                 window.close();
             }, 2000);
         } else {
-            console.error('❌ Pas de token dans l\'URL');
             document.querySelector('h1').textContent = '❌ Lien invalide';
             document.querySelector('p').textContent = 'Le lien de confirmation est invalide ou a expiré.';
         }

@@ -12,8 +12,6 @@ const checkEmailConfirmed = () => {
     const confirmed = localStorage.getItem('emailJustConfirmed');
 
     if (confirmed === 'true') {
-        console.log('🎉 Email confirmé détecté via localStorage !');
-
         // Nettoyer le flag
         localStorage.removeItem('emailJustConfirmed');
         localStorage.removeItem('emailJustConfirmedAt');
@@ -27,37 +25,29 @@ const checkEmailConfirmed = () => {
 };
 
 const startEmailConfirmationPolling = () => {
-    console.log('🔄 Démarrage de l\'écoute de confirmation email...');
-
     // 1. BroadcastChannel (instantané)
     try {
         broadcastChannel = new BroadcastChannel('email_confirmation');
         broadcastChannel.onmessage = (event) => {
-            console.log('📡 BroadcastChannel: Message reçu !', event.data);
             if (event.data.type === 'CONFIRMED') {
-                console.log('🎉 Email confirmé via BroadcastChannel (instantané) !');
                 checkEmailConfirmed();
             }
         };
-        console.log('📻 BroadcastChannel activé');
     } catch (e) {
-        console.warn('⚠️ BroadcastChannel non supporté');
+        // BroadcastChannel non supporté
     }
 
     // 2. Storage Event (détecte changements depuis autre onglet)
     window.addEventListener('storage', (e) => {
         if (e.key === 'emailJustConfirmed' && e.newValue === 'true') {
-            console.log('📢 Email confirmé via Storage Event !');
             checkEmailConfirmed();
         }
     });
-    console.log('👂 Storage listener activé');
 
     // 3. Polling localStorage (backup, toutes les secondes)
     emailConfirmationInterval = setInterval(() => {
         checkEmailConfirmed();
     }, 1000);
-    console.log('🔄 Polling localStorage activé (toutes les 1s)');
 };
 
 const stopEmailConfirmationPolling = () => {
@@ -69,7 +59,6 @@ const stopEmailConfirmationPolling = () => {
         broadcastChannel.close();
         broadcastChannel = null;
     }
-    console.log('⏹️ Écoute arrêtée');
 };
 
 // Afficher la modal de confirmation email
@@ -99,7 +88,7 @@ const showEmailConfirmedModal = () => {
     document.getElementById('goToLoginBtn').addEventListener('click', () => {
         document.getElementById('signupModal').classList.remove('show');
         document.getElementById('loginModal').classList.add('show');
-        stopEmailConfirmationPolling(); // Arrêter le polling
+        stopEmailConfirmationPolling();
     });
 };
 
@@ -519,10 +508,7 @@ if (signupStep2Form) {
             if (result.success) {
                 // SUCCÈS: Garder le loader actif et démarrer le polling
                 // Le loader reste visible en attendant la confirmation email
-                console.log('📧 Compte créé, userId:', result.user?.id);
-                console.log('📧 En attente de confirmation email...');
                 startEmailConfirmationPolling(result.user?.id);
-                // Ne PAS cacher le loader - il reste visible
             } else {
                 // ERREUR: Cacher le loader et afficher l'erreur
                 document.getElementById('signupLoader').classList.remove('active');
