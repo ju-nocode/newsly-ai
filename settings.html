@@ -1247,43 +1247,6 @@
             }
         };
 
-        // Migration des profils
-        const migrateProfiles = async () => {
-            if (!confirm('⚠️ Migrer tous les profils de user_metadata vers la table profiles ?\n\nCela va synchroniser les données pour tous les utilisateurs.')) {
-                return;
-            }
-
-            const btn = document.getElementById('migrateProfilesBtn');
-            btn.disabled = true;
-            btn.textContent = '🔄 Migration en cours...';
-
-            try {
-                const response = await fetch('https://newsly-ai.vercel.app/api/admin/migrate-profiles', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-                    }
-                });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(data.error || 'Erreur lors de la migration');
-                }
-
-                showSuccess(`✅ Migration terminée: ${data.stats.migrated}/${data.stats.total} profils migrés`);
-
-                // Recharger la liste des utilisateurs
-                loadUsersList();
-            } catch (error) {
-                showError('Erreur: ' + error.message);
-            } finally {
-                btn.disabled = false;
-                btn.textContent = '🔄 Migrer les profils (user_metadata → profiles)';
-            }
-        };
-
         // Load users list (admin only)
         const loadUsersList = async () => {
             const usersContainer = document.getElementById('usersTableContainer');
