@@ -2083,6 +2083,19 @@ body:has(.settings-layout) .footer {
   width: 100%;
 }
 
+/* Settings Grid Layouts */
+.settings-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .settings-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
 .settings-card .form-input:not([type="color"]):not([type="range"]):not([type="checkbox"]) {
   max-width: 100%;
   width: 100%;

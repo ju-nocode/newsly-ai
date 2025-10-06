@@ -153,10 +153,10 @@
                 <h2 class="settings-section-title" data-i18n="settings.profile">Profil</h2>
                 <p class="settings-section-desc" data-i18n="settings.manageProfile">Gérez vos informations personnelles</p>
 
+                <!-- Avatar Card -->
                 <div class="settings-card">
-                    <!-- Avatar Section (Optionnel) -->
                     <div class="form-group">
-                        <label class="form-label" data-i18n="settings.avatar">Photo de profil (optionnel)</label>
+                        <label class="form-label" data-i18n="settings.avatar">Photo de profil</label>
                         <div class="avatar-upload-container">
                             <div class="avatar-preview" id="avatarPreview">
                                 <img id="avatarImage" src="https://ui-avatars.com/api/?name=User&background=3b82f6&color=fff&size=200" alt="Avatar">
@@ -167,7 +167,7 @@
                             <input type="file" id="avatarInput" accept="image/*" style="display: none;">
                             <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
                                 <button type="button" id="uploadAvatarBtn" class="btn-secondary" style="flex: 1;">
-                                    📷 Changer la photo
+                                    📷 Changer
                                 </button>
                                 <button type="button" id="removeAvatarBtn" class="btn-danger" style="flex: 1;">
                                     🗑️ Supprimer
@@ -176,67 +176,71 @@
                             <p class="form-hint">Max 2MB - JPG, PNG ou GIF</p>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Email (Read-only) -->
-                    <div class="form-group">
-                        <label for="emailDisplay" class="form-label" data-i18n="settings.email">Email</label>
-                        <input
-                            type="email"
-                            id="emailDisplay"
-                            class="form-input"
-                            placeholder="exemple@email.com"
-                            disabled
-                            readonly
-                        >
-                        <p class="form-hint">L'email ne peut pas être modifié</p>
-                    </div>
+                <!-- Profile Info Grid -->
+                <div class="settings-card">
+                    <div class="settings-grid-2">
+                        <!-- Email (Read-only) -->
+                        <div class="form-group">
+                            <label for="emailDisplay" class="form-label" data-i18n="settings.email">Email</label>
+                            <input
+                                type="email"
+                                id="emailDisplay"
+                                class="form-input"
+                                placeholder="exemple@email.com"
+                                disabled
+                                readonly
+                            >
+                            <p class="form-hint">L'email ne peut pas être modifié</p>
+                        </div>
 
-                    <!-- Username (Obligatoire) -->
-                    <div class="form-group">
-                        <label for="usernameInput" class="form-label">
-                            <span data-i18n="settings.username">Nom d'utilisateur</span>
-                            <span style="color: var(--error); margin-left: 0.25rem;">*</span>
-                        </label>
-                        <input
-                            type="text"
-                            id="usernameInput"
-                            class="form-input"
-                            placeholder="@MonNomUtilisateur"
-                            required
-                        >
-                        <p class="form-hint">Utilisé pour vous identifier sur la plateforme (ex: @julien33)</p>
-                    </div>
+                        <!-- Username (Obligatoire) -->
+                        <div class="form-group">
+                            <label for="usernameInput" class="form-label">
+                                <span data-i18n="settings.username">Nom d'utilisateur</span>
+                                <span style="color: var(--error); margin-left: 0.25rem;">*</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="usernameInput"
+                                class="form-input"
+                                placeholder="@MonNomUtilisateur"
+                                required
+                            >
+                            <p class="form-hint">Ex: @julien33</p>
+                        </div>
 
-                    <!-- Full Name (Obligatoire) -->
-                    <div class="form-group">
-                        <label for="fullNameInput" class="form-label">
-                            <span data-i18n="settings.fullName">Nom complet</span>
-                            <span style="color: var(--error); margin-left: 0.25rem;">*</span>
-                        </label>
-                        <input
-                            type="text"
-                            id="fullNameInput"
-                            class="form-input"
-                            placeholder="Julien RICHARD"
-                            required
-                        >
-                        <p class="form-hint">Votre nom et prénom réels</p>
-                    </div>
+                        <!-- Full Name (Obligatoire) -->
+                        <div class="form-group">
+                            <label for="fullNameInput" class="form-label">
+                                <span data-i18n="settings.fullName">Nom complet</span>
+                                <span style="color: var(--error); margin-left: 0.25rem;">*</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="fullNameInput"
+                                class="form-input"
+                                placeholder="Julien RICHARD"
+                                required
+                            >
+                            <p class="form-hint">Votre nom et prénom</p>
+                        </div>
 
-                    <!-- Country (Obligatoire) -->
-                    <div class="form-group">
-                        <label for="countrySelect" class="form-label">
-                            <span data-i18n="settings.country">Pays</span>
-                            <span style="color: var(--error); margin-left: 0.25rem;">*</span>
-                        </label>
-                        <select
-                            id="countrySelect"
-                            class="form-input"
-                            required
-                        >
-                            <option value="">-- Sélectionnez un pays --</option>
-                        </select>
-                    </div>
+                        <!-- Country (Obligatoire) -->
+                        <div class="form-group">
+                            <label for="countrySelect" class="form-label">
+                                <span data-i18n="settings.country">Pays</span>
+                                <span style="color: var(--error); margin-left: 0.25rem;">*</span>
+                            </label>
+                            <select
+                                id="countrySelect"
+                                class="form-input"
+                                required
+                            >
+                                <option value="">-- Sélectionnez un pays --</option>
+                            </select>
+                        </div>
 
                     <!-- City (Obligatoire) -->
                     <div class="form-group">
@@ -277,25 +281,11 @@
                                 style="flex: 1;"
                             >
                         </div>
-                        <p class="form-hint">Le navigateur mémorisera votre numéro</p>
                     </div>
-
-                    <!-- Bio (Optionnel) -->
-                    <div class="form-group">
-                        <label for="bioInput" class="form-label" data-i18n="settings.bio">Bio (optionnel)</label>
-                        <textarea
-                            id="bioInput"
-                            class="form-input"
-                            placeholder="Parlez-nous de vous..."
-                            data-i18n-placeholder="settings.bioPlaceholder"
-                            rows="3"
-                            maxlength="500"
-                        ></textarea>
-                        <p class="form-hint"><span id="bioCount">0</span>/500 caractères</p>
                     </div>
 
                     <button id="updateProfileBtn" class="btn-primary" data-i18n="settings.updateProfile">
-                        Mettre à jour le profil
+                        💾 Enregistrer
                     </button>
                 </div>
             </section>
@@ -403,75 +393,77 @@
                 <p class="settings-section-desc" data-i18n="settings.customizeParticles">Personnalisez l'effet de particules animées</p>
 
                 <div class="settings-card">
-                    <div class="form-group">
-                        <label for="particlesNumber" class="form-label" data-i18n="settings.particlesNumber">Nombre de particules</label>
-                        <input type="range" id="particlesNumber" class="form-range" min="10" max="100" value="100">
-                        <span id="particlesNumberValue" class="form-hint">100</span>
-                    </div>
+                    <div class="settings-grid-2">
+                        <div class="form-group">
+                            <label for="particlesNumber" class="form-label" data-i18n="settings.particlesNumber">Nombre de particules</label>
+                            <input type="range" id="particlesNumber" class="form-range" min="10" max="100" value="100">
+                            <span id="particlesNumberValue" class="form-hint">100</span>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="particlesColor" class="form-label" data-i18n="settings.particlesColor">Couleur des particules</label>
-                        <input type="color" id="particlesColor" class="form-input" value="#fffe7a">
-                    </div>
+                        <div class="form-group">
+                            <label for="particlesColor" class="form-label" data-i18n="settings.particlesColor">Couleur des particules</label>
+                            <input type="color" id="particlesColor" class="form-input" value="#fffe7a">
+                        </div>
 
-                    <div class="form-group">
-                        <label for="particlesSpeed" class="form-label" data-i18n="settings.particlesSpeed">Vitesse de déplacement</label>
-                        <input type="range" id="particlesSpeed" class="form-range" min="0" max="10" step="0.1" value="0.5">
-                        <span id="particlesSpeedValue" class="form-hint">0.5</span>
-                    </div>
+                        <div class="form-group">
+                            <label for="particlesSpeed" class="form-label" data-i18n="settings.particlesSpeed">Vitesse de déplacement</label>
+                            <input type="range" id="particlesSpeed" class="form-range" min="0" max="10" step="0.1" value="0.5">
+                            <span id="particlesSpeedValue" class="form-hint">0.5</span>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="particlesOpacity" class="form-label" data-i18n="settings.particlesOpacity">Opacité</label>
-                        <input type="range" id="particlesOpacity" class="form-range" min="0" max="1" step="0.01" value="0.28">
-                        <span id="particlesOpacityValue" class="form-hint">0.28</span>
-                    </div>
+                        <div class="form-group">
+                            <label for="particlesOpacity" class="form-label" data-i18n="settings.particlesOpacity">Opacité</label>
+                            <input type="range" id="particlesOpacity" class="form-range" min="0" max="1" step="0.01" value="0.28">
+                            <span id="particlesOpacityValue" class="form-hint">0.28</span>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="lineDistance" class="form-label" data-i18n="settings.lineDistance">Distance des lignes</label>
-                        <input type="range" id="lineDistance" class="form-range" min="0" max="150" value="60">
-                        <span id="lineDistanceValue" class="form-hint">60</span>
-                    </div>
+                        <div class="form-group">
+                            <label for="lineDistance" class="form-label" data-i18n="settings.lineDistance">Distance des lignes</label>
+                            <input type="range" id="lineDistance" class="form-range" min="0" max="150" value="60">
+                            <span id="lineDistanceValue" class="form-hint">60</span>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="lineColor" class="form-label" data-i18n="settings.lineColor">Couleur des lignes</label>
-                        <input type="color" id="lineColor" class="form-input" value="#7c9149">
-                    </div>
+                        <div class="form-group">
+                            <label for="lineColor" class="form-label" data-i18n="settings.lineColor">Couleur des lignes</label>
+                            <input type="color" id="lineColor" class="form-input" value="#7c9149">
+                        </div>
 
-                    <div class="form-group">
-                        <label for="lineOpacity" class="form-label" data-i18n="settings.lineOpacity">Opacité des lignes</label>
-                        <input type="range" id="lineOpacity" class="form-range" min="0" max="1" step="0.01" value="0.39">
-                        <span id="lineOpacityValue" class="form-hint">0.39</span>
-                    </div>
+                        <div class="form-group">
+                            <label for="lineOpacity" class="form-label" data-i18n="settings.lineOpacity">Opacité des lignes</label>
+                            <input type="range" id="lineOpacity" class="form-range" min="0" max="1" step="0.01" value="0.39">
+                            <span id="lineOpacityValue" class="form-hint">0.39</span>
+                        </div>
 
-                    <div class="form-group">
-                        <label class="form-label" data-i18n="settings.hoverInteraction">Interaction au survol</label>
-                        <div class="toggle-group">
-                            <label class="toggle-switch">
-                                <input type="checkbox" id="hoverEnabled" checked>
-                                <span class="toggle-slider"></span>
-                            </label>
-                            <span id="hoverEnabledText" class="form-hint" data-i18n="settings.enabled">Activé</span>
+                        <div class="form-group">
+                            <label class="form-label" data-i18n="settings.hoverInteraction">Interaction au survol</label>
+                            <div class="toggle-group">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="hoverEnabled" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span id="hoverEnabledText" class="form-hint" data-i18n="settings.enabled">Activé</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="repulseDistance" class="form-label" data-i18n="settings.repulseDistance">Distance de répulsion</label>
+                            <input type="range" id="repulseDistance" class="form-range" min="50" max="300" value="100">
+                            <span id="repulseDistanceValue" class="form-hint">100</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="particlesBlur" class="form-label" data-i18n="settings.particlesBlur">Flou des particules</label>
+                            <input type="range" id="particlesBlur" class="form-range" min="0" max="20" step="0.5" value="0">
+                            <span id="particlesBlurValue" class="form-hint">0 px</span>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="repulseDistance" class="form-label" data-i18n="settings.repulseDistance">Distance de répulsion au survol</label>
-                        <input type="range" id="repulseDistance" class="form-range" min="50" max="300" value="100">
-                        <span id="repulseDistanceValue" class="form-hint">100</span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="particlesBlur" class="form-label" data-i18n="settings.particlesBlur">Flou des particules</label>
-                        <input type="range" id="particlesBlur" class="form-range" min="0" max="20" step="0.5" value="0">
-                        <span id="particlesBlurValue" class="form-hint">0 px</span>
-                    </div>
-
-                    <div class="button-group">
+                    <div class="button-group" style="margin-top: 1rem;">
                         <button id="saveParticlesBtn" class="btn-primary" data-i18n="settings.saveSettings">
-                            Enregistrer les paramètres
+                            💾 Enregistrer
                         </button>
                         <button id="resetParticlesBtn" class="btn-secondary" data-i18n="settings.default">
-                            Défaut
+                            🔄 Défaut
                         </button>
                     </div>
                 </div>
