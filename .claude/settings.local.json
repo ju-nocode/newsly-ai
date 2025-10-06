@@ -21,7 +21,8 @@
       "Bash(python:*)",
       "Read(//c/Users/Reechar D/Desktop/**)",
       "Bash(find:*)",
-      "Read(//c/Users/Reechar D/Downloads/**)"
+      "Read(//c/Users/Reechar D/Downloads/**)",
+      "Bash(git fetch:*)"
     ],
     "deny": [],
     "ask": []

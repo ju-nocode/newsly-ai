@@ -4,34 +4,58 @@ import { defaultParticlesConfig } from './particles-config.js';
 import { countries } from './countries.js';
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-// Polling pour détecter la confirmation email
+// Détection de confirmation email (polling + storage event)
 let emailConfirmationInterval = null;
+let storageListener = null;
+
+const checkEmailConfirmed = () => {
+    const emailConfirmed = localStorage.getItem('emailJustConfirmed');
+
+    if (emailConfirmed === 'true') {
+        console.log('🎉 Email confirmé détecté !');
+
+        // Arrêter le polling et le listener
+        stopEmailConfirmationPolling();
+
+        // Nettoyer le flag
+        localStorage.removeItem('emailJustConfirmed');
+
+        // Afficher le succès avec confettis
+        showEmailConfirmedModal();
+    }
+};
 
 const startEmailConfirmationPolling = () => {
     console.log('🔄 Démarrage du polling de confirmation email...');
 
-    emailConfirmationInterval = setInterval(() => {
-        const emailConfirmed = localStorage.getItem('emailJustConfirmed');
+    // 1. Polling (vérifie toutes les secondes dans le même onglet)
+    emailConfirmationInterval = setInterval(checkEmailConfirmed, 1000);
 
-        if (emailConfirmed === 'true') {
-            console.log('🎉 Email confirmé détecté !');
+    // 2. Storage Event Listener (détecte les changements depuis d'autres onglets)
+    storageListener = (e) => {
+        console.log('📢 Storage event détecté:', e.key, e.newValue);
 
-            // Arrêter le polling
-            clearInterval(emailConfirmationInterval);
-
-            // Nettoyer le flag
-            localStorage.removeItem('emailJustConfirmed');
-
-            // Afficher le succès avec confettis
-            showEmailConfirmedModal();
+        if (e.key === 'emailJustConfirmed' && e.newValue === 'true') {
+            console.log('🎉 Email confirmé détecté via storage event (autre onglet) !');
+            checkEmailConfirmed();
         }
-    }, 1000); // Vérifier toutes les secondes
+    };
+
+    window.addEventListener('storage', storageListener);
+    console.log('👂 Storage listener ajouté pour détecter les changements inter-onglets');
 };
 
 const stopEmailConfirmationPolling = () => {
     if (emailConfirmationInterval) {
         clearInterval(emailConfirmationInterval);
         emailConfirmationInterval = null;
+        console.log('⏹️ Polling arrêté');
+    }
+
+    if (storageListener) {
+        window.removeEventListener('storage', storageListener);
+        storageListener = null;
+        console.log('⏹️ Storage listener supprimé');
     }
 };
 
