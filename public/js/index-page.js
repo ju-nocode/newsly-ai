@@ -634,22 +634,24 @@ document.getElementById('heroLoginBtn').addEventListener('click', () => {
 const burgerBtnIndex = document.getElementById('burgerBtnIndex');
 const burgerMenuIndex = document.getElementById('burgerMenuIndex');
 
-burgerBtnIndex.addEventListener('click', (e) => {
-    e.stopPropagation();
-    burgerBtnIndex.classList.toggle('active');
-    burgerMenuIndex.classList.toggle('show');
-});
+if (burgerBtnIndex && burgerMenuIndex) {
+    burgerBtnIndex.addEventListener('click', (e) => {
+        e.stopPropagation();
+        burgerBtnIndex.classList.toggle('active');
+        burgerMenuIndex.classList.toggle('show');
+    });
 
-// Fermer le menu si on clique ailleurs
-document.addEventListener('click', () => {
-    burgerBtnIndex.classList.remove('active');
-    burgerMenuIndex.classList.remove('show');
-});
+    // Fermer le menu si on clique ailleurs
+    document.addEventListener('click', () => {
+        burgerBtnIndex.classList.remove('active');
+        burgerMenuIndex.classList.remove('show');
+    });
 
-// Empêcher la fermeture si on clique dans le menu
-burgerMenuIndex.addEventListener('click', (e) => {
-    e.stopPropagation();
-});
+    // Empêcher la fermeture si on clique dans le menu
+    burgerMenuIndex.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+}
 
 // Language toggle
 const langToggle = document.getElementById('langToggleIndex');
