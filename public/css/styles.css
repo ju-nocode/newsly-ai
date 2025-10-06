@@ -16,15 +16,15 @@ html {
 
 :root {
   /* Light Mode - Modern & Professional */
-  --bg-primary: #0f0f0f;
-  --bg-secondary: #0b0b0b;
-  --bg-tertiary: #1f1f1f;
-  --bg-sidebar: #1c1c1c;
-  --text-primary: #ffffff;
+  --bg-primary: #ffffff;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #ffffff;
+  --bg-sidebar: #ffffff;
+  --text-primary: #000000;
   --text-secondary: #ffffff;
-  --text-muted: #64748b;
-  --text-sidebar: #e5e7eb;
-  --border: #c4c4c4;
+  --text-muted: #2e3134;
+  --text-sidebar: #3e424a;
+  --border: #4c4444;
   --shadow: rgba(0, 0, 0, 0.04);
   --shadow-lg: rgba(0, 0, 0, 0.1); */
 
