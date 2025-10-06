@@ -10,11 +10,14 @@ const checkEmailConfirmation = async () => {
     const access_token = hashParams.get('access_token');
     const type = hashParams.get('type');
 
-    if ((type === 'signup' || type === 'email') && access_token) {
-        console.log('🎉 Email confirmé, affichage du message...');
+    console.log('🔍 Checking email confirmation:', {
+        hasHash: !!window.location.hash,
+        access_token: !!access_token,
+        type
+    });
 
-        // Supprimer le hash de l'URL
-        window.history.replaceState(null, null, window.location.pathname);
+    if ((type === 'signup' || type === 'email' || access_token) && access_token) {
+        console.log('🎉 Email confirmé, affichage du message...');
 
         // Créer le client Supabase
         const supabase = createClient(
@@ -29,6 +32,8 @@ const checkEmailConfirmation = async () => {
                 refresh_token: hashParams.get('refresh_token')
             });
 
+            console.log('📋 Session result:', { success: !error, hasData: !!data });
+
             if (!error && data.session) {
                 // Sauvegarder la session
                 localStorage.setItem('session', JSON.stringify({
@@ -36,12 +41,17 @@ const checkEmailConfirmation = async () => {
                     access_token: data.session.access_token
                 }));
 
+                // Supprimer le hash de l'URL APRÈS avoir récupéré les données
+                window.history.replaceState(null, null, window.location.pathname);
+
                 // Afficher le message de confirmation
-                showEmailConfirmedModal();
+                setTimeout(() => {
+                    showEmailConfirmedModal();
+                }, 100);
                 return true;
             }
         } catch (err) {
-            console.error('Erreur confirmation:', err);
+            console.error('❌ Erreur confirmation:', err);
         }
     }
     return false;
@@ -388,19 +398,34 @@ if (signupBackBtn) {
     });
 }
 
-// Fonction pour générer des confettis
+// Fonction pour générer des confettis plein écran
 const createConfetti = () => {
-    const container = document.getElementById('confettiContainer');
-    if (!container) return;
+    // Créer un container plein écran s'il n'existe pas
+    let container = document.getElementById('globalConfettiContainer');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'globalConfettiContainer';
+        container.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 99999;
+            overflow: hidden;
+        `;
+        document.body.appendChild(container);
+    }
 
     container.innerHTML = '';
 
-    for (let i = 0; i < 50; i++) {
+    // Créer 100 confettis sur toute la page
+    for (let i = 0; i < 100; i++) {
         const confetti = document.createElement('div');
         confetti.className = 'confetti';
-        // Partir du centre et se disperser
-        confetti.style.left = `${40 + Math.random() * 20}%`; // Centre 40-60%
-        confetti.style.top = `${30 + Math.random() * 20}%`; // Haut-centre
+        confetti.style.left = `${Math.random() * 100}%`; // Partout sur la largeur
+        confetti.style.top = `${Math.random() * 30 - 20}%`; // Partir du haut (même au-dessus)
         confetti.style.animationDelay = `${Math.random() * 0.5}s`;
         container.appendChild(confetti);
     }
@@ -408,7 +433,8 @@ const createConfetti = () => {
     // Nettoyer après l'animation
     setTimeout(() => {
         container.innerHTML = '';
-    }, 2500);
+        container.remove();
+    }, 3000);
 };
 
 // STEP 2 - Profil complet
