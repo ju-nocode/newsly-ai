@@ -34,18 +34,25 @@ export default async function handler(req, res) {
 
         // GET - Récupérer le profil
         if (req.method === 'GET') {
-            // Récupérer les données de la table profiles
+            console.log('=== GET PROFILE ===');
+            console.log('User ID from token:', user.id);
+            console.log('User email from token:', user.email);
+
+            // Récupérer les données de la table profiles avec le client authentifié
             const { data: profile, error: profileError } = await supabase
                 .from('profiles')
                 .select('*')
                 .eq('id', user.id)
                 .single();
 
+            console.log('Profile fetched:', profile);
+            console.log('Profile error:', profileError);
+
             if (profileError && profileError.code !== 'PGRST116') {
                 console.error('Profile fetch error:', profileError);
             }
 
-            return res.status(200).json({
+            const responseData = {
                 id: user.id,
                 email: user.email,
                 username: profile?.username || user.user_metadata?.username || user.email.split('@')[0],
@@ -58,7 +65,11 @@ export default async function handler(req, res) {
                 role: profile?.is_admin ? 'admin' : 'user',
                 is_admin: profile?.is_admin || false,
                 created_at: user.created_at
-            });
+            };
+
+            console.log('Response data:', responseData);
+
+            return res.status(200).json(responseData);
         }
 
         // PUT - Mettre à jour le profil
