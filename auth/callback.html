@@ -75,12 +75,18 @@
     </div>
 
     <script type="module">
+        console.log('🚀 SCRIPT CALLBACK DÉMARRÉ !');
+
         import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+        console.log('📦 Supabase importé avec succès');
 
         const supabase = createClient(
             'https://mauulkejlnlubdzmhirq.supabase.co',
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1hdXVsa2VqbG5sdWJkem1oaXJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY5NTQwNzksImV4cCI6MjA2MjUzMDA3OX0.hC0jOBK3rKKj8Fq1P3ITjsZqtaPzzD7EYc7jPVb_Hvs'
         );
+
+        console.log('✅ Client Supabase créé');
 
         async function handleEmailConfirmation() {
             console.log('🔍 Callback chargé, hash:', window.location.hash.substring(0, 50) + '...');
