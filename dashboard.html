@@ -257,7 +257,10 @@
         import { displayNews, escapeHtml, showError, showSuccess } from './public/js/dashboard-utils.js';
         import { tSync as t, translatePage } from './public/js/translation-service.js';
         import { initParticles } from './public/js/particles-config.js';
-        import './public/js/collapse-menu.js'; // Import pour activer les menus déroulants
+        import { initCollapseMenus } from './public/js/collapse-menu.js';
+
+        // Initialize collapse menus
+        initCollapseMenus();
 
         // Initialize particles (async to load from DB)
         (async () => {
