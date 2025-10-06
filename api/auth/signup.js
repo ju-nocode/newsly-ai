@@ -56,7 +56,7 @@ export default async function handler(req, res) {
 
         // Inscription avec redirect URL pour confirmation email (vers callback qui auto-ferme)
         const redirectUrl = process.env.NODE_ENV === 'production'
-            ? 'https://newsly-ai.vercel.app/auth/callback'
+            ? 'https://prod-julien.vercel.app/auth/callback'
             : 'http://localhost:3000/auth/callback';
 
         const { data, error } = await supabase.auth.signUp({
