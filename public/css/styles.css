@@ -2142,7 +2142,9 @@ body:has(.settings-layout) .footer {
   padding: 2rem;
   position: relative;
   transform: scale(0.9);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, height 0.3s ease;
+  min-height: auto;
+  height: auto;
 }
 
 .modal-overlay.show .modal-container {
@@ -2674,26 +2676,56 @@ body:has(.settings-layout) .footer {
 /* Confettis */
 .confetti {
   position: absolute;
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   background: var(--primary);
-  animation: confetti-fall 2s ease-out forwards;
+  border-radius: 2px;
+  animation: confetti-fall 4s ease-out forwards;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 @keyframes confetti-fall {
   0% {
-    transform: translateY(0) rotate(0deg);
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  50% {
     opacity: 1;
   }
   100% {
-    transform: translateY(300px) rotate(720deg);
+    transform: translateY(100vh) rotate(720deg) scale(0.5);
     opacity: 0;
   }
 }
 
-.confetti:nth-child(2n) { background: var(--success); animation-delay: 0.1s; }
-.confetti:nth-child(3n) { background: #fbbf24; animation-delay: 0.2s; }
-.confetti:nth-child(4n) { background: #f472b6; animation-delay: 0.15s; }
+.confetti:nth-child(2n) {
+  background: linear-gradient(135deg, var(--success), #10b981);
+  animation-delay: 0.1s;
+  width: 10px;
+  height: 14px;
+}
+.confetti:nth-child(3n) {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  animation-delay: 0.2s;
+  border-radius: 50%;
+}
+.confetti:nth-child(4n) {
+  background: linear-gradient(135deg, #f472b6, #ec4899);
+  animation-delay: 0.15s;
+  width: 14px;
+  height: 8px;
+}
+.confetti:nth-child(5n) {
+  background: linear-gradient(135deg, #60a5fa, #3b82f6);
+  animation-delay: 0.3s;
+  border-radius: 50%;
+}
+.confetti:nth-child(6n) {
+  background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+  animation-delay: 0.25s;
+  width: 8px;
+  height: 16px;
+}
 
 /* Animation d'erreur */
 .signup-error-box {

@@ -75,11 +75,13 @@ const showEmailConfirmedModal = () => {
     // Modifier le contenu du succès pour la confirmation
     signupSuccess.innerHTML = `
         <div class="success-checkmark"></div>
-        <h2 class="modal-title" style="color: var(--success);">✅ Email validé avec succès !</h2>
+        <h2 class="modal-title" style="color: var(--success); margin-top: 1rem;">🎉 Email validé avec succès !</h2>
         <p class="modal-subtitle" style="margin-bottom: 2rem;">
-            Votre compte est maintenant actif. Vous pouvez vous connecter.
+            Votre compte est maintenant actif !
         </p>
-        <button id="goToLoginBtn" class="btn-primary">Se connecter</button>
+        <button id="goToLoginBtn" class="btn-primary" style="width: 100%; padding: 0.875rem; font-size: 1rem;">
+            Se connecter maintenant →
+        </button>
     `;
 
     // Afficher le succès
@@ -99,15 +101,6 @@ const showEmailConfirmedModal = () => {
             stopEmailConfirmationPolling();
         });
     }
-
-    // Auto-ouvrir la modal de login après 3 secondes
-    setTimeout(() => {
-        const signupForm = document.getElementById('signupForm');
-        const loginForm = document.getElementById('loginForm');
-        if (signupForm) signupForm.style.display = 'none';
-        if (loginForm) loginForm.style.display = 'block';
-        stopEmailConfirmationPolling();
-    }, 3000);
 };
 
 // Si l'utilisateur est déjà connecté, rediriger vers le dashboard
@@ -436,21 +429,22 @@ const createConfetti = () => {
 
     container.innerHTML = '';
 
-    // Créer 100 confettis sur toute la page
-    for (let i = 0; i < 100; i++) {
+    // Créer 150 confettis sur toute la page avec variations
+    for (let i = 0; i < 150; i++) {
         const confetti = document.createElement('div');
         confetti.className = 'confetti';
-        confetti.style.left = `${Math.random() * 100}%`; // Partout sur la largeur
-        confetti.style.top = `${Math.random() * 30 - 20}%`; // Partir du haut (même au-dessus)
-        confetti.style.animationDelay = `${Math.random() * 0.5}s`;
+        confetti.style.left = `${Math.random() * 100}%`;
+        confetti.style.top = `${Math.random() * 30 - 20}%`;
+        confetti.style.animationDelay = `${Math.random() * 1}s`;
+        confetti.style.animationDuration = `${3 + Math.random() * 2}s`; // Entre 3 et 5s
         container.appendChild(confetti);
     }
 
-    // Nettoyer après l'animation
+    // Nettoyer après l'animation (garder 5s pour voir les confettis)
     setTimeout(() => {
         container.innerHTML = '';
         container.remove();
-    }, 3000);
+    }, 6000);
 };
 
 // STEP 2 - Profil complet
@@ -524,13 +518,19 @@ if (signupStep2Form) {
 
             // ÉTAPE 4: Afficher succès ou erreur
             if (result.success) {
-                // SUCCÈS: Changer le message du loader
+                // SUCCÈS: Afficher la notification email sous le loader
+                const emailNotification = document.getElementById('emailSentNotification');
+                if (emailNotification) {
+                    emailNotification.style.display = 'block';
+                }
+
+                // Changer le texte du loader
                 const loader = document.getElementById('signupLoader');
                 if (loader) {
                     const loaderTitle = loader.querySelector('h3');
                     const loaderSubtitle = loader.querySelector('p');
-                    if (loaderTitle) loaderTitle.textContent = '📧 Email envoyé !';
-                    if (loaderSubtitle) loaderSubtitle.textContent = 'Vérifiez votre boîte mail pour confirmer votre compte';
+                    if (loaderTitle) loaderTitle.textContent = '⏳ En attente de confirmation...';
+                    if (loaderSubtitle) loaderSubtitle.textContent = 'Cliquez sur le lien dans votre email';
                 }
 
                 // Démarrer le polling pour détecter la confirmation
