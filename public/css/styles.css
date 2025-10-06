@@ -16,7 +16,7 @@ html {
 
 :root {
   /* Light Mode - Modern & Professional */
-  /* --bg-primary: #ffffff;
+  --bg-primary: #ffffff;
   --bg-secondary: #f8f9fa;
   --bg-tertiary: #edeff1;
   --bg-sidebar: #1c1c1c;
@@ -28,22 +28,6 @@ html {
   --shadow: rgba(0, 0, 0, 0.04);
   --shadow-lg: rgba(0, 0, 0, 0.1); */
 
-  /*--------------------------------------------------------------*/
-  --bg-primary: #ffffff;
-  --bg-secondary: #f7f8fa;
-  --bg-tertiary: #edeff1;
-  --bg-sidebar: #f1f5f9;
-
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #64748b;
-  --text-sidebar: #1e293b;
-
-  --border: #d1d5db;
-  --shadow: rgba(0, 0, 0, 0.04);
-  --shadow-lg: rgba(0, 0, 0, 0.08);
-  /*--------------------------------------------------------------*/
-  
   /* Accent - Modern Blue */
   --primary: #000000;
   --primary-dark: #ffffff;
