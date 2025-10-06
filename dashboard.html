@@ -478,9 +478,16 @@
 
         const fetchWeather = async (lat, lon) => {
             try {
+                // AbortController pour timeout de 5 secondes
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+
                 const response = await fetch(
-                    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&timezone=auto`
+                    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&timezone=auto`,
+                    { signal: controller.signal }
                 );
+                clearTimeout(timeoutId);
+
                 const data = await response.json();
 
                 const temp = Math.round(data.current.temperature_2m);
@@ -488,9 +495,15 @@
                 const icon = getWeatherIcon(weatherCode);
 
                 // Get city name from reverse geocoding using Nominatim (OpenStreetMap)
+                const geoController = new AbortController();
+                const geoTimeoutId = setTimeout(() => geoController.abort(), 5000);
+
                 const geoResponse = await fetch(
-                    `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=fr`
+                    `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=fr`,
+                    { signal: geoController.signal }
                 );
+                clearTimeout(geoTimeoutId);
+
                 const geoData = await geoResponse.json();
                 const city = geoData.address?.city || geoData.address?.town || geoData.address?.village || geoData.address?.state || 'Votre position';
 
@@ -619,6 +632,12 @@
             const newLang = langToggle.checked ? 'en' : 'fr';
 
             localStorage.setItem('language', newLang);
+
+            // Mettre à jour le label du switch dans le burger menu
+            const langLabel = document.getElementById('langLabel');
+            if (langLabel) {
+                langLabel.textContent = newLang === 'en' ? 'English / Français' : 'Français / English';
+            }
 
             // Traduire toute la page
             translatePage();

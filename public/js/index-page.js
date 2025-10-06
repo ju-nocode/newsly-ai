@@ -61,6 +61,11 @@ const stopEmailConfirmationPolling = () => {
     }
 };
 
+// Nettoyer les intervalles lors du déchargement de la page
+window.addEventListener('beforeunload', () => {
+    stopEmailConfirmationPolling();
+});
+
 // Afficher la modal de confirmation email
 const showEmailConfirmedModal = () => {
     // Cacher le loader
