@@ -122,12 +122,25 @@
                             emailJustConfirmed: localStorage.getItem('emailJustConfirmed'),
                             confirmedUserId: localStorage.getItem('confirmedUserId')
                         });
+
+                        // Utiliser BroadcastChannel pour notifier l'autre onglet immédiatement
+                        try {
+                            const channel = new BroadcastChannel('email_confirmation');
+                            channel.postMessage({
+                                type: 'EMAIL_CONFIRMED',
+                                userId: data.user.id
+                            });
+                            console.log('📡 BroadcastChannel: Message envoyé à l\'autre onglet');
+                            channel.close();
+                        } catch (e) {
+                            console.warn('⚠️ BroadcastChannel non supporté:', e);
+                        }
                     } else {
                         console.error('❌ Erreur lors de setSession:', error);
                     }
 
-                    // Fermer l'onglet après 2 secondes
-                    console.log('⏱️ Fermeture dans 2 secondes...');
+                    // Attendre 3 secondes pour laisser le temps au storage event de se propager
+                    console.log('⏱️ Fermeture dans 3 secondes (pour propagation localStorage)...');
                     setTimeout(() => {
                         console.log('👋 Tentative de fermeture de l\'onglet');
                         window.close();
@@ -138,8 +151,8 @@
                                 console.log('⚠️ window.close() a échoué, redirection vers index.html');
                                 window.location.href = '../index.html';
                             }
-                        }, 100);
-                    }, 2000);
+                        }, 200);
+                    }, 3000);
                 } else {
                     console.error('❌ Pas de access_token dans l\'URL');
                 }

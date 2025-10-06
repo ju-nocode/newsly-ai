@@ -43,6 +43,21 @@ const startEmailConfirmationPolling = () => {
 
     window.addEventListener('storage', storageListener);
     console.log('👂 Storage listener ajouté pour détecter les changements inter-onglets');
+
+    // 3. BroadcastChannel (communication instantanée entre onglets)
+    try {
+        const channel = new BroadcastChannel('email_confirmation');
+        channel.onmessage = (event) => {
+            console.log('📡 BroadcastChannel: Message reçu', event.data);
+            if (event.data.type === 'EMAIL_CONFIRMED') {
+                console.log('🎉 Email confirmé détecté via BroadcastChannel (instant) !');
+                checkEmailConfirmed();
+            }
+        };
+        console.log('📻 BroadcastChannel actif pour détection instantanée');
+    } catch (e) {
+        console.warn('⚠️ BroadcastChannel non supporté par ce navigateur');
+    }
 };
 
 const stopEmailConfirmationPolling = () => {
