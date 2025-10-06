@@ -584,6 +584,7 @@
             const result = await getUserProfile();
             if (result.success) {
                 const profile = result.profile;
+                console.log('📋 Profil chargé depuis la base:', profile);
                 const userName = profile.username || profile.email.split('@')[0];
                 const userRole = profile.role || 'user';
 
@@ -619,25 +620,32 @@
 
                 // Country - s'assurer que la valeur existe dans le select
                 const countryValue = profile.country || 'France';
-                const countrySelect = document.getElementById('countrySelect');
-                const countryExists = Array.from(countrySelect.options).some(opt => opt.value === countryValue);
+                console.log('🌍 Pays depuis la base:', countryValue);
+                const countryOptions = Array.from(countrySelect.options);
+                const countryExists = countryOptions.some(opt => opt.value === countryValue);
+                console.log('✅ Pays existe dans le select?', countryExists);
 
                 if (countryExists) {
                     countrySelect.value = countryValue;
+                    console.log('✅ Pays sélectionné:', countrySelect.value);
                 } else {
-                    console.warn(`Pays "${countryValue}" non trouvé dans la liste, utilisation de France par défaut`);
+                    console.warn(`⚠️ Pays "${countryValue}" non trouvé dans la liste, utilisation de France par défaut`);
                     countrySelect.value = 'France';
                 }
 
-                document.getElementById('cityInput').value = profile.city || '';
+                const cityValue = profile.city || '';
+                console.log('🏙️ Ville depuis la base:', cityValue);
+                document.getElementById('cityInput').value = cityValue;
 
                 // Champs optionnels - Téléphone
                 if (profile.phone && profile.phone.trim() !== '') {
+                    console.log('📞 Téléphone depuis la base:', profile.phone);
                     // Séparer l'indicatif du numéro
                     const phoneMatch = profile.phone.match(/^(\+\d+)\s*(.+)$/);
                     if (phoneMatch) {
                         const indicatif = phoneMatch[1];
                         const numero = phoneMatch[2];
+                        console.log('📞 Indicatif:', indicatif, 'Numéro:', numero);
 
                         // Vérifier si l'indicatif existe dans le select
                         const phoneCodeSelect = document.getElementById('phoneCountryCode');
@@ -645,14 +653,17 @@
 
                         if (codeExists) {
                             phoneCodeSelect.value = indicatif;
+                            console.log('✅ Indicatif sélectionné:', phoneCodeSelect.value);
                         } else {
-                            console.warn(`Indicatif "${indicatif}" non trouvé, utilisation de +33 par défaut`);
+                            console.warn(`⚠️ Indicatif "${indicatif}" non trouvé, utilisation de +33 par défaut`);
                             phoneCodeSelect.value = '+33';
                         }
 
                         document.getElementById('phoneInput').value = numero;
+                        console.log('✅ Numéro chargé:', numero);
                     } else {
                         // Format de téléphone invalide, mettre le numéro complet dans le champ
+                        console.warn('⚠️ Format téléphone invalide, mise du numéro complet');
                         document.getElementById('phoneInput').value = profile.phone;
                     }
                 }

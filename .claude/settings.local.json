@@ -20,7 +20,8 @@
       "Bash(npm install:*)",
       "Bash(python:*)",
       "Read(//c/Users/Reechar D/Desktop/**)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Read(//c/Users/Reechar D/Downloads/**)"
     ],
     "deny": [],
     "ask": []
