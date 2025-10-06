@@ -653,6 +653,38 @@ if (burgerBtnIndex && burgerMenuIndex) {
     });
 }
 
+// Sync burger menu with user state
+async function updateBurgerMenuUserInfo() {
+    const user = await checkAuth();
+    const burgerUserInfo = document.getElementById('burgerUserInfoIndex');
+    const burgerAuthButtons = document.getElementById('burgerAuthButtons');
+    const dashboardLink = document.getElementById('dashboardLinkIndex');
+    const userName = document.getElementById('userNameDisplayIndex');
+    const avatarImg = document.getElementById('burgerAvatarImageIndex');
+
+    if (user) {
+        // User is logged in - show user info
+        burgerUserInfo.style.display = 'flex';
+        burgerAuthButtons.style.display = 'none';
+        dashboardLink.style.display = 'flex';
+        userName.textContent = `Yo! ${user.full_name || user.username || 'User'}`;
+        avatarImg.src = user.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.full_name || user.username || 'User')}&background=3ecf8e&color=fff&size=72`;
+    } else {
+        // User not logged in - show auth buttons
+        burgerUserInfo.style.display = 'none';
+        burgerAuthButtons.style.display = 'block';
+        dashboardLink.style.display = 'none';
+    }
+}
+
+// Dashboard link navigation
+const dashboardLinkIndex = document.getElementById('dashboardLinkIndex');
+if (dashboardLinkIndex) {
+    dashboardLinkIndex.addEventListener('click', () => {
+        window.location.href = 'dashboard.html';
+    });
+}
+
 // Language toggle
 const langToggle = document.getElementById('langToggleIndex');
 const langLabel = document.getElementById('langLabel');
@@ -671,4 +703,6 @@ langToggle.addEventListener('change', async () => {
 // Initialize particles with default config
 window.addEventListener('DOMContentLoaded', () => {
     window.particlesJS('particles-js', defaultParticlesConfig);
+    // Update burger menu with user info
+    updateBurgerMenuUserInfo();
 });
