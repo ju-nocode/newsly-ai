@@ -317,8 +317,9 @@ const createConfetti = () => {
     for (let i = 0; i < 50; i++) {
         const confetti = document.createElement('div');
         confetti.className = 'confetti';
-        confetti.style.left = `${Math.random() * 100}%`;
-        confetti.style.top = `${Math.random() * 20}%`;
+        // Partir du centre et se disperser
+        confetti.style.left = `${40 + Math.random() * 20}%`; // Centre 40-60%
+        confetti.style.top = `${30 + Math.random() * 20}%`; // Haut-centre
         confetti.style.animationDelay = `${Math.random() * 0.5}s`;
         container.appendChild(confetti);
     }
