@@ -2526,12 +2526,12 @@ body:has(.settings-layout) .footer {
   width: 100%;
   position: relative;
   overflow: visible;
+  min-height: 400px;
 }
 
 .signup-flip-card {
   position: relative;
   width: 100%;
-  height: auto;
   transform-style: preserve-3d;
   transition: transform 0.8s cubic-bezier(0.4, 0.2, 0.2, 1);
 }
@@ -2548,57 +2548,28 @@ body:has(.settings-layout) .footer {
   width: 100%;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  position: relative;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.4s ease;
-  min-height: auto;
+  display: none;
 }
 
 /* Face 1 visible par défaut */
 .signup-flip-front {
   transform: rotateY(0deg);
-  opacity: 1;
-  pointer-events: auto;
+  display: block;
 }
 
-/* Face 2 visible quand flipped */
+/* Face 2 - cachée par défaut */
 .signup-flip-back {
-  position: absolute;
-  top: 0;
-  left: 0;
   transform: rotateY(180deg);
+  display: none;
 }
 
+/* Quand flipped, inverser l'affichage */
 .signup-flip-card.flipped .signup-flip-front {
-  opacity: 0;
-  pointer-events: none;
+  display: none;
 }
 
 .signup-flip-card.flipped .signup-flip-back {
-  opacity: 1;
-  pointer-events: auto;
-  position: relative;
-}
-
-/* Face 3 - Animation de fin */
-.signup-flip-third {
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform: rotateY(0deg);
-}
-
-.signup-flip-card.flipped-twice .signup-flip-front,
-.signup-flip-card.flipped-twice .signup-flip-back {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.signup-flip-card.flipped-twice .signup-flip-third {
-  opacity: 1;
-  pointer-events: auto;
-  position: relative;
+  display: block;
 }
 
 /* ================================================
