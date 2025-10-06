@@ -1274,20 +1274,22 @@
             const usersContainer = document.getElementById('usersTableContainer');
 
             try {
-                // Import Supabase client
-                const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
-                const supabase = createClient(
-                    'https://mauulkejlnlubdzmhirq.supabase.co',
-                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1hdXVsa2VqbG5sdWJkem1oaXJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY5NTQwNzksImV4cCI6MjA2MjUzMDA3OX0.hC0jOBK3rKKj8Fq1P3ITjsZqtaPzzD7EYc7jPVb_Hvs'
-                );
+                // Appel API sécurisé backend
+                const API_BASE_URL = window.location.hostname === 'localhost'
+                    ? 'http://localhost:3000'
+                    : 'https://prod-julien.vercel.app';
 
-                // Fetch all users
-                const { data: users, error } = await supabase
-                    .from('profiles')
-                    .select('id, email, username, role, created_at, last_sign_in_at')
-                    .order('created_at', { ascending: false });
+                const token = localStorage.getItem('authToken');
+                const response = await fetch(`${API_BASE_URL}/api/admin/users`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
 
-                if (error) throw error;
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Erreur lors du chargement des utilisateurs');
+                }
+
+                const { users } = await response.json();
 
                 if (!users || users.length === 0) {
                     usersContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Aucun utilisateur trouvé</p>';
