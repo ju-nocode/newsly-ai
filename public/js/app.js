@@ -114,19 +114,30 @@ export const signup = async (email, password, metadata) => {
                 city: metadata.city || 'Paris'
             };
 
+        const requestBody = {
+            email,
+            password,
+            metadata: userMetadata,
+            username: metadata.username,
+            full_name: metadata.full_name,
+            country: metadata.country,
+            city: metadata.city,
+            phone: metadata.phone
+        };
+
+        console.log('=== SIGNUP CLIENT REQUEST ===');
+        console.log('Email:', email);
+        console.log('Username:', metadata.username);
+        console.log('Full name:', metadata.full_name);
+        console.log('Country:', metadata.country);
+        console.log('City:', metadata.city);
+        console.log('Phone:', metadata.phone);
+        console.log('Request body:', requestBody);
+
         const response = await fetch(`${API_BASE_URL}/api/auth/signup`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                email,
-                password,
-                metadata: userMetadata,
-                username: metadata.username,
-                full_name: metadata.full_name,
-                country: metadata.country,
-                city: metadata.city,
-                phone: metadata.phone
-            })
+            body: JSON.stringify(requestBody)
         });
 
         const data = await response.json();
