@@ -1,49 +1,41 @@
 #!/bin/bash
-# Stop le script si une commande échoue
+# Commit & push rapide sur la branche main (affichage léger)
+
 set -e
 
-# Fonction : dessine une ligne de tirets sur la largeur du terminal
-print_line() {
-  cols=$(tput cols 2>/dev/null || echo 80)   # fallback à 80 si tput indisponible
-  # crée une chaîne vide de la longueur cols puis remplace les espaces par des '-'
+# --- Fonctions ---
+line() {
+  cols=$(tput cols 2>/dev/null || echo 80)
   printf '%*s\n' "$cols" '' | tr ' ' '-'
 }
 
-echo
-print_line
-echo "📌 Vérification de la branche et préparation du commit"
-print_line
-echo
-
-# Vérifie qu'on est bien sur la branche main
-current_branch=$(git branch --show-current 2>/dev/null || git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "")
-if [ "$current_branch" != "main" ]; then
-  echo "❌ Tu n'es pas sur la branche 'main' (actuellement: $current_branch)"
+# --- Vérifie la branche ---
+branch=$(git branch --show-current 2>/dev/null || git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "")
+if [ "$branch" != "main" ]; then
+  echo "❌  Branche actuelle : $branch (doit être main)"
   exit 1
 fi
 
-# Ajoute tous les fichiers modifiés
-git add -A
-
-# Si aucun changement à commit, on sort proprement
-if git diff --cached --quiet; then
-  echo "✅ Aucun changement à commit."
-  print_line
+# --- Vérifie les changements ---
+changes=$(git status --porcelain)
+if [ -z "$changes" ]; then
+  echo "✅  Aucun changement à commit."
   exit 0
 fi
 
-# Commit avec message automatique ou personnalisé
-msg=${1:-"new updates"}
-git commit -m "$msg"
-
-# Optionnel : pull pour réduire les risques de conflit (non bloquant)
-# git pull --rebase origin main
-
-# Push sur la branche main
-git push origin main
-
+# --- Affiche résumé ---
 echo
-print_line
-echo "🚀 Commit et push terminés avec succès sur la branche main."
-print_line
+line
+echo "📦  Commit & push sur 'main'"
+line
+git status -s
+line
+
+# --- Commit + push ---
+git add -A
+git commit -m "new updates"
+echo
+git push origin main
+line
+echo "🚀  Terminé."
 echo
