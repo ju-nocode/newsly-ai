@@ -54,12 +54,17 @@ export default async function handler(req, res) {
             city: city || metadata?.city || 'Paris'
         };
 
-        // Inscription
+        // Inscription avec redirect URL pour confirmation email
+        const redirectUrl = process.env.NODE_ENV === 'production'
+            ? 'https://newsly-ai.vercel.app/auth/callback'
+            : 'http://localhost:3000/auth/callback';
+
         const { data, error } = await supabase.auth.signUp({
             email,
             password,
             options: {
-                data: userMetadata
+                data: userMetadata,
+                emailRedirectTo: redirectUrl
             }
         });
 
