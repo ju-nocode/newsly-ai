@@ -572,7 +572,8 @@
         const topicSearch = document.getElementById('topicSearch');
         const addTopicBtn = document.getElementById('addTopicBtn');
 
-        addTopicBtn.addEventListener('click', () => {
+        if (addTopicBtn) {
+            addTopicBtn.addEventListener('click', () => {
             const topic = topicSearch.value.trim();
             if (!topic) return;
 
@@ -599,14 +600,17 @@
             categoriesList.appendChild(newCategory);
             topicSearch.value = '';
             showSuccess(`Topic "${topic}" ajouté !`);
-        });
+            });
 
-        // Permettre l'ajout avec Enter
-        topicSearch.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                addTopicBtn.click();
+            // Permettre l'ajout avec Enter
+            if (topicSearch) {
+                topicSearch.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        addTopicBtn.click();
+                    }
+                });
             }
-        });
+        }
 
         // Gérer le switch de langue
         const langToggle = document.getElementById('langToggle');
