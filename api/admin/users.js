@@ -1,14 +1,50 @@
 import { createClient } from '@supabase/supabase-js';
+import { rateLimit } from '../../lib/rate-limit.js';
+
+const limiter = rateLimit({
+    interval: 60 * 1000, // 1 minute
+    maxRequests: 20 // 20 requêtes par minute
+});
 
 export default async function handler(req, res) {
-    // CORS headers
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, DELETE, OPTIONS');
+    // CORS headers - Restricted to allowed origins
+    const allowedOrigins = [
+        'https://prod-julien.vercel.app',
+        'http://localhost:3000',
+        'http://127.0.0.1:3000'
+    ];
+    const origin = req.headers.origin;
+
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+        res.setHeader('Access-Control-Allow-Credentials', true);
+    }
+
+    res.setHeader('Access-Control-Allow-Methods', 'GET, DELETE, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
     if (req.method === 'OPTIONS') {
         return res.status(200).end();
+    }
+
+    // Rate limiting - Get identifier from IP
+    const identifier = req.headers['x-forwarded-for']?.split(',')[0] ||
+                      req.headers['x-real-ip'] ||
+                      req.socket.remoteAddress ||
+                      'unknown';
+
+    const rateLimitResult = limiter.check(identifier);
+
+    // Add rate limit headers
+    res.setHeader('X-RateLimit-Limit', rateLimitResult.limit);
+    res.setHeader('X-RateLimit-Remaining', rateLimitResult.remaining);
+    res.setHeader('X-RateLimit-Reset', rateLimitResult.reset);
+
+    if (!rateLimitResult.success) {
+        return res.status(429).json({
+            error: 'Trop de requêtes. Veuillez réessayer plus tard.',
+            retryAfter: rateLimitResult.reset
+        });
     }
 
     try {
@@ -51,6 +87,16 @@ export default async function handler(req, res) {
 
         // GET - Récupérer la liste des utilisateurs (admin only)
         if (req.method === 'GET') {
+            // Log audit: consultation de la liste des utilisateurs
+            await supabaseAdmin.from('admin_audit_log').insert({
+                admin_id: user.id,
+                admin_email: user.email,
+                action: 'VIEW_USERS',
+                ip_address: identifier,
+                user_agent: req.headers['user-agent'],
+                metadata: { method: 'GET' }
+            });
+
             const { data: users, error: usersError } = await supabaseAdmin
                 .from('profiles')
                 .select('id, email, username, full_name, is_admin, created_at')
@@ -86,7 +132,7 @@ export default async function handler(req, res) {
 
         // DELETE - Supprimer un utilisateur (admin only)
         if (req.method === 'DELETE') {
-            const { userId } = req.query;
+            const { userId } = req.body;
 
             if (!userId) {
                 return res.status(400).json({ error: 'userId requis' });
@@ -98,25 +144,72 @@ export default async function handler(req, res) {
             }
 
             try {
-                // Supprimer le profil
+                // Récupérer les infos de l'utilisateur à supprimer pour l'audit
+                const { data: targetUser } = await supabaseAdmin
+                    .from('profiles')
+                    .select('email, username')
+                    .eq('id', userId)
+                    .single();
+
+                // Log audit AVANT la suppression
+                await supabaseAdmin.from('admin_audit_log').insert({
+                    admin_id: user.id,
+                    admin_email: user.email,
+                    action: 'DELETE_USER',
+                    target_user_id: userId,
+                    target_user_email: targetUser?.email || 'unknown',
+                    ip_address: identifier,
+                    user_agent: req.headers['user-agent'],
+                    metadata: {
+                        target_username: targetUser?.username,
+                        reason: 'Admin deletion'
+                    }
+                });
+
+                // Suppression en cascade de toutes les données liées
+                const deletionErrors = [];
+
+                // 1. Supprimer la configuration particles
+                const { error: particlesError } = await supabaseAdmin
+                    .from('particles_config')
+                    .delete()
+                    .eq('user_id', userId);
+                if (particlesError) {
+                    console.error('Particles config delete error:', particlesError);
+                    deletionErrors.push('particles_config');
+                }
+
+                // 2. Supprimer le profil
                 const { error: profileError } = await supabaseAdmin
                     .from('profiles')
                     .delete()
                     .eq('id', userId);
-
                 if (profileError) {
                     console.error('Profile delete error:', profileError);
+                    deletionErrors.push('profiles');
                 }
 
-                // Supprimer l'utilisateur auth
+                // 3. Supprimer l'utilisateur auth (supprime aussi les sessions)
                 const { error: authError } = await supabaseAdmin.auth.admin.deleteUser(userId);
-
                 if (authError) {
                     console.error('Auth delete error:', authError);
-                    return res.status(500).json({ error: 'Erreur lors de la suppression du compte auth' });
+                    return res.status(500).json({
+                        error: 'Erreur lors de la suppression du compte auth',
+                        details: authError.message,
+                        partialDeletion: deletionErrors.length > 0 ? deletionErrors : undefined
+                    });
                 }
 
-                return res.status(200).json({ message: 'Utilisateur supprimé avec succès' });
+                console.log(`✅ Admin ${user.email} deleted user ${targetUser?.email} (${userId}) from IP ${identifier}`);
+
+                if (deletionErrors.length > 0) {
+                    console.warn(`⚠️ Some data could not be deleted: ${deletionErrors.join(', ')}`);
+                }
+
+                return res.status(200).json({
+                    message: 'Utilisateur supprimé avec succès',
+                    warning: deletionErrors.length > 0 ? `Certaines données n'ont pas pu être supprimées: ${deletionErrors.join(', ')}` : undefined
+                });
             } catch (error) {
                 console.error('Delete user error:', error);
                 return res.status(500).json({ error: error.message });

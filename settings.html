@@ -1363,9 +1363,13 @@
                                 }
                                 const { access_token } = JSON.parse(session);
 
-                                const deleteResponse = await fetch(`${API_BASE_URL}/api/admin/users?userId=${userId}`, {
+                                const deleteResponse = await fetch(`${API_BASE_URL}/api/admin/users`, {
                                     method: 'DELETE',
-                                    headers: { 'Authorization': `Bearer ${access_token}` }
+                                    headers: {
+                                        'Authorization': `Bearer ${access_token}`,
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({ userId })
                                 });
 
                                 if (!deleteResponse.ok) {
