@@ -524,8 +524,16 @@ if (signupStep2Form) {
 
             // ÉTAPE 4: Afficher succès ou erreur
             if (result.success) {
-                // SUCCÈS: Garder le loader actif et démarrer le polling
-                // Le loader reste visible en attendant la confirmation email
+                // SUCCÈS: Changer le message du loader
+                const loader = document.getElementById('signupLoader');
+                if (loader) {
+                    const loaderTitle = loader.querySelector('h3');
+                    const loaderSubtitle = loader.querySelector('p');
+                    if (loaderTitle) loaderTitle.textContent = '📧 Email envoyé !';
+                    if (loaderSubtitle) loaderSubtitle.textContent = 'Vérifiez votre boîte mail pour confirmer votre compte';
+                }
+
+                // Démarrer le polling pour détecter la confirmation
                 startEmailConfirmationPolling(result.user?.id);
             } else {
                 // ERREUR: Cacher le loader et afficher l'erreur
