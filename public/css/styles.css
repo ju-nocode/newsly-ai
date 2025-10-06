@@ -19,8 +19,8 @@ html {
   --bg-primary: #ffffff;
   --bg-secondary: #f8f9fa;
   --bg-tertiary: #edeff1;
-  --bg-sidebar: #1c1c1c;
-  --text-primary: #0f172a;
+  --bg-sidebar: #000;
+  --text-primary: #000;
   --text-secondary: #475569;
   --text-muted: #64748b;
   --text-sidebar: #e5e7eb;
@@ -62,14 +62,14 @@ html {
 
 [data-theme="dark"] {
   --bg-primary: #0d0d0d;
-  --bg-secondary: #0a0a0a;
-  --bg-tertiary: #1a1a1a;
-  --bg-sidebar: #050505;
-  --text-primary: #f1f5f9;
-  --text-secondary: #cbd5e1;
+  --bg-secondary: #0d0d0d;
+  --bg-tertiary: #0d0d0d;
+  --bg-sidebar: #0d0d0d;
+  --text-primary: #b9b9b9;
+  --text-secondary: #b9b9b9;
   --text-muted: #94a3b8;
   --text-sidebar: #e2e8f0;
-  --border: #1f1f1f; */
+  --border: #1f1f1f;
 
   /* Animated Dot Grid Background - darker in dark mode */
   --dot-color: rgba(59, 130, 246, 0.15);
