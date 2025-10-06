@@ -1522,7 +1522,7 @@ body:has(.settings-layout) .footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.875rem 0.75rem;
+  padding: 0.2rem 0.75rem;
   border-radius: var(--radius-md);
   transition: all 0.2s;
 }
@@ -1544,7 +1544,7 @@ body:has(.settings-layout) .footer {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.875rem 0.75rem;
+  padding: 0.2rem 0.75rem;
   background: transparent;
   border: none;
   border-radius: var(--radius-md);
