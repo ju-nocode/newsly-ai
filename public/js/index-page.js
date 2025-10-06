@@ -4,72 +4,47 @@ import { defaultParticlesConfig } from './particles-config.js';
 import { countries } from './countries.js';
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-// Vérifier si on arrive depuis une confirmation email
-const checkEmailConfirmation = async () => {
-    const hashParams = new URLSearchParams(window.location.hash.substring(1));
-    const access_token = hashParams.get('access_token');
-    const type = hashParams.get('type');
+// Polling pour détecter la confirmation email
+let emailConfirmationInterval = null;
 
-    console.log('🔍 Checking email confirmation:', {
-        hasHash: !!window.location.hash,
-        access_token: !!access_token,
-        type
-    });
+const startEmailConfirmationPolling = () => {
+    console.log('🔄 Démarrage du polling de confirmation email...');
 
-    if ((type === 'signup' || type === 'email' || access_token) && access_token) {
-        console.log('🎉 Email confirmé, affichage du message...');
+    emailConfirmationInterval = setInterval(() => {
+        const emailConfirmed = localStorage.getItem('emailJustConfirmed');
 
-        // Créer le client Supabase
-        const supabase = createClient(
-            'https://mauulkejlnlubdzmhirq.supabase.co',
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1hdXVsa2VqbG5sdWJkem1oaXJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY5NTQwNzksImV4cCI6MjA2MjUzMDA3OX0.hC0jOBK3rKKj8Fq1P3ITjsZqtaPzzD7EYc7jPVb_Hvs'
-        );
+        if (emailConfirmed === 'true') {
+            console.log('🎉 Email confirmé détecté !');
 
-        // Établir la session
-        try {
-            const { data, error } = await supabase.auth.setSession({
-                access_token,
-                refresh_token: hashParams.get('refresh_token')
-            });
+            // Arrêter le polling
+            clearInterval(emailConfirmationInterval);
 
-            console.log('📋 Session result:', { success: !error, hasData: !!data });
+            // Nettoyer le flag
+            localStorage.removeItem('emailJustConfirmed');
 
-            if (!error && data.session) {
-                // Sauvegarder la session
-                localStorage.setItem('session', JSON.stringify({
-                    user: data.user,
-                    access_token: data.session.access_token
-                }));
-
-                // Supprimer le hash de l'URL APRÈS avoir récupéré les données
-                window.history.replaceState(null, null, window.location.pathname);
-
-                // Afficher le message de confirmation
-                setTimeout(() => {
-                    showEmailConfirmedModal();
-                }, 100);
-                return true;
-            }
-        } catch (err) {
-            console.error('❌ Erreur confirmation:', err);
+            // Afficher le succès avec confettis
+            showEmailConfirmedModal();
         }
+    }, 1000); // Vérifier toutes les secondes
+};
+
+const stopEmailConfirmationPolling = () => {
+    if (emailConfirmationInterval) {
+        clearInterval(emailConfirmationInterval);
+        emailConfirmationInterval = null;
     }
-    return false;
 };
 
 // Afficher la modal de confirmation email
 const showEmailConfirmedModal = () => {
-    const signupModal = document.getElementById('signupModal');
-    const signupFlipCard = document.getElementById('signupFlipCard');
-    const signupSuccess = document.getElementById('signupSuccess');
+    // Cacher le loader
+    document.getElementById('signupLoader').classList.remove('active');
 
-    // Masquer le flip card
-    signupFlipCard.style.display = 'none';
+    const signupSuccess = document.getElementById('signupSuccess');
 
     // Modifier le contenu du succès pour la confirmation
     signupSuccess.innerHTML = `
         <div class="success-checkmark"></div>
-        <div id="confettiContainer" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden;"></div>
         <h2 class="modal-title" style="color: var(--success);">✅ Email validé avec succès !</h2>
         <p class="modal-subtitle" style="margin-bottom: 2rem;">
             Votre compte est maintenant actif. Vous pouvez vous connecter.
@@ -77,17 +52,17 @@ const showEmailConfirmedModal = () => {
         <button id="goToLoginBtn" class="btn-primary">Se connecter</button>
     `;
 
-    // Afficher la modal et le succès
-    signupModal.classList.add('show');
+    // Afficher le succès
     signupSuccess.classList.add('active');
 
-    // Confettis
+    // Confettis plein écran 🎉
     createConfetti();
 
     // Bouton "Se connecter"
     document.getElementById('goToLoginBtn').addEventListener('click', () => {
-        signupModal.classList.remove('show');
+        document.getElementById('signupModal').classList.remove('show');
         document.getElementById('loginModal').classList.add('show');
+        stopEmailConfirmationPolling(); // Arrêter le polling
     });
 };
 
@@ -100,9 +75,6 @@ if (checkAuth()) {
     if (appLinksSection) {
         appLinksSection.style.display = 'none';
     }
-
-    // Vérifier la confirmation email au chargement
-    checkEmailConfirmation();
 }
 
 // Traductions spécifiques à index.html
@@ -506,16 +478,16 @@ if (signupStep2Form) {
                 phone
             });
 
-            // Cacher le loader
-            document.getElementById('signupLoader').classList.remove('active');
-
             // ÉTAPE 4: Afficher succès ou erreur
             if (result.success) {
-                // SUCCÈS: Afficher animation de succès avec confettis
-                document.getElementById('signupSuccess').classList.add('active');
-                createConfetti();
+                // SUCCÈS: Garder le loader actif et démarrer le polling
+                // Le loader reste visible en attendant la confirmation email
+                console.log('📧 Compte créé, en attente de confirmation email...');
+                startEmailConfirmationPolling();
+                // Ne PAS cacher le loader - il reste visible
             } else {
-                // ERREUR: Afficher message générique (sécurité)
+                // ERREUR: Cacher le loader et afficher l'erreur
+                document.getElementById('signupLoader').classList.remove('active');
                 document.getElementById('signupError').classList.add('active');
             }
         }, 1000);

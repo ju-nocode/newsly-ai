@@ -5,45 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Confirmation - Newsly AI</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📰</text></svg>">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../public/css/styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 500px;
+        }
+        .checkmark {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: block;
+            stroke-width: 3;
+            stroke: #22c55e;
+            stroke-miterlimit: 10;
+            margin: 0 auto 2rem;
+            box-shadow: inset 0px 0px 0px #22c55e;
+            animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+        }
+        .checkmark__circle {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            stroke-width: 3;
+            stroke-miterlimit: 10;
+            stroke: #22c55e;
+            fill: none;
+            animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+        .checkmark__check {
+            transform-origin: 50% 50%;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+        }
+        @keyframes stroke {
+            100% { stroke-dashoffset: 0; }
+        }
+        @keyframes fill {
+            100% { box-shadow: inset 0px 0px 0px 30px #22c55e; }
+        }
+        h1 { font-size: 2rem; margin-bottom: 1rem; }
+        p { font-size: 1.125rem; opacity: 0.9; margin-bottom: 1.5rem; }
+        .closing { font-size: 0.875rem; opacity: 0.7; }
+    </style>
 </head>
 <body>
-    <div class="auth-container">
-        <div class="auth-card">
-            <!-- Loading state -->
-            <div id="loadingState" class="text-center">
-                <div class="spinner" style="margin: 0 auto 1rem;"></div>
-                <h2 class="modal-title">Vérification en cours...</h2>
-                <p class="modal-subtitle">Veuillez patienter</p>
-            </div>
-
-            <!-- Success state -->
-            <div id="successState" style="display: none; text-align: center;">
-                <div class="success-checkmark" style="margin: 0 auto 1.5rem;"></div>
-                <h2 class="modal-title" style="color: var(--success);">✅ Email validé avec succès !</h2>
-                <p class="modal-subtitle" style="margin-bottom: 2rem;">
-                    Votre compte est maintenant actif. Vous pouvez vous connecter.
-                </p>
-                <a href="../index.html" class="btn-primary" style="display: inline-block; text-decoration: none;">
-                    Se connecter
-                </a>
-            </div>
-
-            <!-- Error state -->
-            <div id="errorState" style="display: none; text-align: center;">
-                <div class="error-icon" style="margin: 0 auto 1.5rem;"></div>
-                <h2 class="modal-title" style="color: var(--error);">❌ Erreur de validation</h2>
-                <p class="modal-subtitle" id="errorMessage" style="margin-bottom: 2rem;">
-                    Le lien de confirmation est invalide ou a expiré.
-                </p>
-                <a href="../index.html" class="btn-secondary" style="display: inline-block; text-decoration: none;">
-                    Retour à l'accueil
-                </a>
-            </div>
-        </div>
+    <div class="container">
+        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+            <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+        </svg>
+        <h1>✅ Email validé !</h1>
+        <p>Votre compte est maintenant actif.</p>
+        <p class="closing">Cette fenêtre va se fermer automatiquement...</p>
     </div>
 
     <script type="module">
@@ -54,64 +82,42 @@
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1hdXVsa2VqbG5sdWJkem1oaXJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY5NTQwNzksImV4cCI6MjA2MjUzMDA3OX0.hC0jOBK3rKKj8Fq1P3ITjsZqtaPzzD7EYc7jPVb_Hvs'
         );
 
-        const loadingState = document.getElementById('loadingState');
-        const successState = document.getElementById('successState');
-        const errorState = document.getElementById('errorState');
-        const errorMessage = document.getElementById('errorMessage');
-
         async function handleEmailConfirmation() {
             try {
-                // Récupérer les paramètres de l'URL
                 const hashParams = new URLSearchParams(window.location.hash.substring(1));
                 const access_token = hashParams.get('access_token');
                 const refresh_token = hashParams.get('refresh_token');
-                const type = hashParams.get('type');
 
-                console.log('Hash params:', { access_token: !!access_token, type });
-
-                // Si c'est une confirmation d'email
-                if (type === 'signup' || type === 'email' || access_token) {
-                    // Échanger le token
+                if (access_token) {
+                    // Confirmer l'email avec Supabase
                     const { data, error } = await supabase.auth.setSession({
                         access_token,
                         refresh_token
                     });
 
-                    if (error) {
-                        throw error;
+                    if (!error && data.session) {
+                        console.log('✅ Email confirmé avec succès');
+
+                        // Marquer dans localStorage que l'email est confirmé
+                        localStorage.setItem('emailJustConfirmed', 'true');
+                        localStorage.setItem('confirmedUserId', data.user.id);
                     }
 
-                    console.log('Session établie:', data);
-
-                    // Afficher le succès
-                    loadingState.style.display = 'none';
-                    successState.style.display = 'block';
-
-                    // Sauvegarder la session dans localStorage pour app.js
-                    if (data.session) {
-                        localStorage.setItem('session', JSON.stringify({
-                            user: data.user,
-                            access_token: data.session.access_token
-                        }));
-                    }
-
-                    // Rediriger vers login après 3 secondes
+                    // Fermer l'onglet après 2 secondes
                     setTimeout(() => {
-                        window.location.href = '../index.html';
-                    }, 3000);
-                } else {
-                    throw new Error('Paramètres de confirmation manquants');
+                        window.close();
+                        // Si window.close() ne marche pas (dépend du navigateur)
+                        // Rediriger vers index.html
+                        if (!window.closed) {
+                            window.location.href = '../index.html';
+                        }
+                    }, 2000);
                 }
-
             } catch (error) {
-                console.error('Confirmation error:', error);
-                loadingState.style.display = 'none';
-                errorState.style.display = 'block';
-                errorMessage.textContent = error.message || 'Le lien de confirmation est invalide ou a expiré.';
+                console.error('❌ Erreur confirmation:', error);
             }
         }
 
-        // Lancer la vérification au chargement
         handleEmailConfirmation();
     </script>
 </body>
