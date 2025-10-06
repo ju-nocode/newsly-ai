@@ -886,6 +886,12 @@
             const newPassword = document.getElementById('newPassword').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
 
+            // Validation du mot de passe actuel
+            if (!currentPassword || currentPassword.trim() === '') {
+                showError('Veuillez saisir votre mot de passe actuel');
+                return;
+            }
+
             if (!newPassword || !confirmPassword) {
                 showError('Veuillez remplir le nouveau mot de passe et sa confirmation');
                 return;

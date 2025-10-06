@@ -3,6 +3,38 @@
 // ================================================
 
 // ================================================
+// HELPERS LOCALSTORAGE SÉCURISÉS
+// ================================================
+const safeLocalStorage = {
+    getItem: (key) => {
+        try {
+            return localStorage.getItem(key);
+        } catch (e) {
+            console.error('localStorage.getItem error:', e);
+            return null;
+        }
+    },
+    setItem: (key, value) => {
+        try {
+            localStorage.setItem(key, value);
+            return true;
+        } catch (e) {
+            console.error('localStorage.setItem error (quota exceeded?):', e);
+            return false;
+        }
+    },
+    removeItem: (key) => {
+        try {
+            localStorage.removeItem(key);
+            return true;
+        } catch (e) {
+            console.error('localStorage.removeItem error:', e);
+            return false;
+        }
+    }
+};
+
+// ================================================
 // CONFIGURATION
 // ================================================
 const API_BASE_URL = window.location.hostname === 'localhost'
@@ -539,4 +571,4 @@ if (typeof window !== 'undefined') {
 }
 
 // Exporter les fonctions utiles
-export { currentUser, authToken, loadSession };
+export { currentUser, authToken, loadSession, safeLocalStorage };

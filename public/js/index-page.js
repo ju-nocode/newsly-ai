@@ -448,7 +448,10 @@ const createConfetti = () => {
     // Nettoyer après l'animation (garder 5s pour voir les confettis)
     setTimeout(() => {
         container.innerHTML = '';
-        container.remove();
+        // Vérifier que le container existe toujours dans le DOM avant suppression
+        if (container.parentNode) {
+            container.parentNode.removeChild(container);
+        }
     }, 6000);
 };
 
