@@ -1045,8 +1045,20 @@
                     },
                     (error) => {
                         console.log('Géolocalisation refusée, utilisation de Paris par défaut');
-                        // Paris par défaut
-                        fetchWeather(48.8566, 2.3522);
+                        // Afficher un message à l'utilisateur
+                        weatherWidget.innerHTML = `
+                            <div class="weather-info" style="opacity: 0.7;">
+                                <span class="weather-icon">📍</span>
+                                <div class="weather-details">
+                                    <div class="weather-temp" style="font-size: 0.875rem;">Position par défaut</div>
+                                    <div class="weather-location" style="font-size: 0.75rem;">Géolocalisation désactivée</div>
+                                </div>
+                            </div>
+                        `;
+                        // Puis charger météo Paris après 2s
+                        setTimeout(() => {
+                            fetchWeather(48.8566, 2.3522); // Paris par défaut
+                        }, 2000);
                     }
                 );
             } else {

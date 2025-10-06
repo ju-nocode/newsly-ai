@@ -82,7 +82,7 @@ export const displayNews = (articles, containerId) => {
         return `
             <article class="news-card">
                 <div class="news-image">
-                    <img src="${safeImage}" alt="${safeTitle}" onerror="this.src='https://via.placeholder.com/400x200?text=No+Image'">
+                    <img src="${safeImage}" alt="${safeTitle}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x200?text=No+Image'">
                 </div>
                 <div class="news-content">
                     <h3 class="news-title">
