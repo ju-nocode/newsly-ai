@@ -49,6 +49,7 @@
             <!-- Bouton -->
             <a
                 href="index.html"
+                id="homeButton"
                 style="display: inline-flex; align-items: center; gap: 0.5rem; background: var(--primary); color: white; padding: 0.75rem 1.5rem; border-radius: var(--radius-md); font-weight: 600; font-size: 0.9375rem; text-decoration: none; transition: all 0.2s;"
                 onmouseover="this.style.background='var(--primary-dark)'; this.style.transform='translateY(-2px)'"
                 onmouseout="this.style.background='var(--primary)'; this.style.transform='translateY(0)'"
@@ -62,6 +63,7 @@
     <script>
         let timeLeft = 10;
         const countdownEl = document.getElementById('countdown');
+        const homeButton = document.getElementById('homeButton');
 
         const timer = setInterval(() => {
             timeLeft--;
@@ -72,6 +74,11 @@
                 window.location.href = 'index.html';
             }
         }, 1000);
+
+        // Stopper le timer si l'utilisateur clique sur le bouton
+        homeButton.addEventListener('click', () => {
+            clearInterval(timer);
+        });
     </script>
 
     <!-- Particles.js Library -->

@@ -1,11 +1,11 @@
 import { createClient } from '@supabase/supabase-js';
 
+import { securityHeaders, validateEmail, validatePassword, rateLimit } from '../_middleware/security.js';
+
 export default async function handler(req, res) {
-    // CORS headers
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    // CORS sécurisé
+    const origin = req.headers.origin;
+    securityHeaders(res, origin);
 
     if (req.method === 'OPTIONS') {
         return res.status(200).end();
@@ -18,18 +18,25 @@ export default async function handler(req, res) {
     try {
         const { email, password } = req.body;
 
+        // Rate limiting par IP
+        const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+        const rateLimitResult = rateLimit(clientIP, 5, 60000); // 5 tentatives par minute
+
+        if (!rateLimitResult.allowed) {
+            return res.status(429).json({ error: 'Trop de tentatives. Réessayez dans 1 minute.' });
+        }
+
         if (!email || !password) {
             return res.status(400).json({ error: 'Email et mot de passe requis' });
         }
 
-        // Validation email
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
+        // Validation email avec fonction sécurisée
+        if (!validateEmail(email)) {
             return res.status(400).json({ error: 'Email invalide' });
         }
 
-        // Validation longueur mot de passe
-        if (password.length > 100) {
+        // Validation mot de passe avec fonction sécurisée
+        if (!validatePassword(password)) {
             return res.status(400).json({ error: 'Mot de passe invalide' });
         }
 

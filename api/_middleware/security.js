@@ -2,12 +2,21 @@
 // MIDDLEWARE DE SÉCURITÉ
 // ================================================
 
-export const securityHeaders = (res) => {
-    // CORS
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    res.setHeader('Access-Control-Allow-Origin', '*');
+// Liste des origines autorisées (whitelist)
+const ALLOWED_ORIGINS = [
+    'https://prod-julien.vercel.app',
+    'http://localhost:3000',
+    'http://127.0.0.1:3000'
+];
+
+export const securityHeaders = (res, origin) => {
+    // CORS sécurisé avec whitelist
+    if (origin && ALLOWED_ORIGINS.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+        res.setHeader('Access-Control-Allow-Credentials', 'true');
+    }
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-CSRF-Token');
 
     // Sécurité supplémentaire
     res.setHeader('X-Content-Type-Options', 'nosniff');
@@ -17,11 +26,12 @@ export const securityHeaders = (res) => {
     res.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: http:;");
 };
 
-// Validation email
+// Validation email (RFC 5322 plus strict)
 export const validateEmail = (email) => {
     if (!email || typeof email !== 'string') return false;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email) && email.length <= 255;
+    // Regex plus strict pour email
+    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    return emailRegex.test(email) && email.length >= 5 && email.length <= 255;
 };
 
 // Validation mot de passe
