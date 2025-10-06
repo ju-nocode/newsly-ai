@@ -32,16 +32,24 @@
 
                 <!-- Burger Dropdown Menu -->
                 <div class="burger-dropdown" id="burgerMenuIndex">
-                    <!-- Auth Buttons -->
-                    <button class="burger-link" id="openLoginBtn">
-                        <span style="font-size: 1.5rem; filter: grayscale(1); opacity: 0.8;">🔐</span>
-                        <span data-i18n="auth.login">Connexion</span>
-                    </button>
+                    <!-- User Info (hidden si non connecté) -->
+                    <div class="burger-user-info" id="burgerUserInfoIndex" style="display: none;">
+                        <img id="burgerAvatarImageIndex" class="burger-user-avatar" src="https://ui-avatars.com/api/?name=User&background=3ecf8e&color=fff&size=72" alt="Avatar">
+                        <span id="userNameDisplayIndex" class="burger-user-name"></span>
+                    </div>
 
-                    <button class="burger-link" id="openSignupBtn">
-                        <span style="font-size: 1.5rem; filter: grayscale(1); opacity: 0.8;">✨</span>
-                        <span data-i18n="auth.signup">Créer un compte</span>
-                    </button>
+                    <!-- Auth Buttons (cachés si connecté) -->
+                    <div id="burgerAuthButtons">
+                        <button class="burger-link" id="openLoginBtn">
+                            <span style="font-size: 1.5rem; filter: grayscale(1); opacity: 0.8;">🔐</span>
+                            <span data-i18n="auth.login">Connexion</span>
+                        </button>
+
+                        <button class="burger-link" id="openSignupBtn">
+                            <span style="font-size: 1.5rem; filter: grayscale(1); opacity: 0.8;">✨</span>
+                            <span data-i18n="auth.signup">Créer un compte</span>
+                        </button>
+                    </div>
 
                     <div class="burger-divider"></div>
 
@@ -56,6 +64,12 @@
                             <span class="toggle-slider"></span>
                         </label>
                     </div>
+
+                    <!-- Dashboard link (affiché si connecté) -->
+                    <button class="burger-link" id="dashboardLinkIndex" style="display: none;">
+                        <span style="font-size: 1.5rem; filter: grayscale(1); opacity: 0.8;">📊</span>
+                        <span data-i18n="nav.dashboard">Dashboard</span>
+                    </button>
                 </div>
             </div>
         </div>
