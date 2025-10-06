@@ -51,8 +51,8 @@ html {
   --radius-xl: 0.75rem;
 
   /* Sidebar */
-  --sidebar-width: 280px;
-  --navbar-height: 56px;
+  --sidebar-width: 250px;
+  --navbar-height: 35px;
 
   /* Animated Dot Grid Background */
   --dot-color: rgba(62, 207, 142, 0.15);
