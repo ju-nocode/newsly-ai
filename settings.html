@@ -679,8 +679,13 @@
 
                 if (profile.bio) {
                     const bioInput = document.getElementById('bioInput');
-                    bioInput.value = profile.bio;
-                    document.getElementById('bioCount').textContent = profile.bio.length;
+                    if (bioInput) {
+                        bioInput.value = profile.bio;
+                        const bioCount = document.getElementById('bioCount');
+                        if (bioCount) {
+                            bioCount.textContent = profile.bio.length;
+                        }
+                    }
                 }
 
                 // Valider le formulaire après chargement
@@ -695,12 +700,14 @@
         const uploadAvatarBtn = document.getElementById('uploadAvatarBtn');
         const removeAvatarBtn = document.getElementById('removeAvatarBtn');
 
-        // Compteur de caractères pour la bio
+        // Compteur de caractères pour la bio (si présent)
         const bioInput = document.getElementById('bioInput');
         const bioCount = document.getElementById('bioCount');
-        bioInput.addEventListener('input', () => {
-            bioCount.textContent = bioInput.value.length;
-        });
+        if (bioInput && bioCount) {
+            bioInput.addEventListener('input', () => {
+                bioCount.textContent = bioInput.value.length;
+            });
+        }
 
         // Validation en temps réel et activation/désactivation du bouton
         const updateProfileBtn = document.getElementById('updateProfileBtn');
@@ -833,7 +840,8 @@
             const phoneNumber = document.getElementById('phoneInput').value.trim();
             const phoneCode = document.getElementById('phoneCountryCode').value;
             const phone = phoneNumber ? `${phoneCode} ${phoneNumber}` : '';
-            const bio = document.getElementById('bioInput').value.trim();
+            const bioInput = document.getElementById('bioInput');
+            const bio = bioInput ? bioInput.value.trim() : '';
 
             // Validations (déjà faites par le bouton, mais double-check)
             if (!username || !fullName || !country || !city) {
