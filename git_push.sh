@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # Stop le script si une commande échoue
 set -e
 
@@ -20,7 +19,7 @@ if git diff --cached --quiet; then
 fi
 
 # Commit avec message automatique ou personnalisé
-msg=${1:-"new updates"}
+msg=${1:-"New update! 🚀"}
 git commit -m "$msg"
 
 # Push sur la branche main
