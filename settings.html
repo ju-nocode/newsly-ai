@@ -1257,9 +1257,15 @@
                     ? 'http://localhost:3000'
                     : 'https://prod-julien.vercel.app';
 
-                const token = localStorage.getItem('authToken');
+                // Récupérer le token depuis la session
+                const session = localStorage.getItem('session');
+                if (!session) {
+                    throw new Error('Session non trouvée');
+                }
+                const { access_token } = JSON.parse(session);
+
                 const response = await fetch(`${API_BASE_URL}/api/admin/users`, {
-                    headers: { 'Authorization': `Bearer ${token}` }
+                    headers: { 'Authorization': `Bearer ${access_token}` }
                 });
 
                 if (!response.ok) {
@@ -1350,10 +1356,16 @@
                                     ? 'http://localhost:3000'
                                     : 'https://prod-julien.vercel.app';
 
-                                const token = localStorage.getItem('authToken');
+                                // Récupérer le token depuis la session
+                                const session = localStorage.getItem('session');
+                                if (!session) {
+                                    throw new Error('Session non trouvée');
+                                }
+                                const { access_token } = JSON.parse(session);
+
                                 const deleteResponse = await fetch(`${API_BASE_URL}/api/admin/users?userId=${userId}`, {
                                     method: 'DELETE',
-                                    headers: { 'Authorization': `Bearer ${token}` }
+                                    headers: { 'Authorization': `Bearer ${access_token}` }
                                 });
 
                                 if (!deleteResponse.ok) {
