@@ -1520,10 +1520,11 @@ body:has(.settings-layout) .footer {
 }
 
 .burger-dropdown.show {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-  display: block;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(0) !important;
+  display: block !important;
+  pointer-events: auto !important;
 }
 
 .burger-user-info {
@@ -2440,18 +2441,21 @@ body:has(.settings-layout) .footer {
 
   .search-container {
     margin: 0 0.5rem;
-    max-width: 100%;
+    max-width: 200px;
+    flex: 0 1 200px;
   }
 
   .search-input {
     font-size: 0.875rem;
     padding: 0.5rem 0.75rem;
+    min-width: 0;
   }
 
   .btn-search {
     width: 36px;
     height: 36px;
     font-size: 1.125rem;
+    flex-shrink: 0;
   }
 
   .burger-dropdown {
@@ -2879,6 +2883,42 @@ body:has(.settings-layout) .footer {
   select {
     font-size: 16px;
   }
+}
+
+/* ================================================
+   BROWSER/DEVICE SPECIFIC FIXES
+================================================ */
+
+/* iOS Safari fixes */
+.is-ios .burger-dropdown {
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+}
+
+.is-ios .burger-dropdown.show {
+  -webkit-transform: translateZ(0) translateY(0) !important;
+}
+
+/* Mobile Safari/Chrome burger menu fix */
+.is-mobile .burger-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: auto;
+  margin-top: 0;
+}
+
+.is-mobile .burger-dropdown.show {
+  position: absolute !important;
+}
+
+/* Touch device optimizations */
+.has-touch .burger-menu,
+.has-touch .burger-link {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 /* ================================================

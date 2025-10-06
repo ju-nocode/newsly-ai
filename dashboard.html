@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="public/css/styles.css">
+    <script src="public/js/browser-detect.js"></script>
 </head>
 <body class="dashboard-body">
     <!-- Particles.js Background -->
@@ -30,7 +31,7 @@
             </button>
 
             <a href="dashboard.html" class="logo">
-                <img src="https://img.icons8.com/ios-filled/50/000000/news.png" alt="News" class="logo-icon-img">
+                <span class="logo-icon" style="font-size: 1.75rem; filter: grayscale(1); opacity: 0.8;">📰</span>
                 <span class="logo-text">Newsly AI</span>
             </a>
 
@@ -72,7 +73,7 @@
                     <!-- Theme Toggle avec Switch -->
                     <div class="burger-item">
                         <div class="burger-item-label">
-                            <img src="https://img.icons8.com/ios-filled/50/000000/moon-symbol.png" alt="Theme" class="burger-icon">
+                            <span style="font-size: 1.5rem; filter: grayscale(1); opacity: 0.8;">🌙</span>
                             <span id="themeText" data-i18n="nav.darkMode">Mode sombre</span>
                         </div>
                         <label class="toggle-switch">
@@ -84,7 +85,7 @@
                     <!-- Language Toggle avec Switch -->
                     <div class="burger-item">
                         <div class="burger-item-label">
-                            <img src="https://img.icons8.com/ios-filled/50/000000/globe.png" alt="Language" class="burger-icon">
+                            <span style="font-size: 1.5rem; filter: grayscale(1); opacity: 0.8;">🌍</span>
                             <span id="langLabel">Français / English</span>
                         </div>
                         <label class="toggle-switch">
@@ -96,12 +97,12 @@
                     <div class="burger-divider"></div>
 
                     <button class="burger-link" id="settingsBtn">
-                        <img src="https://img.icons8.com/ios-filled/50/000000/settings.png" alt="Settings" class="burger-icon">
+                        <span style="font-size: 1.5rem; filter: grayscale(1); opacity: 0.8;">⚙️</span>
                         <span data-i18n="nav.settings">Paramètres</span>
                     </button>
 
                     <button class="burger-link" id="logoutBtn">
-                        <img src="https://img.icons8.com/ios-filled/50/000000/exit.png" alt="Logout" class="burger-icon">
+                        <span style="font-size: 1.5rem; filter: grayscale(1); opacity: 0.8;">🚪</span>
                         <span data-i18n="nav.logout">Déconnexion</span>
                     </button>
                 </div>
