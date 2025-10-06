@@ -92,20 +92,20 @@ const showEmailConfirmedModal = () => {
     const goToLoginBtn = document.getElementById('goToLoginBtn');
     if (goToLoginBtn) {
         goToLoginBtn.addEventListener('click', () => {
-            const signupModal = document.getElementById('signupModal');
-            const loginModal = document.getElementById('loginModal');
-            if (signupModal) signupModal.classList.remove('show');
-            if (loginModal) loginModal.classList.add('show');
+            const signupForm = document.getElementById('signupForm');
+            const loginForm = document.getElementById('loginForm');
+            if (signupForm) signupForm.style.display = 'none';
+            if (loginForm) loginForm.style.display = 'block';
             stopEmailConfirmationPolling();
         });
     }
 
     // Auto-ouvrir la modal de login après 3 secondes
     setTimeout(() => {
-        const signupModal = document.getElementById('signupModal');
-        const loginModal = document.getElementById('loginModal');
-        if (signupModal) signupModal.classList.remove('show');
-        if (loginModal) loginModal.classList.add('show');
+        const signupForm = document.getElementById('signupForm');
+        const loginForm = document.getElementById('loginForm');
+        if (signupForm) signupForm.style.display = 'none';
+        if (loginForm) loginForm.style.display = 'block';
         stopEmailConfirmationPolling();
     }, 3000);
 };
