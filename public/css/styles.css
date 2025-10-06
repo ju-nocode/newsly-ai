@@ -76,8 +76,8 @@ html {
   --shadow-lg: rgba(0, 0, 0, 0.8);
 
   /* Accent - Brighter blue for dark mode */
-  --primary: #1a1a1a;
-  --primary-dark: #0d0d0d;
+  --primary: #f1f5f9;
+  --primary-dark: #f1f5f9;
   --primary-light: #1a1a1a;
   --secondary: #0d0d0d;
 }
