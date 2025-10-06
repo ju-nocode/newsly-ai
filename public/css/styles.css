@@ -1330,9 +1330,10 @@ body:has(.settings-layout) .footer {
 .weather-widget {
   display: flex;
   align-items: center;
-  padding: 0.35rem 0.6rem;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
+/*  padding: 0.35rem 0.6rem;*/
+  padding: 0rem 0.5rem;*/
+/*  background: var(--bg-secondary);
+  border: 1px solid var(--border);*/
   border-radius: var(--radius-md);
   transition: all 0.2s;
   cursor: pointer;
