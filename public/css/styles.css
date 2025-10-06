@@ -1317,35 +1317,6 @@ body:has(.settings-layout) .footer {
    SEARCH BAR
 ================================================ */
 
-.search-container {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex: 1;
-  max-width: 500px;
-  margin: 0 2rem;
-}
-
-.search-input {
-  flex: 1;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  color: var(--text-primary);
-  padding: 0.5rem 1rem;
-  border-radius: var(--radius-md);
-  font-size: 0.875rem;
-  transition: all 0.2s;
-}
-
-.search-input:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-.search-input::placeholder {
-  color: var(--text-muted);
-}
 
 /* ================================================
    WEATHER WIDGET
@@ -1434,26 +1405,6 @@ body:has(.settings-layout) .footer {
   opacity: 0.5;
 }
 
-.btn-search {
-  background: var(--primary);
-  color: white;
-  border: none;
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-md);
-  font-size: 1.25rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn-search:hover {
-  background: var(--primary-dark);
-  transform: scale(1.05);
-}
 
 /* ================================================
    BURGER MENU
@@ -2372,10 +2323,6 @@ body:has(.settings-layout) .footer {
     font-size: 1.75rem;
   }
 
-  .search-container {
-    margin: 0 0.5rem;
-  }
-
   .nav-container {
     padding: 0 0.75rem;
   }
@@ -2437,25 +2384,6 @@ body:has(.settings-layout) .footer {
 
   .logo-text {
     display: none;
-  }
-
-  .search-container {
-    margin: 0 0.5rem;
-    max-width: 200px;
-    flex: 0 1 200px;
-  }
-
-  .search-input {
-    font-size: 0.875rem;
-    padding: 0.5rem 0.75rem;
-    min-width: 0;
-  }
-
-  .btn-search {
-    width: 36px;
-    height: 36px;
-    font-size: 1.125rem;
-    flex-shrink: 0;
   }
 
   .burger-dropdown {
