@@ -65,10 +65,10 @@ html {
   --bg-secondary: #0d0d0d;
   --bg-tertiary: #0d0d0d;
   --bg-sidebar: #0d0d0d;
-  --text-primary: #b9b9b9;
-  --text-secondary: #b9b9b9;
-  --text-muted: #94a3b8;
-  --text-sidebar: #e2e8f0;
+  --text-primary: #fff;
+  --text-secondary: #f1f5f9;
+  --text-muted: #f7f7f7;
+  --text-sidebar: #fff;
   --border: #1f1f1f;
 
   /* Animated Dot Grid Background - darker in dark mode */
@@ -77,11 +77,10 @@ html {
   --shadow-lg: rgba(0, 0, 0, 0.8);
 
   /* Accent - Brighter blue for dark mode */
-  --primary: #f1f5f9;
-  --primary-dark: #f1f5f9;
-  --primary-light: #1a1a1a;
+  --primary: #fff;
+  --primary-dark: #0d0d0d;
+  --primary-light: #0d0d0d;
   --secondary: #0d0d0d;
-}
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
