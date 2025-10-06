@@ -1857,15 +1857,27 @@ body:has(.settings-layout) .footer {
   color: var(--success);
 }
 
-.btn-role-toggle {
+.btn-delete-user {
   padding: 0.5rem 1rem;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
   border-radius: var(--radius-sm);
-  color: var(--text-primary);
+  color: var(--error);
   font-size: 0.875rem;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
+}
+
+.btn-delete-user:hover:not(:disabled) {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: var(--error);
+  transform: translateY(-1px);
+}
+
+.btn-delete-user:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .btn-role-toggle:hover:not(:disabled) {
