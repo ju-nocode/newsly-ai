@@ -15,79 +15,73 @@ html {
 }
 
 :root {
-  /* ====== LIGHT MODE - Néon rétro / Soft Futuristic ====== */
-  --bg-primary: #f8f8ff;        /* Fond clair légèrement bleuté */
-  --bg-secondary: #e8eaff;      /* Sections et cartes plus visibles */
-  --bg-tertiary: #dde1ff;       /* Effet de relief subtil */
-  --bg-sidebar: #f0f1ff;        /* Sidebar douce et homogène */
+  /* Light Mode - Retro Pastel */
+  --bg-primary: #fdf6e3;       /* crème rétro */
+  --bg-secondary: #ffe4c4;     /* beige chaud */
+  --bg-tertiary: #fff0f5;      /* lavande pâle */
+  --bg-sidebar: #2c003e;       /* violet foncé */
+  --text-primary: #2b2b2b;     /* gris sombre */
+  --text-secondary: #5e548e;   /* violet pastel */
+  --text-muted: #7a5c61;       /* vieux rose */
+  --text-sidebar: #ffd6f6;     /* rose néon clair */
+  --border: #d8a7ca;           /* rose vintage */
+  --shadow: rgba(0, 0, 0, 0.08);
+  --shadow-lg: rgba(0, 0, 0, 0.2);
 
-  --text-primary: #1a1a2f;      /* Texte foncé lisible */
-  --text-secondary: #3a3a5c;    
-  --text-muted: #6a6a8c;
-  --text-sidebar: #222244;
+  /* Accent - Retro Neon */
+  --primary: #ff6ec7;          /* rose néon */
+  --primary-dark: #b1006a;
+  --primary-light: #ffb6f1;
+  --secondary: #6ec6ff;        /* bleu néon doux */
+  --success: #00ff9c;          /* vert néon */
+  --error: #ff4c4c;            /* rouge vif */
+  --warning: #ffb84c;          /* orange rétro */
 
-  --border: #c2c5ff;
-  --shadow: rgba(150, 150, 255, 0.25);
-  --shadow-lg: rgba(100, 100, 255, 0.35);
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 0.75rem;
+  --spacing-lg: 1rem;
+  --spacing-xl: 1.5rem;
 
-  /* Accents rétro pastel */
-  --primary: #e800e8;           /* Magenta néon */
-  --primary-dark: #b300b3;
-  --primary-light: #ff7fff;
-  --secondary: #00d9ff;         /* Cyan électrique */
+  /* Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
 
-  --success: #00cc88;
-  --error: #ff3366;
-  --warning: #ffcc00;
+  /* Sidebar */
+  --sidebar-width: 250px;
+  --navbar-height: 35px;
 
-  /* Décor */
-  --dot-color: rgba(230, 0, 255, 0.08);
+  /* Animated Dot Grid Background */
+  --dot-color: rgba(255, 110, 199, 0.15); /* néon rose léger */
   --dot-size: 1px;
-  --dot-spacing: 28px;
-
-  --icon-filter: brightness(0.9) saturate(130%);
-
-  /* Boutons */
-  --btn-bg: var(--primary);
-  --btn-bg-hover: var(--primary-light);
-  --btn-text: #ffffff;
-  --btn-shadow: 0 4px 14px rgba(255, 0, 255, 0.4);
+  --dot-spacing: 30px;
 }
 
 [data-theme="dark"] {
-  /* ====== DARK MODE - Cyberpunk profond / néon électrique ====== */
-  --bg-primary: #0b0b14;
-  --bg-secondary: #12122a;
-  --bg-tertiary: #1b1b3a;
-  --bg-sidebar: #101022;
+  /* Dark Mode - Retro Synthwave */
+  --bg-primary: #1b0033;       /* violet très sombre */
+  --bg-secondary: #2c003e;
+  --bg-tertiary: #3d0066;
+  --bg-sidebar: #1a001f;
+  --text-primary: #ffe6ff;     /* rose pâle */
+  --text-secondary: #d3a4ff;   /* violet clair */
+  --text-muted: #b28ddb;       /* pastel sombre */
+  --text-sidebar: #ff8cff;     /* rose néon */
+  --border: #550055;           /* violet saturé */
 
-  --text-primary: #f2f2ff;
-  --text-secondary: #c5c5ff;
-  --text-muted: #8f8fb8;
-  --text-sidebar: #d6d6ff;
-
-  --border: #35355f;
-  --shadow: rgba(0, 0, 0, 0.6);
+  /* Animated Dot Grid Background */
+  --dot-color: rgba(255, 110, 199, 0.15);
+  --shadow: rgba(0, 0, 0, 0.5);
   --shadow-lg: rgba(0, 0, 0, 0.8);
 
-  /* Accents plus vifs */
-  --primary: #ff00ff;
-  --primary-dark: #b300b3;
-  --primary-light: #ff66ff;
-  --secondary: #00ffff;
-
-  --success: #33ff99;
-  --error: #ff4466;
-  --warning: #ffdd33;
-
-  --dot-color: rgba(255, 0, 255, 0.12);
-
-  --icon-filter: brightness(1.5) saturate(190%);
-
-  --btn-bg: var(--primary);
-  --btn-bg-hover: var(--primary-light);
-  --btn-text: #ffffff;
-  --btn-shadow: 0 4px 14px rgba(255, 0, 255, 0.55);
+  /* Accent - Neon Brights */
+  --primary: #ff6ec7;
+  --primary-dark: #b1006a;
+  --primary-light: #ffb6f1;
+  --secondary: #6ec6ff;
 }
 
 /* Transition douce entre les thèmes */
