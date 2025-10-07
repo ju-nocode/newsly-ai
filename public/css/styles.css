@@ -15,30 +15,30 @@ html {
 }
 
 :root {
-  /* ====== LIGHT MODE - SaaS Pro ====== */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f9fafb;
-  --bg-tertiary: #f1f5f9;
-  --bg-sidebar: #ffffff;
+  /* ====== LIGHT MODE - Cyberpunk ====== */
+  --bg-primary: #0a0a0f;     /* Fond sombre mais pas noir total */
+  --bg-secondary: #12121d;   /* Sections secondaires */
+  --bg-tertiary: #1c1c2f;    /* Cartes / blocs */
+  --bg-sidebar: #0d0d1a;     /* Sidebar uniforme */
 
-  --text-primary: #0f172a;
-  --text-secondary: #334155;
-  --text-muted: #64748b;
-  --text-sidebar: #1e293b;
+  --text-primary: #f0f0ff;   /* Blanc léger */
+  --text-secondary: #c0c0ff; /* Texte secondaire néon */
+  --text-muted: #8888aa;     /* Texte moins important */
+  --text-sidebar: #a0a0ff;   /* Texte de la sidebar */
 
-  --border: #e2e8f0;
-  --shadow: rgba(0, 0, 0, 0.04);
-  --shadow-lg: rgba(0, 0, 0, 0.08);
+  --border: #2c2c44;         /* Bordures subtiles */
+  --shadow: rgba(0, 0, 0, 0.6);
+  --shadow-lg: rgba(0, 0, 0, 0.8);
 
-  /* Accent - SaaS Blue */
-  --primary: #3b82f6;       /* Couleur d’accent principale */
-  --primary-dark: #2563eb;  /* Hover / focus */
-  --primary-light: #60a5fa; /* Éléments secondaires */
-  --secondary: #eff6ff;     /* Surfaces neutres */
+  /* Accent néon */
+  --primary: #ff00ff;        /* Violet néon */
+  --primary-dark: #cc00cc;
+  --primary-light: #ff66ff;
+  --secondary: #00ffff;      /* Cyan néon */
 
-  --success: #10b981;
-  --error: #ef4444;
-  --warning: #f59e0b;
+  --success: #00ff99;        /* Vert néon */
+  --error: #ff3366;          /* Rouge néon */
+  --warning: #ffcc00;        /* Jaune néon */
 
   /* Spacing */
   --spacing-xs: 0.25rem;
@@ -57,47 +57,43 @@ html {
   --sidebar-width: 250px;
   --navbar-height: 48px;
 
-  /* Dot grid (fond subtil) */
-  --dot-color: rgba(59, 130, 246, 0.08);
+  /* Dot grid pour effet futuriste */
+  --dot-color: rgba(255, 0, 255, 0.05);
   --dot-size: 1px;
   --dot-spacing: 30px;
 
-  /* Icons (par défaut sombre) */
-  --icon-filter: brightness(0) saturate(100%);
+  /* Icons */
+  --icon-filter: brightness(1.2) saturate(150%);
 }
 
 [data-theme="dark"] {
-  /* ====== DARK MODE - SaaS Pro ====== */
-  --bg-primary: #0f172a;   /* Fond principal */
-  --bg-secondary: #1e293b; /* Sections */
-  --bg-tertiary: #273549;  /* Cartes / blocs */
-  --bg-sidebar: #0f172a;   /* Sidebar uniforme */
+  /* ====== DARK MODE - Cyberpunk ====== */
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #0f0f1f;
+  --bg-tertiary: #1a1a2e;
+  --bg-sidebar: #0d0d1a;
 
-  --text-primary: #f8fafc;
-  --text-secondary: #cbd5e1;
-  --text-muted: #94a3b8;
-  --text-sidebar: #e2e8f0;
+  --text-primary: #f0f0ff;
+  --text-secondary: #c0c0ff;
+  --text-muted: #8888aa;
+  --text-sidebar: #a0a0ff;
 
-  --border: #334155;
+  --border: #2c2c44;
   --shadow: rgba(0, 0, 0, 0.6);
   --shadow-lg: rgba(0, 0, 0, 0.8);
 
-  /* Accent - légèrement plus clair pour ressortir */
-  --primary: #60a5fa;
-  --primary-dark: #3b82f6;
-  --primary-light: #93c5fd;
-  --secondary: #1e293b;
+  --primary: #ff00ff;
+  --primary-dark: #cc00cc;
+  --primary-light: #ff66ff;
+  --secondary: #00ffff;
 
-  /* Statuts */
-  --success: #34d399;
-  --error: #f87171;
-  --warning: #fbbf24;
+  --success: #00ff99;
+  --error: #ff3366;
+  --warning: #ffcc00;
 
-  /* Fond animé */
-  --dot-color: rgba(96, 165, 250, 0.12);
+  --dot-color: rgba(255, 0, 255, 0.1);
 
-  /* Icônes inversées pour le dark mode */
-  --icon-filter: brightness(0) invert(1);
+  --icon-filter: brightness(1.5) saturate(200%);
 }
 
 body {
