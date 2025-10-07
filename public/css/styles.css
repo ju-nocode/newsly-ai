@@ -779,46 +779,25 @@ input[type="color"]::-moz-color-swatch {
   letter-spacing: -0.025em;
   line-height: 1.1;
 
+  /* Gradient animé */
   background: linear-gradient(270deg, #ff3cac, #784ba0, #2b86c5, #ff3cac);
   background-size: 800% 800%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: gradientMove 8s ease infinite;
-
-  display: inline-block;
-  cursor: pointer;
 }
 
 /* Animation du gradient */
 @keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Effet hover : chaque lettre flottante */
-.auth-title:hover {
-  animation: none; /* stop gradient si tu veux */
-}
-
-.auth-title span {
-  display: inline-block;
-  transition: transform 0.3s ease;
-}
-
-/* Hover : lettres flottent */
-.auth-title:hover span {
-  transform: translateY(-10px) rotate(-5deg);
-}
-
-/* On peut ajouter un effet aléatoire pour chaque lettre via nth-child */
-.auth-title span:nth-child(2n) {
-  transition-duration: 0.35s;
-  transform: translateY(-8px) rotate(4deg);
-}
-.auth-title span:nth-child(3n) {
-  transition-duration: 0.4s;
-  transform: translateY(-12px) rotate(-3deg);
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .auth-subtitle {
