@@ -15,30 +15,30 @@ html {
 }
 
 :root {
-  /* ====== LIGHT MODE - Cyberpunk ====== */
-  --bg-primary: #0a0a0f;     /* Fond sombre mais pas noir total */
-  --bg-secondary: #12121d;   /* Sections secondaires */
-  --bg-tertiary: #1c1c2f;    /* Cartes / blocs */
-  --bg-sidebar: #0d0d1a;     /* Sidebar uniforme */
+  /* ====== LIGHT MODE - Cyberpunk amélioré ====== */
+  --bg-primary: #0f0f18;      /* Fond principal légèrement plus clair */
+  --bg-secondary: #18182e;    /* Sections secondaires plus visibles */
+  --bg-tertiary: #202040;     /* Cartes / blocs plus contrastés */
+  --bg-sidebar: #121228;      /* Sidebar uniforme */
 
-  --text-primary: #f0f0ff;   /* Blanc léger */
-  --text-secondary: #c0c0ff; /* Texte secondaire néon */
-  --text-muted: #8888aa;     /* Texte moins important */
-  --text-sidebar: #a0a0ff;   /* Texte de la sidebar */
+  --text-primary: #f0f0ff;
+  --text-secondary: #c0c0ff;
+  --text-muted: #a0a0c0;
+  --text-sidebar: #d0d0ff;
 
-  --border: #2c2c44;         /* Bordures subtiles */
-  --shadow: rgba(0, 0, 0, 0.6);
-  --shadow-lg: rgba(0, 0, 0, 0.8);
+  --border: #3a3a5c;          /* Bordures plus visibles */
+  --shadow: rgba(0, 0, 0, 0.7);
+  --shadow-lg: rgba(0, 0, 0, 0.85);
 
   /* Accent néon */
-  --primary: #ff00ff;        /* Violet néon */
-  --primary-dark: #cc00cc;
-  --primary-light: #ff66ff;
-  --secondary: #00ffff;      /* Cyan néon */
+  --primary: #ff33ff;          /* Violet néon plus lumineux */
+  --primary-dark: #cc00cc;     
+  --primary-light: #ff66ff;    
+  --secondary: #00ffff;        
 
-  --success: #00ff99;        /* Vert néon */
-  --error: #ff3366;          /* Rouge néon */
-  --warning: #ffcc00;        /* Jaune néon */
+  --success: #33ff99;
+  --error: #ff4466;
+  --warning: #ffdd33;
 
   /* Spacing */
   --spacing-xs: 0.25rem;
@@ -58,44 +58,55 @@ html {
   --navbar-height: 48px;
 
   /* Dot grid pour effet futuriste */
-  --dot-color: rgba(255, 0, 255, 0.05);
+  --dot-color: rgba(255, 0, 255, 0.08);
   --dot-size: 1px;
   --dot-spacing: 30px;
 
   /* Icons */
-  --icon-filter: brightness(1.2) saturate(150%);
+  --icon-filter: brightness(1.3) saturate(180%);
+
+  /* Boutons */
+  --btn-bg: var(--primary);
+  --btn-bg-hover: var(--primary-light);
+  --btn-text: #ffffff;
+  --btn-shadow: 0 4px 12px rgba(255, 0, 255, 0.4); /* glow subtil */
 }
 
 [data-theme="dark"] {
-  /* ====== DARK MODE - Cyberpunk ====== */
-  --bg-primary: #0a0a0f;
-  --bg-secondary: #0f0f1f;
-  --bg-tertiary: #1a1a2e;
-  --bg-sidebar: #0d0d1a;
+  /* ====== DARK MODE - Cyberpunk amélioré ====== */
+  --bg-primary: #0f0f18;
+  --bg-secondary: #17173b;
+  --bg-tertiary: #202050;
+  --bg-sidebar: #121228;
 
   --text-primary: #f0f0ff;
   --text-secondary: #c0c0ff;
-  --text-muted: #8888aa;
-  --text-sidebar: #a0a0ff;
+  --text-muted: #a0a0c0;
+  --text-sidebar: #d0d0ff;
 
-  --border: #2c2c44;
-  --shadow: rgba(0, 0, 0, 0.6);
-  --shadow-lg: rgba(0, 0, 0, 0.8);
+  --border: #3a3a5c;
+  --shadow: rgba(0, 0, 0, 0.7);
+  --shadow-lg: rgba(0, 0, 0, 0.85);
 
-  --primary: #ff00ff;
+  --primary: #ff33ff;
   --primary-dark: #cc00cc;
   --primary-light: #ff66ff;
   --secondary: #00ffff;
 
-  --success: #00ff99;
-  --error: #ff3366;
-  --warning: #ffcc00;
+  --success: #33ff99;
+  --error: #ff4466;
+  --warning: #ffdd33;
 
-  --dot-color: rgba(255, 0, 255, 0.1);
+  --dot-color: rgba(255, 0, 255, 0.15);
 
   --icon-filter: brightness(1.5) saturate(200%);
-}
 
+  /* Boutons */
+  --btn-bg: var(--primary);
+  --btn-bg-hover: var(--primary-light);
+  --btn-text: #ffffff;
+  --btn-shadow: 0 4px 12px rgba(255, 0, 255, 0.6);
+}
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
