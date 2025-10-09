@@ -6,7 +6,7 @@
 
 ---
 
-## 🎯 À propos
+## 🎯 À propos de ..
 
 **Newsly AI** est une plateforme moderne d'agrégation d'actualités qui combine intelligence artificielle et design élégant pour vous offrir une expérience de lecture personnalisée. Restez informé avec des actualités du monde entier, filtrées selon vos préférences.
 
