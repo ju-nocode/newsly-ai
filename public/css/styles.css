@@ -2484,6 +2484,11 @@ body:has(.dashboard-sidebar.collapsed) .settings-content {
     --sidebar-width: 0px;
   }
 
+  /* Hide sidebar toggle on mobile (use burger menu instead) */
+  .sidebar-toggle {
+    display: none !important;
+  }
+
   /* Sidebars cachées par défaut sur mobile */
   .dashboard-sidebar {
     position: fixed;
