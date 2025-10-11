@@ -1339,8 +1339,9 @@
                 document.getElementById('adminSectionHeader').style.display = 'flex';
                 document.getElementById('adminSectionContent').style.display = 'block';
 
-                // Load users list for admin
+                // Load users list and Vercel deployments for admin
                 loadUsersList();
+                loadVercelDeployments();
             }
         };
 
@@ -1489,6 +1490,121 @@
             } catch (error) {
                 console.error('Erreur lors du chargement des utilisateurs:', error);
                 usersContainer.innerHTML = '<p style="text-align: center; color: var(--error);">Erreur lors du chargement des utilisateurs</p>';
+            }
+        };
+
+        // Load Vercel deployments (admin only)
+        const loadVercelDeployments = async () => {
+            const deploymentsContainer = document.getElementById('deploymentsTableContainer');
+
+            try {
+                // Appel API sécurisé backend
+                const API_BASE_URL = window.location.hostname === 'localhost'
+                    ? 'http://localhost:3000'
+                    : 'https://prod-julien.vercel.app';
+
+                // Récupérer le token depuis la session
+                const session = localStorage.getItem('session');
+                if (!session) {
+                    throw new Error('Session non trouvée');
+                }
+                const { access_token } = JSON.parse(session);
+
+                const response = await fetch(`${API_BASE_URL}/api/admin/vercel`, {
+                    headers: { 'Authorization': `Bearer ${access_token}` }
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Erreur lors du chargement des déploiements');
+                }
+
+                const { deployments, stats } = await response.json();
+
+                // Update stat cards
+                document.getElementById('totalDeployments').textContent = stats.total;
+                document.getElementById('readyDeployments').textContent = stats.ready;
+                document.getElementById('errorDeployments').textContent = stats.error;
+                document.getElementById('avgBuildTime').textContent = stats.avgBuildTime;
+
+                if (!deployments || deployments.length === 0) {
+                    deploymentsContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Aucun déploiement trouvé</p>';
+                    return;
+                }
+
+                // Create deployments table
+                let tableHTML = `
+                    <table class="users-table">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>URL</th>
+                                <th>État</th>
+                                <th>Type</th>
+                                <th>Créé le</th>
+                                <th>Créateur</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+
+                deployments.forEach(deployment => {
+                    const createdAt = new Date(deployment.created).toLocaleDateString('fr-FR', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+
+                    // État badge avec couleurs
+                    let stateBadge = '';
+                    if (deployment.state === 'READY') {
+                        stateBadge = '<span class="role-badge" style="background: var(--success); color: white;">✅ READY</span>';
+                    } else if (deployment.state === 'ERROR') {
+                        stateBadge = '<span class="role-badge" style="background: var(--error); color: white;">❌ ERROR</span>';
+                    } else if (deployment.state === 'BUILDING') {
+                        stateBadge = '<span class="role-badge" style="background: var(--warning); color: white;">⚙️ BUILDING</span>';
+                    } else {
+                        stateBadge = `<span class="role-badge" style="background: var(--text-muted); color: white;">${deployment.state}</span>`;
+                    }
+
+                    // Type badge
+                    let typeBadge = '';
+                    if (deployment.target === 'production') {
+                        typeBadge = '<span class="role-badge admin">🚀 Production</span>';
+                    } else {
+                        typeBadge = '<span class="role-badge user">🔄 Preview</span>';
+                    }
+
+                    tableHTML += `
+                        <tr>
+                            <td><strong>${escapeHtml(deployment.name)}</strong></td>
+                            <td><a href="https://${escapeHtml(deployment.url)}" target="_blank" rel="noopener" style="color: var(--primary); text-decoration: none;">${escapeHtml(deployment.url)}</a></td>
+                            <td>${stateBadge}</td>
+                            <td>${typeBadge}</td>
+                            <td>${createdAt}</td>
+                            <td>${escapeHtml(deployment.creator)}</td>
+                            <td>
+                                <a href="${deployment.inspectorUrl}" target="_blank" rel="noopener" class="btn-delete-user" style="background: var(--primary); text-decoration: none; display: inline-block;">
+                                    🔍 Inspecter
+                                </a>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                tableHTML += `
+                        </tbody>
+                    </table>
+                `;
+
+                deploymentsContainer.innerHTML = tableHTML;
+
+            } catch (error) {
+                console.error('Erreur lors du chargement des déploiements:', error);
+                deploymentsContainer.innerHTML = `<p style="text-align: center; color: var(--error);">Erreur: ${error.message}</p>`;
             }
         };
 
