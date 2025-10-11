@@ -58,6 +58,21 @@ html {
   --dot-color: rgba(255, 110, 199, 0.15); /* néon rose léger */
   --dot-size: 1px;
   --dot-spacing: 30px;
+
+  /* Icon Filters - Light mode */
+  --icon-filter-primary: brightness(0) saturate(100%);
+  --icon-filter-secondary: brightness(0) saturate(100%) opacity(0.7);
+  --icon-filter-muted: grayscale(100%) opacity(0.6);
+  --icon-filter-white: brightness(0) invert(1);
+  --icon-filter-accent: hue-rotate(280deg) saturate(200%);
+  --icon-filter: var(--icon-filter-primary);
+
+  /* Aurora colors */
+  --aurora-blur: 1rem;
+  --aurora-clr-1: #00c2ff;
+  --aurora-clr-2: #33ff8c;
+  --aurora-clr-3: #ffc640;
+  --aurora-clr-4: #e54cff;
 }
 
 [data-theme="dark"] {
@@ -253,16 +268,6 @@ textarea,
    ICON FILTERS - Theme Adaptation System
 ================================================ */
 
-/* Base icon filters for different themes */
-:root {
-  /* Light mode - Icons noirs */
-  --icon-filter-primary: brightness(0) saturate(100%);
-  --icon-filter-secondary: brightness(0) saturate(100%) opacity(0.7);
-  --icon-filter-muted: grayscale(100%) opacity(0.6);
-  --icon-filter-white: brightness(0) invert(1);
-  --icon-filter-accent: hue-rotate(280deg) saturate(200%);
-}
-
 [data-theme="dark"] {
   /* Dark mode - Icons blancs/colorés */
   --icon-filter-primary: brightness(0) invert(1);
@@ -270,14 +275,6 @@ textarea,
   --icon-filter-muted: brightness(0) invert(1) grayscale(100%) opacity(0.5);
   --icon-filter-white: brightness(0) invert(1);
   --icon-filter-accent: brightness(1.2) hue-rotate(300deg) saturate(150%);
-}
-
-/* Legacy compatibility */
-:root {
-  --icon-filter: var(--icon-filter-primary);
-}
-
-[data-theme="dark"] {
   --icon-filter: brightness(0) invert(1);
 }
 
@@ -3010,16 +3007,6 @@ body:has(.settings-layout) .footer {
 /* ================================================
    AURORA TEXT EFFECT - from CodePen
 ================================================ */
-
-/* Variables pour l'effet aurora */
-:root {
-  /* Aurora colors */
-  --aurora-blur: 1rem;
-  --aurora-clr-1: #00c2ff;
-  --aurora-clr-2: #33ff8c;
-  --aurora-clr-3: #ffc640;
-  --aurora-clr-4: #e54cff;
-}
 
 /* Effet aurora - Exactement comme le CodePen */
 .logo-text.aurora,
