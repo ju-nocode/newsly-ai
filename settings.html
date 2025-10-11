@@ -142,6 +142,10 @@
                     <img src="https://img.icons8.com/ios-filled/50/000000/user-group-man-man.png" alt="Users" class="settings-nav-icon">
                     <span data-i18n="settings.users">Utilisateurs</span>
                 </button>
+                <button class="settings-nav-item" data-section="vercel" id="vercelNavBtn">
+                    <img src="https://img.icons8.com/ios-filled/50/000000/triangle.png" alt="Vercel" class="settings-nav-icon">
+                    <span>Vercel Dashboard</span>
+                </button>
             </div>
         </aside>
 
@@ -494,6 +498,51 @@
                 <div class="settings-card" style="margin-top: 1.5rem;">
                     <div id="usersTableContainer">
                         <p style="text-align: center; color: var(--text-muted);" data-i18n="settings.loadingUsers">Chargement des utilisateurs...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Vercel Dashboard Section (Admin only) -->
+            <section id="section-vercel" class="settings-section">
+                <h2 class="settings-section-title">Vercel Dashboard</h2>
+                <p class="settings-section-desc">Suivez vos déploiements Vercel en temps réel</p>
+
+                <!-- Stats Cards -->
+                <div class="admin-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">🚀</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="totalDeployments">-</div>
+                            <div class="stat-label">Déploiements</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="readyDeployments">-</div>
+                            <div class="stat-label">Prêts</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">❌</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="errorDeployments">-</div>
+                            <div class="stat-label">Erreurs</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⚡</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="avgBuildTime">-</div>
+                            <div class="stat-label">Build moyen (s)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Deployments Table -->
+                <div class="settings-card" style="margin-top: 1.5rem;">
+                    <div id="deploymentsTableContainer">
+                        <p style="text-align: center; color: var(--text-muted);">Chargement des déploiements...</p>
                     </div>
                 </div>
             </section>
