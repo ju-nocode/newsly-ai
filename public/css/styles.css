@@ -124,6 +124,7 @@ body {
 }
 
 /* Particles.js Background Container */
+/* DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
 #particles-js {
   position: fixed;
   top: 0;
@@ -132,16 +133,20 @@ body {
   height: 100%;
   z-index: 0;
 }
+*/
 
 /* Ensure content stays above background */
 /* Allow mouse events to pass through containers to particles */
+/* DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
 .navbar,
 .dashboard-container,
 .settings-layout {
   pointer-events: none;
 }
+*/
 
 /* Re-enable pointer events on interactive elements */
+/* DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
 .navbar > *,
 .nav-container,
 .nav-container > *,
@@ -172,6 +177,7 @@ textarea,
 .footer {
   pointer-events: auto;
 }
+*/
 
 /* Content z-index hierarchy */
 .dashboard-container,

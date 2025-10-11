@@ -13,7 +13,9 @@
 </head>
 <body class="dashboard-body">
     <!-- Particles.js Background -->
+    <!-- DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
     <div id="particles-js"></div>
+    -->
 
     <!-- Overlay pour menu mobile -->
     <div class="mobile-overlay" id="mobileOverlay"></div>
@@ -125,10 +127,12 @@
                     <img src="https://img.icons8.com/ios-filled/50/000000/lock-2.png" alt="Security" class="settings-nav-icon">
                     <span data-i18n="settings.security">Sécurité</span>
                 </button>
+                <!-- DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
                 <button class="settings-nav-item" data-section="particles">
                     <img src="https://img.icons8.com/ios-filled/50/000000/sparkling.png" alt="Particles" class="settings-nav-icon">
                     <span data-i18n="settings.particles">Particules</span>
                 </button>
+                -->
             </div>
 
             <!-- Section Administration (Admin only) -->
@@ -596,20 +600,26 @@
     </footer>
 
     <!-- Particles.js Library -->
+    <!-- DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    -->
 
     <script type="module">
         import { checkAuth, getUserProfile, updateUserProfile, changePassword, deleteAccount, logout } from './public/js/app.js';
         import { escapeHtml, showSuccess, showError } from './public/js/dashboard-utils.js';
         import { translatePage } from './public/js/translation-service.js';
-        import { initParticles } from './public/js/particles-config.js';
+        // DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
+        // import { initParticles } from './public/js/particles-config.js';
         import { countries } from './public/js/countries.js';
         import { attachPhoneFormatter } from './public/js/phone-formatter.js';
 
         // Initialize particles (async to load from DB)
+        // DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
+        /*
         (async () => {
             await initParticles('particles-js');
         })();
+        */
 
         // Vérifier l'authentification
         const isAuth = checkAuth();

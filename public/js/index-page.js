@@ -1,6 +1,7 @@
 import { checkAuth, login, signup } from './app.js';
 import { translatePage } from './translation-service.js';
-import { defaultParticlesConfig } from './particles-config.js';
+// DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
+// import { defaultParticlesConfig } from './particles-config.js';
 import { countries } from './countries.js';
 import { attachPhoneFormatter } from './phone-formatter.js';
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
@@ -716,8 +717,16 @@ langToggle.addEventListener('change', async () => {
 });
 
 // Initialize particles with default config
+// DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
+/*
 window.addEventListener('DOMContentLoaded', () => {
     window.particlesJS('particles-js', defaultParticlesConfig);
     // Update burger menu with user info
+    updateBurgerMenuUserInfo();
+});
+*/
+
+// Update burger menu with user info on load
+window.addEventListener('DOMContentLoaded', () => {
     updateBurgerMenuUserInfo();
 });
