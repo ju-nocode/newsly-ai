@@ -3013,16 +3013,7 @@ body:has(.settings-layout) .footer {
 
 /* Variables pour l'effet aurora */
 :root {
-  /* Light mode - Aurora colors (plus sombres pour visibilité sur fond clair) */
-  --aurora-blur: 1.5rem;
-  --aurora-clr-1: #0077aa;
-  --aurora-clr-2: #228855;
-  --aurora-clr-3: #cc8800;
-  --aurora-clr-4: #aa00cc;
-}
-
-[data-theme="dark"] {
-  /* Dark mode - Aurora colors (vives pour fond sombre) */
+  /* Aurora colors */
   --aurora-blur: 1rem;
   --aurora-clr-1: #00c2ff;
   --aurora-clr-2: #33ff8c;
@@ -3030,35 +3021,36 @@ body:has(.settings-layout) .footer {
   --aurora-clr-4: #e54cff;
 }
 
-/* Effet aurora pour le logo et le titre */
+/* Effet aurora - Exactement comme le CodePen */
 .logo-text.aurora,
 .auth-title.aurora {
-  position: relative;
-  overflow: hidden;
-  background: var(--bg-primary);
-  display: inline-block;
-  color: var(--text-primary);
-  font-weight: 800;
+  position: relative !important;
+  overflow: hidden !important;
+  background: #000 !important;
+  color: #fff !important;
+  font-weight: 800 !important;
+  margin: 0 !important;
 }
 
-[data-theme="dark"] .logo-text.aurora,
-[data-theme="dark"] .auth-title.aurora {
-  color: #fff;
+.logo-text.aurora {
+  display: inline-block !important;
 }
 
+.auth-title.aurora {
+  display: inline-block !important;
+  padding: 1rem 2rem !important;
+}
+
+/* Wrapper des blobs aurora */
 .aurora-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-  mix-blend-mode: darken;
-  pointer-events: none;
-}
-
-[data-theme="dark"] .aurora-wrapper {
-  mix-blend-mode: lighten;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 999 !important;
+  /* mix-blend-mode: darken !important; Temporairement désactivé pour debug */
+  pointer-events: none !important;
 }
 
 .aurora__item {
@@ -3072,13 +3064,13 @@ body:has(.settings-layout) .footer {
   mix-blend-mode: overlay;
 }
 
-/* Taille plus petite pour le logo dans la navbar */
+/* Taille adaptée pour le logo dans la navbar */
 .logo-text.aurora .aurora__item {
-  width: 200px;
-  height: 200px;
+  width: 150vw;
+  height: 150vw;
 }
 
-/* Taille plus grande pour le titre principal */
+/* Taille pour le titre principal */
 .auth-title.aurora .aurora__item {
   width: 60vw;
   height: 60vw;
