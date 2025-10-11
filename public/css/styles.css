@@ -249,9 +249,32 @@ textarea,
   filter: var(--icon-filter, none);
 }
 
-/* Icon filters for theme adaptation */
+/* ================================================
+   ICON FILTERS - Theme Adaptation System
+================================================ */
+
+/* Base icon filters for different themes */
 :root {
-  --icon-filter: brightness(0) saturate(100%);
+  /* Light mode - Icons noirs */
+  --icon-filter-primary: brightness(0) saturate(100%);
+  --icon-filter-secondary: brightness(0) saturate(100%) opacity(0.7);
+  --icon-filter-muted: grayscale(100%) opacity(0.6);
+  --icon-filter-white: brightness(0) invert(1);
+  --icon-filter-accent: hue-rotate(280deg) saturate(200%);
+}
+
+[data-theme="dark"] {
+  /* Dark mode - Icons blancs/colorés */
+  --icon-filter-primary: brightness(0) invert(1);
+  --icon-filter-secondary: brightness(0) invert(1) opacity(0.7);
+  --icon-filter-muted: brightness(0) invert(1) grayscale(100%) opacity(0.5);
+  --icon-filter-white: brightness(0) invert(1);
+  --icon-filter-accent: brightness(1.2) hue-rotate(300deg) saturate(150%);
+}
+
+/* Legacy compatibility */
+:root {
+  --icon-filter: var(--icon-filter-primary);
 }
 
 [data-theme="dark"] {
@@ -260,6 +283,38 @@ textarea,
 
 [data-theme="light"] {
   --icon-filter: brightness(0) saturate(100%);
+}
+
+/* Icon utility classes */
+.icon-primary {
+  filter: var(--icon-filter-primary);
+  transition: filter 0.4s ease;
+}
+
+.icon-secondary {
+  filter: var(--icon-filter-secondary);
+  transition: filter 0.4s ease;
+}
+
+.icon-muted {
+  filter: var(--icon-filter-muted);
+  transition: filter 0.4s ease;
+}
+
+.icon-white {
+  filter: var(--icon-filter-white);
+  transition: filter 0.4s ease;
+}
+
+.icon-accent {
+  filter: var(--icon-filter-accent);
+  transition: filter 0.4s ease;
+}
+
+/* Icons with hover effect */
+.icon-hover:hover {
+  opacity: 0.8;
+  transform: scale(1.05);
 }
 
 .logo-text {
