@@ -102,19 +102,29 @@ export default async function handler(req, res) {
 
             console.log('✅ [VERCEL API] Audit log créé');
 
+            // Vérifier l'environnement actuel
+            console.log('🌍 [VERCEL API] VERCEL_ENV:', process.env.VERCEL_ENV);
+            console.log('🌍 [VERCEL API] VERCEL_URL:', process.env.VERCEL_URL);
+            console.log('🌍 [VERCEL API] NODE_ENV:', process.env.NODE_ENV);
+
             // Vérifier que le token Vercel est configuré
             console.log('🔑 [VERCEL API] Variables d\'environnement disponibles:', Object.keys(process.env).filter(k => k.includes('VERCEL') || k.includes('TOKEN')));
 
-            const vercelToken = process.env.VERCEL_TOKEN;
-            console.log('🔑 [VERCEL API] VERCEL_TOKEN existe?', !!vercelToken);
-            console.log('🔑 [VERCEL API] VERCEL_TOKEN longueur:', vercelToken ? vercelToken.length : 0);
-            console.log('🔑 [VERCEL API] VERCEL_TOKEN preview (premiers 10 chars):', vercelToken ? vercelToken.substring(0, 10) + '...' : 'undefined');
+            // Essayer plusieurs noms de variables (compatibilité)
+            const vercelToken = process.env.VERCEL_API_TOKEN || process.env.VERCEL_TOKEN || process.env.VERCEL_DEPLOYMENT_TOKEN;
+
+            console.log('🔑 [VERCEL API] VERCEL_API_TOKEN existe?', !!process.env.VERCEL_API_TOKEN);
+            console.log('🔑 [VERCEL API] VERCEL_TOKEN existe?', !!process.env.VERCEL_TOKEN);
+            console.log('🔑 [VERCEL API] VERCEL_DEPLOYMENT_TOKEN existe?', !!process.env.VERCEL_DEPLOYMENT_TOKEN);
+            console.log('🔑 [VERCEL API] Token final trouvé?', !!vercelToken);
+            console.log('🔑 [VERCEL API] Token longueur:', vercelToken ? vercelToken.length : 0);
+            console.log('🔑 [VERCEL API] Token preview (premiers 10 chars):', vercelToken ? vercelToken.substring(0, 10) + '...' : 'undefined');
 
             if (!vercelToken) {
                 console.error('❌ [VERCEL API] Token Vercel NON TROUVÉ dans process.env');
                 return res.status(500).json({
                     error: 'Token Vercel non configuré',
-                    message: 'Veuillez ajouter VERCEL_TOKEN dans les variables d\'environnement'
+                    message: 'Veuillez ajouter VERCEL_API_TOKEN ou VERCEL_TOKEN dans les variables d\'environnement'
                 });
             }
 
