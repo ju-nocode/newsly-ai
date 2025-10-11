@@ -31,7 +31,7 @@
             </button>
 
             <a href="dashboard.html" class="logo">
-                <span class="logo-icon" style="font-size: 1.75rem; filter: grayscale(1); opacity: 0.8;">📰</span>
+                <img src="https://img.icons8.com/ios-filled/50/FFFFFF/news.png" alt="News" class="logo-icon" style="width: 1.75rem; height: 1.75rem; filter: brightness(0) invert(1);">
                 <span class="logo-text">Newsly AI</span>
             </a>
 
@@ -65,7 +65,7 @@
                     <!-- Theme Toggle avec Switch -->
                     <div class="burger-item">
                         <div class="burger-item-label">
-                            <span style="font-size: 1.5rem; filter: grayscale(1); opacity: 0.8;">🌙</span>
+                            <img src="https://img.icons8.com/ios-filled/50/000000/moon-symbol.png" alt="Theme" style="width: 1.5rem; height: 1.5rem; filter: grayscale(1); opacity: 0.8;">
                             <span id="themeText" data-i18n="nav.darkMode">Mode sombre</span>
                         </div>
                         <label class="toggle-switch">
@@ -77,7 +77,7 @@
                     <!-- Language Toggle avec Switch -->
                     <div class="burger-item">
                         <div class="burger-item-label">
-                            <span style="font-size: 1.5rem; filter: grayscale(1); opacity: 0.8;">🌍</span>
+                            <img src="https://img.icons8.com/ios-filled/50/000000/globe.png" alt="Language" style="width: 1.5rem; height: 1.5rem; filter: grayscale(1); opacity: 0.8;">
                             <span id="langLabel">Français / English</span>
                         </div>
                         <label class="toggle-switch">
@@ -89,12 +89,12 @@
                     <div class="burger-divider"></div>
 
                     <button class="burger-link" id="dashboardBtn">
-                        <span style="font-size: 1.5rem; filter: grayscale(1); opacity: 0.8;">📊</span>
+                        <img src="https://img.icons8.com/ios-filled/50/000000/dashboard.png" alt="Dashboard" style="width: 1.5rem; height: 1.5rem; filter: grayscale(1); opacity: 0.8;">
                         <span data-i18n="nav.dashboard">Dashboard</span>
                     </button>
 
                     <button class="burger-link" id="logoutBtn">
-                        <span style="font-size: 1.5rem; filter: grayscale(1); opacity: 0.8;">🚪</span>
+                        <img src="https://img.icons8.com/ios-filled/50/000000/exit.png" alt="Logout" style="width: 1.5rem; height: 1.5rem; filter: grayscale(1); opacity: 0.8;">
                         <span data-i18n="nav.logout">Déconnexion</span>
                     </button>
                 </div>
@@ -262,16 +262,7 @@
                         <label for="phoneInput" class="form-label" data-i18n="settings.phone">Téléphone (optionnel)</label>
                         <div style="display: flex; gap: 0.5rem;">
                             <select id="phoneCountryCode" class="form-input" style="width: 120px;">
-                                <option value="+33">🇫🇷 +33</option>
-                                <option value="+32">🇧🇪 +32</option>
-                                <option value="+41">🇨🇭 +41</option>
-                                <option value="+1">🇺🇸 +1</option>
-                                <option value="+44">🇬🇧 +44</option>
-                                <option value="+49">🇩🇪 +49</option>
-                                <option value="+34">🇪🇸 +34</option>
-                                <option value="+39">🇮🇹 +39</option>
-                                <option value="+351">🇵🇹 +351</option>
-                                <option value="+31">🇳🇱 +31</option>
+                                <!-- Options peuplées dynamiquement depuis countries.js -->
                             </select>
                             <input
                                 type="tel"
@@ -517,7 +508,7 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <div class="footer-brand">
-                        <span class="footer-logo-icon" style="font-size: 1.5rem; filter: grayscale(1); opacity: 0.8;">📰</span>
+                        <img src="https://img.icons8.com/ios-filled/50/000000/news.png" alt="News" class="footer-logo-icon" style="width: 1.5rem; height: 1.5rem; filter: grayscale(1); opacity: 0.8;">
                         <span>Newsly AI</span>
                     </div>
                     <p class="footer-text">
@@ -548,8 +539,8 @@
             <div class="footer-bottom">
                 <p>&copy; 2025 Newsly AI. Développé avec ❤️ par <a href="https://www.linkedin.com/in/fr-richard-julien/" target="_blank" rel="noopener" style="color: var(--primary); text-decoration: none;">Julien Richard</a></p>
                 <div class="footer-social">
-                    <a href="https://github.com/ju-nocode/newsly-ai" target="_blank" rel="noopener" aria-label="GitHub" style="font-size: 1.5rem; filter: grayscale(1); opacity: 0.7; text-decoration: none;">⚙️</a>
-                    <a href="https://www.linkedin.com/in/fr-richard-julien/" target="_blank" rel="noopener" aria-label="LinkedIn" style="font-size: 1.5rem; filter: grayscale(1); opacity: 0.7; text-decoration: none;">💼</a>
+                    <a href="https://github.com/ju-nocode/newsly-ai" target="_blank" rel="noopener" aria-label="GitHub"><img src="https://img.icons8.com/ios-filled/50/000000/github.png" alt="GitHub" style="width: 1.5rem; height: 1.5rem; filter: grayscale(1); opacity: 0.7;"></a>
+                    <a href="https://www.linkedin.com/in/fr-richard-julien/" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="https://img.icons8.com/ios-filled/50/000000/linkedin.png" alt="LinkedIn" style="width: 1.5rem; height: 1.5rem; filter: grayscale(1); opacity: 0.7;"></a>
                 </div>
             </div>
         </div>
@@ -564,6 +555,7 @@
         import { translatePage } from './public/js/translation-service.js';
         import { initParticles } from './public/js/particles-config.js';
         import { countries } from './public/js/countries.js';
+        import { attachPhoneFormatter } from './public/js/phone-formatter.js';
 
         // Initialize particles (async to load from DB)
         (async () => {
@@ -587,6 +579,27 @@
             option.textContent = `${country.emoji} ${country.name}`;
             countrySelect.appendChild(option);
         });
+
+        // Populer le select des codes téléphoniques depuis countries.js
+        const phoneCountryCodeSelect = document.getElementById('phoneCountryCode');
+        const phoneInput = document.getElementById('phoneInput');
+        if (phoneCountryCodeSelect) {
+            // Vider les options existantes
+            phoneCountryCodeSelect.innerHTML = '';
+            countries.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country.dial_code;
+                option.textContent = `${country.emoji} ${country.dial_code}`;
+                phoneCountryCodeSelect.appendChild(option);
+            });
+            // Sélectionner +33 (France) par défaut
+            phoneCountryCodeSelect.value = '+33';
+
+            // Attach phone number formatter
+            if (phoneInput) {
+                attachPhoneFormatter(phoneInput, phoneCountryCodeSelect);
+            }
+        }
 
         // Charger le profil utilisateur
         const loadProfile = async () => {

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Commit & push rapide sur la branche main (affichage léger)
+# Commit & push rapide sur la branche master (affichage léger)
 
 set -e
 
@@ -11,8 +11,8 @@ line() {
 
 # --- Vérifie la branche ---
 branch=$(git branch --show-current 2>/dev/null || git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "")
-if [ "$branch" != "main" ]; then
-  echo "❌  Branche actuelle : $branch (doit être main)"
+if [ "$branch" != "master" ]; then
+  echo "❌  Branche actuelle : $branch (doit être master)"
   exit 1
 fi
 
@@ -26,7 +26,7 @@ fi
 # --- Affiche résumé ---
 echo
 line
-echo "📦  Commit & push sur 'main'"
+echo "📦  Commit & push sur 'master'"
 line
 git status -s
 line
@@ -35,7 +35,7 @@ line
 git add -A
 git commit -m "new updates"
 echo
-git push origin main
+git push origin master
 line
 echo "🚀  Terminé."
 echo

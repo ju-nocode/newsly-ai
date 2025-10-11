@@ -2,6 +2,7 @@ import { checkAuth, login, signup } from './app.js';
 import { translatePage } from './translation-service.js';
 import { defaultParticlesConfig } from './particles-config.js';
 import { countries } from './countries.js';
+import { attachPhoneFormatter } from './phone-formatter.js';
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
 // Détection de confirmation email - Écoute localStorage + BroadcastChannel + Polling
@@ -352,6 +353,7 @@ if (signupCountrySelect) {
 
 // Peupler le dropdown des indicatifs téléphoniques
 const signupPhoneCodeSelect = document.getElementById('signupPhoneCode');
+const signupPhoneInput = document.getElementById('signupPhone');
 if (signupPhoneCodeSelect) {
     // Vider les options existantes
     signupPhoneCodeSelect.innerHTML = '';
@@ -363,6 +365,11 @@ if (signupPhoneCodeSelect) {
     });
     // Sélectionner +33 (France) par défaut
     signupPhoneCodeSelect.value = '+33';
+
+    // Attach phone number formatter
+    if (signupPhoneInput) {
+        attachPhoneFormatter(signupPhoneInput, signupPhoneCodeSelect);
+    }
 }
 
 // Variables pour stocker les données de Step 1
