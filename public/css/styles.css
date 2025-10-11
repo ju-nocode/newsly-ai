@@ -319,30 +319,6 @@ textarea,
 
 .logo-text {
   font-weight: 700;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  
-  /* Gradient animé */
-  background: linear-gradient(90deg, #ff3cac, #784ba0, #2b86c5, #ff3cac);
-  background-size: 800% 800%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradientMove 8s ease infinite;
-  }
-
-/* Animation du gradient */
-@keyframes gradientMove {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
 }
 
 .nav-links {
@@ -849,26 +825,6 @@ input[type="color"]::-moz-color-swatch {
   margin-bottom: 1rem;
   letter-spacing: -0.025em;
   line-height: 1.1;
-
-  /* Gradient animé */
-  background: linear-gradient(270deg, #ff3cac, #784ba0, #2b86c5, #ff3cac);
-  background-size: 800% 800%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradientMove 8s ease infinite;
-}
-
-/* Animation du gradient */
-@keyframes gradientMove {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
 }
 
 .auth-subtitle {
