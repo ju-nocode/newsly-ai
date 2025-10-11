@@ -529,33 +529,44 @@ input[type="color"]::-moz-color-swatch {
 
 /* Toggle button for sidebar */
 .sidebar-toggle {
-  position: absolute;
-  top: 0.5rem;
-  right: -12px;
-  width: 24px;
-  height: 24px;
+  position: fixed;
+  top: calc(var(--navbar-height) + 0.75rem);
+  left: calc(var(--sidebar-width) - 16px);
+  width: 32px;
+  height: 32px;
   background: var(--primary);
-  border: 2px solid var(--bg-primary);
+  border: 3px solid var(--bg-secondary);
   border-radius: 50%;
-  display: flex;
+  display: flex !important;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 101;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+  z-index: 10001 !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5);
+  pointer-events: auto !important;
+}
+
+.sidebar-toggle:active {
+  transform: scale(0.95);
 }
 
 .sidebar-toggle:hover {
-  transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+  transform: scale(1.15);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.6);
+  background: var(--primary-dark);
 }
 
 .sidebar-toggle svg {
-  width: 12px;
-  height: 12px;
+  width: 16px;
+  height: 16px;
   color: white;
   transition: transform 0.3s ease;
+  stroke-width: 3;
+}
+
+.dashboard-sidebar.collapsed .sidebar-toggle {
+  left: calc(var(--sidebar-width-collapsed) - 16px);
 }
 
 .dashboard-sidebar.collapsed .sidebar-toggle svg {
@@ -711,7 +722,7 @@ input[type="color"]::-moz-color-swatch {
 }
 
 /* Adjust content when sidebar is collapsed */
-.dashboard-sidebar.collapsed ~ .dashboard-container {
+body:has(.dashboard-sidebar.collapsed) .dashboard-container {
   margin-left: var(--sidebar-width-collapsed);
 }
 
@@ -1331,10 +1342,16 @@ input[type="color"]::-moz-color-swatch {
 
 .dashboard-body .footer {
   margin-left: var(--sidebar-width);
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body:has(.settings-layout) .footer {
   margin-left: var(--sidebar-width);
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body:has(.dashboard-sidebar.collapsed) .footer {
+  margin-left: var(--sidebar-width-collapsed);
 }
 
 .footer-container {
@@ -1870,7 +1887,7 @@ body:has(.settings-layout) .footer {
 }
 
 /* Adjust settings content when sidebar is collapsed */
-.dashboard-sidebar.collapsed ~ .settings-content {
+body:has(.dashboard-sidebar.collapsed) .settings-content {
   margin-left: var(--sidebar-width-collapsed);
 }
 
