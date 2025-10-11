@@ -15,27 +15,27 @@ html {
 }
 
 :root {
-  /* Light Mode - Retro Pastel */
-  --bg-primary: #fdf6e3;       /* crème rétro */
-  --bg-secondary: #ffe4c4;     /* beige chaud */
-  --bg-tertiary: #fff0f5;      /* lavande pâle */
-  --bg-sidebar: #2c003e;       /* violet foncé */
-  --text-primary: #2b2b2b;     /* gris sombre */
-  --text-secondary: #5e548e;   /* violet pastel */
-  --text-muted: #7a5c61;       /* vieux rose */
-  --text-sidebar: #ffd6f6;     /* rose néon clair */
-  --border: #d8a7ca;           /* rose vintage */
-  --shadow: rgba(0, 0, 0, 0.08);
-  --shadow-lg: rgba(0, 0, 0, 0.2);
+  /* Light Mode - Modern Clean */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  --bg-sidebar: #ffffff;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --text-sidebar: #0f172a;
+  --border: #e2e8f0;
+  --shadow: rgba(0, 0, 0, 0.05);
+  --shadow-lg: rgba(0, 0, 0, 0.1);
 
-  /* Accent - Retro Neon */
-  --primary: #ff6ec7;          /* rose néon */
-  --primary-dark: #b1006a;
-  --primary-light: #ffb6f1;
-  --secondary: #6ec6ff;        /* bleu néon doux */
-  --success: #00ff9c;          /* vert néon */
-  --error: #ff4c4c;            /* rouge vif */
-  --warning: #ffb84c;          /* orange rétro */
+  /* Accent - Modern Blue */
+  --primary: #3b82f6;
+  --primary-dark: #2563eb;
+  --primary-light: #60a5fa;
+  --secondary: #8b5cf6;
+  --success: #10b981;
+  --error: #ef4444;
+  --warning: #f59e0b;
 
   /* Spacing */
   --spacing-xs: 0.25rem;
@@ -55,7 +55,7 @@ html {
   --navbar-height: 35px;
 
   /* Animated Dot Grid Background */
-  --dot-color: rgba(255, 110, 199, 0.15); /* néon rose léger */
+  --dot-color: rgba(59, 130, 246, 0.1);
   --dot-size: 1px;
   --dot-spacing: 30px;
 
@@ -68,35 +68,35 @@ html {
   --icon-filter: var(--icon-filter-primary);
 
   /* Aurora colors */
-  --aurora-blur: 1rem;
-  --aurora-clr-1: #00c2ff;
-  --aurora-clr-2: #33ff8c;
-  --aurora-clr-3: #ffc640;
-  --aurora-clr-4: #e54cff;
+  --aurora-blur: 1.5rem;
+  --aurora-clr-1: #3b82f6;
+  --aurora-clr-2: #8b5cf6;
+  --aurora-clr-3: #06b6d4;
+  --aurora-clr-4: #6366f1;
 }
 
 [data-theme="dark"] {
-  /* Dark Mode - Retro Synthwave */
-  --bg-primary: #1b0033;       /* violet très sombre */
-  --bg-secondary: #2c003e;
-  --bg-tertiary: #3d0066;
-  --bg-sidebar: #1a001f;
-  --text-primary: #ffe6ff;     /* rose pâle */
-  --text-secondary: #d3a4ff;   /* violet clair */
-  --text-muted: #b28ddb;       /* pastel sombre */
-  --text-sidebar: #ff8cff;     /* rose néon */
-  --border: #550055;           /* violet saturé */
+  /* Dark Mode - Modern Slate */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --bg-sidebar: #0f172a;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #64748b;
+  --text-sidebar: #f1f5f9;
+  --border: #334155;
 
   /* Animated Dot Grid Background */
-  --dot-color: rgba(255, 110, 199, 0.15);
-  --shadow: rgba(0, 0, 0, 0.5);
-  --shadow-lg: rgba(0, 0, 0, 0.8);
+  --dot-color: rgba(59, 130, 246, 0.15);
+  --shadow: rgba(0, 0, 0, 0.3);
+  --shadow-lg: rgba(0, 0, 0, 0.5);
 
-  /* Accent - Neon Brights */
-  --primary: #ff6ec7;
-  --primary-dark: #b1006a;
-  --primary-light: #ffb6f1;
-  --secondary: #6ec6ff;
+  /* Accent - Modern Blue (same as light for consistency) */
+  --primary: #3b82f6;
+  --primary-dark: #2563eb;
+  --primary-light: #60a5fa;
+  --secondary: #8b5cf6;
 }
 
 /* Transition douce entre les thèmes */
@@ -179,7 +179,14 @@ textarea,
 }
 */
 
-/* Content z-index hierarchy */
+/* Content z-index hierarchy
+   Hiérarchie clarifiée pour éviter les conflits :
+   - z-index: 1 = Contenu principal
+   - z-index: 100 = Sidebar
+   - z-index: 1000-1999 = Éléments mobiles (sidebars, overlays)
+   - z-index: 10000-10999 = Navigation et dropdowns
+   - z-index: 20000+ = Modaux et éléments au-dessus de tout
+*/
 .dashboard-container,
 .settings-layout,
 .hero,
@@ -189,7 +196,7 @@ textarea,
 .cta-section,
 .footer {
   position: relative;
-  z-index: 10;
+  z-index: 1;
 }
 
 .modal-overlay {
@@ -226,12 +233,18 @@ textarea,
   right: 0;
   width: 100%;
   height: var(--navbar-height);
-  background: var(--bg-primary);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
-  box-shadow: 0 2px 8px var(--shadow);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   z-index: 10000;
   padding: 0;
   padding-top: env(safe-area-inset-top);
+}
+
+[data-theme="dark"] .navbar {
+  background: rgba(15, 23, 42, 0.8);
 }
 
 .navbar.dashboard-nav {
@@ -488,12 +501,18 @@ input[type="color"]::-moz-color-swatch {
   top: var(--navbar-height);
   width: var(--sidebar-width);
   height: calc(100vh - var(--navbar-height));
-  background: var(--bg-primary);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-right: 1px solid var(--border);
   padding: 0;
   overflow-y: auto;
   z-index: 100;
-  pointer-events: auto; /* Réactiver les événements sur le sidebar */
+  pointer-events: auto;
+}
+
+[data-theme="dark"] .dashboard-sidebar {
+  background: rgba(15, 23, 42, 0.8);
 }
 
 /* ================================================
@@ -814,12 +833,15 @@ input[type="color"]::-moz-color-swatch {
   align-items: center;
   justify-content: center;
   position: relative;
-  z-index: 10;
+  z-index: 1;
+  background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
 }
 
 .auth-container {
   max-width: 600px;
   margin: 0 auto;
+  position: relative;
+  z-index: 2;
 }
 
 .auth-title {
@@ -1057,20 +1079,20 @@ input[type="color"]::-moz-color-swatch {
 
 .feature-card,
 .category-preview {
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
+  background: var(--bg-primary);
   padding: 1.5rem;
   border-radius: var(--radius-lg);
   text-align: center;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid var(--border);
+  box-shadow: 0 1px 3px var(--shadow);
 }
 
 .feature-card:hover,
 .category-preview:hover {
   border-color: var(--primary);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px var(--shadow);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
 }
 
 .feature-icon,
@@ -1111,19 +1133,19 @@ input[type="color"]::-moz-color-swatch {
 }
 
 .step-card {
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
+  background: var(--bg-primary);
   padding: 2rem 1.5rem;
   border-radius: var(--radius-lg);
   border: 1px solid var(--border);
   text-align: center;
   position: relative;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 3px var(--shadow);
 }
 
 .step-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 20px var(--shadow);
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
   border-color: var(--primary);
 }
 
@@ -3014,13 +3036,13 @@ body:has(.settings-layout) .footer {
    AURORA TEXT EFFECT - from CodePen
 ================================================ */
 
-/* Effet aurora - Exactement comme le CodePen */
+/* Effet aurora - Modernisé pour s'intégrer au design */
 .logo-text.aurora,
 .auth-title.aurora {
   position: relative !important;
   overflow: hidden !important;
-  background-color: #000000 !important;
-  color: #ffffff !important;
+  background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary)) !important;
+  color: var(--text-primary) !important;
   font-weight: 800 !important;
   margin: 0 !important;
   isolation: isolate !important;
@@ -3028,11 +3050,15 @@ body:has(.settings-layout) .footer {
 
 .logo-text.aurora {
   display: inline-block !important;
+  background: transparent !important;
 }
 
 .auth-title.aurora {
   display: inline-block !important;
   padding: 1rem 2rem !important;
+  border-radius: var(--radius-lg) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
 }
 
 /* Wrapper des blobs aurora */
@@ -3042,8 +3068,9 @@ body:has(.settings-layout) .footer {
   left: 0 !important;
   width: 100% !important;
   height: 100% !important;
-  z-index: 999 !important;
-  mix-blend-mode: darken !important;
+  z-index: -1 !important;
+  mix-blend-mode: normal !important;
+  opacity: 0.5 !important;
   pointer-events: none !important;
 }
 
@@ -3055,7 +3082,8 @@ body:has(.settings-layout) .footer {
   background-color: var(--aurora-clr-1);
   border-radius: 37% 29% 27% 27% / 28% 25% 41% 37%;
   filter: blur(var(--aurora-blur));
-  mix-blend-mode: overlay;
+  mix-blend-mode: soft-light;
+  opacity: 0.6;
 }
 
 /* Taille adaptée pour le logo dans la navbar */
