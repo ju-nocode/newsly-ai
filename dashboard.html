@@ -107,6 +107,13 @@
     <!-- Main Content -->
     <div class="dashboard-container">
         <aside class="dashboard-sidebar">
+            <!-- Toggle button for collapsing sidebar -->
+            <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+
             <div class="collapse-header" data-collapse-id="categories">
                 <img src="https://img.icons8.com/ios-filled/50/FFFFFF/news.png" alt="Categories" class="collapse-header-icon">
                 <h2 data-i18n="sidebar.categories">Catégories</h2>
@@ -807,6 +814,34 @@
 
                         console.log(`🔄 Toggle ${collapseId}: ${willCollapse ? 'collapsed' : 'expanded'}`);
                     });
+                });
+            }
+
+            // ================================================
+            // SIDEBAR TOGGLE - Collapsible functionality
+            // ================================================
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const sidebar = document.querySelector('.dashboard-sidebar');
+
+            // Load saved state from localStorage
+            const isSidebarCollapsed = localStorage.getItem('sidebar_collapsed') === 'true';
+            if (isSidebarCollapsed) {
+                sidebar.classList.add('collapsed');
+            }
+
+            // Toggle sidebar on button click
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    sidebar.classList.toggle('collapsed');
+
+                    // Save state to localStorage
+                    const isCollapsed = sidebar.classList.contains('collapsed');
+                    localStorage.setItem('sidebar_collapsed', isCollapsed);
+
+                    console.log(`🔄 Sidebar ${isCollapsed ? 'collapsed' : 'expanded'}`);
                 });
             }
         })();
