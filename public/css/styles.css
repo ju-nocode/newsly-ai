@@ -3026,10 +3026,11 @@ body:has(.settings-layout) .footer {
 .auth-title.aurora {
   position: relative !important;
   overflow: hidden !important;
-  background: #000 !important;
-  color: #fff !important;
+  background-color: #000000 !important;
+  color: #ffffff !important;
   font-weight: 800 !important;
   margin: 0 !important;
+  isolation: isolate !important;
 }
 
 .logo-text.aurora {
@@ -3049,7 +3050,7 @@ body:has(.settings-layout) .footer {
   width: 100% !important;
   height: 100% !important;
   z-index: 999 !important;
-  /* mix-blend-mode: darken !important; Temporairement désactivé pour debug */
+  mix-blend-mode: darken !important;
   pointer-events: none !important;
 }
 
