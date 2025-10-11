@@ -87,9 +87,6 @@ export default async function handler(req, res) {
 
         // GET - Récupérer les déploiements Vercel (admin only)
         if (req.method === 'GET') {
-            console.log('🔍 [VERCEL API] Début de la requête GET');
-            console.log('👤 [VERCEL API] Admin:', user.email, '- ID:', user.id);
-
             // Log audit: consultation du dashboard Vercel
             await supabaseAdmin.from('admin_audit_log').insert({
                 admin_id: user.id,
@@ -100,52 +97,28 @@ export default async function handler(req, res) {
                 metadata: { method: 'GET' }
             });
 
-            console.log('✅ [VERCEL API] Audit log créé');
-
-            // Vérifier l'environnement actuel
-            console.log('🌍 [VERCEL API] VERCEL_ENV:', process.env.VERCEL_ENV);
-            console.log('🌍 [VERCEL API] VERCEL_URL:', process.env.VERCEL_URL);
-            console.log('🌍 [VERCEL API] NODE_ENV:', process.env.NODE_ENV);
-
-            // Vérifier que le token Vercel est configuré
-            console.log('🔑 [VERCEL API] Variables d\'environnement disponibles:', Object.keys(process.env).filter(k => k.includes('VERCEL') || k.includes('TOKEN')));
-
             // Essayer plusieurs noms de variables (compatibilité)
             const vercelToken = process.env.VERCEL_API_TOKEN || process.env.VERCEL_TOKEN || process.env.VERCEL_DEPLOYMENT_TOKEN;
 
-            console.log('🔑 [VERCEL API] VERCEL_API_TOKEN existe?', !!process.env.VERCEL_API_TOKEN);
-            console.log('🔑 [VERCEL API] VERCEL_TOKEN existe?', !!process.env.VERCEL_TOKEN);
-            console.log('🔑 [VERCEL API] VERCEL_DEPLOYMENT_TOKEN existe?', !!process.env.VERCEL_DEPLOYMENT_TOKEN);
-            console.log('🔑 [VERCEL API] Token final trouvé?', !!vercelToken);
-            console.log('🔑 [VERCEL API] Token longueur:', vercelToken ? vercelToken.length : 0);
-            console.log('🔑 [VERCEL API] Token preview (premiers 10 chars):', vercelToken ? vercelToken.substring(0, 10) + '...' : 'undefined');
-
             if (!vercelToken) {
-                console.error('❌ [VERCEL API] Token Vercel NON TROUVÉ dans process.env');
                 return res.status(500).json({
                     error: 'Token Vercel non configuré',
                     message: 'Veuillez ajouter VERCEL_API_TOKEN ou VERCEL_TOKEN dans les variables d\'environnement'
                 });
             }
 
-            console.log('✅ [VERCEL API] Token Vercel trouvé, appel à l\'API Vercel...');
-
             try {
                 // Appeler l'API Vercel pour récupérer les déploiements
                 // Documentation: https://vercel.com/docs/rest-api/endpoints#list-deployments
-                console.log('🌐 [VERCEL API] Appel à l\'API Vercel: https://api.vercel.com/v6/deployments?limit=20');
-
                 const vercelResponse = await fetch('https://api.vercel.com/v6/deployments?limit=20', {
                     headers: {
                         'Authorization': `Bearer ${vercelToken}`
                     }
                 });
 
-                console.log('📡 [VERCEL API] Réponse reçue - Status:', vercelResponse.status, vercelResponse.statusText);
-
                 if (!vercelResponse.ok) {
                     const errorData = await vercelResponse.json();
-                    console.error('❌ [VERCEL API] Erreur API Vercel:', JSON.stringify(errorData, null, 2));
+                    console.error('Vercel API error:', errorData);
                     return res.status(vercelResponse.status).json({
                         error: 'Erreur API Vercel',
                         details: errorData.error?.message || 'Erreur inconnue'
@@ -154,13 +127,6 @@ export default async function handler(req, res) {
 
                 const vercelData = await vercelResponse.json();
                 const deployments = vercelData.deployments || [];
-
-                console.log('✅ [VERCEL API] Déploiements récupérés:', deployments.length);
-                console.log('📊 [VERCEL API] Premier déploiement:', deployments[0] ? {
-                    name: deployments[0].name,
-                    state: deployments[0].state,
-                    url: deployments[0].url
-                } : 'Aucun');
 
                 // Formater les déploiements
                 const formattedDeployments = deployments.map(d => ({
@@ -200,17 +166,6 @@ export default async function handler(req, res) {
                 // Production deployments
                 const productionDeployments = deployments.filter(d => d.target === 'production').length;
 
-                console.log('📊 [VERCEL API] Statistiques calculées:', {
-                    total: totalDeployments,
-                    ready: readyDeployments,
-                    error: errorDeployments,
-                    building: buildingDeployments,
-                    production: productionDeployments,
-                    avgBuildTime: avgBuildTimeSeconds
-                });
-
-                console.log('✅ [VERCEL API] Envoi de la réponse au client');
-
                 return res.status(200).json({
                     deployments: formattedDeployments,
                     stats: {
@@ -230,8 +185,7 @@ export default async function handler(req, res) {
                 });
 
             } catch (fetchError) {
-                console.error('❌ [VERCEL API] Erreur lors du fetch:', fetchError);
-                console.error('❌ [VERCEL API] Stack trace:', fetchError.stack);
+                console.error('Vercel API fetch error:', fetchError);
                 return res.status(500).json({
                     error: 'Erreur lors de la communication avec l\'API Vercel',
                     details: fetchError.message
