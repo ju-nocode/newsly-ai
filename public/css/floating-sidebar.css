@@ -178,6 +178,7 @@ input[type="checkbox"].checkbox-input {
     outline: 2px solid transparent;
     border-radius: inherit;
     padding: 0 0.5rem;
+    overflow: hidden;
 }
 
 .sidebar__link.country-filter-item {
@@ -249,12 +250,31 @@ aside:has(:checked) .toggle--close {
     opacity: 0;
 }
 
-aside:not(:has(:checked)) :where(figcaption, .item--heading) {
+aside:not(:has(:checked)) :where(figcaption, .item--heading, .text) {
     opacity: 0;
+    width: 0;
+    overflow: hidden;
 }
 
-aside:has(:checked) :where(figcaption, .item--heading) {
+aside:has(:checked) :where(figcaption, .item--heading, .text) {
+    opacity: 1;
+    width: auto;
     transition: opacity 300ms ease-in 200ms;
+}
+
+/* Centrer les icônes quand collapsed */
+aside:not(:has(:checked)) .sidebar__link {
+    justify-content: center;
+    padding: 0;
+}
+
+aside:not(:has(:checked)) .sidebar__link .icon {
+    margin: 0;
+}
+
+/* Cacher les checkboxes des filtres pays quand collapsed */
+aside:not(:has(:checked)) .country-filter-item input[type="checkbox"] {
+    display: none;
 }
 
 [data-tooltip]::before {
