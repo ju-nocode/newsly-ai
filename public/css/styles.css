@@ -3162,13 +3162,13 @@ body:has(.dashboard-sidebar.collapsed) .settings-content {
   position: relative !important;
   display: inline-block !important;
   overflow: hidden !important;
-  background: rgba(0, 0, 0, 0.9) !important;
-  color: #ffffff !important;
+  background: var(--aurora-text-bg) !important;
+  color: var(--aurora-text-color) !important;
   font-weight: 800 !important;
   margin: 0 !important;
   line-height: 1 !important;
   isolation: isolate !important;
-  mix-blend-mode: screen !important;
+  mix-blend-mode: var(--aurora-text-mix, normal) !important;
 }
 
 .logo-text.aurora-text {
@@ -3191,8 +3191,8 @@ body:has(.dashboard-sidebar.collapsed) .settings-content {
   width: 100% !important;
   height: 100% !important;
   z-index: 2 !important;
-  mix-blend-mode: lighten !important;
-  opacity: 0.85 !important;
+  mix-blend-mode: var(--aurora-blend-mode) !important;
+  opacity: var(--aurora-opacity) !important;
   pointer-events: none !important;
 }
 
@@ -3204,8 +3204,8 @@ body:has(.dashboard-sidebar.collapsed) .settings-content {
   background-color: var(--aurora-clr-1);
   border-radius: 37% 29% 27% 27% / 28% 25% 41% 37%;
   filter: blur(var(--aurora-blur));
-  mix-blend-mode: lighten;
-  opacity: 0.6;
+  mix-blend-mode: inherit;
+  opacity: inherit;
 }
 
 /* Taille adapt??e pour le logo dans la navbar */
