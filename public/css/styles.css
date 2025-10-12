@@ -1,4 +1,4 @@
-/* ================================================
+﻿/* ================================================
 NEWSLY AI - Modern SaaS Dashboard Style
 ================================================ */
 
@@ -100,7 +100,7 @@ html {
   --secondary: #8b5cf6;
 }
 
-/* Transition douce entre les thèmes */
+/* Transition douce entre les thÃ¨mes */
 html, body, [data-theme] {
   transition:
     background-color 0.4s ease,
@@ -125,7 +125,7 @@ body {
 }
 
 /* Particles.js Background Container */
-/* DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
+/* DÃ‰SACTIVÃ‰ - Conflit avec Aurora et Dark/Light Mode
 #particles-js {
   position: fixed;
   top: 0;
@@ -138,7 +138,7 @@ body {
 
 /* Ensure content stays above background */
 /* Allow mouse events to pass through containers to particles */
-/* DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
+/* DÃ‰SACTIVÃ‰ - Conflit avec Aurora et Dark/Light Mode
 .navbar,
 .dashboard-container,
 .settings-layout {
@@ -147,7 +147,7 @@ body {
 */
 
 /* Re-enable pointer events on interactive elements */
-/* DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
+/* DÃ‰SACTIVÃ‰ - Conflit avec Aurora et Dark/Light Mode
 .navbar > *,
 .nav-container,
 .nav-container > *,
@@ -181,12 +181,12 @@ textarea,
 */
 
 /* Content z-index hierarchy
-   Hiérarchie clarifiée pour éviter les conflits :
+   HiÃ©rarchie clarifiÃ©e pour Ã©viter les conflits :
    - z-index: 1 = Contenu principal
    - z-index: 100 = Sidebar
-   - z-index: 1000-1999 = Éléments mobiles (sidebars, overlays)
+   - z-index: 1000-1999 = Ã‰lÃ©ments mobiles (sidebars, overlays)
    - z-index: 10000-10999 = Navigation et dropdowns
-   - z-index: 20000+ = Modaux et éléments au-dessus de tout
+   - z-index: 20000+ = Modaux et Ã©lÃ©ments au-dessus de tout
 */
 .dashboard-container,
 .settings-layout,
@@ -289,7 +289,7 @@ textarea,
 ================================================ */
 
 [data-theme="dark"] {
-  /* Dark mode - Icons blancs/colorés */
+  /* Dark mode - Icons blancs/colorÃ©s */
   --icon-filter-primary: brightness(0) invert(1);
   --icon-filter-secondary: brightness(0) invert(1) opacity(0.7);
   --icon-filter-muted: brightness(0) invert(1) grayscale(100%) opacity(0.5);
@@ -614,7 +614,7 @@ input[type="color"]::-moz-color-swatch {
 }
 
 /* ================================================
-   COLLAPSE MENU - Classe unique pour tous les menus déroulants
+   COLLAPSE MENU - Classe unique pour tous les menus dÃ©roulants
 ================================================ */
 
 .collapse-header {
@@ -1608,7 +1608,7 @@ body:has(.dashboard-sidebar.collapsed) .footer {
    BURGER MENU
 ================================================ */
 
-/* Bouton burger caché par défaut sur desktop */
+/* Bouton burger cachÃ© par dÃ©faut sur desktop */
 .mobile-menu-btn {
   display: none;
 }
@@ -2367,7 +2367,7 @@ body:has(.dashboard-sidebar.collapsed) .settings-content {
 #section-security .security-grid .settings-card {
   margin-bottom: 0;
   height: 100%;
-  max-width: none; /* Permet à la grille de gérer la largeur */
+  max-width: none; /* Permet Ã  la grille de gÃ©rer la largeur */
 }
 
 @media (max-width: 1024px) {
@@ -2493,7 +2493,7 @@ body:has(.dashboard-sidebar.collapsed) .settings-content {
     display: none !important;
   }
 
-  /* Sidebars cachées par défaut sur mobile */
+  /* Sidebars cachÃ©es par dÃ©faut sur mobile */
   .dashboard-sidebar {
     position: fixed;
     top: 0;
@@ -2536,7 +2536,7 @@ body:has(.dashboard-sidebar.collapsed) .settings-content {
     transform: translate3d(0, 0, 0);
   }
 
-  /* Overlay pour fermer le menu en cliquant à côté */
+  /* Overlay pour fermer le menu en cliquant Ã  cÃ´tÃ© */
   .mobile-overlay {
     position: fixed;
     top: 0;
@@ -2550,7 +2550,7 @@ body:has(.dashboard-sidebar.collapsed) .settings-content {
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
     -webkit-tap-highlight-color: transparent; /* Pas de highlight iOS */
-    touch-action: none; /* Empêche scroll sous overlay */
+    touch-action: none; /* EmpÃªche scroll sous overlay */
   }
 
   .mobile-overlay.show {
@@ -2574,7 +2574,7 @@ body:has(.dashboard-sidebar.collapsed) .settings-content {
     border-radius: var(--radius-md);
     transition: background 0.2s;
     -webkit-tap-highlight-color: rgba(59, 130, 246, 0.1); /* Highlight bleu iOS */
-    touch-action: manipulation; /* Meilleure réactivité tactile */
+    touch-action: manipulation; /* Meilleure rÃ©activitÃ© tactile */
   }
 
   .mobile-menu-btn:active {
@@ -2815,13 +2815,13 @@ body:has(.dashboard-sidebar.collapsed) .settings-content {
   display: none;
 }
 
-/* Face 1 visible par défaut */
+/* Face 1 visible par dÃ©faut */
 .signup-flip-front {
   transform: rotateY(0deg);
   display: block;
 }
 
-/* Face 2 - cachée par défaut */
+/* Face 2 - cachÃ©e par dÃ©faut */
 .signup-flip-back {
   transform: rotateY(180deg);
   display: none;
@@ -2891,7 +2891,7 @@ body:has(.dashboard-sidebar.collapsed) .settings-content {
   100% { transform: rotate(360deg); }
 }
 
-/* Animation de succès */
+/* Animation de succÃ¨s */
 .signup-success {
   display: none;
   text-align: center;
@@ -2925,7 +2925,7 @@ body:has(.dashboard-sidebar.collapsed) .settings-content {
 }
 
 .success-checkmark::after {
-  content: '✓';
+  content: 'âœ“';
   position: absolute;
   top: 50%;
   left: 50%;
@@ -3157,7 +3157,7 @@ body:has(.dashboard-sidebar.collapsed) .settings-content {
    AURORA TEXT EFFECT - from CodePen
 ================================================ */
 
-/* Effet aurora - Modernisé pour s'intégrer au design */
+/* Effet aurora - ModernisÃ© pour s'intÃ©grer au design */
 .aurora-text {
   position: relative !important;
   display: inline-block !important;
@@ -3166,14 +3166,15 @@ body:has(.dashboard-sidebar.collapsed) .settings-content {
   color: var(--text-primary) !important;
   font-weight: 800 !important;
   margin: 0 !important;
+  line-height: 1 !important;
   isolation: isolate !important;
 }
 
-.logo-text .aurora-text {
+.logo-text.aurora-text {
   background: transparent !important;
 }
 
-.auth-title .aurora-text {
+.auth-title.aurora-text {
   padding: 1rem 2rem !important;
   border-radius: var(--radius-lg) !important;
   backdrop-filter: blur(10px) !important;
@@ -3181,15 +3182,15 @@ body:has(.dashboard-sidebar.collapsed) .settings-content {
 }
 
 /* Wrapper des blobs aurora */
-.aurora-wrapper {
+.aurora {
   position: absolute !important;
   top: 0 !important;
   left: 0 !important;
   width: 100% !important;
   height: 100% !important;
-  z-index: -1 !important;
-  mix-blend-mode: normal !important;
-  opacity: 0.5 !important;
+  z-index: 2 !important;
+  mix-blend-mode: overlay !important;
+  opacity: 0.6 !important;
   pointer-events: none !important;
 }
 
@@ -3201,18 +3202,18 @@ body:has(.dashboard-sidebar.collapsed) .settings-content {
   background-color: var(--aurora-clr-1);
   border-radius: 37% 29% 27% 27% / 28% 25% 41% 37%;
   filter: blur(var(--aurora-blur));
-  mix-blend-mode: soft-light;
+  mix-blend-mode: overlay;
   opacity: 0.6;
 }
 
-/* Taille adaptée pour le logo dans la navbar */
-.logo-text .aurora-text .aurora__item {
+/* Taille adaptÃ©e pour le logo dans la navbar */
+.logo-text.aurora-text .aurora__item {
   width: 150vw;
   height: 150vw;
 }
 
 /* Taille pour le titre principal */
-.auth-title .aurora-text .aurora__item {
+.auth-title.aurora-text .aurora__item {
   width: 60vw;
   height: 60vw;
 }
