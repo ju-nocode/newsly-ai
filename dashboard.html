@@ -473,7 +473,7 @@
                 currentCategory = category;
 
                 // Mettre à jour le titre
-                const title = btn.querySelector('span').textContent;
+                const title = btn.querySelector('.text').textContent;
                 document.getElementById('categoryTitle').textContent = `Actualités ${title}`;
 
                 loadNews(category);
@@ -701,19 +701,27 @@
             if (!topic) return;
 
             // Créer un nouveau bouton de catégorie
-            const categoriesList = document.querySelector('.categories-list');
-            const newCategory = document.createElement('button');
-            newCategory.className = 'settings-nav-item';
-            newCategory.dataset.category = topic;
-            newCategory.innerHTML = `
-                <img src="https://img.icons8.com/ios-filled/50/000000/bookmark.png" alt="Topic" class="settings-nav-icon">
-                <span>${escapeHtml(topic)}</span>
+            const categoriesList = document.querySelector('.sidebar__list.list--primary');
+            const newCategory = document.createElement('li');
+            newCategory.className = 'sidebar__item';
+            const newLink = document.createElement('a');
+            newLink.className = 'sidebar__link';
+            newLink.href = '#';
+            newLink.dataset.category = topic;
+            newLink.innerHTML = `
+                <span class="icon">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
+                    </svg>
+                </span>
+                <span class="text">${escapeHtml(topic)}</span>
             `;
+            newCategory.appendChild(newLink);
 
             // Ajouter l'événement de clic
-            newCategory.addEventListener('click', () => {
-                document.querySelectorAll('.settings-nav-item[data-category]').forEach(b => b.classList.remove('active'));
-                newCategory.classList.add('active');
+            newLink.addEventListener('click', () => {
+                document.querySelectorAll('.sidebar__link[data-category]').forEach(b => b.classList.remove('active'));
+                newLink.classList.add('active');
 
                 currentCategory = topic;
                 document.getElementById('categoryTitle').textContent = `Actualités ${escapeHtml(topic)}`;
@@ -756,7 +764,7 @@
             translatePage();
 
             // Mettre à jour le titre de la catégorie actuelle
-            const activeBtn = document.querySelector('.settings-nav-item[data-category].active');
+            const activeBtn = document.querySelector('.sidebar__link[data-category].active');
             if (activeBtn) {
                 const categoryKey = activeBtn.dataset.category;
                 const translatedCategory = t(`category.${categoryKey}`);
