@@ -250,15 +250,25 @@ aside:has(:checked) .toggle--close {
     opacity: 0;
 }
 
-aside:not(:has(:checked)) :where(figcaption, .item--heading, .text) {
-    opacity: 0;
-    width: 0;
-    overflow: hidden;
+aside:not(:has(:checked)) :where(figcaption, .item--heading) {
+    display: none;
 }
 
-aside:has(:checked) :where(figcaption, .item--heading, .text) {
-    opacity: 1;
-    width: auto;
+aside:not(:has(:checked)) .text {
+    display: none !important;
+}
+
+aside:not(:has(:checked)) .vertical-sidebar .text {
+    display: none !important;
+}
+
+aside:has(:checked) :where(figcaption, .item--heading) {
+    display: block;
+    transition: opacity 300ms ease-in 200ms;
+}
+
+aside:has(:checked) .text {
+    display: inline;
     transition: opacity 300ms ease-in 200ms;
 }
 
@@ -272,9 +282,19 @@ aside:not(:has(:checked)) .sidebar__link .icon {
     margin: 0;
 }
 
-/* Cacher les checkboxes des filtres pays quand collapsed */
+/* Cacher les checkboxes et texte des filtres pays quand collapsed */
 aside:not(:has(:checked)) .country-filter-item input[type="checkbox"] {
     display: none;
+}
+
+aside:not(:has(:checked)) .country-filter-item {
+    display: none;
+}
+
+/* Cacher la scrollbar quand collapsed */
+aside:not(:has(:checked)) .sidebar__wrapper {
+    overflow-y: hidden;
+    padding-right: 0;
 }
 
 [data-tooltip]::before {
