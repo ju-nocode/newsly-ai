@@ -38,5 +38,5 @@ echo
 git push origin master
 line
 echo
-echo "🚀  Terminé."
+echo "🚀 _Terminé_ 🚀"
 echo
