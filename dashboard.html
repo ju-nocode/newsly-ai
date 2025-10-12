@@ -460,10 +460,10 @@
         };
 
         // Gérer les clics sur les catégories
-        document.querySelectorAll('.settings-nav-item[data-category]').forEach(btn => {
+        document.querySelectorAll('.sidebar__link[data-category]').forEach(btn => {
             btn.addEventListener('click', () => {
                 // Retirer la classe active de tous les boutons de catégorie
-                document.querySelectorAll('.settings-nav-item[data-category]').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.sidebar__link[data-category]').forEach(b => b.classList.remove('active'));
 
                 // Ajouter la classe active au bouton cliqué
                 btn.classList.add('active');
