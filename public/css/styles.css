@@ -3162,12 +3162,13 @@ body:has(.dashboard-sidebar.collapsed) .settings-content {
   position: relative !important;
   display: inline-block !important;
   overflow: hidden !important;
-  background: var(--bg-primary) !important;
-  color: var(--text-primary) !important;
+  background: rgba(0, 0, 0, 0.9) !important;
+  color: #ffffff !important;
   font-weight: 800 !important;
   margin: 0 !important;
   line-height: 1 !important;
   isolation: isolate !important;
+  mix-blend-mode: screen !important;
 }
 
 .logo-text.aurora-text {
