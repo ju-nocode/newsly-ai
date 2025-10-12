@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Newsly AI</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>�Y"�</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📰</text></svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
 </head>
 <body class="dashboard-body">
     <!-- Particles.js Background -->
-    <!-- D�?SACTIV�? - Conflit avec Aurora et Dark/Light Mode
+    <!-- DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
     <div id="particles-js"></div>
     -->
 
@@ -42,7 +42,7 @@
                 <!-- Weather Widget -->
                 <div class="weather-widget" id="weatherWidget">
                     <div class="weather-loading">
-                        <span>�~�️</span>
+                        <span>🌤️</span>
                     </div>
                 </div>
             </div>
@@ -219,32 +219,32 @@
                     </li>
                     <li class="sidebar__item">
                         <label class="sidebar__link country-filter-item">
-                            <input type="checkbox" class="country-checkbox" value="us" data-name="�?tats-Unis" style="margin-right: 0.5rem;">
-                            <span class="text" data-i18n="country.us">�Y?��Y?� �?tats-Unis</span>
+                            <input type="checkbox" class="country-checkbox" value="us" data-name="États-Unis" style="margin-right: 0.5rem;">
+                            <span class="text" data-i18n="country.us">🇺🇸 États-Unis</span>
                         </label>
                     </li>
                     <li class="sidebar__item">
                         <label class="sidebar__link country-filter-item">
                             <input type="checkbox" class="country-checkbox" value="fr" data-name="France" style="margin-right: 0.5rem;">
-                            <span class="text" data-i18n="country.fr">�Y?��Y?� France</span>
+                            <span class="text" data-i18n="country.fr">🇫🇷 France</span>
                         </label>
                     </li>
                     <li class="sidebar__item">
                         <label class="sidebar__link country-filter-item">
                             <input type="checkbox" class="country-checkbox" value="gb" data-name="Royaume-Uni" style="margin-right: 0.5rem;">
-                            <span class="text" data-i18n="country.gb">�Y?��Y?� Royaume-Uni</span>
+                            <span class="text" data-i18n="country.gb">🇬🇧 Royaume-Uni</span>
                         </label>
                     </li>
                     <li class="sidebar__item">
                         <label class="sidebar__link country-filter-item">
                             <input type="checkbox" class="country-checkbox" value="ca" data-name="Canada" style="margin-right: 0.5rem;">
-                            <span class="text" data-i18n="country.ca">�Y?��Y?� Canada</span>
+                            <span class="text" data-i18n="country.ca">🇨🇦 Canada</span>
                         </label>
                     </li>
                     <li class="sidebar__item">
                         <label class="sidebar__link country-filter-item">
                             <input type="checkbox" class="country-checkbox" value="de" data-name="Allemagne" style="margin-right: 0.5rem;">
-                            <span class="text" data-i18n="country.de">�Y?��Y?� Allemagne</span>
+                            <span class="text" data-i18n="country.de">🇩🇪 Allemagne</span>
                         </label>
                     </li>
                 </ul>
@@ -297,7 +297,7 @@
     </div>
 
     <!-- Particles.js Library -->
-    <!-- D�?SACTIV�? - Conflit avec Aurora et Dark/Light Mode
+    <!-- DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     -->
 
@@ -305,7 +305,7 @@
         import { checkAuth, logout, getUserProfile, fetchNews, deleteAccount, currentUser } from './public/js/app.js';
         import { displayNews, escapeHtml, showError, showSuccess } from './public/js/dashboard-utils.js';
         import { tSync as t, translatePage } from './public/js/translation-service.js';
-        // D�?SACTIV�? - Conflit avec Aurora et Dark/Light Mode
+        // DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
         // import { initParticles } from './public/js/particles-config.js';
         import { initCollapseMenus } from './public/js/collapse-menu.js';
 
@@ -313,7 +313,7 @@
         initCollapseMenus();
 
         // Initialize particles (async to load from DB)
-        // D�?SACTIV�? - Conflit avec Aurora et Dark/Light Mode
+        // DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
         /*
         (async () => {
             await initParticles('particles-js');
@@ -321,7 +321,7 @@
         */
 
         let currentCategory = 'general';
-        let selectedCountries = ['us']; // Par défaut : �?tats-Unis
+        let selectedCountries = ['us']; // Par défaut : États-Unis
 
         // Vérifier l'authentification
         const isAuth = checkAuth();
@@ -394,7 +394,7 @@
                 if (allArticles.length === 0) {
                     newsContainer.innerHTML = `
                         <div class="news-empty">
-                            <p>�Y"� Aucune actualité disponible</p>
+                            <p>ℹ️ Aucune actualité disponible</p>
                             <p class="error-details" style="color: var(--text-secondary);">Essayez une autre catégorie ou d'autres pays</p>
                         </div>
                     `;
@@ -405,7 +405,7 @@
             } catch (error) {
                 newsContainer.innerHTML = `
                     <div class="news-empty">
-                        <p>�O Erreur lors du chargement des actualités</p>
+                        <p>❌ Erreur lors du chargement des actualités</p>
                         <p class="error-details">${escapeHtml(error.message)}</p>
                         <button onclick="location.reload()" class="btn-primary">Réessayer</button>
                     </div>
@@ -523,14 +523,14 @@
 
         const getWeatherIcon = (weatherCode) => {
             // WMO Weather codes: https://open-meteo.com/en/docs
-            if (weatherCode === 0) return '�~?️'; // Clear sky
-            if (weatherCode <= 3) return '�>.'; // Partly cloudy
-            if (weatherCode <= 48) return '�YO�️'; // Fog
-            if (weatherCode <= 67) return '�YO�️'; // Rain
-            if (weatherCode <= 77) return '�YO�️'; // Snow
-            if (weatherCode <= 82) return '�YO�️'; // Showers
-            if (weatherCode <= 99) return '�>^️'; // Thunderstorm
-            return '�~�️';
+            if (weatherCode === 0) return '🌤️'; // Clear sky
+            if (weatherCode <= 3) return '⛅'; // Partly cloudy
+            if (weatherCode <= 48) return '🌫️'; // Fog
+            if (weatherCode <= 67) return '🌫️'; // Rain
+            if (weatherCode <= 77) return '🌫️'; // Snow
+            if (weatherCode <= 82) return '🌫️'; // Showers
+            if (weatherCode <= 99) return '⛈️'; // Thunderstorm
+            return '🌤️';
         };
 
         const fetchWeather = async (lat, lon) => {
@@ -577,7 +577,7 @@
                 console.error('Erreur météo:', error);
                 weatherWidget.innerHTML = `
                     <div class="weather-error">
-                        <span>�YO�️</span>
+                        <span>🌫️</span>
                     </div>
                 `;
             }
@@ -604,7 +604,7 @@
                         // Afficher un message à l'utilisateur
                         weatherWidget.innerHTML = `
                             <div class="weather-info" style="opacity: 0.7;">
-                                <span class="weather-icon">�Y"�</span>
+                                <span class="weather-icon">☀️</span>
                                 <div class="weather-details">
                                     <div class="weather-temp" style="font-size: 0.875rem;">Position par défaut</div>
                                     <div class="weather-location" style="font-size: 0.75rem;">Géolocalisation désactivée</div>
@@ -828,14 +828,14 @@
             const collapseHeaders = document.querySelectorAll('[data-collapse-id]');
 
             if (collapseHeaders.length > 0) {
-                console.log(`�o. ${collapseHeaders.length} menu(s) collapse trouvé(s)`);
+                console.log(`✅ ${collapseHeaders.length} menu(s) collapse trouvé(s)`);
 
                 collapseHeaders.forEach(header => {
                     const collapseId = header.getAttribute('data-collapse-id');
                     const content = document.querySelector(`[data-collapse-target="${collapseId}"]`);
 
                     if (!content) {
-                        console.warn(`�s�️ Contenu collapse non trouvé pour: ${collapseId}`);
+                        console.warn(`⚠️ Contenu collapse non trouvé pour: ${collapseId}`);
                         return;
                     }
 
@@ -861,7 +861,7 @@
                         // Sauvegarder l'état
                         localStorage.setItem(`collapse_${collapseId}`, willCollapse);
 
-                        console.log(`�Y"" Toggle ${collapseId}: ${willCollapse ? 'collapsed' : 'expanded'}`);
+                        console.log(`🔄 Toggle ${collapseId}: ${willCollapse ? 'collapsed' : 'expanded'}`);
                     });
                 });
             }
@@ -890,7 +890,7 @@
                     const isCollapsed = sidebar.classList.contains('collapsed');
                     localStorage.setItem('sidebar_collapsed', isCollapsed);
 
-                    console.log(`�Y"" Sidebar ${isCollapsed ? 'collapsed' : 'expanded'}`);
+                    console.log(`🔄 Sidebar ${isCollapsed ? 'collapsed' : 'expanded'}`);
                 });
             }
         })();
