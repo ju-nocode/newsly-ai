@@ -1,11 +1,11 @@
 {
   "nav": {
-    "search": "Search a topic...",
+    "search": "Search for a topic...",
     "settings": "Settings",
     "logout": "Logout",
     "darkMode": "Dark mode",
     "lightMode": "Light mode",
-    "backToDashboard": "← Back to Dashboard",
+    "backToDashboard": "← Back to dashboard",
     "dashboard": "Dashboard",
     "login": "Login",
     "signup": "Sign up",
@@ -14,8 +14,8 @@
   "hero": {
     "title": "Your AI-Powered Personalized NewsWall",
     "subtitle": "Stay informed with personalized news powered by artificial intelligence",
-    "cta": "Create account",
-    "ctaSecondary": "Sign In"
+    "cta": "Create an account",
+    "ctaSecondary": "Log in"
   },
   "features": {
     "title": "Why choose Newsly AI?",

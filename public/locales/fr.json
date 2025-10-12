@@ -5,11 +5,11 @@
     "logout": "Déconnexion",
     "darkMode": "Mode sombre",
     "lightMode": "Mode clair",
-    "backToDashboard": "← Retour au Dashboard",
+    "backToDashboard": "← Retour au tableau de bord",
     "dashboard": "Dashboard",
     "login": "Connexion",
     "signup": "Créer un compte",
-    "language": "Français / English"
+    "language": "Français / Anglais"
   },
   "hero": {
     "title": "Votre NewsWall Personnalisé Alimenté par l'IA",
