@@ -3158,9 +3158,9 @@ body:has(.dashboard-sidebar.collapsed) .settings-content {
 ================================================ */
 
 /* Effet aurora - Modernisé pour s'intégrer au design */
-.logo-text.aurora,
-.auth-title.aurora {
+.aurora-text {
   position: relative !important;
+  display: inline-block !important;
   overflow: hidden !important;
   background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary)) !important;
   color: var(--text-primary) !important;
@@ -3169,13 +3169,11 @@ body:has(.dashboard-sidebar.collapsed) .settings-content {
   isolation: isolate !important;
 }
 
-.logo-text.aurora {
-  display: inline-block !important;
+.logo-text .aurora-text {
   background: transparent !important;
 }
 
-.auth-title.aurora {
-  display: inline-block !important;
+.auth-title .aurora-text {
   padding: 1rem 2rem !important;
   border-radius: var(--radius-lg) !important;
   backdrop-filter: blur(10px) !important;
@@ -3208,13 +3206,13 @@ body:has(.dashboard-sidebar.collapsed) .settings-content {
 }
 
 /* Taille adaptée pour le logo dans la navbar */
-.logo-text.aurora .aurora__item {
+.logo-text .aurora-text .aurora__item {
   width: 150vw;
   height: 150vw;
 }
 
 /* Taille pour le titre principal */
-.auth-title.aurora .aurora__item {
+.auth-title .aurora-text .aurora__item {
   width: 60vw;
   height: 60vw;
 }
