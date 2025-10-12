@@ -781,29 +781,37 @@
         // ================================================
         const mobileSidebarBtn = document.getElementById('mobileSidebarBtn');
         const mobileOverlay = document.getElementById('mobileOverlay');
-        const dashboardSidebar = document.querySelector('.dashboard-sidebar');
+        const verticalSidebar = document.querySelector('.vertical-sidebar');
 
         // Fonction pour fermer le menu mobile
         const closeMobileMenu = () => {
-            dashboardSidebar.classList.remove('mobile-open');
-            mobileOverlay.classList.remove('show');
+            if (verticalSidebar) {
+                verticalSidebar.classList.remove('mobile-open');
+            }
+            if (mobileOverlay) {
+                mobileOverlay.classList.remove('show');
+            }
             document.body.style.overflow = ''; // Réactiver scroll
         };
 
         // Fonction pour ouvrir le menu mobile
         const openMobileMenu = () => {
-            dashboardSidebar.classList.add('mobile-open');
-            mobileOverlay.classList.add('show');
+            if (verticalSidebar) {
+                verticalSidebar.classList.add('mobile-open');
+            }
+            if (mobileOverlay) {
+                mobileOverlay.classList.add('show');
+            }
             document.body.style.overflow = 'hidden'; // Empêcher scroll background
         };
 
         // Toggle menu avec le bouton burger
-        if (mobileSidebarBtn) {
+        if (mobileSidebarBtn && verticalSidebar) {
             mobileSidebarBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
 
-                if (dashboardSidebar.classList.contains('mobile-open')) {
+                if (verticalSidebar.classList.contains('mobile-open')) {
                     closeMobileMenu();
                 } else {
                     openMobileMenu();
@@ -826,8 +834,8 @@
             }, { passive: false });
         }
 
-        // Fermer sidebar après sélection sur mobile
-        document.querySelectorAll('.settings-nav-item').forEach(btn => {
+        // Fermer sidebar après sélection sur mobile (clic sur une catégorie)
+        document.querySelectorAll('.sidebar__link[data-category]').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (window.innerWidth <= 1024) {
                     setTimeout(closeMobileMenu, 100); // Petit délai pour UX
@@ -837,7 +845,7 @@
 
         // Fermer avec touche Escape
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && dashboardSidebar.classList.contains('mobile-open')) {
+            if (e.key === 'Escape' && verticalSidebar && verticalSidebar.classList.contains('mobile-open')) {
                 closeMobileMenu();
             }
         });
