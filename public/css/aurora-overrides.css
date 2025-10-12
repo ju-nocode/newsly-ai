@@ -1,0 +1,32 @@
+:root {
+  /* Aurora effect overrides - light theme defaults */
+  --aurora-text-bg: #ffffff;
+  --aurora-text-color: #0f172a;
+  --aurora-blend-mode: darken;
+  --aurora-opacity: 0.6;
+}
+
+[data-theme="dark"] {
+  /* Aurora effect overrides - dark theme tweaks */
+  --aurora-text-bg: rgba(15, 23, 42, 0.92);
+  --aurora-text-color: #f1f5f9;
+  --aurora-blend-mode: screen;
+  --aurora-opacity: 0.85;
+}
+
+.aurora-text {
+  background: var(--aurora-text-bg) !important;
+  color: var(--aurora-text-color) !important;
+  mix-blend-mode: normal !important;
+}
+
+.aurora {
+  mix-blend-mode: var(--aurora-blend-mode) !important;
+  opacity: var(--aurora-opacity) !important;
+}
+
+.aurora__item {
+  mix-blend-mode: inherit !important;
+  opacity: inherit !important;
+}
+
