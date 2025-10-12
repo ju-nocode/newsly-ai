@@ -34,6 +34,10 @@ html {
   --primary-light: #60a5fa;
   --secondary: #8b5cf6;
   --aurora-text-shadow: rgba(15, 23, 42, 0.18);
+  --aurora-tone-1: #7f5af0;
+  --aurora-tone-2: #2cb1ff;
+  --aurora-tone-3: #70ffcb;
+  --aurora-tone-4: #ff87d4;
   --success: #10b981;
   --error: #ef4444;
   --warning: #f59e0b;
@@ -3158,18 +3162,6 @@ body:has(.dashboard-sidebar.collapsed) .settings-content {
 /* ================================================
    AURORA TEXT EFFECT - animated gradient inside letters
 ================================================ */
-
-:root {
-  --aurora-tone-1: #7f5af0;
-  --aurora-tone-2: #2cb1ff;
-  --aurora-tone-3: #70ffcb;
-  --aurora-tone-4: #ff87d4;
-  --aurora-text-shadow: rgba(15, 23, 42, 0.2);
-}
-
-[data-theme="dark"] {
-  --aurora-text-shadow: rgba(0, 0, 0, 0.55);
-}
 
 .aurora-text {
   position: relative;
