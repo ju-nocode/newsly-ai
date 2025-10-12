@@ -4,20 +4,22 @@
   --aurora-text-color: #0f172a;
   --aurora-blend-mode: darken;
   --aurora-opacity: 0.6;
+  --aurora-text-mix: normal;
 }
 
 [data-theme="dark"] {
   /* Aurora effect overrides - dark theme tweaks */
-  --aurora-text-bg: rgba(15, 23, 42, 0.92);
+  --aurora-text-bg: rgba(15, 23, 42, 0.88);
   --aurora-text-color: #f1f5f9;
   --aurora-blend-mode: screen;
-  --aurora-opacity: 0.85;
+  --aurora-opacity: 1;
+  --aurora-text-mix: screen;
 }
 
 .aurora-text {
   background: var(--aurora-text-bg) !important;
   color: var(--aurora-text-color) !important;
-  mix-blend-mode: normal !important;
+  mix-blend-mode: var(--aurora-text-mix) !important;
 }
 
 .aurora {
@@ -29,4 +31,3 @@
   mix-blend-mode: inherit !important;
   opacity: inherit !important;
 }
-
