@@ -950,7 +950,7 @@ body:has(.dashboard-sidebar.collapsed) .dashboard-container {
   justify-content: center;
   position: relative;
   z-index: 1;
-  background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
 }
 
 .auth-container {
