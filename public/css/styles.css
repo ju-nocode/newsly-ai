@@ -3165,7 +3165,7 @@ body:has(.dashboard-sidebar.collapsed) .settings-content {
 
 .aurora-text {
   position: relative;
-  display: inline-block;
+  display: initial;
   font-weight: 800 !important;
   margin: 0 !important;
   line-height: 1;
