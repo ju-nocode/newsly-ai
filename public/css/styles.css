@@ -33,6 +33,7 @@ html {
   --primary-dark: #2563eb;
   --primary-light: #60a5fa;
   --secondary: #8b5cf6;
+  --aurora-text-shadow: rgba(15, 23, 42, 0.18);
   --success: #10b981;
   --error: #ef4444;
   --warning: #f59e0b;
@@ -98,6 +99,7 @@ html {
   --primary-dark: #2563eb;
   --primary-light: #60a5fa;
   --secondary: #8b5cf6;
+  --aurora-text-shadow: rgba(0, 0, 0, 0.55);
 }
 
 /* Transition douce entre les th??mes */
