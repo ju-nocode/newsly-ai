@@ -3154,223 +3154,53 @@ body:has(.dashboard-sidebar.collapsed) .settings-content {
 }
 
 /* ================================================
-   AURORA TEXT EFFECT - from CodePen
+   AURORA TEXT EFFECT - animated gradient inside letters
 ================================================ */
 
-/* Effet aurora - Modernis?? pour s'int??grer au design */
-.aurora-text {
-  position: relative !important;
-  display: inline-block !important;
-  overflow: hidden !important;
-  background: var(--aurora-text-bg) !important;
-  color: var(--aurora-text-color) !important;
-  font-weight: 800 !important;
-  margin: 0 !important;
-  line-height: 1 !important;
-  isolation: isolate !important;
-  mix-blend-mode: var(--aurora-text-mix, normal) !important;
-}
-
-.logo-text.aurora-text {
-  padding: 0.1rem 0.35rem !important;
-  border-radius: var(--radius-sm) !important;
-}
-
-.auth-title.aurora-text {
-  padding: 1rem 2rem !important;
-  border-radius: var(--radius-lg) !important;
-  backdrop-filter: blur(10px) !important;
-  -webkit-backdrop-filter: blur(10px) !important;
-}
-
-/* Wrapper des blobs aurora */
-.aurora {
-  position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  z-index: 2 !important;
-  mix-blend-mode: var(--aurora-blend-mode) !important;
-  opacity: var(--aurora-opacity) !important;
-  pointer-events: none !important;
-}
-
-.aurora__item {
-  overflow: hidden;
-  position: absolute;
-  width: 60vw;
-  height: 60vw;
-  background-color: var(--aurora-clr-1);
-  border-radius: 37% 29% 27% 27% / 28% 25% 41% 37%;
-  filter: blur(var(--aurora-blur));
-  mix-blend-mode: inherit;
-  opacity: inherit;
-}
-
-/* Taille adapt??e pour le logo dans la navbar */
-.logo-text.aurora-text .aurora__item {
-  width: 150vw;
-  height: 150vw;
-}
-
-/* Taille pour le titre principal */
-.auth-title.aurora-text .aurora__item {
-  width: 60vw;
-  height: 60vw;
-}
-
-.aurora__item:nth-of-type(1) {
-  top: -50%;
-  animation: aurora-border 6s ease-in-out infinite,
-    aurora-1 12s ease-in-out infinite alternate;
-}
-
-.aurora__item:nth-of-type(2) {
-  background-color: var(--aurora-clr-3);
-  right: 0;
-  top: 0;
-  animation: aurora-border 6s ease-in-out infinite,
-    aurora-2 12s ease-in-out infinite alternate;
-}
-
-.aurora__item:nth-of-type(3) {
-  background-color: var(--aurora-clr-2);
-  left: 0;
-  bottom: 0;
-  animation: aurora-border 6s ease-in-out infinite,
-    aurora-3 8s ease-in-out infinite alternate;
-}
-
-.aurora__item:nth-of-type(4) {
-  background-color: var(--aurora-clr-4);
-  right: 0;
-  bottom: -50%;
-  animation: aurora-border 6s ease-in-out infinite,
-    aurora-4 24s ease-in-out infinite alternate;
-}
-
-@keyframes aurora-1 {
-  0% {
-    top: 0;
-    right: 0;
-  }
-  50% {
-    top: 100%;
-    right: 75%;
-  }
-  75% {
-    top: 100%;
-    right: 25%;
-  }
-  100% {
-    top: 0;
-    right: 0;
-  }
-}
-
-@keyframes aurora-2 {
-  0% {
-    top: -50%;
-    left: 0%;
-  }
-  60% {
-    top: 100%;
-    left: 75%;
-  }
-  85% {
-    top: 100%;
-    left: 25%;
-  }
-  100% {
-    top: -50%;
-    left: 0%;
-  }
-}
-
-@keyframes aurora-3 {
-  0% {
-    bottom: 0;
-    left: 0;
-  }
-  40% {
-    bottom: 100%;
-    left: 75%;
-  }
-  65% {
-    bottom: 40%;
-    left: 50%;
-  }
-  100% {
-    bottom: 0;
-    left: 0;
-  }
-}
-
-@keyframes aurora-4 {
-  0% {
-    bottom: -50%;
-    right: 0;
-  }
-  50% {
-    bottom: 0%;
-    right: 40%;
-  }
-  90% {
-    bottom: 50%;
-    right: 25%;
-  }
-  100% {
-    bottom: -50%;
-    right: 0;
-  }
-}
-
-@keyframes aurora-border {
-  0% {
-    border-radius: 37% 29% 27% 27% / 28% 25% 41% 37%;
-  }
-  25% {
-    border-radius: 47% 29% 39% 49% / 61% 19% 66% 26%;
-  }
-  50% {
-    border-radius: 57% 23% 47% 72% / 63% 17% 66% 33%;
-  }
-  75% {
-    border-radius: 28% 49% 29% 100% / 93% 20% 64% 25%;
-  }
-  100% {
-    border-radius: 37% 29% 27% 27% / 28% 25% 41% 37%;
-  }
-}
-
-/* Aurora theme overrides */
 :root {
-  --aurora-text-bg: #ffffff;
-  --aurora-text-color: #0f172a;
-  --aurora-blend-mode: darken;
-  --aurora-opacity: 0.6;
+  --aurora-tone-1: #7f5af0;
+  --aurora-tone-2: #2cb1ff;
+  --aurora-tone-3: #70ffcb;
+  --aurora-tone-4: #ff87d4;
+  --aurora-text-shadow: rgba(15, 23, 42, 0.2);
 }
 
 [data-theme="dark"] {
-  --aurora-text-bg: rgba(15, 23, 42, 0.92);
-  --aurora-text-color: #f1f5f9;
-  --aurora-blend-mode: screen;
-  --aurora-opacity: 0.85;
+  --aurora-text-shadow: rgba(0, 0, 0, 0.55);
 }
 
 .aurora-text {
-  background: var(--aurora-text-bg) !important;
-  color: var(--aurora-text-color) !important;
-  mix-blend-mode: normal !important;
+  position: relative;
+  display: inline-block;
+  font-weight: 800 !important;
+  margin: 0 !important;
+  line-height: 1;
+  color: transparent;
+  background-image:
+    radial-gradient(120% 120% at 10% 15%, var(--aurora-tone-4) 0%, transparent 70%),
+    radial-gradient(110% 110% at 80% 0%, var(--aurora-tone-1) 0%, transparent 65%),
+    radial-gradient(120% 120% at 20% 90%, var(--aurora-tone-2) 0%, transparent 70%),
+    radial-gradient(130% 130% at 90% 85%, var(--aurora-tone-3) 0%, transparent 70%);
+  background-repeat: no-repeat;
+  background-size: 180% 180%, 160% 160%, 170% 170%, 200% 200%;
+  background-position: 5% 20%, 70% 0%, 20% 90%, 90% 75%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: aurora-flow 12s ease-in-out infinite;
+  filter: drop-shadow(0 0.35rem 0.65rem var(--aurora-text-shadow));
 }
 
-.aurora {
-  mix-blend-mode: var(--aurora-blend-mode) !important;
-  opacity: var(--aurora-opacity) !important;
-}
-
-.aurora__item {
-  mix-blend-mode: inherit !important;
-  opacity: inherit !important;
+@keyframes aurora-flow {
+  0% {
+    background-position: 5% 20%, 70% 0%, 20% 90%, 90% 75%;
+    background-size: 180% 180%, 160% 160%, 170% 170%, 200% 200%;
+  }
+  50% {
+    background-position: 65% 80%, 10% 30%, 85% 10%, 35% 85%;
+    background-size: 210% 210%, 170% 170%, 190% 190%, 160% 160%;
+  }
+  100% {
+    background-position: 5% 20%, 70% 0%, 20% 90%, 90% 75%;
+    background-size: 180% 180%, 160% 160%, 170% 170%, 200% 200%;
+  }
 }
