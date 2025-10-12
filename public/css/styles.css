@@ -3190,7 +3190,7 @@ body:has(.dashboard-sidebar.collapsed) .settings-content {
   width: 100% !important;
   height: 100% !important;
   z-index: 2 !important;
-  mix-blend-mode: color-dodge !important;
+  mix-blend-mode: lighten !important;
   opacity: 0.85 !important;
   pointer-events: none !important;
 }
@@ -3203,7 +3203,7 @@ body:has(.dashboard-sidebar.collapsed) .settings-content {
   background-color: var(--aurora-clr-1);
   border-radius: 37% 29% 27% 27% / 28% 25% 41% 37%;
   filter: blur(var(--aurora-blur));
-  mix-blend-mode: color-dodge;
+  mix-blend-mode: lighten;
   opacity: 0.6;
 }
 
