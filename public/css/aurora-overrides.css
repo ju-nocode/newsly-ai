@@ -1,15 +1,15 @@
 :root {
   /* Aurora effect overrides - light theme defaults */
-  --aurora-text-bg: #ffffff;
+  --aurora-text-bg: transparent;
   --aurora-text-color: #0f172a;
-  --aurora-blend-mode: darken;
-  --aurora-opacity: 0.6;
+  --aurora-blend-mode: screen;
+  --aurora-opacity: 0.75;
   --aurora-text-mix: normal;
 }
 
 [data-theme="dark"] {
   /* Aurora effect overrides - dark theme tweaks */
-  --aurora-text-bg: rgba(15, 23, 42, 0.88);
+  --aurora-text-bg: transparent;
   --aurora-text-color: #f1f5f9;
   --aurora-blend-mode: screen;
   --aurora-opacity: 1;
