@@ -37,5 +37,6 @@ git commit -m "new updates"
 echo
 git push origin master
 line
+echo
 echo "🚀  Terminé."
 echo
