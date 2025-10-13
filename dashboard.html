@@ -316,12 +316,14 @@
                 // Navbar role badge
                 const navUserRole = document.getElementById('navUserRole');
 
-                if (userRole === 'admin') {
-                    navUserRole.textContent = 'Connecté en tant qu\'admin';
-                    navUserRole.className = 'user-role-badge admin';
-                } else {
-                    navUserRole.textContent = `Connecté en tant que ${escapeHtml(userName)}`;
-                    navUserRole.className = 'user-role-badge user';
+                if (navUserRole) {
+                    if (userRole === 'admin') {
+                        navUserRole.textContent = 'Connecté en tant qu\'admin';
+                        navUserRole.className = 'user-role-badge admin';
+                    } else {
+                        navUserRole.textContent = `Connecté en tant que ${escapeHtml(userName)}`;
+                        navUserRole.className = 'user-role-badge user';
+                    }
                 }
 
                 // Charger l'avatar dans le burger
