@@ -2,31 +2,16 @@
    AURORA EFFECT - OVERRIDES
    ================================================
 
-   This file ensures the Aurora effect does NOT interfere
-   with user interactions on forms and buttons.
+   L'effet Aurora est maintenant un gradient animé
+   directement dans le texte (background-clip: text).
 
-   All Aurora animations are defined in styles.css.
-   This file provides additional safety overrides.
+   Plus besoin de blobs en arrière-plan !
+
+   Ce fichier garantit juste que tous les éléments
+   interactifs restent cliquables.
 ================================================ */
 
-/* Ensure Aurora wrapper never blocks interactions */
-.aurora {
-  pointer-events: none !important;
-  user-select: none !important;
-  -webkit-user-select: none !important;
-  -moz-user-select: none !important;
-  -ms-user-select: none !important;
-}
-
-.aurora__item {
-  pointer-events: none !important;
-  user-select: none !important;
-  -webkit-user-select: none !important;
-  -moz-user-select: none !important;
-  -ms-user-select: none !important;
-}
-
-/* Ensure all form elements remain interactive */
+/* Ensure all form elements remain fully interactive */
 .modal-overlay,
 .modal-container,
 .auth-form,
@@ -41,8 +26,6 @@ textarea {
   pointer-events: auto !important;
   user-select: auto !important;
   -webkit-user-select: auto !important;
-  -moz-user-select: auto !important;
-  -ms-user-select: auto !important;
 }
 
 /* Ensure modal is always on top and interactive */
@@ -56,10 +39,9 @@ textarea {
   pointer-events: auto !important;
 }
 
-/* Make sure text in aurora containers remains selectable */
+/* Le texte Aurora reste sélectionnable */
 .aurora-text {
   user-select: text !important;
   -webkit-user-select: text !important;
-  -moz-user-select: text !important;
-  -ms-user-select: text !important;
+  cursor: inherit !important;
 }
