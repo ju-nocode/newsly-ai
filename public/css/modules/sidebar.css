@@ -237,17 +237,45 @@
   box-shadow: 2px 0 16px rgba(0, 0, 0, 0.3);
 }
 
-/* Vertical sidebar closed state */
+/* Vertical sidebar closed state - Icons only */
 .vertical-sidebar.closed {
-  width: 2px;
-  overflow: hidden;
-  border-right: 2px solid var(--primary);
-  box-shadow: none;
+  width: 60px;
+  overflow: visible;
+  border-right: 1px solid var(--border);
 }
 
 .vertical-sidebar.closed .sidebar-content {
-  opacity: 0;
-  pointer-events: none;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Hide text elements when sidebar is closed */
+.vertical-sidebar.closed .sidebar-header h2,
+.vertical-sidebar.closed .sidebar-header p,
+.vertical-sidebar.closed .sidebar-menu-title,
+.vertical-sidebar.closed .sidebar-menu-link span {
+  display: none;
+}
+
+/* Center icons when sidebar is closed */
+.vertical-sidebar.closed .sidebar-header {
+  padding: 1rem 0;
+  text-align: center;
+  justify-content: center;
+}
+
+.vertical-sidebar.closed .sidebar-menu-link {
+  justify-content: center;
+  padding: 0.75rem 0;
+}
+
+.vertical-sidebar.closed .sidebar-menu-link svg {
+  margin: 0;
+}
+
+/* Hide checkboxes when closed */
+.vertical-sidebar.closed .sidebar-menu-link input[type="checkbox"] {
+  display: none;
 }
 
 /* Sidebar Content */
@@ -406,4 +434,11 @@
 .vertical-sidebar.closed ~ .navbar .sidebar-toggle-btn svg,
 body:has(.vertical-sidebar.closed) .sidebar-toggle-btn svg {
   transform: rotate(180deg);
+}
+
+/* Hide sidebar toggle on mobile (use burger menu instead) */
+@media (max-width: 1024px) {
+  .sidebar-toggle-btn {
+    display: none !important;
+  }
 }

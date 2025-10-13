@@ -13,15 +13,20 @@
   margin-left: 250px;
   padding: 2rem 2.5rem;
   flex: 1;
-  max-width: 100%;
-  width: 100%;
+  width: calc(100% - 250px);
+  max-width: calc(100% - 250px);
   display: block;
-  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
 }
 
-/* Adjust content when sidebar is collapsed */
+/* Adjust content when sidebar is collapsed (icons only mode) */
 .vertical-sidebar.closed ~ .dashboard-container {
-  margin-left: 2px;
+  margin-left: 60px;
+  width: calc(100% - 60px);
+  max-width: calc(100% - 60px);
 }
 
 .dashboard-main {
@@ -226,12 +231,16 @@
 /* Tablet */
 @media (max-width: 1024px) {
   .dashboard-container {
-    margin-left: 0;
+    margin-left: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
     padding: 1.5rem;
   }
 
   .vertical-sidebar.closed ~ .dashboard-container {
-    margin-left: 0;
+    margin-left: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
   .news-grid {

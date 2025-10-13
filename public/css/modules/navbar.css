@@ -20,10 +20,10 @@
   transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Adjust navbar when sidebar is closed */
+/* Adjust navbar when sidebar is closed (icons only mode) */
 .vertical-sidebar.closed ~ .navbar {
-  left: 2px;
-  width: calc(100% - 2px);
+  left: 60px;
+  width: calc(100% - 60px);
 }
 
 [data-theme="dark"] .navbar,
@@ -34,6 +34,22 @@
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
+}
+
+/* Navbar for landing page (index.html) - Full width, centered */
+.navbar-landing {
+  left: 0 !important;
+  width: 100% !important;
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-bottom: 1px solid var(--border) !important;
+  box-shadow: 0 2px 8px var(--shadow) !important;
+}
+
+[data-theme="dark"] .navbar-landing {
+  background: rgba(15, 23, 42, 0.8) !important;
+  border-color: rgba(255, 255, 255, 0.05) !important;
 }
 
 .navbar.dashboard-nav {

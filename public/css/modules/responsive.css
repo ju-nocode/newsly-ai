@@ -138,7 +138,7 @@
   }
 
   /* Reset navbar positioning on mobile - sidebar uses transform instead */
-  .navbar {
+  .navbar:not(.navbar-landing) {
     left: 0 !important;
     width: 100% !important;
   }
