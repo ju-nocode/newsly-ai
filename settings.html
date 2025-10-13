@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+Ôªø<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ParamËtres - Newsly AI</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>??</text></svg>">
+    <title>Param√®tres - Newsly AI</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>‚úèÔ∏è</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
 </head>
 <body class="dashboard-body">
     <!-- Particles.js Background -->
-    <!-- D…SACTIV… - Conflit avec Aurora et Dark/Light Mode
+    <!-- D√âSACTIV√â - Conflit avec Aurora et Dark/Light Mode
     <div id="particles-js"></div>
     -->
 
@@ -25,7 +25,7 @@
     <nav class="navbar dashboard-nav">
         <div class="nav-container">
             <!-- Bouton burger pour menu mobile (settings nav) -->
-            <button class="mobile-menu-btn" id="mobileSettingsNavBtn" aria-label="Ouvrir menu paramËtres">
+            <button class="mobile-menu-btn" id="mobileSettingsNavBtn" aria-label="Ouvrir menu param√®tres">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <line x1="3" y1="12" x2="21" y2="12"></line>
                     <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -42,7 +42,7 @@
                 <!-- Weather Widget -->
                 <div class="weather-widget" id="weatherWidget">
                     <div class="weather-loading">
-                        <span>???</span>
+                        <span>üå§Ô∏è</span>
                     </div>
                 </div>
             </div>
@@ -69,17 +69,10 @@
                     <div class="burger-item">
                         <div class="burger-item-label">
                             <img src="https://img.icons8.com/ios-filled/50/000000/moon-symbol.png" alt="Theme" class="icon-secondary" style="width: 1.5rem; height: 1.5rem;">
-                            <span
-                                id="themeText"
-                                data-i18n="nav.darkMode"
-                                data-dark-fr="Mode sombre"
-                                data-light-fr="Mode clair"
-                                data-dark-en="Dark mode"
-                                data-light-en="Light mode"
-                            >Mode sombre</span>
+                            <span id="themeText" data-i18n="nav.darkMode">Mode sombre</span>
                         </div>
                         <label class="toggle-switch">
-                            <input type="checkbox" id="themeToggleSwitch" data-theme-toggle>
+                            <input type="checkbox" id="themeToggle">
                             <span class="toggle-slider"></span>
                         </label>
                     </div>
@@ -88,7 +81,7 @@
                     <div class="burger-item">
                         <div class="burger-item-label">
                             <img src="https://img.icons8.com/ios-filled/50/000000/globe.png" alt="Language" class="icon-secondary" style="width: 1.5rem; height: 1.5rem;">
-                            <span id="langLabel">FranÁais / English</span>
+                            <span id="langLabel">Fran√ßais / English</span>
                         </div>
                         <label class="toggle-switch">
                             <input type="checkbox" id="langToggle">
@@ -105,7 +98,7 @@
 
                     <button class="burger-link" id="logoutBtn">
                         <img src="https://img.icons8.com/ios-filled/50/000000/exit.png" alt="Logout" class="icon-secondary" style="width: 1.5rem; height: 1.5rem;">
-                        <span data-i18n="nav.logout">DÈconnexion</span>
+                        <span data-i18n="nav.logout">D√©connexion</span>
                     </button>
                 </div>
             </div>
@@ -123,12 +116,12 @@
         <div class="sidebar-content">
             <div class="sidebar-header">
                 <h2>Newsly AI</h2>
-                <p data-i18n="settings.title">ParamËtres</p>
+                <p data-i18n="settings.title">Param√®tres</p>
             </div>
 
-            <!-- ParamËtres du compte -->
+            <!-- Param√®tres du compte -->
             <div class="sidebar-section">
-                <h3 class="sidebar-menu-title" data-i18n="settings.accountSettings">ParamËtres du compte</h3>
+                <h3 class="sidebar-menu-title" data-i18n="settings.accountSettings">Param√®tres du compte</h3>
                 <ul class="sidebar-menu">
                     <li class="sidebar-menu-item">
                         <a class="sidebar-menu-link active" href="#" data-section="profile">
@@ -153,7 +146,7 @@
                             <svg viewBox="0 0 16 16" fill="currentColor">
                                 <path d="M5.338 1.59a61 61 0 0 0-2.837.856.48.48 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.7 10.7 0 0 0 2.287 2.233c.346.244.652.42.893.533q.18.085.293.118a1 1 0 0 0 .101.025 1 1 0 0 0 .1-.025q.114-.034.294-.118c.24-.113.547-.29.893-.533a10.7 10.7 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.8 11.8 0 0 1-2.517 2.453 7 7 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7 7 0 0 1-1.048-.625 11.8 11.8 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 63 63 0 0 1 5.072.56"/>
                             </svg>
-                            <span data-i18n="settings.security">SÈcuritÈ</span>
+                            <span data-i18n="settings.security">S√©curit√©</span>
                         </a>
                     </li>
                 </ul>
@@ -177,7 +170,7 @@
                                 <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
                                 <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
                             </svg>
-                            <span data-i18n="nav.logout">DÈconnexion</span>
+                            <span data-i18n="nav.logout">D√©connexion</span>
                         </a>
                     </li>
                 </ul>
@@ -194,7 +187,7 @@
             <!-- Profile Section -->
             <section id="section-profile" class="settings-section active">
                 <h2 class="settings-section-title" data-i18n="settings.profile">Profil</h2>
-                <p class="settings-section-desc" data-i18n="settings.manageProfile">GÈrez vos informations personnelles</p>
+                <p class="settings-section-desc" data-i18n="settings.manageProfile">G√©rez vos informations personnelles</p>
 
                 <!-- Avatar Card -->
                 <div class="settings-card">
@@ -204,16 +197,16 @@
                             <div class="avatar-preview" id="avatarPreview">
                                 <img id="avatarImage" src="https://ui-avatars.com/api/?name=User&background=3b82f6&color=fff&size=200" alt="Avatar">
                                 <div class="avatar-overlay" id="avatarOverlay">
-                                    <span class="avatar-edit-icon">??</span>
+                                    <span class="avatar-edit-icon">üì∑</span>
                                 </div>
                             </div>
                             <input type="file" id="avatarInput" accept="image/*" style="display: none;">
                             <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
                                 <button type="button" id="uploadAvatarBtn" class="btn-primary" style="flex: 1;">
-                                    ?? Changer
+                                    ‚úèÔ∏è Changer
                                 </button>
                                 <button type="button" id="removeAvatarBtn" class="btn-danger" style="flex: 1;">
-                                    ??? Supprimer
+                                    üóëÔ∏è Supprimer
                                 </button>
                             </div>
                             <p class="form-hint">Max 2MB - JPG, PNG ou GIF</p>
@@ -235,7 +228,7 @@
                                 disabled
                                 readonly
                             >
-                            <p class="form-hint">L'email ne peut pas Ítre modifiÈ</p>
+                            <p class="form-hint">L'email ne peut pas √™tre modifi√©</p>
                         </div>
 
                         <!-- Username (Obligatoire) -->
@@ -267,7 +260,7 @@
                                 placeholder="Julien RICHARD"
                                 required
                             >
-                            <p class="form-hint">Votre nom et prÈnom</p>
+                            <p class="form-hint">Votre nom et pr√©nom</p>
                         </div>
 
                         <!-- Country (Obligatoire) -->
@@ -281,7 +274,7 @@
                                 class="form-input"
                                 required
                             >
-                                <option value="">-- SÈlectionnez un pays --</option>
+                                <option value="">-- S√©lectionnez un pays --</option>
                             </select>
                         </div>
 
@@ -302,10 +295,10 @@
 
                     <!-- Phone (Optionnel) -->
                     <div class="form-group">
-                        <label for="phoneInput" class="form-label" data-i18n="settings.phone">TÈlÈphone (optionnel)</label>
+                        <label for="phoneInput" class="form-label" data-i18n="settings.phone">T√©l√©phone (optionnel)</label>
                         <div style="display: flex; gap: 0.5rem;">
                             <select id="phoneCountryCode" class="form-input" style="width: 120px;">
-                                <!-- Options peuplÈes dynamiquement depuis countries.js -->
+                                <!-- Options peupl√©es dynamiquement depuis countries.js -->
                             </select>
                             <input
                                 type="tel"
@@ -319,7 +312,7 @@
                     </div>
 
                     <button id="updateProfileBtn" class="btn-primary" data-i18n="settings.updateProfile">
-                        ?? Enregistrer
+                        üìù Enregistrer
                     </button>
                 </div>
             </section>
@@ -327,19 +320,19 @@
             <!-- Account Section -->
             <section id="section-account" class="settings-section">
                 <h2 class="settings-section-title">Compte</h2>
-                <p class="settings-section-desc">GÈrez les paramËtres de votre compte</p>
+                <p class="settings-section-desc">G√©rez les param√®tres de votre compte</p>
 
                 <div class="settings-card">
                     <div class="form-group">
-                        <label class="form-label" data-i18n="settings.languagePreferences">PrÈfÈrences de langue</label>
+                        <label class="form-label" data-i18n="settings.languagePreferences">Pr√©f√©rences de langue</label>
                         <select id="languageSelect" class="form-input">
-                            <option value="fr" data-i18n="settings.french">FranÁais</option>
+                            <option value="fr" data-i18n="settings.french">Fran√ßais</option>
                             <option value="en" data-i18n="settings.english">English</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" data-i18n="settings.theme">ThËme</label>
+                        <label class="form-label" data-i18n="settings.theme">Th√®me</label>
                         <select id="themeSelect" class="form-input">
                             <option value="light" data-i18n="settings.light">Clair</option>
                             <option value="dark" data-i18n="settings.dark">Sombre</option>
@@ -347,14 +340,14 @@
                     </div>
 
                     <button id="saveAccountBtn" class="btn-primary" data-i18n="settings.savePreferences">
-                        Enregistrer les prÈfÈrences
+                        Enregistrer les pr√©f√©rences
                     </button>
                 </div>
 
                 <div class="settings-card" style="margin-top: 2rem; border-color: var(--error);">
                     <h3 style="color: var(--error); margin-bottom: 0.5rem;" data-i18n="settings.dangerZone">Zone de danger</h3>
                     <p class="settings-description" data-i18n="settings.dangerZoneDesc">
-                        Une fois votre compte supprimÈ, toutes vos donnÈes seront dÈfinitivement effacÈes. Cette action est irrÈversible.
+                        Une fois votre compte supprim√©, toutes vos donn√©es seront d√©finitivement effac√©es. Cette action est irr√©versible.
                     </p>
                     <button id="deleteAccountBtn" class="btn-danger" data-i18n="settings.deleteAccount">
                         Supprimer mon compte
@@ -364,8 +357,8 @@
 
             <!-- Security Section -->
             <section id="section-security" class="settings-section">
-                <h2 class="settings-section-title" data-i18n="settings.security">SÈcuritÈ</h2>
-                <p class="settings-section-desc" data-i18n="settings.protectAccount">ProtÈgez votre compte</p>
+                <h2 class="settings-section-title" data-i18n="settings.security">S√©curit√©</h2>
+                <p class="settings-section-desc" data-i18n="settings.protectAccount">Prot√©gez votre compte</p>
 
                 <div class="security-grid">
                     <div class="settings-card">
@@ -376,7 +369,7 @@
                                 type="password"
                                 id="currentPassword"
                                 class="form-input"
-                                placeholder="ïïïïïïïïïïïïïïïïïïïïïïïï"
+                                placeholder="‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢"
                                 data-i18n-placeholder="settings.currentPasswordPlaceholder"
                             >
                         </div>
@@ -387,7 +380,7 @@
                                 type="password"
                                 id="newPassword"
                                 class="form-input"
-                                placeholder="ïïïïïïïïïïïïïïïïïïïïïïïï"
+                                placeholder="‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢"
                                 data-i18n-placeholder="settings.newPasswordPlaceholder"
                             >
                         </div>
@@ -398,7 +391,7 @@
                                 type="password"
                                 id="confirmPassword"
                                 class="form-input"
-                                placeholder="ïïïïïïïïïïïïïïïïïïïïïïïï"
+                                placeholder="‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢"
                                 data-i18n-placeholder="settings.confirmPasswordPlaceholder"
                             >
                         </div>
@@ -410,9 +403,9 @@
 
                     <!-- Security Audit Card -->
                     <div class="settings-card">
-                        <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-primary);" data-i18n="settings.securityAudit">Audit de sÈcuritÈ</h3>
+                        <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-primary);" data-i18n="settings.securityAudit">Audit de s√©curit√©</h3>
                         <p class="settings-description" data-i18n="settings.securityAuditDesc">
-                            Consultez l'historique des activitÈs de sÈcuritÈ de votre compte
+                            Consultez l'historique des activit√©s de s√©curit√© de votre compte
                         </p>
                         <div id="securityAuditContainer">
                             <p style="text-align: center; color: var(--text-muted);" data-i18n="settings.loadingAudit">Chargement de l'audit...</p>
@@ -423,8 +416,8 @@
 
             <!-- Particles Section -->
             <section id="section-particles" class="settings-section">
-                <h2 class="settings-section-title" data-i18n="settings.particles">Particules d'arriËre-plan</h2>
-                <p class="settings-section-desc" data-i18n="settings.customizeParticles">Personnalisez l'effet de particules animÈes</p>
+                <h2 class="settings-section-title" data-i18n="settings.particles">Particules d'arri√®re-plan</h2>
+                <p class="settings-section-desc" data-i18n="settings.customizeParticles">Personnalisez l'effet de particules anim√©es</p>
 
                 <div class="settings-card">
                     <div class="settings-grid-2">
@@ -440,13 +433,13 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="particlesSpeed" class="form-label" data-i18n="settings.particlesSpeed">Vitesse de dÈplacement</label>
+                            <label for="particlesSpeed" class="form-label" data-i18n="settings.particlesSpeed">Vitesse de d√©placement</label>
                             <input type="range" id="particlesSpeed" class="form-range" min="0" max="10" step="0.1" value="0.5">
                             <span id="particlesSpeedValue" class="form-hint">0.5</span>
                         </div>
 
                         <div class="form-group">
-                            <label for="particlesOpacity" class="form-label" data-i18n="settings.particlesOpacity">OpacitÈ</label>
+                            <label for="particlesOpacity" class="form-label" data-i18n="settings.particlesOpacity">Opacit√©</label>
                             <input type="range" id="particlesOpacity" class="form-range" min="0" max="1" step="0.01" value="0.28">
                             <span id="particlesOpacityValue" class="form-hint">0.28</span>
                         </div>
@@ -463,7 +456,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="lineOpacity" class="form-label" data-i18n="settings.lineOpacity">OpacitÈ des lignes</label>
+                            <label for="lineOpacity" class="form-label" data-i18n="settings.lineOpacity">Opacit√© des lignes</label>
                             <input type="range" id="lineOpacity" class="form-range" min="0" max="1" step="0.01" value="0.39">
                             <span id="lineOpacityValue" class="form-hint">0.39</span>
                         </div>
@@ -475,12 +468,12 @@
                                     <input type="checkbox" id="hoverEnabled" checked>
                                     <span class="toggle-slider"></span>
                                 </label>
-                                <span id="hoverEnabledText" class="form-hint" data-i18n="settings.enabled">ActivÈ</span>
+                                <span id="hoverEnabledText" class="form-hint" data-i18n="settings.enabled">Activ√©</span>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="repulseDistance" class="form-label" data-i18n="settings.repulseDistance">Distance de rÈpulsion</label>
+                            <label for="repulseDistance" class="form-label" data-i18n="settings.repulseDistance">Distance de r√©pulsion</label>
                             <input type="range" id="repulseDistance" class="form-range" min="50" max="300" value="100">
                             <span id="repulseDistanceValue" class="form-hint">100</span>
                         </div>
@@ -494,10 +487,10 @@
 
                     <div class="button-group" style="margin-top: 1rem;">
                         <button id="saveParticlesBtn" class="btn-primary" data-i18n="settings.saveSettings">
-                            ?? Enregistrer
+                            üìù Enregistrer
                         </button>
                         <button id="resetParticlesBtn" class="btn-primary" data-i18n="settings.default">
-                            ?? DÈfaut
+                            üîÑ D√©faut
                         </button>
                     </div>
                 </div>
@@ -506,26 +499,26 @@
             <!-- Users Management Section (Admin only) -->
             <section id="section-users" class="settings-section">
                 <h2 class="settings-section-title" data-i18n="settings.users">Gestion des utilisateurs</h2>
-                <p class="settings-section-desc" data-i18n="settings.manageUsers">GÈrez les utilisateurs et leurs comptes</p>
+                <p class="settings-section-desc" data-i18n="settings.manageUsers">G√©rez les utilisateurs et leurs comptes</p>
 
                 <!-- Stats Cards -->
                 <div class="admin-stats">
                     <div class="stat-card">
-                        <div class="stat-icon">??</div>
+                        <div class="stat-icon">üë•</div>
                         <div class="stat-info">
                             <div class="stat-value" id="totalUsers">-</div>
                             <div class="stat-label">Utilisateurs</div>
                         </div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">???</div>
+                        <div class="stat-icon">üõ°Ô∏è</div>
                         <div class="stat-info">
                             <div class="stat-value" id="totalAdmins">-</div>
                             <div class="stat-label">Administrateurs</div>
                         </div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">??</div>
+                        <div class="stat-icon">üÜï</div>
                         <div class="stat-info">
                             <div class="stat-value" id="recentUsers">-</div>
                             <div class="stat-label">Cette semaine</div>
@@ -544,33 +537,33 @@
             <!-- Vercel Dashboard Section (Admin only) -->
             <section id="section-vercel" class="settings-section">
                 <h2 class="settings-section-title">Vercel Dashboard</h2>
-                <p class="settings-section-desc">Suivez vos dÈploiements Vercel en temps rÈel</p>
+                <p class="settings-section-desc">Suivez vos d√©ploiements Vercel en temps r√©el</p>
 
                 <!-- Stats Cards -->
                 <div class="admin-stats">
                     <div class="stat-card">
-                        <div class="stat-icon">??</div>
+                        <div class="stat-icon">üöÄ</div>
                         <div class="stat-info">
                             <div class="stat-value" id="totalDeployments">-</div>
-                            <div class="stat-label">DÈploiements</div>
+                            <div class="stat-label">D√©ploiements</div>
                         </div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">?</div>
+                        <div class="stat-icon">‚úÖ</div>
                         <div class="stat-info">
                             <div class="stat-value" id="readyDeployments">-</div>
-                            <div class="stat-label">PrÍts</div>
+                            <div class="stat-label">Pr√™ts</div>
                         </div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">?</div>
+                        <div class="stat-icon">‚ùå</div>
                         <div class="stat-info">
                             <div class="stat-value" id="errorDeployments">-</div>
                             <div class="stat-label">Erreurs</div>
                         </div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">??</div>
+                        <div class="stat-icon">‚è±Ô∏è</div>
                         <div class="stat-info">
                             <div class="stat-value" id="avgBuildTime">-</div>
                             <div class="stat-label">Build moyen (s)</div>
@@ -581,7 +574,7 @@
                 <!-- Deployments Table -->
                 <div class="settings-card" style="margin-top: 1.5rem;">
                     <div id="deploymentsTableContainer">
-                        <p style="text-align: center; color: var(--text-muted);">Chargement des dÈploiements...</p>
+                        <p style="text-align: center; color: var(--text-muted);">Chargement des d√©ploiements...</p>
                     </div>
                 </div>
             </section>
@@ -591,7 +584,7 @@
     </div>
 
     <!-- Particles.js Library -->
-    <!-- D…SACTIV… - Conflit avec Aurora et Dark/Light Mode
+    <!-- D√âSACTIV√â - Conflit avec Aurora et Dark/Light Mode
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     -->
 
@@ -599,20 +592,20 @@
         import { checkAuth, getUserProfile, updateUserProfile, changePassword, deleteAccount, logout } from './public/js/app.js';
         import { escapeHtml, showSuccess, showError } from './public/js/dashboard-utils.js';
         import { translatePage } from './public/js/translation-service.js';
-        // D…SACTIV… - Conflit avec Aurora et Dark/Light Mode
+        // D√âSACTIV√â - Conflit avec Aurora et Dark/Light Mode
         // import { initParticles } from './public/js/particles-config.js';
         import { countries } from './public/js/countries.js';
         import { attachPhoneFormatter } from './public/js/phone-formatter.js';
 
         // Initialize particles (async to load from DB)
-        // D…SACTIV… - Conflit avec Aurora et Dark/Light Mode
+        // D√âSACTIV√â - Conflit avec Aurora et Dark/Light Mode
         /*
         (async () => {
             await initParticles('particles-js');
         })();
         */
 
-        // VÈrifier l'authentification
+        // V√©rifier l'authentification
         const isAuth = checkAuth();
         if (!isAuth) {
             window.location.href = 'index.html';
@@ -630,7 +623,7 @@
             countrySelect.appendChild(option);
         });
 
-        // Populer le select des codes tÈlÈphoniques depuis countries.js
+        // Populer le select des codes t√©l√©phoniques depuis countries.js
         const phoneCountryCodeSelect = document.getElementById('phoneCountryCode');
         const phoneInput = document.getElementById('phoneInput');
         if (phoneCountryCodeSelect) {
@@ -642,7 +635,7 @@
                 option.textContent = `${country.emoji} ${country.dial_code}`;
                 phoneCountryCodeSelect.appendChild(option);
             });
-            // SÈlectionner +33 (France) par dÈfaut
+            // S√©lectionner +33 (France) par d√©faut
             phoneCountryCodeSelect.value = '+33';
 
             // Attach phone number formatter
@@ -656,7 +649,7 @@
             const result = await getUserProfile();
             if (result.success) {
                 const profile = result.profile;
-                console.log('?? Profil chargÈ depuis la base:', profile);
+                console.log('üìÇ Profil charg√© depuis la base:', profile);
                 const userName = profile.username || profile.email.split('@')[0];
                 const userRole = profile.role || 'user';
 
@@ -665,15 +658,15 @@
 
                 if (navUserRole) {
                     if (userRole === 'admin') {
-                        navUserRole.textContent = 'ConnectÈ en tant qu\'admin';
+                        navUserRole.textContent = 'Connect√© en tant qu\'admin';
                         navUserRole.className = 'user-role-badge admin';
                     } else {
-                        navUserRole.textContent = `ConnectÈ en tant que ${escapeHtml(userName)}`;
+                        navUserRole.textContent = `Connect√© en tant que ${escapeHtml(userName)}`;
                         navUserRole.className = 'user-role-badge user';
                     }
                 }
 
-                // Email (toujours prÈsent)
+                // Email (toujours pr√©sent)
                 document.getElementById('emailDisplay').value = profile.email;
 
                 // Avatar
@@ -681,7 +674,7 @@
                     currentAvatarUrl = profile.avatar_url;
                     document.getElementById('avatarImage').src = profile.avatar_url;
                 } else {
-                    // Avatar par dÈfaut avec initiales
+                    // Avatar par d√©faut avec initiales
                     const name = profile.username || profile.email.split('@')[0];
                     document.getElementById('avatarImage').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=3ecf8e&color=fff&size=200`;
                 }
@@ -692,50 +685,50 @@
 
                 // Country - s'assurer que la valeur existe dans le select
                 const countryValue = profile.country || 'France';
-                console.log('?? Pays depuis la base:', countryValue);
+                console.log('üåç Pays depuis la base:', countryValue);
                 const countryOptions = Array.from(countrySelect.options);
                 const countryExists = countryOptions.some(opt => opt.value === countryValue);
-                console.log('? Pays existe dans le select?', countryExists);
+                console.log('‚úÖ Pays existe dans le select?', countryExists);
 
                 if (countryExists) {
                     countrySelect.value = countryValue;
-                    console.log('? Pays sÈlectionnÈ:', countrySelect.value);
+                    console.log('‚úÖ Pays s√©lectionn√©:', countrySelect.value);
                 } else {
-                    console.warn(`?? Pays "${countryValue}" non trouvÈ dans la liste, utilisation de France par dÈfaut`);
+                    console.warn(`‚ö†Ô∏è Pays "${countryValue}" non trouv√© dans la liste, utilisation de France par d√©faut`);
                     countrySelect.value = 'France';
                 }
 
                 const cityValue = profile.city || '';
-                console.log('??? Ville depuis la base:', cityValue);
+                console.log('üèôÔ∏è Ville depuis la base:', cityValue);
                 document.getElementById('cityInput').value = cityValue;
 
-                // Champs optionnels - TÈlÈphone
+                // Champs optionnels - T√©l√©phone
                 if (profile.phone && profile.phone.trim() !== '') {
-                    console.log('?? TÈlÈphone depuis la base:', profile.phone);
-                    // SÈparer l'indicatif du numÈro
+                    console.log('üìû T√©l√©phone depuis la base:', profile.phone);
+                    // S√©parer l'indicatif du num√©ro
                     const phoneMatch = profile.phone.match(/^(\+\d+)\s*(.+)$/);
                     if (phoneMatch) {
                         const indicatif = phoneMatch[1];
                         const numero = phoneMatch[2];
-                        console.log('?? Indicatif:', indicatif, 'NumÈro:', numero);
+                        console.log('üìû Indicatif:', indicatif, 'Num√©ro:', numero);
 
-                        // VÈrifier si l'indicatif existe dans le select
+                        // V√©rifier si l'indicatif existe dans le select
                         const phoneCodeSelect = document.getElementById('phoneCountryCode');
                         const codeExists = Array.from(phoneCodeSelect.options).some(opt => opt.value === indicatif);
 
                         if (codeExists) {
                             phoneCodeSelect.value = indicatif;
-                            console.log('? Indicatif sÈlectionnÈ:', phoneCodeSelect.value);
+                            console.log('‚úÖ Indicatif s√©lectionn√©:', phoneCodeSelect.value);
                         } else {
-                            console.warn(`?? Indicatif "${indicatif}" non trouvÈ, utilisation de +33 par dÈfaut`);
+                            console.warn(`‚ö†Ô∏è Indicatif "${indicatif}" non trouv√©, utilisation de +33 par d√©faut`);
                             phoneCodeSelect.value = '+33';
                         }
 
                         document.getElementById('phoneInput').value = numero;
-                        console.log('? NumÈro chargÈ:', numero);
+                        console.log('‚úÖ Num√©ro charg√©:', numero);
                     } else {
-                        // Format de tÈlÈphone invalide, mettre le numÈro complet dans le champ
-                        console.warn('?? Format tÈlÈphone invalide, mise du numÈro complet');
+                        // Format de t√©l√©phone invalide, mettre le num√©ro complet dans le champ
+                        console.warn('‚ö†Ô∏è Format t√©l√©phone invalide, mise du num√©ro complet');
                         document.getElementById('phoneInput').value = profile.phone;
                     }
                 }
@@ -751,7 +744,7 @@
                     }
                 }
 
-                // Valider le formulaire aprËs chargement
+                // Valider le formulaire apr√®s chargement
                 validateForm();
             }
         };
@@ -763,7 +756,7 @@
         const uploadAvatarBtn = document.getElementById('uploadAvatarBtn');
         const removeAvatarBtn = document.getElementById('removeAvatarBtn');
 
-        // Compteur de caractËres pour la bio (si prÈsent)
+        // Compteur de caract√®res pour la bio (si pr√©sent)
         const bioInput = document.getElementById('bioInput');
         const bioCount = document.getElementById('bioCount');
         if (bioInput && bioCount) {
@@ -772,7 +765,7 @@
             });
         }
 
-        // Validation en temps rÈel et activation/dÈsactivation du bouton
+        // Validation en temps r√©el et activation/d√©sactivation du bouton
         const updateProfileBtn = document.getElementById('updateProfileBtn');
         const validateForm = () => {
             const username = document.getElementById('usernameInput').value.trim();
@@ -793,7 +786,7 @@
             }
         };
 
-        // …couter les changements sur les champs obligatoires
+        // √âcouter les changements sur les champs obligatoires
         document.getElementById('usernameInput').addEventListener('input', validateForm);
         document.getElementById('fullNameInput').addEventListener('input', validateForm);
         document.getElementById('countrySelect').addEventListener('change', validateForm);
@@ -804,7 +797,7 @@
             avatarInput.click();
         });
 
-        // Cliquer sur l'avatar ouvre aussi le sÈlecteur
+        // Cliquer sur l'avatar ouvre aussi le s√©lecteur
         avatarPreview.addEventListener('click', () => {
             avatarInput.click();
         });
@@ -814,7 +807,7 @@
             currentAvatarUrl = null;
             const userName = document.getElementById('usernameInput').value || 'User';
             avatarImage.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=3b82f6&color=fff&size=200`;
-            showSuccess('Photo supprimÈe (cliquez sur "Mettre ‡ jour" pour sauvegarder)');
+            showSuccess('Photo supprim√©e (cliquez sur "Mettre √† jour" pour sauvegarder)');
         });
 
         // Fonction pour compresser l'image
@@ -824,7 +817,7 @@
                 reader.onload = (e) => {
                     const img = new Image();
                     img.onload = () => {
-                        // Redimensionner ‡ max 200x200 pour limiter la taille
+                        // Redimensionner √† max 200x200 pour limiter la taille
                         const MAX_SIZE = 200;
                         let width = img.width;
                         let height = img.height;
@@ -841,14 +834,14 @@
                             }
                         }
 
-                        // CrÈer un canvas pour redimensionner
+                        // Cr√©er un canvas pour redimensionner
                         const canvas = document.createElement('canvas');
                         canvas.width = width;
                         canvas.height = height;
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, width, height);
 
-                        // Convertir en base64 avec compression JPEG (qualitÈ 0.8)
+                        // Convertir en base64 avec compression JPEG (qualit√© 0.8)
                         const compressedBase64 = canvas.toDataURL('image/jpeg', 0.8);
                         resolve(compressedBase64);
                     };
@@ -860,21 +853,21 @@
             });
         };
 
-        // GÈrer la sÈlection d'image
+        // G√©rer la s√©lection d'image
         avatarInput.addEventListener('change', async (e) => {
             const file = e.target.files[0];
             if (!file) return;
 
             // Validation: type d'image
             if (!file.type.startsWith('image/')) {
-                showError('Veuillez sÈlectionner une image valide');
+                showError('Veuillez s√©lectionner une image valide');
                 return;
             }
 
             // Validation: taille max 2MB
             const maxSize = 2 * 1024 * 1024; // 2MB en bytes
             if (file.size > maxSize) {
-                showError('L\'image ne doit pas dÈpasser 2 MB');
+                showError('L\'image ne doit pas d√©passer 2 MB');
                 return;
             }
 
@@ -882,19 +875,19 @@
                 // Compresser l'image
                 const compressedBase64 = await compressImage(file);
 
-                // PrÈvisualisation locale
+                // Pr√©visualisation locale
                 avatarImage.src = compressedBase64;
                 currentAvatarUrl = compressedBase64;
 
                 const sizeKB = Math.round((compressedBase64.length * 0.75) / 1024);
-                showSuccess(`Image compressÈe (${sizeKB} KB) ! Cliquez sur "Mettre ‡ jour le profil" pour sauvegarder`);
+                showSuccess(`Image compress√©e (${sizeKB} KB) ! Cliquez sur "Mettre √† jour le profil" pour sauvegarder`);
             } catch (error) {
                 showError('Erreur lors de la compression de l\'image');
                 console.error(error);
             }
         });
 
-        // Mettre ‡ jour le profil
+        // Mettre √† jour le profil
         updateProfileBtn.addEventListener('click', async () => {
             const username = document.getElementById('usernameInput').value.trim();
             const fullName = document.getElementById('fullNameInput').value.trim();
@@ -906,13 +899,13 @@
             const bioInput = document.getElementById('bioInput');
             const bio = bioInput ? bioInput.value.trim() : '';
 
-            // Validations (dÈj‡ faites par le bouton, mais double-check)
+            // Validations (d√©j√† faites par le bouton, mais double-check)
             if (!username || !fullName || !country || !city) {
                 showError('Veuillez remplir tous les champs obligatoires (Username, Nom complet, Pays, Ville)');
                 return;
             }
 
-            // Construire l'objet avec seulement les champs nÈcessaires
+            // Construire l'objet avec seulement les champs n√©cessaires
             const profileData = {
                 username,
                 full_name: fullName,
@@ -927,19 +920,19 @@
             if (bio) {
                 profileData.bio = bio;
             }
-            // Avatar peut Ítre null (pour supprimer) ou une URL/base64
+            // Avatar peut √™tre null (pour supprimer) ou une URL/base64
             profileData.avatar_url = currentAvatarUrl;
 
             const result = await updateUserProfile(profileData);
 
             if (result.success) {
-                showSuccess('Profil mis ‡ jour avec succËs !');
-                // Mettre ‡ jour l'avatar dans le burger menu
+                showSuccess('Profil mis √† jour avec succ√®s !');
+                // Mettre √† jour l'avatar dans le burger menu
                 if (currentAvatarUrl) {
                     document.getElementById('burgerAvatarImage').src = currentAvatarUrl;
                 }
             } else {
-                showError(result.error || 'Erreur lors de la mise ‡ jour');
+                showError(result.error || 'Erreur lors de la mise √† jour');
             }
         });
 
@@ -961,7 +954,7 @@
             }
 
             if (newPassword.length < 8) {
-                showError('Le mot de passe doit contenir au moins 8 caractËres');
+                showError('Le mot de passe doit contenir au moins 8 caract√®res');
                 return;
             }
 
@@ -973,7 +966,7 @@
             const result = await changePassword(newPassword);
 
             if (result.success) {
-                showSuccess('Mot de passe changÈ avec succËs !');
+                showSuccess('Mot de passe chang√© avec succ√®s !');
                 // Clear fields
                 document.getElementById('currentPassword').value = '';
                 document.getElementById('newPassword').value = '';
@@ -985,11 +978,11 @@
 
         // Supprimer le compte
         document.getElementById('deleteAccountBtn').addEventListener('click', async () => {
-            if (confirm('??  tes-vous s˚r de vouloir supprimer votre compte ? Cette action est irrÈversible !')) {
-                if (confirm('?? DERNI»RE CONFIRMATION : Toutes vos donnÈes seront perdues. Continuer ?')) {
+            if (confirm('‚ö†Ô∏è √ätes-vous s√ªr de vouloir supprimer votre compte ? Cette action est irr√©versible !')) {
+                if (confirm('üö® DERNI√àRE CONFIRMATION : Toutes vos donn√©es seront perdues. Continuer ?')) {
                     const result = await deleteAccount();
                     if (result.success) {
-                        alert('? Compte supprimÈ avec succËs');
+                        alert('‚úÖ Compte supprim√© avec succ√®s');
                         window.location.href = 'index.html';
                     } else {
                         showError(result.error || 'Erreur lors de la suppression');
@@ -998,7 +991,7 @@
             }
         });
 
-        // GÈrer le burger menu
+        // G√©rer le burger menu
         const burgerBtn = document.getElementById('burgerBtn');
         const burgerMenu = document.getElementById('burgerMenu');
 
@@ -1017,7 +1010,7 @@
             burgerMenu.classList.remove('show');
         });
 
-        // EmpÍcher la fermeture si on clique dans le menu
+        // Emp√™cher la fermeture si on clique dans le menu
         burgerMenu.addEventListener('click', (e) => {
             e.stopPropagation();
         });
@@ -1030,14 +1023,14 @@
 
         const getWeatherIcon = (weatherCode) => {
             // WMO Weather codes: https://open-meteo.com/en/docs
-            if (weatherCode === 0) return '???'; // Clear sky
-            if (weatherCode <= 3) return '?'; // Partly cloudy
-            if (weatherCode <= 48) return '???'; // Fog
-            if (weatherCode <= 67) return '???'; // Rain
-            if (weatherCode <= 77) return '???'; // Snow
-            if (weatherCode <= 82) return '???'; // Showers
-            if (weatherCode <= 99) return '??'; // Thunderstorm
-            return '???';
+            if (weatherCode === 0) return 'üå§Ô∏è'; // Clear sky
+            if (weatherCode <= 3) return '‚õÖ'; // Partly cloudy
+            if (weatherCode <= 48) return 'üå´Ô∏è'; // Fog
+            if (weatherCode <= 67) return 'üå´Ô∏è'; // Rain
+            if (weatherCode <= 77) return 'üå´Ô∏è'; // Snow
+            if (weatherCode <= 82) return 'üå´Ô∏è'; // Showers
+            if (weatherCode <= 99) return '‚õàÔ∏è'; // Thunderstorm
+            return 'üå§Ô∏è';
         };
 
         const fetchWeather = async (lat, lon) => {
@@ -1075,16 +1068,16 @@
                     <div class="weather-info">
                         <span class="weather-icon">${icon}</span>
                         <div class="weather-details">
-                            <span class="weather-temp">${temp}∞C</span>
+                            <span class="weather-temp">${temp}¬∞C</span>
                             <span class="weather-city">${city}</span>
                         </div>
                     </div>
                 `;
             } catch (error) {
-                console.error('Erreur mÈtÈo:', error);
+                console.error('Erreur m√©t√©o:', error);
                 weatherWidget.innerHTML = `
                     <div class="weather-error">
-                        <span>???</span>
+                        <span>üå´Ô∏è</span>
                     </div>
                 `;
             }
@@ -1107,25 +1100,25 @@
                         fetchWeather(lat, lon);
                     },
                     (error) => {
-                        console.log('GÈolocalisation refusÈe, utilisation de Paris par dÈfaut');
-                        // Afficher un message ‡ l'utilisateur
+                        console.log('G√©olocalisation refus√©e, utilisation de Paris par d√©faut');
+                        // Afficher un message √† l'utilisateur
                         weatherWidget.innerHTML = `
                             <div class="weather-info" style="opacity: 0.7;">
-                                <span class="weather-icon">??</span>
+                                <span class="weather-icon">‚òÄÔ∏è</span>
                                 <div class="weather-details">
-                                    <div class="weather-temp" style="font-size: 0.875rem;">Position par dÈfaut</div>
-                                    <div class="weather-location" style="font-size: 0.75rem;">GÈolocalisation dÈsactivÈe</div>
+                                    <div class="weather-temp" style="font-size: 0.875rem;">Position par d√©faut</div>
+                                    <div class="weather-location" style="font-size: 0.75rem;">G√©olocalisation d√©sactiv√©e</div>
                                 </div>
                             </div>
                         `;
-                        // Puis charger mÈtÈo Paris aprËs 2s
+                        // Puis charger m√©t√©o Paris apr√®s 2s
                         setTimeout(() => {
-                            fetchWeather(48.8566, 2.3522); // Paris par dÈfaut
+                            fetchWeather(48.8566, 2.3522); // Paris par d√©faut
                         }, 2000);
                     }
                 );
             } else {
-                // Paris par dÈfaut si pas de gÈolocalisation
+                // Paris par d√©faut si pas de g√©olocalisation
                 fetchWeather(48.8566, 2.3522);
             }
         };
@@ -1156,56 +1149,40 @@
             const newLang = languageSelect.value;
 
             // Apply theme
-        const themeSwitch = document.querySelector('[data-theme-toggle]');
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+
+            // Apply language
+            localStorage.setItem('language', newLang);
+
+            // Update burger menu toggles
+            themeToggle.checked = newTheme === 'dark';
+            themeText.textContent = newTheme === 'dark' ? 'Mode sombre' : 'Mode clair';
+            langToggle.checked = newLang === 'en';
+
+            // Traduire d'abord
+            await translatePage();
+
+            showSuccess('Pr√©f√©rences enregistr√©es avec succ√®s !');
+        });
+
+        // G√©rer le toggle du th√®me
+        const themeToggle = document.getElementById('themeToggle');
         const themeText = document.getElementById('themeText');
 
-        const refreshThemeUI = (theme) => {
-            if (themeSwitch) {
-                themeSwitch.checked = theme === 'dark';
-            }
-            if (themeText) {
-                const lang = (localStorage.getItem('language') || 'fr').toLowerCase();
-                const localeKey = lang.startsWith('en') ? 'En' : 'Fr';
-                const darkLabel = themeText.dataset['dark' + localeKey] || themeText.dataset.darkFr || 'Mode sombre';
-                const lightLabel = themeText.dataset['light' + localeKey] || themeText.dataset.lightFr || 'Mode clair';
-                themeText.textContent = theme === 'dark' ? darkLabel : lightLabel;
-            }
-        };
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        themeToggle.checked = savedTheme === 'dark';
+        themeText.textContent = savedTheme === 'dark' ? 'Mode sombre' : 'Mode clair';
 
-        window.addEventListener('newsly-theme-change', (event) => {
-            refreshThemeUI(event.detail?.theme || (localStorage.getItem('theme') || 'dark'));
+        themeToggle.addEventListener('change', () => {
+            const newTheme = themeToggle.checked ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeText.textContent = newTheme === 'dark' ? 'Mode sombre' : 'Mode clair';
         });
 
-        refreshThemeUI(localStorage.getItem('theme') || 'dark');
-
-            showSuccess('PrÈfÈrences enregistrÈes avec succËs !');
-        });
-
-        const themeSwitch = document.querySelector('[data-theme-toggle]');
-        const themeText = document.getElementById('themeText');
-
-        const refreshThemeUI = (theme) => {
-            if (themeSwitch) {
-                themeSwitch.checked = theme === 'dark';
-            }
-            if (themeText) {
-                const lang = (localStorage.getItem('language') || 'fr').toLowerCase();
-                const localeKey = lang.startsWith('en') ? 'En' : 'Fr';
-                const darkLabel = themeText.dataset['dark' + localeKey] || themeText.dataset.darkFr || 'Mode sombre';
-                const lightLabel = themeText.dataset['light' + localeKey] || themeText.dataset.lightFr || 'Mode clair';
-                themeText.textContent = theme === 'dark' ? darkLabel : lightLabel;
-            }
-        };
-
-        window.addEventListener('newsly-theme-change', (event) => {
-            refreshThemeUI(event.detail?.theme || (localStorage.getItem('theme') || 'dark'));
-        });
-
-        refreshThemeUI(localStorage.getItem('theme') || 'dark');
-
-        });
-
-        // GÈrer le switch de langue
+        // G√©rer le switch de langue
         const langToggle = document.getElementById('langToggle');
         const savedLang = localStorage.getItem('language') || 'fr';
         langToggle.checked = savedLang === 'en';
@@ -1214,10 +1191,10 @@
             const newLang = langToggle.checked ? 'en' : 'fr';
             localStorage.setItem('language', newLang);
 
-            // Mettre ‡ jour le label du switch dans le burger menu
+            // Mettre √† jour le label du switch dans le burger menu
             const langLabel = document.getElementById('langLabel');
             if (langLabel) {
-                langLabel.textContent = newLang === 'en' ? 'English / FranÁais' : 'FranÁais / English';
+                langLabel.textContent = newLang === 'en' ? 'English / Fran√ßais' : 'Fran√ßais / English';
             }
 
             translatePage();
@@ -1244,14 +1221,14 @@
         const closeSettingsMobileMenu = () => {
             settingsNav.classList.remove('mobile-open');
             mobileOverlay.classList.remove('show');
-            document.body.style.overflow = ''; // RÈactiver scroll
+            document.body.style.overflow = ''; // R√©activer scroll
         };
 
         // Fonction pour ouvrir le menu settings mobile
         const openSettingsMobileMenu = () => {
             settingsNav.classList.add('mobile-open');
             mobileOverlay.classList.add('show');
-            document.body.style.overflow = 'hidden'; // EmpÍcher scroll background
+            document.body.style.overflow = 'hidden'; // Emp√™cher scroll background
         };
 
         // Toggle menu avec le bouton burger
@@ -1283,11 +1260,11 @@
             }, { passive: false });
         }
 
-        // Fermer nav aprËs sÈlection section sur mobile
+        // Fermer nav apr√®s s√©lection section sur mobile
         document.querySelectorAll('.settings-nav-item').forEach(item => {
             item.addEventListener('click', () => {
                 if (window.innerWidth <= 1024) {
-                    setTimeout(closeSettingsMobileMenu, 100); // Petit dÈlai pour UX
+                    setTimeout(closeSettingsMobileMenu, 100); // Petit d√©lai pour UX
                 }
             });
         });
@@ -1374,7 +1351,7 @@
         // Show/hide Admin section - only for specific admin email with is_admin true in DB
         const checkAdminAccess = async () => {
             const result = await getUserProfile();
-            // VÈrifier is_admin directement depuis le profil (colonne profiles.is_admin)
+            // V√©rifier is_admin directement depuis le profil (colonne profiles.is_admin)
             if (result.success && result.profile.is_admin === true) {
                 // Show admin section
                 document.getElementById('adminSectionHeader').style.display = 'flex';
@@ -1391,15 +1368,15 @@
             const usersContainer = document.getElementById('usersTableContainer');
 
             try {
-                // Appel API sÈcurisÈ backend
+                // Appel API s√©curis√© backend
                 const API_BASE_URL = window.location.hostname === 'localhost'
                     ? 'http://localhost:3000'
                     : 'https://prod-julien.vercel.app';
 
-                // RÈcupÈrer le token depuis la session
+                // R√©cup√©rer le token depuis la session
                 const session = localStorage.getItem('session');
                 if (!session) {
-                    throw new Error('Session non trouvÈe');
+                    throw new Error('Session non trouv√©e');
                 }
                 const { access_token } = JSON.parse(session);
 
@@ -1420,7 +1397,7 @@
                 document.getElementById('recentUsers').textContent = stats.recentUsers;
 
                 if (!users || users.length === 0) {
-                    usersContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Aucun utilisateur trouvÈ</p>';
+                    usersContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Aucun utilisateur trouv√©</p>';
                     return;
                 }
 
@@ -1432,8 +1409,8 @@
                                 <th>Email</th>
                                 <th>Nom d'utilisateur</th>
                                 <th>Nom complet</th>
-                                <th>RÙle</th>
-                                <th>CrÈÈ le</th>
+                                <th>R√¥le</th>
+                                <th>Cr√©√© le</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -1465,7 +1442,7 @@
                             <td>
                                 ${!isCurrentUser ? `
                                     <button class="btn-delete-user" data-user-id="${user.id}" data-user-email="${escapeHtml(user.email)}">
-                                        ??? Supprimer
+                                        üóëÔ∏è Supprimer
                                     </button>
                                 ` : '<span style="color: var(--text-muted); font-size: 0.875rem;">Vous</span>'}
                             </td>
@@ -1486,7 +1463,7 @@
                         const userId = btn.dataset.userId;
                         const userEmail = btn.dataset.userEmail;
 
-                        if (confirm(`?? ATTENTION: Voulez-vous vraiment supprimer le compte de ${userEmail} ?\n\nCette action est IRR…VERSIBLE et supprimera:\n- Le compte utilisateur\n- Toutes les donnÈes associÈes\n- L'accËs ‡ l'application\n\nConfirmer la suppression ?`)) {
+                        if (confirm(`‚ö†Ô∏è ATTENTION: Voulez-vous vraiment supprimer le compte de ${userEmail} ?\n\nCette action est IRR√âVERSIBLE et supprimera:\n- Le compte utilisateur\n- Toutes les donn√©es associ√©es\n- L'acc√®s √† l'application\n\nConfirmer la suppression ?`)) {
                             try {
                                 btn.disabled = true;
                                 btn.textContent = 'Suppression...';
@@ -1495,10 +1472,10 @@
                                     ? 'http://localhost:3000'
                                     : 'https://prod-julien.vercel.app';
 
-                                // RÈcupÈrer le token depuis la session
+                                // R√©cup√©rer le token depuis la session
                                 const session = localStorage.getItem('session');
                                 if (!session) {
-                                    throw new Error('Session non trouvÈe');
+                                    throw new Error('Session non trouv√©e');
                                 }
                                 const { access_token } = JSON.parse(session);
 
@@ -1516,13 +1493,13 @@
                                     throw new Error(error.error || 'Erreur lors de la suppression');
                                 }
 
-                                showSuccess('? Utilisateur supprimÈ avec succËs');
+                                showSuccess('‚úÖ Utilisateur supprim√© avec succ√®s');
                                 loadUsersList(); // Reload the list
                             } catch (error) {
-                                showError('? Erreur: ' + error.message);
+                                showError('‚ùå Erreur: ' + error.message);
                                 console.error(error);
                                 btn.disabled = false;
-                                btn.textContent = '??? Supprimer';
+                                btn.textContent = 'üóëÔ∏è Supprimer';
                             }
                         }
                     });
@@ -1539,15 +1516,15 @@
             const deploymentsContainer = document.getElementById('deploymentsTableContainer');
 
             try {
-                // Appel API sÈcurisÈ backend
+                // Appel API s√©curis√© backend
                 const API_BASE_URL = window.location.hostname === 'localhost'
                     ? 'http://localhost:3000'
                     : 'https://prod-julien.vercel.app';
 
-                // RÈcupÈrer le token depuis la session
+                // R√©cup√©rer le token depuis la session
                 const session = localStorage.getItem('session');
                 if (!session) {
-                    throw new Error('Session non trouvÈe');
+                    throw new Error('Session non trouv√©e');
                 }
                 const { access_token } = JSON.parse(session);
 
@@ -1557,7 +1534,7 @@
 
                 if (!response.ok) {
                     const error = await response.json();
-                    throw new Error(error.error || 'Erreur lors du chargement des dÈploiements');
+                    throw new Error(error.error || 'Erreur lors du chargement des d√©ploiements');
                 }
 
                 const { deployments, stats } = await response.json();
@@ -1569,7 +1546,7 @@
                 document.getElementById('avgBuildTime').textContent = stats.avgBuildTime;
 
                 if (!deployments || deployments.length === 0) {
-                    deploymentsContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Aucun dÈploiement trouvÈ</p>';
+                    deploymentsContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Aucun d√©ploiement trouv√©</p>';
                     return;
                 }
 
@@ -1580,10 +1557,10 @@
                             <tr>
                                 <th>Nom</th>
                                 <th>URL</th>
-                                <th>…tat</th>
+                                <th>√âtat</th>
                                 <th>Type</th>
-                                <th>CrÈÈ le</th>
-                                <th>CrÈateur</th>
+                                <th>Cr√©√© le</th>
+                                <th>Cr√©ateur</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -1599,14 +1576,14 @@
                         minute: '2-digit'
                     });
 
-                    // …tat badge avec couleurs
+                    // √âtat badge avec couleurs
                     let stateBadge = '';
                     if (deployment.state === 'READY') {
-                        stateBadge = '<span class="role-badge" style="background: var(--success); color: white;">? READY</span>';
+                        stateBadge = '<span class="role-badge" style="background: var(--success); color: white;">‚úÖ READY</span>';
                     } else if (deployment.state === 'ERROR') {
-                        stateBadge = '<span class="role-badge" style="background: var(--error); color: white;">? ERROR</span>';
+                        stateBadge = '<span class="role-badge" style="background: var(--error); color: white;">‚ùå ERROR</span>';
                     } else if (deployment.state === 'BUILDING') {
-                        stateBadge = '<span class="role-badge" style="background: var(--warning); color: white;">?? BUILDING</span>';
+                        stateBadge = '<span class="role-badge" style="background: var(--warning); color: white;">üöß BUILDING</span>';
                     } else {
                         stateBadge = `<span class="role-badge" style="background: var(--text-muted); color: white;">${deployment.state}</span>`;
                     }
@@ -1614,9 +1591,9 @@
                     // Type badge
                     let typeBadge = '';
                     if (deployment.target === 'production') {
-                        typeBadge = '<span class="role-badge admin">?? Production</span>';
+                        typeBadge = '<span class="role-badge admin">üöÄ Production</span>';
                     } else {
-                        typeBadge = '<span class="role-badge user">?? Preview</span>';
+                        typeBadge = '<span class="role-badge user">üîÅ Preview</span>';
                     }
 
                     tableHTML += `
@@ -1629,7 +1606,7 @@
                             <td>${escapeHtml(deployment.creator)}</td>
                             <td>
                                 <a href="${deployment.inspectorUrl}" target="_blank" rel="noopener" class="btn-delete-user" style="background: var(--primary); text-decoration: none; display: inline-block;">
-                                    ?? Inspecter
+                                    ‚úèÔ∏è Inspecter
                                 </a>
                             </td>
                         </tr>
@@ -1644,7 +1621,7 @@
                 deploymentsContainer.innerHTML = tableHTML;
 
             } catch (error) {
-                console.error('Erreur lors du chargement des dÈploiements:', error);
+                console.error('Erreur lors du chargement des d√©ploiements:', error);
                 deploymentsContainer.innerHTML = `<p style="text-align: center; color: var(--error);">Erreur: ${error.message}</p>`;
             }
         };
@@ -1656,58 +1633,58 @@
         const loadSecurityAudit = async () => {
             const auditContainer = document.getElementById('securityAuditContainer');
 
-            // RÈcupÈrer l'IP publique
+            // R√©cup√©rer l'IP publique
             let publicIP = 'Non disponible';
             try {
                 const ipResponse = await fetch('https://api.ipify.org?format=json');
                 const ipData = await ipResponse.json();
                 publicIP = ipData.ip;
             } catch (error) {
-                console.warn('Impossible de rÈcupÈrer l\'IP publique:', error);
+                console.warn('Impossible de r√©cup√©rer l\'IP publique:', error);
             }
 
             // Get audit events from localStorage (mock data for now)
             const auditEvents = [
                 {
                     type: 'success',
-                    icon: '?',
-                    title: 'Connexion rÈussie',
-                    description: 'Vous vous Ítes connectÈ ‡ votre compte',
+                    icon: '‚úÖ',
+                    title: 'Connexion r√©ussie',
+                    description: 'Vous vous √™tes connect√© √† votre compte',
                     timestamp: new Date(),
                     ip: publicIP,
                     device: 'Chrome sur Windows'
                 },
                 {
                     type: 'info',
-                    icon: '??',
+                    icon: '‚úèÔ∏è',
                     title: 'Changement de mot de passe',
-                    description: 'Votre mot de passe a ÈtÈ modifiÈ avec succËs',
+                    description: 'Votre mot de passe a √©t√© modifi√© avec succ√®s',
                     timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
                     ip: publicIP,
                     device: 'Chrome sur Windows'
                 },
                 {
                     type: 'info',
-                    icon: '??',
-                    title: 'Mise ‡ jour du profil',
-                    description: 'Vos informations de profil ont ÈtÈ modifiÈes',
+                    icon: 'üìù',
+                    title: 'Mise √† jour du profil',
+                    description: 'Vos informations de profil ont √©t√© modifi√©es',
                     timestamp: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
                     ip: publicIP,
                     device: 'Chrome sur Windows'
                 },
                 {
                     type: 'success',
-                    icon: '?',
-                    title: 'Connexion rÈussie',
-                    description: 'Vous vous Ítes connectÈ ‡ votre compte',
+                    icon: '‚úÖ',
+                    title: 'Connexion r√©ussie',
+                    description: 'Vous vous √™tes connect√© √† votre compte',
                     timestamp: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
                     ip: publicIP,
                     device: 'Safari sur macOS'
                 },
                 {
                     type: 'warning',
-                    icon: '??',
-                    title: 'Tentative de connexion ÈchouÈe',
+                    icon: '‚ö†Ô∏è',
+                    title: 'Tentative de connexion √©chou√©e',
                     description: 'Mot de passe incorrect',
                     timestamp: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
                     ip: '203.45.67.89',
@@ -1716,7 +1693,7 @@
             ];
 
             if (auditEvents.length === 0) {
-                auditContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Aucune activitÈ rÈcente</p>';
+                auditContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Aucune activit√© r√©cente</p>';
                 return;
             }
 
@@ -1740,9 +1717,9 @@
                             <div class="audit-title">${escapeHtml(event.title)}</div>
                             <div class="audit-description">${escapeHtml(event.description)}</div>
                             <div class="audit-meta">
-                                <span>?? ${formattedDate}</span>
-                                <span>?? ${escapeHtml(event.ip)}</span>
-                                <span>?? ${escapeHtml(event.device)}</span>
+                                <span>üìÖ ${formattedDate}</span>
+                                <span>‚úèÔ∏è ${escapeHtml(event.ip)}</span>
+                                <span>üìù ${escapeHtml(event.device)}</span>
                             </div>
                         </div>
                         <span class="audit-badge ${event.type}">${event.type}</span>
@@ -1792,7 +1769,7 @@
             document.getElementById('lineOpacityValue').textContent = config.particles.line_linked.opacity.toFixed(2);
 
             document.getElementById('hoverEnabled').checked = config.interactivity.events.onhover.enable;
-            document.getElementById('hoverEnabledText').textContent = config.interactivity.events.onhover.enable ? 'ActivÈ' : 'DÈsactivÈ';
+            document.getElementById('hoverEnabledText').textContent = config.interactivity.events.onhover.enable ? 'Activ√©' : 'D√©sactiv√©';
 
             document.getElementById('repulseDistance').value = config.interactivity.modes.repulse.distance;
             document.getElementById('repulseDistanceValue').textContent = config.interactivity.modes.repulse.distance;
@@ -1833,7 +1810,7 @@
             try {
                 const particlesContainer = document.getElementById('particles-js');
 
-                // Destruction sÈcurisÈe avec optional chaining
+                // Destruction s√©curis√©e avec optional chaining
                 if (window.pJSDom && window.pJSDom.length > 0) {
                     try {
                         if (window.pJSDom[0]?.pJS?.fn?.vendors?.destroypJS) {
@@ -1893,7 +1870,7 @@
             particlesContainer.style.filter = `blur(${e.target.value}px)`;
         });
         document.getElementById('hoverEnabled').addEventListener('change', (e) => {
-            document.getElementById('hoverEnabledText').textContent = e.target.checked ? 'ActivÈ' : 'DÈsactivÈ';
+            document.getElementById('hoverEnabledText').textContent = e.target.checked ? 'Activ√©' : 'D√©sactiv√©';
             applyLivePreview();
         });
 
@@ -1905,7 +1882,7 @@
             const dbResult = await saveParticlesConfigToDB(config);
 
             if (dbResult.success) {
-                showSuccess('ParamËtres des particules enregistrÈs !');
+                showSuccess('Param√®tres des particules enregistr√©s !');
             } else {
                 console.error('DB save error:', dbResult.error);
                 showError('Erreur lors de la sauvegarde : ' + dbResult.error);
@@ -1915,7 +1892,7 @@
             try {
                 const particlesContainer = document.getElementById('particles-js');
 
-                // Destruction sÈcurisÈe avec optional chaining
+                // Destruction s√©curis√©e avec optional chaining
                 if (window.pJSDom && window.pJSDom.length > 0) {
                     try {
                         if (window.pJSDom[0]?.pJS?.fn?.vendors?.destroypJS) {
@@ -1972,7 +1949,7 @@
             document.getElementById('lineOpacityValue').textContent = defaultParticlesConfig.particles.line_linked.opacity.toFixed(2);
 
             document.getElementById('hoverEnabled').checked = defaultParticlesConfig.interactivity.events.onhover.enable;
-            document.getElementById('hoverEnabledText').textContent = defaultParticlesConfig.interactivity.events.onhover.enable ? 'ActivÈ' : 'DÈsactivÈ';
+            document.getElementById('hoverEnabledText').textContent = defaultParticlesConfig.interactivity.events.onhover.enable ? 'Activ√©' : 'D√©sactiv√©';
 
             document.getElementById('repulseDistance').value = defaultParticlesConfig.interactivity.modes.repulse.distance;
             document.getElementById('repulseDistanceValue').textContent = defaultParticlesConfig.interactivity.modes.repulse.distance;
@@ -1982,12 +1959,12 @@
             document.getElementById('particlesBlurValue').textContent = '0 px';
             document.getElementById('particles-js').style.filter = 'blur(0px)';
 
-            showSuccess('ParamËtres par dÈfaut appliquÈs (non enregistrÈs)');
+            showSuccess('Param√®tres par d√©faut appliqu√©s (non enregistr√©s)');
 
             try {
                 const particlesContainer = document.getElementById('particles-js');
 
-                // Destruction sÈcurisÈe avec optional chaining
+                // Destruction s√©curis√©e avec optional chaining
                 if (window.pJSDom && window.pJSDom.length > 0) {
                     try {
                         if (window.pJSDom[0]?.pJS?.fn?.vendors?.destroypJS) {
@@ -2011,7 +1988,7 @@
                 }, 50);
             } catch (error) {
                 console.error('Reset error:', error);
-                showError('Erreur lors de la rÈinitialisation. Rechargement...');
+                showError('Erreur lors de la r√©initialisation. Rechargement...');
                 setTimeout(() => location.reload(), 1000);
             }
         });
@@ -2026,25 +2003,25 @@
             await loadParticlesSettings();
 
             // ================================================
-            // SETTINGS NAVIGATION COLLAPSIBLE - SystËme universel
+            // SETTINGS NAVIGATION COLLAPSIBLE - Syst√®me universel
             // ================================================
 
-            // SÈlectionner tous les headers avec data-collapse-id
+            // S√©lectionner tous les headers avec data-collapse-id
             const collapseHeaders = document.querySelectorAll('[data-collapse-id]');
 
             if (collapseHeaders.length > 0) {
-                console.log(`? ${collapseHeaders.length} menu(s) collapse trouvÈ(s)`);
+                console.log(`‚úÖ ${collapseHeaders.length} menu(s) collapse trouv√©(s)`);
 
                 collapseHeaders.forEach(header => {
                     const collapseId = header.getAttribute('data-collapse-id');
                     const content = document.querySelector(`[data-collapse-target="${collapseId}"]`);
 
                     if (!content) {
-                        console.warn(`?? Contenu collapse non trouvÈ pour: ${collapseId}`);
+                        console.warn(`‚ö†Ô∏è Contenu collapse non trouv√© pour: ${collapseId}`);
                         return;
                     }
 
-                    // Charger l'Ètat sauvegardÈ depuis localStorage
+                    // Charger l'√©tat sauvegard√© depuis localStorage
                     const isCollapsed = localStorage.getItem(`collapse_${collapseId}`) === 'true';
 
                     if (isCollapsed) {
@@ -2063,10 +2040,10 @@
                         header.classList.toggle('collapsed');
                         content.classList.toggle('collapsed');
 
-                        // Sauvegarder l'Ètat
+                        // Sauvegarder l'√©tat
                         localStorage.setItem(`collapse_${collapseId}`, willCollapse);
 
-                        console.log(`?? Toggle ${collapseId}: ${willCollapse ? 'collapsed' : 'expanded'}`);
+                        console.log(`üîÑ Toggle ${collapseId}: ${willCollapse ? 'collapsed' : 'expanded'}`);
                     });
                 });
             }
@@ -2077,7 +2054,7 @@
             const sidebarToggle = document.getElementById('sidebarToggle');
             const sidebar = document.querySelector('.vertical-sidebar');
 
-            // Load saved state from localStorage (par dÈfaut: ouvert)
+            // Load saved state from localStorage (par d√©faut: ouvert)
             const isSidebarClosed = localStorage.getItem('vertical_sidebar_closed') === 'true';
             if (isSidebarClosed && sidebar) {
                 sidebar.classList.add('closed');
@@ -2095,7 +2072,7 @@
                     const isClosed = sidebar.classList.contains('closed');
                     localStorage.setItem('vertical_sidebar_closed', isClosed);
 
-                    console.log(`?? Sidebar ${isClosed ? 'fermÈe (2px)' : 'ouverte (250px)'}`);
+                    console.log(`üîÑ Sidebar ${isClosed ? 'ferm√©e (2px)' : 'ouverte (250px)'}`);
                 });
             }
         })();
