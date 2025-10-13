@@ -2603,10 +2603,12 @@ body:has(.dashboard-sidebar.collapsed) .settings-content {
 
   .dashboard-container {
     margin-left: 0;
+    padding: 1rem;
   }
 
   .settings-content {
     margin-left: 0;
+    padding: 1.5rem 1rem 150px 1rem;
   }
 
   .toast {

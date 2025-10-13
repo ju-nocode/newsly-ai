@@ -19,9 +19,9 @@ VERTICAL SIDEBAR - MINIMALIST LINE STYLE
     background-color: #333;
 }
 
-/* Sur mobile, on peut cacher le trait si souhaité (optionnel) */
+/* Sur mobile, le trait reste visible mais on ajuste l'espacement */
 @media (max-width: 768px) {
     .vertical-sidebar {
-        display: none;
+        /* Le trait reste visible même sur mobile */
     }
 }
