@@ -211,3 +211,199 @@
               opacity 0.2s cubic-bezier(0.4, 0, 1, 1),
               padding 0.25s cubic-bezier(0.4, 0, 1, 1);
 }
+
+/* ================================================
+   VERTICAL SIDEBAR - Modern Sidebar Design
+================================================ */
+
+.vertical-sidebar {
+  position: fixed;
+  left: 0;
+  top: var(--navbar-height);
+  width: 250px;
+  height: calc(100vh - var(--navbar-height));
+  background: var(--bg-primary);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 100;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 2px 0 8px var(--shadow);
+}
+
+[data-theme="dark"] .vertical-sidebar {
+  background: var(--bg-primary);
+  border-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 2px 0 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Vertical sidebar closed state */
+.vertical-sidebar.closed {
+  width: 2px;
+  overflow: hidden;
+  border-right: 2px solid var(--primary);
+  box-shadow: none;
+}
+
+.vertical-sidebar.closed .sidebar-content {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Sidebar Content */
+.sidebar-content {
+  padding: 0;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+/* Sidebar Header */
+.sidebar-header {
+  padding: 1.5rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  background: rgba(59, 130, 246, 0.05);
+}
+
+.sidebar-header h2 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+  line-height: 1.2;
+}
+
+.sidebar-header p {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Sidebar Section */
+.sidebar-section {
+  padding: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.sidebar-section:last-child {
+  border-bottom: none;
+}
+
+/* Sidebar Menu Title */
+.sidebar-menu-title {
+  padding: 0.875rem 1.25rem 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+/* Sidebar Menu */
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-menu-item {
+  margin: 0;
+  padding: 0;
+}
+
+/* Sidebar Menu Link */
+.sidebar-menu-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  background: transparent;
+  width: 100%;
+  border: none;
+  text-align: left;
+}
+
+.sidebar-menu-link:hover {
+  background: rgba(59, 130, 246, 0.08);
+  color: var(--text-primary);
+  transform: translateX(2px);
+}
+
+.sidebar-menu-link.active {
+  background: rgba(59, 130, 246, 0.12);
+  color: var(--primary);
+  font-weight: 600;
+  border-left: 3px solid var(--primary);
+  padding-left: calc(1.25rem - 3px);
+}
+
+/* Sidebar SVG Icons */
+.sidebar-menu-link svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.sidebar-menu-link:hover svg {
+  opacity: 0.9;
+}
+
+.sidebar-menu-link.active svg {
+  opacity: 1;
+  color: var(--primary);
+}
+
+/* Checkboxes in sidebar (for countries) */
+.sidebar-menu-link input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--primary);
+  flex-shrink: 0;
+}
+
+/* Sidebar Toggle Button (in navbar) */
+.sidebar-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-right: 0.5rem;
+}
+
+.sidebar-toggle-btn:hover {
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.sidebar-toggle-btn:active {
+  transform: scale(0.95);
+}
+
+.sidebar-toggle-btn svg {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
+
+/* Rotate arrow when sidebar is closed */
+.vertical-sidebar.closed ~ .navbar .sidebar-toggle-btn svg,
+body:has(.vertical-sidebar.closed) .sidebar-toggle-btn svg {
+  transform: rotate(180deg);
+}

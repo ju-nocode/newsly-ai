@@ -1215,24 +1215,32 @@
         // ================================================
         const mobileSettingsNavBtn = document.getElementById('mobileSettingsNavBtn');
         const mobileOverlay = document.getElementById('mobileOverlay');
-        const settingsNav = document.querySelector('.dashboard-sidebar');
+        const settingsNav = document.querySelector('.vertical-sidebar');
 
         // Fonction pour fermer le menu settings mobile
         const closeSettingsMobileMenu = () => {
-            settingsNav.classList.remove('mobile-open');
-            mobileOverlay.classList.remove('show');
+            if (settingsNav) {
+                settingsNav.classList.remove('mobile-open');
+            }
+            if (mobileOverlay) {
+                mobileOverlay.classList.remove('show');
+            }
             document.body.style.overflow = ''; // Réactiver scroll
         };
 
         // Fonction pour ouvrir le menu settings mobile
         const openSettingsMobileMenu = () => {
-            settingsNav.classList.add('mobile-open');
-            mobileOverlay.classList.add('show');
+            if (settingsNav) {
+                settingsNav.classList.add('mobile-open');
+            }
+            if (mobileOverlay) {
+                mobileOverlay.classList.add('show');
+            }
             document.body.style.overflow = 'hidden'; // Empêcher scroll background
         };
 
         // Toggle menu avec le bouton burger
-        if (mobileSettingsNavBtn) {
+        if (mobileSettingsNavBtn && settingsNav) {
             mobileSettingsNavBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -1271,7 +1279,7 @@
 
         // Fermer avec touche Escape
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && settingsNav.classList.contains('mobile-open')) {
+            if (e.key === 'Escape' && settingsNav && settingsNav.classList.contains('mobile-open')) {
                 closeSettingsMobileMenu();
             }
         });
