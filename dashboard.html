@@ -21,13 +21,29 @@
     <!-- Overlay pour menu mobile -->
     <div class="mobile-overlay" id="mobileOverlay"></div>
 
-    <!-- Vertical Sidebar - Collapsible -->
-    <aside class="vertical-sidebar">
-        <div class="sidebar-content">
-            <div class="sidebar-header">
-                <h2>Newsly AI</h2>
-                <p>News Dashboard</p>
-            </div>
+    <!-- Navigation Top Bar -->
+    <nav class="navbar dashboard-nav">
+        <div class="nav-container">
+            <!-- Sidebar Toggle Button -->
+            <button class="sidebar-toggle-btn" id="sidebarToggle" aria-label="Toggle sidebar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+
+            <!-- Bouton burger pour menu mobile -->
+            <button class="mobile-menu-btn" id="mobileSidebarBtn" aria-label="Ouvrir menu">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+
+            <a href="dashboard.html" class="logo">
+                <img src="https://img.icons8.com/ios-filled/50/FFFFFF/news.png" alt="News" class="logo-icon icon-white" style="width: 1.75rem; height: 1.75rem;">
+                <span class="logo-text">Newsly AI</span>
+            </a>
 
             <div class="nav-user-weather">
                 <!-- Weather Widget -->
@@ -98,12 +114,6 @@
 
     <!-- Vertical Sidebar - Collapsible -->
     <aside class="vertical-sidebar">
-        <button class="sidebar-toggle-btn" id="sidebarToggle" aria-label="Toggle sidebar">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-        </button>
-
         <div class="sidebar-content">
             <div class="sidebar-header">
                 <h2>Newsly AI</h2>

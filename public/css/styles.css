@@ -765,7 +765,7 @@ input[type="color"]::-moz-color-swatch {
 
 /* Adjust content when sidebar is collapsed */
 .vertical-sidebar.closed ~ .dashboard-container {
-  margin-left: 10px;
+  margin-left: 2px;
 }
 
 .dashboard-main {
@@ -1931,7 +1931,7 @@ body:has(.vertical-sidebar.closed) .footer {
 
 /* Adjust settings content when sidebar is collapsed */
 .vertical-sidebar.closed ~ .settings-layout .settings-content {
-  margin-left: 10px;
+  margin-left: 2px;
 }
 
 .settings-content > div {
@@ -2661,6 +2661,12 @@ body:has(.vertical-sidebar.closed) .footer {
 
   .nav-container {
     padding: 0 0.75rem;
+  }
+
+  /* Reset navbar positioning on mobile - sidebar uses transform instead */
+  .navbar {
+    left: 0 !important;
+    width: 100% !important;
   }
 
   .nav-user-greeting {
