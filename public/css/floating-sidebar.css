@@ -1,27 +1,168 @@
 /* ================================================
-VERTICAL SIDEBAR - MINIMALIST LINE STYLE
+VERTICAL SIDEBAR - COLLAPSIBLE MINIMALIST
 ================================================ */
 
-/* Le trait vertical fixe à gauche */
 .vertical-sidebar {
     position: fixed;
     left: 0;
     top: 0;
-    width: 2px;
     height: 100vh;
-    background-color: #222;
-    z-index: 100;
-    pointer-events: none;
+    width: 250px;
+    background: var(--bg-primary);
+    border-right: 1px solid var(--border);
+    z-index: 999;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* En mode dark, le trait est légèrement plus clair */
-[data-theme="dark"] .vertical-sidebar {
+/* État fermé - Trait de 2px */
+.vertical-sidebar.closed {
+    width: 2px;
+    background-color: #222;
+    border: none;
+    box-shadow: none;
+}
+
+[data-theme="dark"] .vertical-sidebar.closed {
     background-color: #333;
 }
 
-/* Sur mobile, le trait reste visible mais on ajuste l'espacement */
+/* Conteneur des menus */
+.sidebar-content {
+    padding: 1rem;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+}
+
+.vertical-sidebar.closed .sidebar-content {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Bouton toggle */
+.sidebar-toggle-btn {
+    position: absolute;
+    top: 50%;
+    right: -12px;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 48px;
+    background: var(--primary);
+    border: none;
+    border-radius: 0 6px 6px 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    z-index: 1000;
+    transition: all 0.2s ease;
+    box-shadow: 2px 0 8px rgba(59, 130, 246, 0.3);
+}
+
+.sidebar-toggle-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.vertical-sidebar.closed .sidebar-toggle-btn {
+    right: -12px;
+}
+
+.sidebar-toggle-btn svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+}
+
+.vertical-sidebar.closed .sidebar-toggle-btn svg {
+    transform: rotate(180deg);
+}
+
+/* Header de la sidebar */
+.sidebar-header {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.sidebar-header h2 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.sidebar-header p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* Menu items */
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+}
+
+.sidebar-menu-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.sidebar-menu-item {
+    margin-bottom: 0.25rem;
+}
+
+.sidebar-menu-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 0.75rem;
+    border-radius: 6px;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.sidebar-menu-link:hover {
+    background: var(--bg-secondary);
+    color: var(--primary);
+}
+
+.sidebar-menu-link.active {
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--primary);
+    font-weight: 500;
+}
+
+.sidebar-menu-link svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+}
+
+/* Mobile */
 @media (max-width: 768px) {
     .vertical-sidebar {
-        /* Le trait reste visible même sur mobile */
+        transform: translateX(-100%);
+    }
+
+    .vertical-sidebar.closed {
+        transform: translateX(0);
+    }
+
+    .vertical-sidebar:not(.closed) {
+        transform: translateX(0);
     }
 }
