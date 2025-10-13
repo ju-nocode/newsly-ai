@@ -82,28 +82,28 @@ html {
 }
 
 [data-theme="dark"] {
-  /* Dark Mode - Modern Slate */
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
-  --bg-tertiary: #334155;
-  --bg-sidebar: #0f172a;
-  --text-primary: #f1f5f9;
-  --text-secondary: #cbd5e1;
-  --text-muted: #64748b;
-  --text-sidebar: #f1f5f9;
-  --border: #334155;
+  /* Dark Mode - Deep Sapphire */
+  --bg-primary: #050b18;
+  --bg-secondary: #09152b;
+  --bg-tertiary: #11203f;
+  --bg-sidebar: #050b18;
+  --text-primary: #eaf1ff;
+  --text-secondary: #b9c6e1;
+  --text-muted: #7886a3;
+  --text-sidebar: #eaf1ff;
+  --border: #1e2a47;
 
-  /* Animated Dot Grid Background */
-  --dot-color: rgba(59, 130, 246, 0.15);
-  --shadow: rgba(0, 0, 0, 0.3);
-  --shadow-lg: rgba(0, 0, 0, 0.5);
+  /* Ambient glow / shadows */
+  --dot-color: rgba(80, 110, 190, 0.12);
+  --shadow: rgba(5, 12, 25, 0.55);
+  --shadow-lg: rgba(0, 0, 0, 0.65);
 
-  /* Accent - Modern Blue (same as light for consistency) */
-  --primary: #3b82f6;
-  --primary-dark: #2563eb;
-  --primary-light: #60a5fa;
-  --secondary: #8b5cf6;
-  --aurora-text-shadow: rgba(0, 0, 0, 0.55);
+  /* Accent palette */
+  --primary: #4c8dff;
+  --primary-dark: #386bdb;
+  --primary-light: #7ba8ff;
+  --secondary: #9c6cff;
+  --aurora-text-shadow: rgba(0, 0, 0, 0.65);
 }
 
 /* Transition douce entre les th??mes */
