@@ -2434,7 +2434,7 @@ body:has(.vertical-sidebar.closed) .footer {
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  z-index: 10000;
+  z-index: 20000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3206,16 +3206,11 @@ body:has(.vertical-sidebar.closed) .footer {
 
 /* Effet aurora - Modernis?? pour s'int??grer au design */
 .aurora-text {
-<<<<<<< ours
-  position: relative;
-  display: initial;
-=======
   position: relative !important;
   display: inline-block !important;
   overflow: hidden !important;
   background: var(--aurora-text-bg) !important;
   color: var(--aurora-text-color) !important;
->>>>>>> theirs
   font-weight: 800 !important;
   margin: 0 !important;
   line-height: 1 !important;
@@ -3378,8 +3373,6 @@ body:has(.vertical-sidebar.closed) .footer {
   }
 }
 
-<<<<<<< ours
-=======
 @keyframes aurora-border {
   0% {
     border-radius: 37% 29% 27% 27% / 28% 25% 41% 37%;
@@ -3428,4 +3421,3 @@ body:has(.vertical-sidebar.closed) .footer {
   mix-blend-mode: inherit !important;
   opacity: inherit !important;
 }
->>>>>>> theirs

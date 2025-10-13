@@ -1,0 +1,65 @@
+/* ================================================
+   AURORA EFFECT - OVERRIDES
+   ================================================
+
+   This file ensures the Aurora effect does NOT interfere
+   with user interactions on forms and buttons.
+
+   All Aurora animations are defined in styles.css.
+   This file provides additional safety overrides.
+================================================ */
+
+/* Ensure Aurora wrapper never blocks interactions */
+.aurora {
+  pointer-events: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+}
+
+.aurora__item {
+  pointer-events: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+}
+
+/* Ensure all form elements remain interactive */
+.modal-overlay,
+.modal-container,
+.auth-form,
+.form-input,
+.form-label,
+.btn-submit,
+.btn-primary,
+button,
+input,
+select,
+textarea {
+  pointer-events: auto !important;
+  user-select: auto !important;
+  -webkit-user-select: auto !important;
+  -moz-user-select: auto !important;
+  -ms-user-select: auto !important;
+}
+
+/* Ensure modal is always on top and interactive */
+.modal-overlay {
+  z-index: 20000 !important;
+  pointer-events: auto !important;
+}
+
+.modal-container {
+  z-index: 20001 !important;
+  pointer-events: auto !important;
+}
+
+/* Make sure text in aurora containers remains selectable */
+.aurora-text {
+  user-select: text !important;
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+}
