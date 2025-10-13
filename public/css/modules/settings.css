@@ -5,7 +5,8 @@
 .settings-layout {
   display: flex;
   flex: 1;
-  min-height: calc(100vh - var(--navbar-height));
+  min-height: 100vh;
+  padding-top: var(--navbar-height);
 }
 
 .settings-nav-item {
