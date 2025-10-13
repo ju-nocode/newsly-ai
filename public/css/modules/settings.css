@@ -1,67 +1,70 @@
 /* ================================================
-   SETTINGS PAGE - Vercel Style
+   SETTINGS PAGE - Modern & Responsive
 ================================================ */
 
 .settings-layout {
   display: flex;
   flex: 1;
+  min-height: calc(100vh - var(--navbar-height));
 }
 
 .settings-nav-item {
   display: flex;
   align-items: center;
-  gap: 0.625rem;
-  padding: 0.5rem 1.5rem;
+  gap: 0.75rem;
+  padding: 0.625rem 1.5rem;
   background: transparent;
   border: none;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   text-align: left;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-weight: 400;
   color: var(--text-secondary);
-  line-height: 1.4;
+  line-height: 1.5;
   width: 100%;
   border-radius: 0;
+  position: relative;
 }
 
 .settings-nav-item:hover {
-  background: rgba(59, 130, 246, 0.05);
+  background: rgba(59, 130, 246, 0.08);
   color: var(--text-primary);
 }
 
 .settings-nav-item.active {
-  background: rgba(59, 130, 246, 0.1);
+  background: rgba(59, 130, 246, 0.12);
   color: var(--primary);
-  font-weight: 500;
+  font-weight: 600;
   border-left: 3px solid var(--primary);
   padding-left: calc(1.5rem - 3px);
 }
 
 .settings-nav-icon {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   object-fit: contain;
   filter: var(--icon-filter, none);
   opacity: 0.6;
+  transition: opacity 0.2s;
 }
 
 .settings-nav-item:hover .settings-nav-icon {
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
 .settings-nav-item.active .settings-nav-icon {
   opacity: 1;
-  filter: brightness(0) saturate(100%) invert(70%) sepia(48%) saturate(1356%) hue-rotate(112deg) brightness(95%) contrast(86%);
+  filter: brightness(0) saturate(100%) invert(48%) sepia(89%) saturate(1353%) hue-rotate(199deg) brightness(100%) contrast(93%);
 }
 
 /* Settings nav item with checkbox support */
 .settings-nav-item input[type="checkbox"] {
   cursor: pointer;
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   accent-color: var(--primary);
-  margin-right: 0.625rem;
+  margin-right: 0.5rem;
 }
 
 .settings-nav-item input[type="checkbox"]:checked {
@@ -74,13 +77,14 @@
 }
 
 .settings-content {
-  flex: auto;
+  flex: 1;
   margin-left: 250px;
-  padding: 2rem 2.5rem 250px 2.5rem;
+  padding: 2rem 2.5rem;
   min-height: calc(100vh - var(--navbar-height));
   display: flex;
   justify-content: flex-start;
   transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
 }
 
 /* Adjust settings content when sidebar is collapsed */
@@ -90,7 +94,7 @@
 
 .settings-content > div {
   width: 100%;
-  max-width: 1100px;
+  max-width: 1200px;
 }
 
 .settings-section {
@@ -99,13 +103,13 @@
 
 .settings-section.active {
   display: block;
-  animation: fadeIn 0.3s ease;
+  animation: fadeInUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@keyframes fadeIn {
+@keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
