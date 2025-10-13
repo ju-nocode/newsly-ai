@@ -4,13 +4,17 @@
 
 .dashboard-body {
   padding-top: var(--navbar-height);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .dashboard-container {
   margin-left: 250px;
-  padding: 3rem 4rem;
+  padding: 2rem 2.5rem;
   flex: 1;
-  max-width: 1600px;
+  max-width: 100%;
+  width: 100%;
   display: block;
   transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -22,19 +26,25 @@
 
 .dashboard-main {
   width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
 }
 
 .news-header {
   margin-bottom: 2rem;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
 }
 
 .news-header h1 {
   font-size: 1.875rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-primary);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
 .loading-indicator {
@@ -43,6 +53,20 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.loading-indicator::before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 /* ================================================
