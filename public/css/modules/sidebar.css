@@ -228,13 +228,30 @@
   overflow-x: hidden;
   z-index: 10001;
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 2px 0 8px var(--shadow);
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.03);
+}
+
+/* Rounded corner connection with navbar */
+.vertical-sidebar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: var(--navbar-height);
+  background: transparent;
+  border-top-right-radius: 20px;
+  box-shadow: 10px -10px 0 0 var(--bg-primary);
+  pointer-events: none;
 }
 
 [data-theme="dark"] .vertical-sidebar {
   background: var(--bg-primary);
   border-color: rgba(255, 255, 255, 0.05);
-  box-shadow: 2px 0 16px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .vertical-sidebar::after {
+  box-shadow: 10px -10px 0 0 var(--bg-primary);
 }
 
 /* Vertical sidebar closed state - Icons only */
@@ -242,6 +259,12 @@
   width: 60px;
   overflow: visible;
   border-right: 1px solid var(--border);
+}
+
+/* Adjust rounded corner when sidebar is closed */
+.vertical-sidebar.closed::after {
+  width: 20px;
+  box-shadow: 10px -10px 0 0 var(--bg-primary);
 }
 
 .vertical-sidebar.closed .sidebar-content {
