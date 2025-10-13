@@ -9,11 +9,11 @@
   right: 0;
   width: calc(100% - 250px);
   height: var(--navbar-height);
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 2px 4px var(--shadow);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   z-index: 10000;
   padding: 0;
   padding-top: env(safe-area-inset-top);
@@ -26,14 +26,9 @@
   width: calc(100% - 60px);
 }
 
-[data-theme="dark"] .navbar,
-.nav-container,
-.nav-container > *,
-.navbar::before,
-.navbar::after {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
+[data-theme="dark"] .navbar {
+  background: var(--bg-primary);
+  border-color: rgba(255, 255, 255, 0.05);
 }
 
 /* Navbar for landing page (index.html) - Full width, centered */
