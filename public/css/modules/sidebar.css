@@ -219,14 +219,14 @@
 .vertical-sidebar {
   position: fixed;
   left: 0;
-  top: var(--navbar-height);
+  top: 0;
   width: 250px;
-  height: calc(100vh - var(--navbar-height));
+  height: 100vh;
   background: var(--bg-primary);
   border-right: 1px solid var(--border);
   overflow-y: auto;
   overflow-x: hidden;
-  z-index: 100;
+  z-index: 10001;
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 2px 0 8px var(--shadow);
 }

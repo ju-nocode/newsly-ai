@@ -3,7 +3,7 @@
 ================================================ */
 
 .dashboard-body {
-  padding-top: var(--navbar-height);
+  padding-top: 0;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -11,10 +11,12 @@
 
 .dashboard-container {
   margin-left: 250px;
+  margin-top: var(--navbar-height);
   padding: 2rem 2.5rem;
   flex: 1;
   width: calc(100% - 250px);
   max-width: calc(100% - 250px);
+  min-height: calc(100vh - var(--navbar-height));
   display: block;
   transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
               width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
