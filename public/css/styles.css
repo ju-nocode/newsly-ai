@@ -77,30 +77,6 @@ html {
 }
 
 [data-theme="dark"] {
-<<<<<<< ours
-  /* Dark Mode - Deep Sapphire */
-  --bg-primary: #050b18;
-  --bg-secondary: #09152b;
-  --bg-tertiary: #11203f;
-  --bg-sidebar: #050b18;
-  --text-primary: #eaf1ff;
-  --text-secondary: #b9c6e1;
-  --text-muted: #7886a3;
-  --text-sidebar: #eaf1ff;
-  --border: #1e2a47;
-
-  /* Ambient glow / shadows */
-  --dot-color: rgba(80, 110, 190, 0.12);
-  --shadow: rgba(5, 12, 25, 0.55);
-  --shadow-lg: rgba(0, 0, 0, 0.65);
-
-  /* Accent palette */
-  --primary: #4c8dff;
-  --primary-dark: #386bdb;
-  --primary-light: #7ba8ff;
-  --secondary: #9c6cff;
-  --aurora-text-shadow: rgba(0, 0, 0, 0.65);
-=======
   /* Dark Mode - Modern Slate */
   --bg-primary: #0f172a;
   --bg-secondary: #1e293b;
@@ -122,7 +98,6 @@ html {
   --primary-dark: #2563eb;
   --primary-light: #60a5fa;
   --secondary: #8b5cf6;
->>>>>>> theirs
 }
 
 /* Transition douce entre les th??mes */
@@ -172,12 +147,6 @@ body {
 */
 
 /* Re-enable pointer events on interactive elements */
-/* D??SACTIV?? - Conflit avec Aurora et Dark/Light Mode
-.navbar > *,
-.nav-container,
-.nav-container > *,
-.feature-card,
-.category-preview,
 .auth-section,
 .auth-section > *,
 .auth-container,
@@ -190,20 +159,12 @@ button,
 input,
 select,
 textarea,
-.settings-card,
-.news-card,
-.sidebar,
-.dashboard-header,
-.dashboard-content,
-.settings-header,
-.settings-content,
-.search-form,
-.filter-tags,
-.news-grid,
-.footer {
-  pointer-events: auto;
+.modal-overlay,
+.modal-container,
+.feature-card,
+.category-preview {
+  pointer-events: auto !important;
 }
-*/
 
 /* Content z-index hierarchy
    Hi??rarchie clarifi??e pour ??viter les conflits :
@@ -987,11 +948,20 @@ input[type="color"]::-moz-color-swatch {
 }
 
 .auth-title {
-  font-size: 3rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
+  font-size: 5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
   letter-spacing: -0.025em;
   line-height: 1.1;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: default;
+}
+
+.auth-title:hover {
+  filter: drop-shadow(0 0 20px var(--aurora-clr-1))
+          drop-shadow(0 0 40px var(--aurora-clr-2))
+          drop-shadow(0 0 60px var(--aurora-clr-3));
+  transform: scale(1.02);
 }
 
 .auth-subtitle {
@@ -2765,6 +2735,11 @@ body:has(.vertical-sidebar.closed) .footer {
 
   .section-title {
     font-size: 1.5rem;
+  }
+
+  /* Titre réduit sur mobile */
+  .auth-title {
+    font-size: 2.5rem !important;
   }
 
   .settings-content {
