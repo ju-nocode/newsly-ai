@@ -29,6 +29,16 @@ body {
   flex-direction: column;
 }
 
+/* Global image safety - prevent icons from overflowing */
+img {
+  max-width: 100%;
+}
+
+/* Images without explicit height should scale proportionally */
+img:not([style*="height"]):not([height]) {
+  height: auto;
+}
+
 /* Re-enable pointer events on interactive elements */
 .auth-section,
 .auth-section > *,
