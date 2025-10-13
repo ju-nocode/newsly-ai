@@ -2054,10 +2054,10 @@
             const sidebarToggle = document.getElementById('sidebarToggle');
             const sidebar = document.querySelector('.vertical-sidebar');
 
-            // Load saved state from localStorage (par défaut: fermé)
-            const isSidebarClosed = localStorage.getItem('vertical_sidebar_closed') !== 'false';
-            if (!isSidebarClosed && sidebar) {
-                sidebar.classList.remove('closed');
+            // Load saved state from localStorage (par défaut: ouvert)
+            const isSidebarClosed = localStorage.getItem('vertical_sidebar_closed') === 'true';
+            if (isSidebarClosed && sidebar) {
+                sidebar.classList.add('closed');
             }
 
             // Toggle sidebar on button click

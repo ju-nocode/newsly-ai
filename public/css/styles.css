@@ -119,7 +119,7 @@ body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background: var(--bg-secondary);
   color: var(--text-primary);
-  line-height: 1.5;
+  line-height: 1;
   font-size: 13px;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
