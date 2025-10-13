@@ -1354,8 +1354,15 @@
             // Vérifier is_admin directement depuis le profil (colonne profiles.is_admin)
             if (result.success && result.profile.is_admin === true) {
                 // Show admin section
-                document.getElementById('adminSectionHeader').style.display = 'flex';
-                document.getElementById('adminSectionContent').style.display = 'block';
+                const adminHeader = document.getElementById('adminSectionHeader');
+                const adminContent = document.getElementById('adminSectionContent');
+
+                if (adminHeader) {
+                    adminHeader.style.display = 'flex';
+                }
+                if (adminContent) {
+                    adminContent.style.display = 'block';
+                }
 
                 // Load users list and Vercel deployments for admin
                 loadUsersList();
@@ -1392,9 +1399,13 @@
                 const { users, stats } = await response.json();
 
                 // Update stat cards
-                document.getElementById('totalUsers').textContent = stats.totalUsers;
-                document.getElementById('totalAdmins').textContent = stats.totalAdmins;
-                document.getElementById('recentUsers').textContent = stats.recentUsers;
+                const totalUsersEl = document.getElementById('totalUsers');
+                const totalAdminsEl = document.getElementById('totalAdmins');
+                const recentUsersEl = document.getElementById('recentUsers');
+
+                if (totalUsersEl) totalUsersEl.textContent = stats.totalUsers;
+                if (totalAdminsEl) totalAdminsEl.textContent = stats.totalAdmins;
+                if (recentUsersEl) recentUsersEl.textContent = stats.recentUsers;
 
                 if (!users || users.length === 0) {
                     usersContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Aucun utilisateur trouvé</p>';
