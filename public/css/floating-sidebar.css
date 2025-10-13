@@ -43,43 +43,36 @@ VERTICAL SIDEBAR - COLLAPSIBLE MINIMALIST
     pointer-events: none;
 }
 
-/* Bouton toggle */
+/* Bouton toggle dans la navbar */
 .sidebar-toggle-btn {
-    position: absolute;
-    top: 50%;
-    right: -12px;
-    transform: translateY(-50%);
-    width: 24px;
-    height: 48px;
-    background: var(--primary);
-    border: none;
-    border-radius: 0 6px 6px 0;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 6px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    z-index: 1000;
+    color: var(--text-primary);
+    width: 32px;
+    height: 32px;
     transition: all 0.2s ease;
-    box-shadow: 2px 0 8px rgba(59, 130, 246, 0.3);
+    flex-shrink: 0;
+    margin-right: 0.75rem;
 }
 
 .sidebar-toggle-btn:hover {
-    background: var(--primary-dark);
-    transform: translateY(-50%) scale(1.1);
-}
-
-.vertical-sidebar.closed .sidebar-toggle-btn {
-    right: -12px;
+    background: var(--bg-secondary);
+    border-color: var(--primary);
+    color: var(--primary);
 }
 
 .sidebar-toggle-btn svg {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
     transition: transform 0.3s ease;
 }
 
-.vertical-sidebar.closed .sidebar-toggle-btn svg {
+.vertical-sidebar.closed ~ .navbar .sidebar-toggle-btn svg {
     transform: rotate(180deg);
 }
 
