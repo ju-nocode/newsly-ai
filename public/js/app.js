@@ -1,15 +1,11 @@
-﻿if (typeof window !== 'undefined') {
-    window.newslyToggleTheme = toggleTheme;
-    window.newslyApplyTheme = (theme) => applyTheme(theme);
-    window.newslyGetTheme = getCurrentTheme;
-    window.newslyAttachThemeSwitchListeners = attachThemeSwitchListeners;
-    window.getParticlesConfigFromDB = getParticlesConfig;
-}
-
-}
-
-
-}
+﻿// ================================================
+// SAFE LOCALSTORAGE WRAPPER
+// ================================================
+const safeLocalStorage = {
+    getItem: (key) => {
+        try {
+            return localStorage.getItem(key);
+        } catch (e) {
             console.error('localStorage.getItem error:', e);
             return null;
         }
