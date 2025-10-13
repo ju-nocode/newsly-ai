@@ -1,0 +1,60 @@
+/* ================================================
+   AURORA TEXT EFFECT - from CodePen
+================================================ */
+
+/* Effet aurora - Gradient animé DANS le texte */
+.aurora-text {
+  position: relative !important;
+  display: inline-block !important;
+  font-weight: 800 !important;
+  margin: 0 !important;
+  line-height: 1 !important;
+
+  /* Gradient animé visible UNIQUEMENT dans les lettres */
+  background: linear-gradient(
+    90deg,
+    var(--aurora-clr-1),
+    var(--aurora-clr-2),
+    var(--aurora-clr-3),
+    var(--aurora-clr-4),
+    var(--aurora-clr-1)
+  ) !important;
+  background-size: 200% 100% !important;
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+  color: transparent !important;
+  animation: aurora-gradient 8s ease-in-out infinite !important;
+}
+
+/* Styles spécifiques pour le logo et le titre */
+.logo-text.aurora-text {
+  padding: 0.1rem 0.35rem !important;
+  border-radius: var(--radius-sm) !important;
+  font-size: inherit !important;
+}
+
+.auth-title.aurora-text {
+  padding: 0.5rem 1rem !important;
+  border-radius: var(--radius-lg) !important;
+  font-size: inherit !important;
+}
+
+/* OBSOLÈTE - Les blobs aurora__item ne sont plus utilisés */
+/* L'effet est maintenant un gradient animé dans le texte lui-même */
+.aurora,
+.aurora__item {
+  display: none !important;
+}
+
+/* Animation du gradient dans le texte */
+@keyframes aurora-gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

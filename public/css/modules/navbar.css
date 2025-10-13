@@ -1,0 +1,111 @@
+/* ================================================
+   NAVIGATION TOP BAR
+================================================ */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 250px;
+  right: 0;
+  width: calc(100% - 250px);
+  height: var(--navbar-height);
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  z-index: 10000;
+  padding: 0;
+  padding-top: env(safe-area-inset-top);
+  transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Adjust navbar when sidebar is closed */
+.vertical-sidebar.closed ~ .navbar {
+  left: 2px;
+  width: calc(100% - 2px);
+}
+
+[data-theme="dark"] .navbar,
+.nav-container,
+.nav-container > *,
+.navbar::before,
+.navbar::after {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.navbar.dashboard-nav {
+  left: 0;
+  width: 100%;
+  margin-left: 0;
+}
+
+.nav-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.logo-icon {
+  font-size: 1.25rem;
+}
+
+.logo-icon-img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  filter: var(--icon-filter, none);
+}
+
+.logo-text {
+  font-weight: 700;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.nav-user-weather {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-left: auto;
+  margin-right: 1rem;
+}
+
+.user-role-badge {
+  font-size: 0.75rem;
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.user-role-badge.admin {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--error);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.user-role-badge.user {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  padding: 0.1rem 0.5rem;
+}

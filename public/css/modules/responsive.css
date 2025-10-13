@@ -1,0 +1,408 @@
+/* ================================================
+   RESPONSIVE
+================================================ */
+
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-width: 0px;
+  }
+
+  /* Hide sidebar toggle on mobile (use burger menu instead) */
+  .sidebar-toggle {
+    display: none !important;
+  }
+
+  /* Sidebars cachées par défaut sur mobile */
+  .dashboard-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height pour mobile */
+    transform: translate3d(-100%, 0, 0); /* GPU acceleration */
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    box-shadow: 2px 0 20px var(--shadow-lg);
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling iOS */
+    will-change: transform; /* Optimisation performance */
+  }
+
+  .dashboard-sidebar.show {
+    transform: translate3d(0, 0, 0);
+  }
+
+  /* Sidebar visible quand menu mobile ouvert */
+  .dashboard-sidebar.mobile-open {
+    transform: translate3d(0, 0, 0);
+  }
+
+  .settings-layout .dashboard-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height pour mobile */
+    transform: translate3d(-100%, 0, 0); /* GPU acceleration */
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    box-shadow: 2px 0 20px var(--shadow-lg);
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling iOS */
+    will-change: transform; /* Optimisation performance */
+  }
+
+  /* Settings nav visible quand menu mobile ouvert */
+  .settings-layout .dashboard-sidebar.mobile-open {
+    transform: translate3d(0, 0, 0);
+  }
+
+  /* Overlay pour fermer le menu en cliquant à côté */
+  .mobile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    height: 100dvh; /* Dynamic viewport pour mobile */
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    -webkit-tap-highlight-color: transparent; /* Pas de highlight iOS */
+    touch-action: none; /* Empêche scroll sous overlay */
+  }
+
+  .mobile-overlay.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Bouton burger pour ouvrir sidebar sur mobile */
+  .mobile-menu-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+    width: 44px; /* Taille minimum tactile 44px */
+    height: 44px;
+    border-radius: var(--radius-md);
+    transition: background 0.2s;
+    -webkit-tap-highlight-color: rgba(59, 130, 246, 0.1); /* Highlight bleu iOS */
+    touch-action: manipulation; /* Meilleure réactivité tactile */
+  }
+
+  .mobile-menu-btn:active {
+    background: var(--bg-secondary);
+    transform: scale(0.95);
+  }
+
+  .mobile-menu-btn svg {
+    width: 24px;
+    height: 24px;
+    pointer-events: none; /* Events passent au bouton parent */
+  }
+
+  .dashboard-container {
+    margin-left: 0;
+    padding: 1rem;
+  }
+
+  .settings-content {
+    margin-left: 0;
+    padding: 1.5rem 1rem 150px 1rem;
+  }
+
+  .toast {
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .news-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .dashboard-container {
+    padding: 1rem;
+  }
+
+  .section-title {
+    font-size: 1.75rem;
+  }
+
+  .nav-container {
+    padding: 0 0.75rem;
+  }
+
+  /* Reset navbar positioning on mobile - sidebar uses transform instead */
+  .navbar {
+    left: 0 !important;
+    width: 100% !important;
+  }
+
+  .nav-user-greeting {
+    display: none;
+  }
+
+  .weather-widget {
+    margin-left: 0.5rem;
+  }
+
+  .weather-city {
+    display: none;
+  }
+
+  .burger-dropdown {
+    top: calc(var(--navbar-height) + env(safe-area-inset-top, 0px));
+    min-width: 260px;
+  }
+
+  .settings-content {
+    padding: 1.5rem 1rem 150px 1rem;
+  }
+
+  .settings-card {
+    padding: 1.25rem;
+  }
+
+  .settings-card-title {
+    font-size: 1rem;
+  }
+
+  .btn-primary,
+  .btn-primary,
+  .btn-danger {
+    min-height: 44px;
+    padding: 0.75rem 1.25rem;
+  }
+
+  .news-card {
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .settings-nav-item {
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0 0.5rem;
+  }
+
+  .nav-container {
+    padding: 0 0.5rem;
+  }
+
+  .logo-text {
+    display: none;
+  }
+
+  .burger-dropdown {
+    top: calc(var(--navbar-height) + env(safe-area-inset-top, 0px));
+    left: 0.5rem;
+    right: 0.5rem;
+    margin: 0.5rem;
+    min-width: auto;
+    width: calc(100% - 1rem);
+  }
+
+  .dashboard-container {
+    padding: 1rem 0.75rem;
+  }
+
+  .news-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .modal-container {
+    width: 95%;
+    max-width: 95%;
+    padding: 1.5rem;
+    margin: 0.5rem;
+  }
+
+  .modal-title {
+    font-size: 1.25rem;
+  }
+
+  .features,
+  .categories-preview,
+  .cta-section {
+    padding: 3rem 1rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  /* Titre réduit sur mobile */
+  .auth-title {
+    font-size: 2.5rem !important;
+  }
+
+  .settings-content {
+    padding: 1rem 0.75rem 100px 0.75rem;
+  }
+
+  .settings-card {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .settings-card-title {
+    font-size: 0.9375rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-group {
+    gap: 0.375rem;
+    margin-bottom: 0.875rem;
+  }
+
+  .form-label {
+    font-size: 0.8125rem;
+  }
+
+  .form-input,
+  .form-textarea,
+  .form-select {
+    font-size: 1rem;
+  }
+
+  .btn-primary,
+  .btn-primary,
+  .btn-danger {
+    font-size: 0.8125rem;
+    padding: 0.625rem 1rem;
+  }
+
+  .news-card-title {
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  .news-card-description {
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  /* Avatar sur mobile: toujours afficher l'overlay */
+  .avatar-overlay {
+    opacity: 0.3;
+  }
+
+  .avatar-preview {
+    width: 80px;
+    height: 80px;
+  }
+
+  .avatar-edit-icon {
+    font-size: 1.25rem;
+  }
+}
+
+/* ================================================
+   MOBILE LANDSCAPE ORIENTATION
+================================================ */
+
+@media (max-width: 900px) and (orientation: landscape) {
+  .hero {
+    padding: 2rem 1rem;
+  }
+
+  .hero-title {
+    font-size: 1.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.9375rem;
+  }
+
+  .modal-container {
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .settings-container {
+    padding-top: calc(var(--navbar-height) + 0.5rem);
+  }
+
+  .dashboard-container {
+    padding: 1.5rem 1rem;
+  }
+}
+
+/* ================================================
+   TOUCH DEVICE OPTIMIZATIONS
+================================================ */
+
+@media (hover: none) and (pointer: coarse) {
+  button,
+  .btn-primary,
+  .btn-primary,
+  .btn-danger,
+  .settings-nav-item {
+    -webkit-tap-highlight-color: rgba(59, 130, 246, 0.1);
+  }
+
+  .news-card {
+    -webkit-tap-highlight-color: rgba(59, 130, 246, 0.05);
+  }
+
+  .settings-nav-item:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+}
+
+/* ================================================
+   BROWSER/DEVICE SPECIFIC FIXES
+================================================ */
+
+/* iOS Safari fixes */
+.is-ios .burger-dropdown {
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+}
+
+.is-ios .burger-dropdown.show {
+  -webkit-transform: translateZ(0) translateY(0) !important;
+}
+
+/* Mobile Safari/Chrome burger menu fix */
+.is-mobile .burger-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: auto;
+  margin-top: 0;
+}
+
+.is-mobile .burger-dropdown.show {
+  position: absolute !important;
+}
+
+/* Touch device optimizations */
+.has-touch .burger-menu,
+.has-touch .burger-link {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}

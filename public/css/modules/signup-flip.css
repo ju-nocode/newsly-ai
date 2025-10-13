@@ -1,0 +1,266 @@
+/* ================================================
+   SIGNUP FLIP CARD ANIMATION
+================================================ */
+
+.signup-flip-container {
+  perspective: 1000px;
+  width: 100%;
+  position: relative;
+  overflow: visible;
+  min-height: 400px;
+}
+
+.signup-flip-card {
+  position: relative;
+  width: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+.signup-flip-card.flipped {
+  transform: rotateY(180deg);
+}
+
+.signup-flip-card.flipped-twice {
+  transform: rotateY(360deg);
+}
+
+.signup-flip-face {
+  width: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: none;
+}
+
+/* Face 1 visible par défaut */
+.signup-flip-front {
+  transform: rotateY(0deg);
+  display: block;
+}
+
+/* Face 2 - cachée par défaut */
+.signup-flip-back {
+  transform: rotateY(180deg);
+  display: none;
+}
+
+/* Quand flipped, inverser l'affichage */
+.signup-flip-card.flipped .signup-flip-front {
+  display: none;
+}
+
+.signup-flip-card.flipped .signup-flip-back {
+  display: block;
+}
+
+/* ================================================
+   ANIMATIONS DE SOUMISSION
+================================================ */
+
+/* Animation de disparition avec flou vers le centre */
+@keyframes shrinkAndBlur {
+  0% {
+    transform: scale(1);
+    filter: blur(0px);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0);
+    filter: blur(10px);
+    opacity: 0;
+  }
+}
+
+.signup-flip-card.submitting {
+  animation: shrinkAndBlur 0.8s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+  transform-origin: center center;
+}
+
+/* Spinner de chargement */
+.signup-loader {
+  display: none;
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.signup-loader.active {
+  display: block;
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid var(--border);
+  border-top: 4px solid var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1.5rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Animation de succès */
+.signup-success {
+  display: none;
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.signup-success.active {
+  display: block;
+  animation: fadeIn 0.5s ease-in;
+}
+
+.success-checkmark {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  background: var(--success);
+  position: relative;
+  animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.success-checkmark::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  color: white;
+  font-weight: bold;
+}
+
+/* Confettis */
+.confetti {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: var(--primary);
+  border-radius: 2px;
+  animation: confetti-fall 4s ease-out forwards;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg) scale(0.5);
+    opacity: 0;
+  }
+}
+
+.confetti:nth-child(2n) {
+  background: linear-gradient(135deg, var(--success), #10b981);
+  animation-delay: 0.1s;
+  width: 10px;
+  height: 14px;
+}
+.confetti:nth-child(3n) {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  animation-delay: 0.2s;
+  border-radius: 50%;
+}
+.confetti:nth-child(4n) {
+  background: linear-gradient(135deg, #f472b6, #ec4899);
+  animation-delay: 0.15s;
+  width: 14px;
+  height: 8px;
+}
+.confetti:nth-child(5n) {
+  background: linear-gradient(135deg, #60a5fa, #3b82f6);
+  animation-delay: 0.3s;
+  border-radius: 50%;
+}
+.confetti:nth-child(6n) {
+  background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+  animation-delay: 0.25s;
+  width: 8px;
+  height: 16px;
+}
+
+/* Animation d'erreur */
+.signup-error-box {
+  display: none;
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.signup-error-box.active {
+  display: block;
+  animation: fadeIn 0.5s ease-in;
+}
+
+.error-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  background: var(--error);
+  position: relative;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+.error-icon::before,
+.error-icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 4px;
+  background: white;
+  border-radius: 2px;
+}
+
+.error-icon::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.error-icon::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* Responsive flip card */
+@media (max-width: 768px) {
+  .signup-flip-container {
+    min-height: auto;
+  }
+
+  .signup-flip-card {
+    min-height: auto;
+  }
+}

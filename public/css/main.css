@@ -1,0 +1,69 @@
+/* ================================================
+   NEWSLY AI - Modern SaaS Dashboard Style
+
+   Structure modulaire pour une meilleure maintenabilité
+   et réduction de la consommation de tokens
+================================================ */
+
+/* 1. Variables CSS - Theme colors & design tokens */
+@import url('modules/variables.css');
+
+/* 2. Base - Reset & body styles */
+@import url('modules/base.css');
+
+/* 3. Navigation */
+@import url('modules/navbar.css');
+
+/* 4. Icons - Filters & utilities */
+@import url('modules/icons.css');
+
+/* 5. Buttons */
+@import url('modules/buttons.css');
+
+/* 6. Forms */
+@import url('modules/forms.css');
+
+/* 7. Sidebar */
+@import url('modules/sidebar.css');
+
+/* 8. Dashboard & News */
+@import url('modules/dashboard.css');
+
+/* 9. Hero / Auth section */
+@import url('modules/hero.css');
+
+/* 10. Features & Categories */
+@import url('modules/features.css');
+
+/* 11. CTA Section */
+@import url('modules/cta.css');
+
+/* 12. Footer */
+@import url('modules/footer.css');
+
+/* 13. Toast Notifications */
+@import url('modules/toast.css');
+
+/* 14. Weather Widget */
+@import url('modules/weather.css');
+
+/* 15. Burger Menu */
+@import url('modules/burger.css');
+
+/* 16. Settings Page */
+@import url('modules/settings.css');
+
+/* 17. Modal */
+@import url('modules/modal.css');
+
+/* 18. Signup Flip Animation */
+@import url('modules/signup-flip.css');
+
+/* 19. Aurora Effect */
+@import url('modules/aurora.css');
+
+/* 20. Utilities */
+@import url('modules/utilities.css');
+
+/* 21. Responsive - Media queries (doit être en dernier) */
+@import url('modules/responsive.css');

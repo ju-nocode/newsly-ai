@@ -1,0 +1,110 @@
+/* ================================================
+   CSS VARIABLES - Theme Colors & Design Tokens
+================================================ */
+
+:root {
+  /* Light Mode - Modern Clean */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  --bg-sidebar: #ffffff;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --text-sidebar: #0f172a;
+  --border: #e2e8f0;
+  --shadow: rgba(0, 0, 0, 0.05);
+  --shadow-lg: rgba(0, 0, 0, 0.1);
+
+  /* Accent - Modern Blue */
+  --primary: #3b82f6;
+  --primary-dark: #2563eb;
+  --primary-light: #60a5fa;
+  --secondary: #8b5cf6;
+  --success: #10b981;
+  --error: #ef4444;
+  --warning: #f59e0b;
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 0.75rem;
+  --spacing-lg: 1rem;
+  --spacing-xl: 1.5rem;
+
+  /* Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+
+  /* Sidebar */
+  --sidebar-width: 250px;
+  --sidebar-width-collapsed: 70px;
+  --navbar-height: 35px;
+
+  /* Animated Dot Grid Background */
+  --dot-color: rgba(59, 130, 246, 0.1);
+  --dot-size: 1px;
+  --dot-spacing: 30px;
+
+  /* Icon Filters - Light mode */
+  --icon-filter-primary: brightness(0) saturate(100%);
+  --icon-filter-secondary: brightness(0) saturate(100%) opacity(0.7);
+  --icon-filter-muted: grayscale(100%) opacity(0.6);
+  --icon-filter-white: brightness(0) invert(1);
+  --icon-filter-accent: hue-rotate(280deg) saturate(200%);
+  --icon-filter: var(--icon-filter-primary);
+
+  /* Aurora colors */
+  --aurora-blur: 1.5rem;
+  --aurora-clr-1: #3b82f6;
+  --aurora-clr-2: #8b5cf6;
+  --aurora-clr-3: #06b6d4;
+  --aurora-clr-4: #6366f1;
+}
+
+[data-theme="dark"] {
+  /* Dark Mode - Modern Slate */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --bg-sidebar: #0f172a;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #64748b;
+  --text-sidebar: #f1f5f9;
+  --border: #334155;
+
+  /* Animated Dot Grid Background */
+  --dot-color: rgba(59, 130, 246, 0.15);
+  --shadow: rgba(0, 0, 0, 0.3);
+  --shadow-lg: rgba(0, 0, 0, 0.5);
+
+  /* Accent - Modern Blue (same as light for consistency) */
+  --primary: #3b82f6;
+  --primary-dark: #2563eb;
+  --primary-light: #60a5fa;
+  --secondary: #8b5cf6;
+
+  /* Dark mode - Icons blancs/colorés */
+  --icon-filter-primary: brightness(0) invert(1);
+  --icon-filter-secondary: brightness(0) invert(1) opacity(0.7);
+  --icon-filter-muted: brightness(0) invert(1) grayscale(100%) opacity(0.5);
+  --icon-filter-white: brightness(0) invert(1);
+  --icon-filter-accent: brightness(1.2) hue-rotate(300deg) saturate(150%);
+  --icon-filter: brightness(0) invert(1);
+}
+
+[data-theme="light"] {
+  --icon-filter: brightness(0) saturate(100%);
+}
+
+/* Transition douce entre les thèmes */
+html, body, [data-theme] {
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease;
+}

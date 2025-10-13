@@ -1,0 +1,57 @@
+/* ================================================
+   HERO SECTION
+================================================ */
+
+/* Auth Section (replaces hero) */
+.auth-section {
+  padding: 4rem 2rem 3rem;
+  text-align: center;
+  margin-top: var(--navbar-height);
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+}
+
+.auth-container {
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.auth-title {
+  font-size: 5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: default;
+}
+
+.auth-title:hover {
+  filter: drop-shadow(0 0 20px var(--aurora-clr-1))
+          drop-shadow(0 0 40px var(--aurora-clr-2))
+          drop-shadow(0 0 60px var(--aurora-clr-3));
+  transform: scale(1.02);
+}
+
+.auth-subtitle {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
