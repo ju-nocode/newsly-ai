@@ -1324,6 +1324,30 @@
             });
         });
 
+        // Handle section switching from VERTICAL SIDEBAR
+        const sidebarLinks = document.querySelectorAll('.sidebar-menu-link[data-section]');
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const sectionId = link.dataset.section;
+
+                // Remove active class from all sidebar links
+                sidebarLinks.forEach(l => l.classList.remove('active'));
+
+                // Add active class to clicked item
+                link.classList.add('active');
+
+                // Hide all sections
+                sections.forEach(section => section.classList.remove('active'));
+
+                // Show selected section
+                const targetSection = document.getElementById(`section-${sectionId}`);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                }
+            });
+        });
+
         // Show/hide Admin section - only for specific admin email with is_admin true in DB
         const checkAdminAccess = async () => {
             const result = await getUserProfile();
