@@ -1,15 +1,15 @@
-// ================================================
-// NEWSLY AI - Version Sécurisée avec API Routes
-// ================================================
+﻿if (typeof window !== 'undefined') {
+    window.newslyToggleTheme = toggleTheme;
+    window.newslyApplyTheme = (theme) => applyTheme(theme);
+    window.newslyGetTheme = getCurrentTheme;
+    window.newslyAttachThemeSwitchListeners = attachThemeSwitchListeners;
+    window.getParticlesConfigFromDB = getParticlesConfig;
+}
 
-// ================================================
-// HELPERS LOCALSTORAGE SÉCURISÉS
-// ================================================
-const safeLocalStorage = {
-    getItem: (key) => {
-        try {
-            return localStorage.getItem(key);
-        } catch (e) {
+}
+
+
+}
             console.error('localStorage.getItem error:', e);
             return null;
         }
@@ -39,7 +39,7 @@ const safeLocalStorage = {
 // ================================================
 const API_BASE_URL = window.location.hostname === 'localhost'
     ? 'http://localhost:3000'
-    : ''; // En production Vercel, les API routes sont sur le même domaine
+    : ''; // En production Vercel, les API routes sont sur le mÃªme domaine
 
 // ================================================
 // GESTION DE SESSION
@@ -56,28 +56,28 @@ const loadSession = () => {
             currentUser = data.user;
             authToken = data.access_token;
 
-            // Vérifier si le token n'est pas trop gros (limite Vercel: ~16KB)
+            // VÃ©rifier si le token n'est pas trop gros (limite Vercel: ~16KB)
             const tokenSize = authToken?.length || 0;
             if (tokenSize > 100000) {
-                console.error('❌ Token trop volumineux détecté (' + Math.round(tokenSize/1024) + ' KB), nettoyage...');
+                console.error('âŒ Token trop volumineux dÃ©tectÃ© (' + Math.round(tokenSize/1024) + ' KB), nettoyage...');
                 clearSession();
-                alert('⚠️ Votre session contenait des données trop volumineuses. Veuillez contacter le support.');
+                alert('âš ï¸ Votre session contenait des donnÃ©es trop volumineuses. Veuillez contacter le support.');
                 window.location.href = 'index.html';
                 return false;
             }
 
-            console.log('✅ Session chargée:', {
+            console.log('âœ… Session chargÃ©e:', {
                 userId: currentUser?.id,
                 tokenPresent: !!authToken,
                 tokenLength: tokenSize
             });
             return true;
         } catch (e) {
-            console.error('❌ Erreur chargement session:', e);
+            console.error('âŒ Erreur chargement session:', e);
             clearSession();
         }
     }
-    console.log('⚠️ Aucune session trouvée dans localStorage');
+    console.log('âš ï¸ Aucune session trouvÃ©e dans localStorage');
     return false;
 };
 
@@ -86,7 +86,7 @@ const saveSession = (user, token) => {
     currentUser = user;
     authToken = token;
     localStorage.setItem('session', JSON.stringify({ user, access_token: token }));
-    console.log('💾 Session sauvegardée:', {
+    console.log('ðŸ’¾ Session sauvegardÃ©e:', {
         userId: user?.id,
         email: user?.email,
         tokenPresent: !!token,
@@ -202,17 +202,17 @@ export const resendConfirmation = async (email) => {
     }
 };
 
-// Déconnexion
+// DÃ©connexion
 export const logout = () => {
     clearSession();
     window.location.href = 'index.html';
 };
 
 // ================================================
-// API CALLS - Actualités
+// API CALLS - ActualitÃ©s
 // ================================================
 
-// Récupérer les actualités
+// RÃ©cupÃ©rer les actualitÃ©s
 export const fetchNews = async (category = 'general', country = 'us', page = 1) => {
     try {
         const url = `${API_BASE_URL}/api/news?category=${category}&country=${country}&page=${page}`;
@@ -224,7 +224,7 @@ export const fetchNews = async (category = 'general', country = 'us', page = 1) 
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(data.error || 'Erreur de récupération des news');
+            throw new Error(data.error || 'Erreur de rÃ©cupÃ©ration des news');
         }
 
         return { success: true, articles: data.articles };
@@ -239,14 +239,14 @@ export const fetchNews = async (category = 'general', country = 'us', page = 1) 
 // API CALLS - Profil utilisateur
 // ================================================
 
-// Récupérer le profil
+// RÃ©cupÃ©rer le profil
 export const getUserProfile = async () => {
     if (!authToken) {
-        console.warn('⚠️ getUserProfile: Pas de token disponible');
-        return { success: false, error: 'Non authentifié' };
+        console.warn('âš ï¸ getUserProfile: Pas de token disponible');
+        return { success: false, error: 'Non authentifiÃ©' };
     }
 
-    console.log('🔍 getUserProfile: Envoi requête avec token', {
+    console.log('ðŸ” getUserProfile: Envoi requÃªte avec token', {
         tokenPresent: !!authToken,
         tokenLength: authToken?.length,
         tokenStart: authToken?.substring(0, 20) + '...'
@@ -257,35 +257,35 @@ export const getUserProfile = async () => {
             headers: { 'Authorization': `Bearer ${authToken}` }
         });
 
-        console.log('📥 getUserProfile: Réponse reçue', {
+        console.log('ðŸ“¥ getUserProfile: RÃ©ponse reÃ§ue', {
             status: response.status,
             statusText: response.statusText,
             contentType: response.headers.get('content-type')
         });
 
-        // Si le token est invalide ou expiré, déconnecter l'utilisateur
+        // Si le token est invalide ou expirÃ©, dÃ©connecter l'utilisateur
         if (response.status === 401) {
-            console.error('❌ Token invalide ou expiré, déconnexion...');
+            console.error('âŒ Token invalide ou expirÃ©, dÃ©connexion...');
             clearSession();
             window.location.href = 'index.html';
-            return { success: false, error: 'Session expirée' };
+            return { success: false, error: 'Session expirÃ©e' };
         }
 
-        // Vérifier si la réponse est du JSON
+        // VÃ©rifier si la rÃ©ponse est du JSON
         const contentType = response.headers.get('content-type');
         if (!contentType || !contentType.includes('application/json')) {
-            console.error('❌ Réponse non-JSON reçue:', contentType);
-            throw new Error(`Réponse invalide du serveur (${response.status})`);
+            console.error('âŒ RÃ©ponse non-JSON reÃ§ue:', contentType);
+            throw new Error(`RÃ©ponse invalide du serveur (${response.status})`);
         }
 
         const data = await response.json();
 
         if (!response.ok) {
-            console.error('❌ Erreur API:', data.error);
-            throw new Error(data.error || 'Erreur de récupération du profil');
+            console.error('âŒ Erreur API:', data.error);
+            throw new Error(data.error || 'Erreur de rÃ©cupÃ©ration du profil');
         }
 
-        console.log('✅ getUserProfile: Succès', { email: data.email });
+        console.log('âœ… getUserProfile: SuccÃ¨s', { email: data.email });
         return { success: true, profile: data };
 
     } catch (error) {
@@ -294,10 +294,10 @@ export const getUserProfile = async () => {
     }
 };
 
-// Mettre à jour le profil
+// Mettre Ã  jour le profil
 export const updateUserProfile = async (profileData) => {
     if (!authToken) {
-        return { success: false, error: 'Non authentifié' };
+        return { success: false, error: 'Non authentifiÃ©' };
     }
 
     try {
@@ -310,23 +310,23 @@ export const updateUserProfile = async (profileData) => {
             body: JSON.stringify(profileData)
         });
 
-        // Si le token est invalide ou expiré, déconnecter l'utilisateur
+        // Si le token est invalide ou expirÃ©, dÃ©connecter l'utilisateur
         if (response.status === 401) {
             clearSession();
             window.location.href = 'index.html';
-            return { success: false, error: 'Session expirée' };
+            return { success: false, error: 'Session expirÃ©e' };
         }
 
-        // Vérifier si la réponse est du JSON
+        // VÃ©rifier si la rÃ©ponse est du JSON
         const contentType = response.headers.get('content-type');
         if (!contentType || !contentType.includes('application/json')) {
-            throw new Error(`Réponse invalide du serveur (${response.status})`);
+            throw new Error(`RÃ©ponse invalide du serveur (${response.status})`);
         }
 
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(data.error || 'Erreur de mise à jour du profil');
+            throw new Error(data.error || 'Erreur de mise Ã  jour du profil');
         }
 
         return { success: true, user: data.user };
@@ -340,7 +340,7 @@ export const updateUserProfile = async (profileData) => {
 // Changer le mot de passe
 export const changePassword = async (newPassword) => {
     if (!authToken) {
-        return { success: false, error: 'Non authentifié' };
+        return { success: false, error: 'Non authentifiÃ©' };
     }
 
     try {
@@ -353,17 +353,17 @@ export const changePassword = async (newPassword) => {
             body: JSON.stringify({ newPassword })
         });
 
-        // Si le token est invalide ou expiré, déconnecter l'utilisateur
+        // Si le token est invalide ou expirÃ©, dÃ©connecter l'utilisateur
         if (response.status === 401) {
             clearSession();
             window.location.href = 'index.html';
-            return { success: false, error: 'Session expirée' };
+            return { success: false, error: 'Session expirÃ©e' };
         }
 
-        // Vérifier si la réponse est du JSON
+        // VÃ©rifier si la rÃ©ponse est du JSON
         const contentType = response.headers.get('content-type');
         if (!contentType || !contentType.includes('application/json')) {
-            throw new Error(`Réponse invalide du serveur (${response.status})`);
+            throw new Error(`RÃ©ponse invalide du serveur (${response.status})`);
         }
 
         const data = await response.json();
@@ -383,7 +383,7 @@ export const changePassword = async (newPassword) => {
 // Supprimer le compte
 export const deleteAccount = async () => {
     if (!authToken) {
-        return { success: false, error: 'Non authentifié' };
+        return { success: false, error: 'Non authentifiÃ©' };
     }
 
     try {
@@ -394,17 +394,17 @@ export const deleteAccount = async () => {
             }
         });
 
-        // Si le token est invalide ou expiré, déconnecter l'utilisateur
+        // Si le token est invalide ou expirÃ©, dÃ©connecter l'utilisateur
         if (response.status === 401) {
             clearSession();
             window.location.href = 'index.html';
-            return { success: false, error: 'Session expirée' };
+            return { success: false, error: 'Session expirÃ©e' };
         }
 
-        // Vérifier si la réponse est du JSON
+        // VÃ©rifier si la rÃ©ponse est du JSON
         const contentType = response.headers.get('content-type');
         if (!contentType || !contentType.includes('application/json')) {
-            throw new Error(`Réponse invalide du serveur (${response.status})`);
+            throw new Error(`RÃ©ponse invalide du serveur (${response.status})`);
         }
 
         const data = await response.json();
@@ -428,11 +428,76 @@ export const deleteAccount = async () => {
 // DARK/LIGHT MODE
 // ================================================
 
+// ================================================
+// DARK/LIGHT MODE
+// ================================================
+
+const THEME_STORAGE_KEY = 'theme';
+const THEME_SWITCH_SELECTOR = 'input[type=\"checkbox\"][data-theme-toggle]';
+const THEME_EVENT_NAME = 'newsly-theme-change';
+
+const getStoredTheme = () => localStorage.getItem(THEME_STORAGE_KEY) || 'dark';
+
+const getCurrentTheme = () => document.documentElement.getAttribute('data-theme') || getStoredTheme();
+
+const applyTheme = (theme, { persist = true } = {}) => {
+    document.documentElement.setAttribute('data-theme', theme);
+
+    if (persist) {
+        localStorage.setItem(THEME_STORAGE_KEY, theme);
+    }
+
+    updateThemeControls(theme);
+
+    if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent(THEME_EVENT_NAME, { detail: { theme } }));
+    }
+};
+
+const toggleTheme = (explicitTheme) => {
+    const currentTheme = getCurrentTheme();
+    const targetTheme = explicitTheme || (currentTheme === 'dark' ? 'light' : 'dark');
+    applyTheme(targetTheme);
+};
+
+const updateThemeControls = (theme) => {
+    const themeButton = document.getElementById('themeToggleBtn');
+    if (themeButton) {
+        themeButton.innerHTML = theme === 'dark' ? '🌙' : '☀️';
+    }
+
+    document.querySelectorAll(THEME_SWITCH_SELECTOR).forEach((input) => {
+        input.checked = theme === 'dark';
+    });
+
+    const themeText = document.getElementById('themeText');
+    if (themeText) {
+        const language = (localStorage.getItem('language') || 'fr').toLowerCase();
+        const localeKey = language.startsWith('en') ? 'En' : 'Fr';
+        const darkLabel = themeText.dataset['dark' + localeKey] || themeText.dataset.darkFr || 'Mode sombre';
+        const lightLabel = themeText.dataset['light' + localeKey] || themeText.dataset.lightFr || 'Mode clair';
+        themeText.textContent = theme === 'dark' ? darkLabel : lightLabel;
+    }
+};
+
+const handleThemeSwitchChange = (event) => {
+    const desiredTheme = event.target.checked ? 'dark' : 'light';
+    toggleTheme(desiredTheme);
+};
+
+const attachThemeSwitchListeners = () => {
+    document.querySelectorAll(THEME_SWITCH_SELECTOR).forEach((input) => {
+        input.removeEventListener('change', handleThemeSwitchChange);
+        input.addEventListener('change', handleThemeSwitchChange);
+    });
+
+    updateThemeControls(getCurrentTheme());
+};
+
 // Initialiser le thème au chargement
 const initTheme = () => {
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    updateThemeIcon(savedTheme);
+    const savedTheme = getStoredTheme();
+    applyTheme(savedTheme, { persist: false });
 };
 
 // Créer le bouton de toggle du thème
@@ -440,44 +505,28 @@ const createThemeToggle = () => {
     const navLinks = document.querySelector('.nav-links');
     if (!navLinks) return;
 
-    const themeToggle = document.createElement('button');
-    themeToggle.className = 'theme-toggle';
-    themeToggle.id = 'themeToggle';
-    themeToggle.innerHTML = '🌙';
-    themeToggle.setAttribute('aria-label', 'Toggle dark/light mode');
-
-    themeToggle.addEventListener('click', toggleTheme);
-
-    navLinks.insertBefore(themeToggle, navLinks.firstChild);
-};
-
-// Toggle entre dark et light mode
-const toggleTheme = () => {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-    document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-    updateThemeIcon(newTheme);
-};
-
-// Mettre à jour l'icône du thème
-const updateThemeIcon = (theme) => {
-    const themeToggle = document.getElementById('themeToggle');
-    if (themeToggle) {
-        themeToggle.innerHTML = theme === 'dark' ? '🌙' : '☀️';
+    let themeToggleBtn = document.getElementById('themeToggleBtn');
+    if (!themeToggleBtn) {
+        themeToggleBtn = document.createElement('button');
+        themeToggleBtn.className = 'theme-toggle';
+        themeToggleBtn.id = 'themeToggleBtn';
+        themeToggleBtn.setAttribute('aria-label', 'Toggle dark/light mode');
+        navLinks.insertBefore(themeToggleBtn, navLinks.firstChild);
     }
+
+    themeToggleBtn.innerHTML = getCurrentTheme() === 'dark' ? '??' : '??';
+    themeToggleBtn.removeEventListener('click', toggleTheme);
+    themeToggleBtn.addEventListener('click', () => toggleTheme());
 };
 
-// ================================================
 // PROTECTION DES PAGES
 // ================================================
 
-// Vérifier si l'utilisateur est authentifié
+// VÃ©rifier si l'utilisateur est authentifiÃ©
 export const checkAuth = () => {
     const isAuthenticated = loadSession();
 
-    // Pages qui nécessitent une authentification
+    // Pages qui nÃ©cessitent une authentification
     const protectedPages = ['dashboard.html', 'settings.html'];
     const currentPage = window.location.pathname.split('/').pop();
 
@@ -498,7 +547,7 @@ export const getParticlesConfig = async () => {
     if (!authToken) {
         loadSession();
         if (!authToken) {
-            return { success: false, error: 'Non authentifié' };
+            return { success: false, error: 'Non authentifiÃ©' };
         }
     }
 
@@ -510,7 +559,7 @@ export const getParticlesConfig = async () => {
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(data.error || 'Erreur de récupération de la config');
+            throw new Error(data.error || 'Erreur de rÃ©cupÃ©ration de la config');
         }
 
         return { success: true, config: data.config };
@@ -525,7 +574,7 @@ export const saveParticlesConfigToDB = async (config) => {
     if (!authToken) {
         loadSession();
         if (!authToken) {
-            return { success: false, error: 'Non authentifié - veuillez vous reconnecter' };
+            return { success: false, error: 'Non authentifiÃ© - veuillez vous reconnecter' };
         }
     }
 
@@ -556,19 +605,25 @@ export const saveParticlesConfigToDB = async (config) => {
 // INITIALISATION
 // ================================================
 
-// Charger la session immédiatement au chargement du module
+// Charger la session immÃ©diatement au chargement du module
 loadSession();
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
     initTheme();
     createThemeToggle();
+    attachThemeSwitchListeners();
     loadSession(); // Recharger pour être sûr
 });
 
+
+
 // Expose getParticlesConfig globally for particles-config.js
 if (typeof window !== 'undefined') {
+    window.newslyToggleTheme = toggleTheme;
+    window.newslyApplyTheme = (theme) => applyTheme(theme);
+    window.newslyGetTheme = getCurrentTheme;
+    window.newslyAttachThemeSwitchListeners = attachThemeSwitchListeners;
     window.getParticlesConfigFromDB = getParticlesConfig;
 }
 
-// Exporter les fonctions utiles
 export { currentUser, authToken, loadSession, safeLocalStorage };
