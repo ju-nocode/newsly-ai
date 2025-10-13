@@ -729,7 +729,7 @@ input[type="color"]::-moz-color-swatch {
 }
 
 .dashboard-container {
-  margin-left: 10px;
+  margin-left: 250px;
   padding: 3rem 4rem;
   flex: 1;
   max-width: 1600px;
@@ -738,7 +738,7 @@ input[type="color"]::-moz-color-swatch {
 }
 
 /* Adjust content when sidebar is collapsed */
-body:has(.dashboard-sidebar.collapsed) .dashboard-container {
+.vertical-sidebar.closed ~ .dashboard-container {
   margin-left: 10px;
 }
 
@@ -1357,16 +1357,17 @@ body:has(.dashboard-sidebar.collapsed) .dashboard-container {
 }
 
 .dashboard-body .footer {
-  margin-left: 10px;
+  margin-left: 250px;
   transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body:has(.settings-layout) .footer {
-  margin-left: 10px;
+  margin-left: 250px;
   transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-body:has(.dashboard-sidebar.collapsed) .footer {
+.vertical-sidebar.closed ~ * .footer,
+body:has(.vertical-sidebar.closed) .footer {
   margin-left: 10px;
 }
 
@@ -1894,7 +1895,7 @@ body:has(.dashboard-sidebar.collapsed) .footer {
 
 .settings-content {
   flex: auto;
-  margin-left: 10px;
+  margin-left: 250px;
   padding: 2rem 2.5rem 250px 2.5rem;
   min-height: calc(100vh - var(--navbar-height));
   display: flex;
@@ -1903,7 +1904,7 @@ body:has(.dashboard-sidebar.collapsed) .footer {
 }
 
 /* Adjust settings content when sidebar is collapsed */
-body:has(.dashboard-sidebar.collapsed) .settings-content {
+.vertical-sidebar.closed ~ .settings-layout .settings-content {
   margin-left: 10px;
 }
 

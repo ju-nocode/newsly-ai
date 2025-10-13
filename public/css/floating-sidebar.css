@@ -5,8 +5,8 @@ VERTICAL SIDEBAR - COLLAPSIBLE MINIMALIST
 .vertical-sidebar {
     position: fixed;
     left: 0;
-    top: 0;
-    height: 100vh;
+    top: var(--navbar-height);
+    height: calc(100vh - var(--navbar-height));
     width: 250px;
     background: var(--bg-primary);
     border-right: 1px solid var(--border);
