@@ -1357,17 +1357,17 @@ body:has(.dashboard-sidebar.collapsed) .dashboard-container {
 }
 
 .dashboard-body .footer {
-  margin-left: var(--sidebar-width);
+  margin-left: 10px;
   transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body:has(.settings-layout) .footer {
-  margin-left: var(--sidebar-width);
+  margin-left: 10px;
   transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body:has(.dashboard-sidebar.collapsed) .footer {
-  margin-left: var(--sidebar-width-collapsed);
+  margin-left: 10px;
 }
 
 .footer-container {
