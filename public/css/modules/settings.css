@@ -518,6 +518,14 @@
 
 /* Tablet */
 @media (max-width: 1024px) {
+  .settings-layout {
+    padding-top: 0;
+  }
+
+  body:has(.settings-layout) {
+    padding-top: var(--navbar-height);
+  }
+
   .settings-content {
     margin-left: 0 !important;
     width: 100% !important;

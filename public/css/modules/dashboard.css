@@ -232,8 +232,13 @@
 
 /* Tablet */
 @media (max-width: 1024px) {
+  .dashboard-body {
+    padding-top: var(--navbar-height);
+  }
+
   .dashboard-container {
     margin-left: 0 !important;
+    margin-top: 0 !important;
     width: 100% !important;
     max-width: 100% !important;
     padding: 1.5rem;
@@ -241,6 +246,7 @@
 
   .vertical-sidebar.closed ~ .dashboard-container {
     margin-left: 0 !important;
+    margin-top: 0 !important;
     width: 100% !important;
     max-width: 100% !important;
   }
