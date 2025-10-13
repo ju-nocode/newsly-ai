@@ -390,10 +390,11 @@
         };
 
         // Gérer les clics sur les catégories
-        document.querySelectorAll('.sidebar__link[data-category]').forEach(btn => {
-            btn.addEventListener('click', () => {
+        document.querySelectorAll('.sidebar-menu-link[data-category]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
                 // Retirer la classe active de tous les boutons de catégorie
-                document.querySelectorAll('.sidebar__link[data-category]').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.sidebar-menu-link[data-category]').forEach(b => b.classList.remove('active'));
 
                 // Ajouter la classe active au bouton cliqué
                 btn.classList.add('active');
@@ -403,7 +404,7 @@
                 currentCategory = category;
 
                 // Mettre à jour le titre
-                const title = btn.querySelector('.text').textContent;
+                const title = btn.querySelector('span').textContent;
                 document.getElementById('categoryTitle').textContent = `Actualités ${title}`;
 
                 loadNews(category);
@@ -631,26 +632,24 @@
             if (!topic) return;
 
             // Créer un nouveau bouton de catégorie
-            const categoriesList = document.querySelector('.sidebar__list.list--primary');
+            const categoriesList = document.querySelector('.sidebar-menu');
             const newCategory = document.createElement('li');
-            newCategory.className = 'sidebar__item';
+            newCategory.className = 'sidebar-menu-item';
             const newLink = document.createElement('a');
-            newLink.className = 'sidebar__link';
+            newLink.className = 'sidebar-menu-link';
             newLink.href = '#';
             newLink.dataset.category = topic;
             newLink.innerHTML = `
-                <span class="icon">
-                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
-                    </svg>
-                </span>
-                <span class="text">${escapeHtml(topic)}</span>
+                <svg viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
+                </svg>
+                <span>${escapeHtml(topic)}</span>
             `;
             newCategory.appendChild(newLink);
 
             // Ajouter l'événement de clic
             newLink.addEventListener('click', () => {
-                document.querySelectorAll('.sidebar__link[data-category]').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.sidebar-menu-link[data-category]').forEach(b => b.classList.remove('active'));
                 newLink.classList.add('active');
 
                 currentCategory = topic;
@@ -694,7 +693,7 @@
             translatePage();
 
             // Mettre à jour le titre de la catégorie actuelle
-            const activeBtn = document.querySelector('.sidebar__link[data-category].active');
+            const activeBtn = document.querySelector('.sidebar-menu-link[data-category].active');
             if (activeBtn) {
                 const categoryKey = activeBtn.dataset.category;
                 const translatedCategory = t(`category.${categoryKey}`);
@@ -773,7 +772,7 @@
         }
 
         // Fermer sidebar après sélection sur mobile (clic sur une catégorie)
-        document.querySelectorAll('.sidebar__link[data-category]').forEach(btn => {
+        document.querySelectorAll('.sidebar-menu-link[data-category]').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (window.innerWidth <= 1024) {
                     setTimeout(closeMobileMenu, 100); // Petit délai pour UX
@@ -844,27 +843,27 @@
             // SIDEBAR TOGGLE - Collapsible functionality
             // ================================================
             const sidebarToggle = document.getElementById('sidebarToggle');
-            const sidebar = document.querySelector('.dashboard-sidebar');
+            const sidebar = document.querySelector('.vertical-sidebar');
 
-            // Load saved state from localStorage
-            const isSidebarCollapsed = localStorage.getItem('sidebar_collapsed') === 'true';
-            if (isSidebarCollapsed) {
-                sidebar.classList.add('collapsed');
+            // Load saved state from localStorage (par défaut: fermé)
+            const isSidebarClosed = localStorage.getItem('vertical_sidebar_closed') !== 'false';
+            if (!isSidebarClosed) {
+                sidebar.classList.remove('closed');
             }
 
             // Toggle sidebar on button click
-            if (sidebarToggle) {
+            if (sidebarToggle && sidebar) {
                 sidebarToggle.addEventListener('click', (e) => {
                     e.preventDefault();
                     e.stopPropagation();
 
-                    sidebar.classList.toggle('collapsed');
+                    sidebar.classList.toggle('closed');
 
                     // Save state to localStorage
-                    const isCollapsed = sidebar.classList.contains('collapsed');
-                    localStorage.setItem('sidebar_collapsed', isCollapsed);
+                    const isClosed = sidebar.classList.contains('closed');
+                    localStorage.setItem('vertical_sidebar_closed', isClosed);
 
-                    console.log(`🔄 Sidebar ${isCollapsed ? 'collapsed' : 'expanded'}`);
+                    console.log(`🔄 Sidebar ${isClosed ? 'fermée (2px)' : 'ouverte (250px)'}`);
                 });
             }
         })();
