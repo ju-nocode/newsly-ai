@@ -729,7 +729,7 @@ input[type="color"]::-moz-color-swatch {
 }
 
 .dashboard-container {
-  margin-left: var(--sidebar-width);
+  margin-left: 10px;
   padding: 3rem 4rem;
   flex: 1;
   max-width: 1600px;
@@ -739,7 +739,7 @@ input[type="color"]::-moz-color-swatch {
 
 /* Adjust content when sidebar is collapsed */
 body:has(.dashboard-sidebar.collapsed) .dashboard-container {
-  margin-left: var(--sidebar-width-collapsed);
+  margin-left: 10px;
 }
 
 .dashboard-main {
@@ -1894,7 +1894,7 @@ body:has(.dashboard-sidebar.collapsed) .footer {
 
 .settings-content {
   flex: auto;
-  margin-left: var(--sidebar-width);
+  margin-left: 10px;
   padding: 2rem 2.5rem 250px 2.5rem;
   min-height: calc(100vh - var(--navbar-height));
   display: flex;
@@ -1904,7 +1904,7 @@ body:has(.dashboard-sidebar.collapsed) .footer {
 
 /* Adjust settings content when sidebar is collapsed */
 body:has(.dashboard-sidebar.collapsed) .settings-content {
-  margin-left: var(--sidebar-width-collapsed);
+  margin-left: 10px;
 }
 
 .settings-content > div {
