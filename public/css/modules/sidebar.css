@@ -222,23 +222,18 @@
   top: var(--navbar-height);
   width: 250px;
   height: calc(100vh - var(--navbar-height));
-  background: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: var(--bg-primary);
   border-right: 1px solid var(--border);
   overflow-y: auto;
   overflow-x: hidden;
   z-index: 9999;
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.02);
+  box-shadow: none;
 }
 
 [data-theme="dark"] .vertical-sidebar {
-  background: rgba(15, 23, 42, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: var(--bg-primary);
   border-right-color: rgba(255, 255, 255, 0.08);
-  box-shadow: 2px 0 16px rgba(0, 0, 0, 0.4);
 }
 
 /* Vertical sidebar closed state - Icons only */
