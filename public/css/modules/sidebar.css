@@ -250,7 +250,7 @@
 }
 
 [data-theme="dark"] .vertical-sidebar::before {
-  box-shadow: -10px 10px 0 0 var(--bg-primary);
+  box-shadow: 0 10px 0 0 var(--bg-primary);
 }
 
 /* Vertical sidebar closed state - Icons only */

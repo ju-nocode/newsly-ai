@@ -19,6 +19,7 @@
   padding-top: env(safe-area-inset-top);
   transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
               width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-top-left-radius: 20px;
 }
 
 /* Adjust navbar when sidebar is closed (icons only mode) */
@@ -31,6 +32,7 @@
 [data-theme="dark"] .navbar {
   background: var(--bg-secondary);
   border-color: rgba(255, 255, 255, 0.05);
+  border-top-left-radius: 20px;
 }
 
 /* Navbar for landing page (index.html) - Full width, centered */
