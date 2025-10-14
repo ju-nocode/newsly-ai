@@ -457,23 +457,14 @@ const toggleTheme = (explicitTheme) => {
 };
 
 const updateThemeControls = (theme) => {
-    const themeButton = document.getElementById('themeToggleBtn');
-    if (themeButton) {
-        themeButton.innerHTML = theme === 'dark' ? '🌙' : '☀️';
-    }
+    // DÉSACTIVÉ - Theme button updates are now handled by theme-service.js
+    // Only update checkboxes here to avoid conflicts
 
     document.querySelectorAll(THEME_SWITCH_SELECTOR).forEach((input) => {
         input.checked = theme === 'dark';
     });
 
-    const themeText = document.getElementById('themeText');
-    if (themeText) {
-        const language = (localStorage.getItem('language') || 'fr').toLowerCase();
-        const localeKey = language.startsWith('en') ? 'En' : 'Fr';
-        const darkLabel = themeText.dataset['dark' + localeKey] || themeText.dataset.darkFr || 'Mode sombre';
-        const lightLabel = themeText.dataset['light' + localeKey] || themeText.dataset.lightFr || 'Mode clair';
-        themeText.textContent = theme === 'dark' ? darkLabel : lightLabel;
-    }
+    // Theme text and button icons are now managed by theme-service.js
 };
 
 const handleThemeSwitchChange = (event) => {
@@ -497,22 +488,11 @@ const initTheme = () => {
 };
 
 // Créer le bouton de toggle du thème
+// DÉSACTIVÉ - Maintenant géré par theme-service.js
 const createThemeToggle = () => {
-    const navLinks = document.querySelector('.nav-links');
-    if (!navLinks) return;
-
-    let themeToggleBtn = document.getElementById('themeToggleBtn');
-    if (!themeToggleBtn) {
-        themeToggleBtn = document.createElement('button');
-        themeToggleBtn.className = 'theme-toggle';
-        themeToggleBtn.id = 'themeToggleBtn';
-        themeToggleBtn.setAttribute('aria-label', 'Toggle dark/light mode');
-        navLinks.insertBefore(themeToggleBtn, navLinks.firstChild);
-    }
-
-    themeToggleBtn.innerHTML = getCurrentTheme() === 'dark' ? '??' : '??';
-    themeToggleBtn.removeEventListener('click', toggleTheme);
-    themeToggleBtn.addEventListener('click', () => toggleTheme());
+    // Theme toggle button is now managed by theme-service.js
+    // This function is kept for backward compatibility but does nothing
+    return;
 };
 
 // PROTECTION DES PAGES
