@@ -35,16 +35,15 @@
 .navbar-landing {
   left: 0 !important;
   width: 100% !important;
-  background: rgba(255, 255, 255, 0.8) !important;
+  background: var(--bg-primary) !important;
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
-  border-bottom: 1px solid var(--border) !important;
-  box-shadow: 0 2px 8px var(--shadow) !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
 }
 
 [data-theme="dark"] .navbar-landing {
-  background: rgba(15, 23, 42, 0.8) !important;
-  border-color: rgba(255, 255, 255, 0.05) !important;
+  background: var(--bg-primary) !important;
 }
 
 .navbar.dashboard-nav {
