@@ -168,14 +168,22 @@
   padding: 0;
   margin-left: 0.5rem;
   transition: all 0.3s;
+  border-radius: 0;
+  outline: none;
 }
 
 .sidebar-toggle-btn:hover {
   opacity: 0.7;
+  background: transparent;
 }
 
 .sidebar-toggle-btn:active {
   transform: scale(0.95);
+}
+
+.sidebar-toggle-btn:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 .sidebar-toggle-btn svg {
@@ -183,6 +191,9 @@
   height: 18px;
   color: var(--text-primary);
   transition: transform 0.3s ease;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 /* Rotate arrow when sidebar is closed */
