@@ -1,0 +1,47 @@
+/* ================================================
+   NEWSLY AI - Settings Page CSS
+
+   Seulement les modules nécessaires pour settings.html
+================================================ */
+
+/* 1. Variables CSS - Theme colors & design tokens */
+@import url('modules/variables.css');
+
+/* 2. Base - Reset & body styles */
+@import url('modules/base.css');
+
+/* 3. Navigation */
+@import url('modules/navbar.css');
+
+/* 4. Icons - Filters & utilities */
+@import url('modules/icons.css');
+
+/* 5. Buttons */
+@import url('modules/buttons.css');
+
+/* 6. Forms */
+@import url('modules/forms.css');
+
+/* 7. Sidebar */
+@import url('modules/sidebar.css');
+
+/* 8. Settings Page */
+@import url('modules/settings.css');
+
+/* 9. Toast Notifications */
+@import url('modules/toast.css');
+
+/* 10. Weather Widget */
+@import url('modules/weather.css');
+
+/* 11. Burger Menu */
+@import url('modules/burger.css');
+
+/* 12. Modal */
+@import url('modules/modal.css');
+
+/* 13. Utilities */
+@import url('modules/utilities.css');
+
+/* 14. Responsive - Media queries (doit être en dernier) */
+@import url('modules/responsive.css');
