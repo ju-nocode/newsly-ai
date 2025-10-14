@@ -10,7 +10,7 @@
   width: calc(100% - 250px);
   height: var(--navbar-height);
   background: var(--bg-primary);
-  border-bottom: 1px solid var(--border);
+  border-bottom: none;
   box-shadow: none;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -28,8 +28,7 @@
 }
 
 [data-theme="dark"] .navbar {
-  background: var(--bg-secondary);
-  border-color: rgba(255, 255, 255, 0.05);
+  background: var(--bg-primary);
 }
 
 /* Navbar for landing page (index.html) - Full width, centered */
