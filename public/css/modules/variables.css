@@ -3,16 +3,16 @@
 ================================================ */
 
 :root {
-  /* Light Mode - Modern Clean */
+  /* Light Mode - Pure White */
   --bg-primary: #ffffff;
-  --bg-secondary: #f8fafc;
-  --bg-tertiary: #f1f5f9;
+  --bg-secondary: #fafafa;
+  --bg-tertiary: #f5f5f5;
   --bg-sidebar: #ffffff;
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #94a3b8;
-  --text-sidebar: #0f172a;
-  --border: #e2e8f0;
+  --text-primary: #171717;
+  --text-secondary: #525252;
+  --text-muted: #a3a3a3;
+  --text-sidebar: #171717;
+  --border: #e5e5e5;
   --shadow: rgba(0, 0, 0, 0.05);
   --shadow-lg: rgba(0, 0, 0, 0.1);
 
@@ -65,16 +65,16 @@
 }
 
 [data-theme="dark"] {
-  /* Dark Mode - Modern Slate */
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
-  --bg-tertiary: #334155;
-  --bg-sidebar: #0f172a;
-  --text-primary: #f1f5f9;
-  --text-secondary: #cbd5e1;
-  --text-muted: #64748b;
-  --text-sidebar: #f1f5f9;
-  --border: #334155;
+  /* Dark Mode - Modern Gray (moins bleuté) */
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #242424;
+  --bg-tertiary: #2e2e2e;
+  --bg-sidebar: #1a1a1a;
+  --text-primary: #f5f5f5;
+  --text-secondary: #d4d4d4;
+  --text-muted: #737373;
+  --text-sidebar: #f5f5f5;
+  --border: #404040;
 
   /* Animated Dot Grid Background */
   --dot-color: rgba(59, 130, 246, 0.15);
