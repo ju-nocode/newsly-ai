@@ -9,9 +9,9 @@
   right: 0;
   width: calc(100% - 250px);
   height: var(--navbar-height);
-  background: var(--bg-primary);
+  background: var(--bg-secondary);
   border-bottom: 1px solid var(--border);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  box-shadow: none;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   z-index: 10000;
@@ -19,16 +19,18 @@
   padding-top: env(safe-area-inset-top);
   transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
               width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-top-left-radius: 24px;
 }
 
 /* Adjust navbar when sidebar is closed (icons only mode) */
 .vertical-sidebar.closed ~ .navbar {
   left: 60px;
   width: calc(100% - 60px);
+  border-top-left-radius: 24px;
 }
 
 [data-theme="dark"] .navbar {
-  background: var(--bg-primary);
+  background: var(--bg-secondary);
   border-color: rgba(255, 255, 255, 0.05);
 }
 

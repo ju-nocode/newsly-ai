@@ -223,52 +223,50 @@
   width: 250px;
   height: calc(100vh - var(--navbar-height));
   background: var(--bg-primary);
-  border-right: 1px solid var(--border);
+  border-right: none;
   overflow-y: auto;
   overflow-x: hidden;
   z-index: 9999;
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.03);
 }
 
-/* Rounded corner connection - Angle inversé à 90° */
+/* Arrondi inversé (concave) comme OpenAI - Coin supérieur droit */
 .vertical-sidebar::before {
   content: '';
   position: absolute;
-  top: -20px;
+  top: 0;
   right: 0;
-  width: 20px;
-  height: 20px;
-  background: transparent;
-  border-bottom-left-radius: 20px;
-  box-shadow: -10px 10px 0 0 var(--bg-primary);
+  width: 24px;
+  height: 24px;
+  background: var(--bg-secondary);
+  border-bottom-left-radius: 24px;
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
 }
 
 [data-theme="dark"] .vertical-sidebar {
   background: var(--bg-primary);
-  border-color: rgba(255, 255, 255, 0.05);
 }
 
 [data-theme="dark"] .vertical-sidebar::before {
-  box-shadow: -10px 10px 0 0 var(--bg-primary);
+  background: var(--bg-secondary);
 }
 
 /* Vertical sidebar closed state - Icons only */
 .vertical-sidebar.closed {
   width: 60px;
   overflow: visible;
-  border-right: 1px solid var(--border);
+  border-right: none;
 }
 
 /* Adjust rounded corner when sidebar is closed */
 .vertical-sidebar.closed::before {
-  top: -20px;
+  top: 0;
   right: 0;
-  width: 20px;
-  height: 20px;
-  box-shadow: -10px 10px 0 0 var(--bg-primary);
+  width: 24px;
+  height: 24px;
+  background: var(--bg-secondary);
+  border-bottom-left-radius: 24px;
 }
 
 .vertical-sidebar.closed .sidebar-content {
@@ -311,27 +309,9 @@
   position: relative;
 }
 
-/* Sidebar Header */
+/* Sidebar Header - Hidden for cleaner look */
 .sidebar-header {
-  padding: 1.5rem 1.25rem;
-  border-bottom: 1px solid var(--border);
-  background: rgba(59, 130, 246, 0.05);
-}
-
-.sidebar-header h2 {
-  font-size: 1.125rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 0.25rem;
-  line-height: 1.2;
-}
-
-.sidebar-header p {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  display: none;
 }
 
 /* Sidebar Section */
