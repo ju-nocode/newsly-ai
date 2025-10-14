@@ -24,6 +24,8 @@
   box-sizing: border-box;
   position: relative;
   z-index: 1;
+  border-top-left-radius: 20px;
+  background: var(--bg-secondary);
 }
 
 /* Adjust content when sidebar is collapsed (icons only mode) */

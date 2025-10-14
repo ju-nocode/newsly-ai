@@ -230,27 +230,8 @@
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Arrondi inversé (concave) comme OpenAI - Coin supérieur droit */
-.vertical-sidebar::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: -20px;
-  width: 20px;
-  height: 20px;
-  background: transparent;
-  border-bottom-right-radius: 20px;
-  box-shadow: 0 10px 0 0 var(--bg-primary);
-  pointer-events: none;
-  z-index: 2;
-}
-
 [data-theme="dark"] .vertical-sidebar {
   background: var(--bg-primary);
-}
-
-[data-theme="dark"] .vertical-sidebar::before {
-  box-shadow: 0 10px 0 0 var(--bg-primary);
 }
 
 /* Vertical sidebar closed state - Icons only */
@@ -258,17 +239,6 @@
   width: 60px;
   overflow: visible;
   border-right: none;
-}
-
-/* Adjust rounded corner when sidebar is closed */
-.vertical-sidebar.closed::before {
-  top: 0;
-  right: -20px;
-  width: 20px;
-  height: 20px;
-  background: transparent;
-  border-bottom-right-radius: 20px;
-  box-shadow: 0 10px 0 0 var(--bg-primary);
 }
 
 .vertical-sidebar.closed .sidebar-content {
