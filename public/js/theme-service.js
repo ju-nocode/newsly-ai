@@ -51,18 +51,41 @@ export function getTheme() {
  * @param {string} theme - Current theme
  */
 function updateThemeToggles(theme) {
+    const isDark = theme === 'dark';
+
     // Update checkbox toggles (without triggering change event)
     const themeToggles = document.querySelectorAll('#themeToggle, [data-theme-toggle]');
     themeToggles.forEach(toggle => {
-        if (toggle.checked !== (theme === 'dark')) {
-            toggle.checked = theme === 'dark';
+        if (toggle.checked !== isDark) {
+            toggle.checked = isDark;
         }
     });
 
     // Update theme text labels
     const themeTexts = document.querySelectorAll('#themeText, [data-theme-text]');
     themeTexts.forEach(text => {
-        text.textContent = theme === 'dark' ? 'Mode sombre' : 'Mode clair';
+        text.textContent = isDark ? 'Mode sombre' : 'Mode clair';
+    });
+
+    // Update theme icon images (moon/sun)
+    const themeIcons = document.querySelectorAll('[data-theme-icon]');
+    themeIcons.forEach(icon => {
+        if (isDark) {
+            // Dark mode → show sun (to switch to light)
+            icon.src = 'https://img.icons8.com/ios-filled/50/000000/sun--v1.png';
+            icon.alt = 'Light mode';
+        } else {
+            // Light mode → show moon (to switch to dark)
+            icon.src = 'https://img.icons8.com/ios-filled/50/000000/moon-symbol.png';
+            icon.alt = 'Dark mode';
+        }
+    });
+
+    // Update theme emoji buttons (☀️/🌙)
+    const themeEmojiButtons = document.querySelectorAll('[data-theme-emoji]');
+    themeEmojiButtons.forEach(button => {
+        button.textContent = isDark ? '☀️' : '🌙';
+        button.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
     });
 
     // Update theme select dropdowns
