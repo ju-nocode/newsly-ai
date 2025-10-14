@@ -88,6 +88,33 @@ function updateThemeToggles(theme) {
         button.setAttribute('aria-label', isDark ? 'Dark mode active' : 'Light mode active');
     });
 
+    // Update theme toggle buttons (with icons8 images)
+    const themeToggleButtons = document.querySelectorAll('#themeToggleBtn, .theme-toggle, [data-theme-toggle-btn]');
+    themeToggleButtons.forEach(button => {
+        // Check if button already has an img, otherwise create one
+        let img = button.querySelector('img');
+        if (!img) {
+            img = document.createElement('img');
+            img.style.width = '1.25rem';
+            img.style.height = '1.25rem';
+            img.style.display = 'block';
+            button.innerHTML = '';
+            button.appendChild(img);
+        }
+
+        if (isDark) {
+            // Dark mode → show moon
+            img.src = 'https://img.icons8.com/ios-filled/50/000000/moon-symbol.png';
+            img.alt = 'Dark mode';
+        } else {
+            // Light mode → show sun
+            img.src = 'https://img.icons8.com/ios-filled/50/000000/sun--v1.png';
+            img.alt = 'Light mode';
+        }
+
+        button.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+    });
+
     // Update theme select dropdowns
     const themeSelects = document.querySelectorAll('#themeSelect, [data-theme-select]');
     themeSelects.forEach(select => {
@@ -131,6 +158,21 @@ export function setupThemeListeners() {
         });
     });
 
+    // Setup theme toggle buttons (navbar buttons with icons)
+    const themeToggleButtons = document.querySelectorAll('#themeToggleBtn, .theme-toggle, [data-theme-toggle-btn]');
+    themeToggleButtons.forEach(button => {
+        const newButton = button.cloneNode(true);
+        button.parentNode.replaceChild(newButton, button);
+
+        newButton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const currentTheme = getTheme();
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            console.log(`🔄 Theme button clicked: ${currentTheme} → ${newTheme}`);
+            setTheme(newTheme);
+        });
+    });
+
     // Listen for storage events (cross-tab synchronization)
     window.addEventListener('storage', (e) => {
         if (e.key === 'theme' && e.newValue) {
@@ -147,7 +189,7 @@ export function setupThemeListeners() {
         updateThemeToggles(theme);
     });
 
-    console.log(`✅ Theme service initialized (${themeToggles.length} toggles, ${themeSelects.length} selects)`);
+    console.log(`✅ Theme service initialized (${themeToggles.length} toggles, ${themeSelects.length} selects, ${themeToggleButtons.length} buttons)`);
 }
 
 // Auto-initialize theme on module load
