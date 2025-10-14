@@ -121,26 +121,22 @@
   padding: 0.1rem 0.5rem;
 }
 
-/* Theme Toggle Button */
+/* Theme Toggle Button - Same style as .burger-menu */
 .theme-toggle {
+  background: transparent;
+  border: none;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   padding: 0;
-  margin: 0;
+  transition: all 0.3s;
 }
 
 .theme-toggle:hover {
-  background: var(--bg-tertiary);
-  border-color: var(--primary);
-  transform: scale(1.05);
+  opacity: 0.7;
 }
 
 .theme-toggle:active {
