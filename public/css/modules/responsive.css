@@ -129,6 +129,10 @@
 @media (max-width: 768px) {
   /* Removed duplicate grid rules - now in dashboard.css */
 
+  .auth-title {
+    font-size: 4.5rem !important;
+  }
+
   .section-title {
     font-size: 1.75rem;
   }
@@ -225,7 +229,7 @@
 
   /* Titre réduit sur mobile */
   .auth-title {
-    font-size: 2.5rem !important;
+    font-size: 3.5rem !important;
   }
 
   /* Removed duplicate settings rules - now in settings.css */
