@@ -488,11 +488,33 @@ const initTheme = () => {
 };
 
 // Créer le bouton de toggle du thème
-// DÉSACTIVÉ - Maintenant géré par theme-service.js
 const createThemeToggle = () => {
-    // Theme toggle button is now managed by theme-service.js
-    // This function is kept for backward compatibility but does nothing
-    return;
+    const navLinks = document.querySelector('.nav-links');
+    if (!navLinks) return;
+
+    let themeToggleBtn = document.getElementById('themeToggleBtn');
+    if (!themeToggleBtn) {
+        themeToggleBtn = document.createElement('button');
+        themeToggleBtn.className = 'theme-toggle';
+        themeToggleBtn.id = 'themeToggleBtn';
+        themeToggleBtn.setAttribute('aria-label', 'Toggle dark/light mode');
+
+        // Create img element with Icons8 image (theme-service.js will update it)
+        const img = document.createElement('img');
+        const currentTheme = getCurrentTheme();
+        img.src = currentTheme === 'dark'
+            ? 'https://img.icons8.com/ios-filled/50/000000/moon-symbol.png'
+            : 'https://img.icons8.com/ios-filled/50/000000/sun--v1.png';
+        img.alt = currentTheme === 'dark' ? 'Dark mode' : 'Light mode';
+        img.style.width = '1.25rem';
+        img.style.height = '1.25rem';
+        img.style.display = 'block';
+
+        themeToggleBtn.appendChild(img);
+        navLinks.insertBefore(themeToggleBtn, navLinks.firstChild);
+    }
+
+    // Event listener will be added by theme-service.js
 };
 
 // PROTECTION DES PAGES
