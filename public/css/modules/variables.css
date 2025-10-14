@@ -100,11 +100,11 @@
   --icon-filter: brightness(0) saturate(100%);
 }
 
-/* Transition douce entre les thèmes */
+/* Transition douce entre les thèmes
 html, body, [data-theme] {
   transition:
     background-color 0.4s ease,
     color 0.4s ease,
     border-color 0.4s ease,
     box-shadow 0.4s ease;
-}
+} */
