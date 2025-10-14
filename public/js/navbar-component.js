@@ -69,7 +69,7 @@ export function createNavbar(config = {}) {
                     <!-- Theme Toggle avec Switch -->
                     <div class="burger-item">
                         <div class="burger-item-label">
-                            <img src="https://img.icons8.com/ios-filled/50/000000/moon-symbol.png" alt="Theme" class="icon-secondary" data-theme-icon>
+                            <img src="https://img.icons8.com/ios-filled/50/000000/sun--v1.png" alt="Theme" class="icon-secondary" data-theme-icon>
                             <span id="themeText" data-i18n="nav.darkMode">Mode sombre</span>
                         </div>
                         <label class="toggle-switch">

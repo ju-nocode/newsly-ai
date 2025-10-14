@@ -71,21 +71,21 @@ function updateThemeToggles(theme) {
     const themeIcons = document.querySelectorAll('[data-theme-icon]');
     themeIcons.forEach(icon => {
         if (isDark) {
-            // Dark mode → show sun (to switch to light)
-            icon.src = 'https://img.icons8.com/ios-filled/50/000000/sun--v1.png';
-            icon.alt = 'Light mode';
-        } else {
-            // Light mode → show moon (to switch to dark)
+            // Dark mode → show moon (representing current state)
             icon.src = 'https://img.icons8.com/ios-filled/50/000000/moon-symbol.png';
             icon.alt = 'Dark mode';
+        } else {
+            // Light mode → show sun (representing current state)
+            icon.src = 'https://img.icons8.com/ios-filled/50/000000/sun--v1.png';
+            icon.alt = 'Light mode';
         }
     });
 
     // Update theme emoji buttons (☀️/🌙)
     const themeEmojiButtons = document.querySelectorAll('[data-theme-emoji]');
     themeEmojiButtons.forEach(button => {
-        button.textContent = isDark ? '☀️' : '🌙';
-        button.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+        button.textContent = isDark ? '🌙' : '☀️';
+        button.setAttribute('aria-label', isDark ? 'Dark mode active' : 'Light mode active');
     });
 
     // Update theme select dropdowns
