@@ -235,11 +235,12 @@
   content: '';
   position: absolute;
   top: 0;
-  right: 0;
-  width: 24px;
-  height: 24px;
-  background: var(--bg-secondary);
-  border-bottom-left-radius: 24px;
+  right: -20px;
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  border-bottom-left-radius: 20px;
+  box-shadow: -10px 10px 0 0 var(--bg-primary);
   pointer-events: none;
   z-index: 2;
 }
@@ -249,7 +250,7 @@
 }
 
 [data-theme="dark"] .vertical-sidebar::before {
-  background: var(--bg-secondary);
+  box-shadow: -10px 10px 0 0 var(--bg-primary);
 }
 
 /* Vertical sidebar closed state - Icons only */
@@ -262,11 +263,12 @@
 /* Adjust rounded corner when sidebar is closed */
 .vertical-sidebar.closed::before {
   top: 0;
-  right: 0;
-  width: 24px;
-  height: 24px;
-  background: var(--bg-secondary);
-  border-bottom-left-radius: 24px;
+  right: -20px;
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  border-bottom-left-radius: 20px;
+  box-shadow: -10px 10px 0 0 var(--bg-primary);
 }
 
 .vertical-sidebar.closed .sidebar-content {

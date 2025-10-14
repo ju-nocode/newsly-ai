@@ -9,7 +9,7 @@
   right: 0;
   width: calc(100% - 250px);
   height: var(--navbar-height);
-  background: var(--bg-secondary);
+  background: var(--bg-primary);
   border-bottom: 1px solid var(--border);
   box-shadow: none;
   backdrop-filter: blur(20px);
@@ -19,14 +19,14 @@
   padding-top: env(safe-area-inset-top);
   transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
               width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border-top-left-radius: 24px;
+  border-top-left-radius: 20px;
 }
 
 /* Adjust navbar when sidebar is closed (icons only mode) */
 .vertical-sidebar.closed ~ .navbar {
   left: 60px;
   width: calc(100% - 60px);
-  border-top-left-radius: 24px;
+  border-top-left-radius: 20px;
 }
 
 [data-theme="dark"] .navbar {
