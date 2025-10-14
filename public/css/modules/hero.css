@@ -46,6 +46,48 @@
   animation: hover-pulse 1.5s ease-in-out infinite;
 }
 
+/* Hero Title with Aurora Effect - Dedicated class */
+.hero-title-aurora {
+  font-size: 6rem !important;
+  font-weight: 800 !important;
+  margin-bottom: 1.5rem !important;
+  letter-spacing: -0.025em !important;
+  line-height: 1.1 !important;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  cursor: pointer !important;
+  position: relative !important;
+  display: inline-block !important;
+  animation: subtle-float 6s ease-in-out infinite !important;
+
+  /* Aurora gradient effect */
+  background: linear-gradient(
+    90deg,
+    var(--aurora-clr-1),
+    var(--aurora-clr-2),
+    var(--aurora-clr-3),
+    var(--aurora-clr-4),
+    var(--aurora-clr-1)
+  ) !important;
+  background-size: 200% 100% !important;
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+  color: transparent !important;
+  animation: subtle-float 6s ease-in-out infinite, aurora-gradient 8s ease-in-out infinite !important;
+
+  padding: 0.5rem 1rem !important;
+  border-radius: var(--radius-lg) !important;
+}
+
+.hero-title-aurora:hover {
+  filter: drop-shadow(0 0 30px var(--aurora-clr-1))
+          drop-shadow(0 0 60px var(--aurora-clr-2))
+          drop-shadow(0 0 90px var(--aurora-clr-3))
+          brightness(1.2) !important;
+  transform: scale(1.05) translateY(-5px) !important;
+  letter-spacing: 0.02em !important;
+  animation: hover-pulse 1.5s ease-in-out infinite, aurora-gradient 8s ease-in-out infinite !important;
+}
+
 /* Subtle floating animation when not hovering */
 @keyframes subtle-float {
   0%, 100% {
