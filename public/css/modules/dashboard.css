@@ -22,6 +22,8 @@
               width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
               max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-sizing: border-box;
+  position: relative;
+  z-index: 1;
 }
 
 /* Adjust content when sidebar is collapsed (icons only mode) */

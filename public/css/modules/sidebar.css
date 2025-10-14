@@ -239,8 +239,8 @@
   width: 20px;
   height: 20px;
   background: transparent;
-  border-bottom-left-radius: 20px;
-  box-shadow: -10px 10px 0 0 var(--bg-primary);
+  border-bottom-right-radius: 20px;
+  box-shadow: 0 10px 0 0 var(--bg-primary);
   pointer-events: none;
   z-index: 2;
 }
@@ -267,8 +267,8 @@
   width: 20px;
   height: 20px;
   background: transparent;
-  border-bottom-left-radius: 20px;
-  box-shadow: -10px 10px 0 0 var(--bg-primary);
+  border-bottom-right-radius: 20px;
+  box-shadow: 0 10px 0 0 var(--bg-primary);
 }
 
 .vertical-sidebar.closed .sidebar-content {
