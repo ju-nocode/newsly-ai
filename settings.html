@@ -514,8 +514,13 @@
         // Initialize navbar component
         initNavbar('div.mobile-overlay', { showSettingsNav: true });
 
-        // Initialize theme listeners (after navbar is loaded)
-        setTimeout(() => setupThemeListeners(), 100);
+        // Initialize theme listeners after navbar is fully rendered
+        // Using requestAnimationFrame to ensure DOM is ready
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                setupThemeListeners();
+            });
+        });
 
         // Initialize particles (async to load from DB)
         // DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
