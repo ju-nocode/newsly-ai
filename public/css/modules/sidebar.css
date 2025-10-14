@@ -258,7 +258,7 @@
 
 /* Center icons when sidebar is closed */
 .vertical-sidebar.closed .sidebar-section:first-of-type {
-  padding-top: 4rem;
+  padding-top: 0rem;
 }
 
 .vertical-sidebar.closed .sidebar-menu-link {
@@ -299,7 +299,7 @@
 }
 
 .sidebar-section:first-of-type {
-  padding-top: 4rem;
+  padding-top: 0rem;
 }
 
 .sidebar-section:last-child {
