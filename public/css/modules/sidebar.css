@@ -219,7 +219,7 @@
 .vertical-sidebar {
   position: fixed;
   left: 0;
-  top: 0;
+  top: 2.5rem;
   width: 250px;
   height: 100vh;
   background: var(--bg-primary);
