@@ -1199,10 +1199,19 @@
             window.location.href = 'dashboard.html';
         });
 
-        // Bouton Logout
+        // Bouton Logout (burger menu)
         document.getElementById('logoutBtn').addEventListener('click', () => {
             logout();
         });
+
+        // Bouton Logout (sidebar)
+        const sidebarLogoutBtn = document.getElementById('sidebarLogoutBtn');
+        if (sidebarLogoutBtn) {
+            sidebarLogoutBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                logout();
+            });
+        }
 
         // ================================================
         // MENU MOBILE - Gestion settings nav responsive

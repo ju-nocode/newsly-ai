@@ -709,6 +709,15 @@
             logout();
         });
 
+        // Bouton Logout (sidebar)
+        const sidebarLogoutBtn = document.getElementById('sidebarLogoutBtn');
+        if (sidebarLogoutBtn) {
+            sidebarLogoutBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                logout();
+            });
+        }
+
         // ================================================
         // MENU MOBILE - Gestion sidebar responsive
         // ================================================
