@@ -1278,6 +1278,34 @@
             }
         });
 
+        // ================================================
+        // SIDEBAR TOGGLE - Collapsible functionality
+        // ================================================
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.querySelector('.vertical-sidebar');
+
+        // Load saved state from localStorage (par défaut: ouvert)
+        const isSidebarClosed = localStorage.getItem('vertical_sidebar_closed') === 'true';
+        if (isSidebarClosed && sidebar) {
+            sidebar.classList.add('closed');
+        }
+
+        // Toggle sidebar on button click
+        if (sidebarToggle && sidebar) {
+            sidebarToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                sidebar.classList.toggle('closed');
+
+                // Save state to localStorage
+                const isClosed = sidebar.classList.contains('closed');
+                localStorage.setItem('vertical_sidebar_closed', isClosed);
+
+                console.log(`🔄 Sidebar ${isClosed ? 'fermée (2px)' : 'ouverte (250px)'}`);
+            });
+        }
+
         // Charger le nom utilisateur pour le burger
         const loadUserName = async () => {
             const result = await getUserProfile();
@@ -2058,34 +2086,6 @@
 
                         console.log(`🔄 Toggle ${collapseId}: ${willCollapse ? 'collapsed' : 'expanded'}`);
                     });
-                });
-            }
-
-            // ================================================
-            // SIDEBAR TOGGLE - Collapsible functionality
-            // ================================================
-            const sidebarToggle = document.getElementById('sidebarToggle');
-            const sidebar = document.querySelector('.vertical-sidebar');
-
-            // Load saved state from localStorage (par défaut: ouvert)
-            const isSidebarClosed = localStorage.getItem('vertical_sidebar_closed') === 'true';
-            if (isSidebarClosed && sidebar) {
-                sidebar.classList.add('closed');
-            }
-
-            // Toggle sidebar on button click
-            if (sidebarToggle && sidebar) {
-                sidebarToggle.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-
-                    sidebar.classList.toggle('closed');
-
-                    // Save state to localStorage
-                    const isClosed = sidebar.classList.contains('closed');
-                    localStorage.setItem('vertical_sidebar_closed', isClosed);
-
-                    console.log(`🔄 Sidebar ${isClosed ? 'fermée (2px)' : 'ouverte (250px)'}`);
                 });
             }
         })();
