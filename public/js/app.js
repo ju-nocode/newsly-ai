@@ -211,7 +211,7 @@ export const logout = () => {
 // RÃ©cupÃ©rer les actualitÃ©s
 export const fetchNews = async (category = 'general', country = 'us', page = 1) => {
     try {
-        const url = `${API_BASE_URL}/api/news?category=${category}&country=${country}&page=${page}`;
+        const url = `${API_BASE_URL}/api/news?category=${encodeURIComponent(category)}&country=${encodeURIComponent(country)}&page=${encodeURIComponent(page)}`;
 
         const response = await fetch(url, {
             headers: authToken ? { 'Authorization': `Bearer ${authToken}` } : {}
