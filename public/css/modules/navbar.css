@@ -11,7 +11,6 @@
   height: var(--navbar-height);
   background: var(--bg-primary);
   border-bottom: 1px solid var(--border);
-  border-left: 1px solid var(--border);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -19,28 +18,13 @@
   padding: 0;
   padding-top: env(safe-area-inset-top);
   transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              border-radius 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border-top-left-radius: 20px;
-}
-
-/* Rounded corner connection with sidebar */
-.navbar::before {
-  content: '';
-  position: absolute;
-  bottom: -1px;
-  left: -1px;
-  right: 0;
-  height: 1px;
-  background: var(--border);
-  z-index: 1;
+              width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Adjust navbar when sidebar is closed (icons only mode) */
 .vertical-sidebar.closed ~ .navbar {
   left: 60px;
   width: calc(100% - 60px);
-  border-top-left-radius: 20px;
 }
 
 [data-theme="dark"] .navbar {

@@ -219,30 +219,31 @@
 .vertical-sidebar {
   position: fixed;
   left: 0;
-  top: 2.5rem;
+  top: var(--navbar-height);
   width: 250px;
-  height: 100vh;
+  height: calc(100vh - var(--navbar-height));
   background: var(--bg-primary);
   border-right: 1px solid var(--border);
   overflow-y: auto;
   overflow-x: hidden;
-  z-index: 10001;
+  z-index: 9999;
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.03);
 }
 
-/* Rounded corner connection with navbar */
-.vertical-sidebar::after {
+/* Rounded corner connection - Angle inversé à 90° */
+.vertical-sidebar::before {
   content: '';
   position: absolute;
-  top: 0;
+  top: -20px;
   right: 0;
   width: 20px;
-  height: var(--navbar-height);
+  height: 20px;
   background: transparent;
-  border-top-right-radius: 20px;
-  box-shadow: 10px -10px 0 0 var(--bg-primary);
+  border-bottom-left-radius: 20px;
+  box-shadow: -10px 10px 0 0 var(--bg-primary);
   pointer-events: none;
+  z-index: 1;
 }
 
 [data-theme="dark"] .vertical-sidebar {
@@ -250,8 +251,8 @@
   border-color: rgba(255, 255, 255, 0.05);
 }
 
-[data-theme="dark"] .vertical-sidebar::after {
-  box-shadow: 10px -10px 0 0 var(--bg-primary);
+[data-theme="dark"] .vertical-sidebar::before {
+  box-shadow: -10px 10px 0 0 var(--bg-primary);
 }
 
 /* Vertical sidebar closed state - Icons only */
@@ -262,9 +263,12 @@
 }
 
 /* Adjust rounded corner when sidebar is closed */
-.vertical-sidebar.closed::after {
+.vertical-sidebar.closed::before {
+  top: -20px;
+  right: 0;
   width: 20px;
-  box-shadow: 10px -10px 0 0 var(--bg-primary);
+  height: 20px;
+  box-shadow: -10px 10px 0 0 var(--bg-primary);
 }
 
 .vertical-sidebar.closed .sidebar-content {
@@ -281,10 +285,8 @@
 }
 
 /* Center icons when sidebar is closed */
-.vertical-sidebar.closed .sidebar-header {
-  padding: 1rem 0;
-  text-align: center;
-  justify-content: center;
+.vertical-sidebar.closed .sidebar-section:first-of-type {
+  padding-top: 4rem;
 }
 
 .vertical-sidebar.closed .sidebar-menu-link {
@@ -303,9 +305,10 @@
 
 /* Sidebar Content */
 .sidebar-content {
-  padding: 1.5rem 0 0 0;
+  padding: 0;
   opacity: 1;
   transition: opacity 0.2s ease;
+  position: relative;
 }
 
 /* Sidebar Header */
@@ -335,6 +338,10 @@
 .sidebar-section {
   padding: 0;
   border-bottom: 1px solid var(--border);
+}
+
+.sidebar-section:first-of-type {
+  padding-top: 4rem;
 }
 
 .sidebar-section:last-child {
@@ -423,24 +430,28 @@
   flex-shrink: 0;
 }
 
-/* Sidebar Toggle Button (in navbar) */
+/* Sidebar Toggle Button (in sidebar) */
 .sidebar-toggle-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  background: transparent;
-  border: none;
+  width: 36px;
+  height: 36px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
   color: var(--text-primary);
   cursor: pointer;
   border-radius: var(--radius-md);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  margin-right: 0.5rem;
+  z-index: 10;
 }
 
 .sidebar-toggle-btn:hover {
   background: rgba(59, 130, 246, 0.1);
+  border-color: var(--primary);
 }
 
 .sidebar-toggle-btn:active {
@@ -448,15 +459,19 @@
 }
 
 .sidebar-toggle-btn svg {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   transition: transform 0.3s ease;
 }
 
 /* Rotate arrow when sidebar is closed */
-.vertical-sidebar.closed ~ .navbar .sidebar-toggle-btn svg,
-body:has(.vertical-sidebar.closed) .sidebar-toggle-btn svg {
+.vertical-sidebar.closed .sidebar-toggle-btn svg {
   transform: rotate(180deg);
+}
+
+/* Position toggle button when sidebar is closed */
+.vertical-sidebar.closed .sidebar-toggle-btn {
+  right: 0.75rem;
 }
 
 /* Hide sidebar toggle on mobile (use burger menu instead) */
