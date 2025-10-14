@@ -223,7 +223,7 @@
   width: 250px;
   height: calc(100vh - var(--navbar-height));
   background: var(--bg-primary);
-  border-right: 1px solid var(--border);
+  border-right: none;
   overflow-y: auto;
   overflow-x: hidden;
   z-index: 9999;
@@ -233,7 +233,7 @@
 
 [data-theme="dark"] .vertical-sidebar {
   background: var(--bg-primary);
-  border-right-color: rgba(255, 255, 255, 0.08);
+  border-right: none;
 }
 
 /* Vertical sidebar closed state - Icons only */
