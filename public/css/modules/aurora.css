@@ -7,8 +7,6 @@
   position: relative !important;
   display: inline-block !important;
   font-weight: 800 !important;
-  margin: 0 !important;
-  line-height: 1 !important;
 
   /* Gradient animé visible UNIQUEMENT dans les lettres */
   background: linear-gradient(
@@ -31,12 +29,17 @@
   padding: 0.1rem 0.35rem !important;
   border-radius: var(--radius-sm) !important;
   font-size: inherit !important;
+  margin: 0 !important;
+  line-height: 1 !important;
 }
 
 .auth-title.aurora-text {
   padding: 0.5rem 1rem !important;
   border-radius: var(--radius-lg) !important;
   font-size: inherit !important;
+  /* Keep the original margin and line-height from .auth-title */
+  margin: 1.5rem 0 !important;
+  line-height: 1.1 !important;
 }
 
 /* OBSOLÈTE - Les blobs aurora__item ne sont plus utilisés */
