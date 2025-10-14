@@ -96,8 +96,14 @@ svg {
   display: inline-block;
 }
 
-/* Sidebar toggle SVG */
-.sidebar-toggle-btn svg,
+/* Sidebar toggle SVG (in navbar) and mobile menu SVG */
+.sidebar-toggle-btn svg {
+  width: 18px !important;
+  height: 18px !important;
+  max-width: 18px !important;
+  max-height: 18px !important;
+}
+
 .mobile-menu-btn svg {
   width: 24px !important;
   height: 24px !important;
