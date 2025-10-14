@@ -72,6 +72,15 @@ const fallbackTranslations = {
         'sidebar.categories': 'Catégories',
         'sidebar.countries': 'Pays',
         'sidebar.allCountries': 'Tous',
+
+        // Countries
+        'country.all': 'Tous',
+        'country.us': '🇺🇸 États-Unis',
+        'country.fr': '🇫🇷 France',
+        'country.gb': '🇬🇧 Royaume-Uni',
+        'country.ca': '🇨🇦 Canada',
+        'country.de': '🇩🇪 Allemagne',
+
         'category.general': 'Général',
         'category.business': 'Business',
         'category.technology': 'Technologie',
@@ -164,6 +173,15 @@ const fallbackTranslations = {
         'sidebar.categories': 'Categories',
         'sidebar.countries': 'Countries',
         'sidebar.allCountries': 'All',
+
+        // Countries
+        'country.all': 'All',
+        'country.us': '🇺🇸 United States',
+        'country.fr': '🇫🇷 France',
+        'country.gb': '🇬🇧 United Kingdom',
+        'country.ca': '🇨🇦 Canada',
+        'country.de': '🇩🇪 Germany',
+
         'category.general': 'General',
         'category.business': 'Business',
         'category.technology': 'Technology',

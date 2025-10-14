@@ -20,89 +20,7 @@
     <!-- Overlay pour menu mobile -->
     <div class="mobile-overlay" id="mobileOverlay"></div>
 
-    <!-- Navigation Top Bar -->
-    <nav class="navbar dashboard-nav">
-        <div class="nav-container">
-            <!-- Bouton burger pour menu mobile (settings nav) -->
-            <button class="mobile-menu-btn" id="mobileSettingsNavBtn" aria-label="Ouvrir menu paramètres">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
-            </button>
-
-            <a href="dashboard.html" class="logo">
-                <img src="https://img.icons8.com/ios-filled/50/FFFFFF/news.png" alt="News" class="logo-icon icon-white" style="width: 1.75rem; height: 1.75rem;">
-                <span class="logo-text">Newsly AI</span>
-            </a>
-
-            <div class="nav-user-weather">
-                <!-- Weather Widget -->
-                <div class="weather-widget" id="weatherWidget">
-                    <div class="weather-loading">
-                        <span>🌤️</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="nav-links">
-                <!-- Burger Menu -->
-                <button class="burger-menu" id="burgerBtn">
-                    <span class="burger-line"></span>
-                    <span class="burger-line"></span>
-                    <span class="burger-line"></span>
-                </button>
-
-                <!-- Burger Dropdown Menu -->
-                <div class="burger-dropdown" id="burgerMenu">
-                    <!-- User Info -->
-                    <div class="burger-user-info">
-                        <img id="burgerAvatarImage" class="burger-user-avatar" src="https://ui-avatars.com/api/?name=User&background=3ecf8e&color=fff&size=72" alt="Avatar">
-                        <span id="userNameDisplay" class="burger-user-name">User: User</span>
-                    </div>
-
-                    <div class="burger-divider"></div>
-
-                    <!-- Theme Toggle avec Switch -->
-                    <div class="burger-item">
-                        <div class="burger-item-label">
-                            <img src="https://img.icons8.com/ios-filled/50/000000/moon-symbol.png" alt="Theme" class="icon-secondary" style="width: 1.5rem; height: 1.5rem;">
-                            <span id="themeText" data-i18n="nav.darkMode">Mode sombre</span>
-                        </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="themeToggle">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-
-                    <!-- Language Toggle avec Switch -->
-                    <div class="burger-item">
-                        <div class="burger-item-label">
-                            <img src="https://img.icons8.com/ios-filled/50/000000/globe.png" alt="Language" class="icon-secondary" style="width: 1.5rem; height: 1.5rem;">
-                            <span id="langLabel">Français / English</span>
-                        </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="langToggle">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-
-                    <div class="burger-divider"></div>
-
-                    <button class="burger-link" id="dashboardBtn">
-                        <img src="https://img.icons8.com/ios-filled/50/000000/dashboard.png" alt="Dashboard" class="icon-secondary" style="width: 1.5rem; height: 1.5rem;">
-                        <span data-i18n="nav.dashboard">Dashboard</span>
-                    </button>
-
-                    <button class="burger-link" id="logoutBtn">
-                        <img src="https://img.icons8.com/ios-filled/50/000000/exit.png" alt="Logout" class="icon-secondary" style="width: 1.5rem; height: 1.5rem;">
-                        <span data-i18n="nav.logout">Déconnexion</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <!-- Navbar will be injected here by navbar-component.js -->
 
     <!-- Vertical Sidebar - Collapsible -->
     <aside class="vertical-sidebar">
@@ -590,6 +508,14 @@
         // import { initParticles } from './public/js/particles-config.js';
         import { countries } from './public/js/countries.js';
         import { attachPhoneFormatter } from './public/js/phone-formatter.js';
+        import { initNavbar } from './public/js/navbar-component.js';
+        import { setupThemeListeners, setTheme } from './public/js/theme-service.js';
+
+        // Initialize navbar component
+        initNavbar('div.mobile-overlay', { showSettingsNav: true });
+
+        // Initialize theme listeners (after navbar is loaded)
+        setTimeout(() => setupThemeListeners(), 100);
 
         // Initialize particles (async to load from DB)
         // DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
@@ -1142,17 +1068,17 @@
             const newTheme = themeSelect.value;
             const newLang = languageSelect.value;
 
-            // Apply theme
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
+            // Apply theme using centralized service
+            setTheme(newTheme);
 
             // Apply language
             localStorage.setItem('language', newLang);
 
-            // Update burger menu toggles
-            themeToggle.checked = newTheme === 'dark';
-            themeText.textContent = newTheme === 'dark' ? 'Mode sombre' : 'Mode clair';
-            langToggle.checked = newLang === 'en';
+            // Update language toggle
+            const langToggle = document.getElementById('langToggle');
+            if (langToggle) {
+                langToggle.checked = newLang === 'en';
+            }
 
             // Traduire d'abord
             await translatePage();
@@ -1160,21 +1086,7 @@
             showSuccess('Préférences enregistrées avec succès !');
         });
 
-        // Gérer le toggle du thème
-        const themeToggle = document.getElementById('themeToggle');
-        const themeText = document.getElementById('themeText');
-
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        themeToggle.checked = savedTheme === 'dark';
-        themeText.textContent = savedTheme === 'dark' ? 'Mode sombre' : 'Mode clair';
-
-        themeToggle.addEventListener('change', () => {
-            const newTheme = themeToggle.checked ? 'dark' : 'light';
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            themeText.textContent = newTheme === 'dark' ? 'Mode sombre' : 'Mode clair';
-        });
+        // Theme is now managed by theme-service.js
 
         // Gérer le switch de langue
         const langToggle = document.getElementById('langToggle');
