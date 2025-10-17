@@ -245,7 +245,7 @@
 
                         <div class="form-group">
                             <label class="form-label" data-i18n="settings.theme">Thème</label>
-                            <select id="themeSelect" class="form-input">
+                            <select id="themeSelect" class="form-input" data-manual-theme>
                                 <option value="light" data-i18n="settings.light">Clair</option>
                                 <option value="dark" data-i18n="settings.dark">Sombre</option>
                             </select>
@@ -521,13 +521,8 @@
         // Initialize navbar component
         initNavbar('div.mobile-overlay', { showSettingsNav: true });
 
-        // Initialize theme listeners after navbar is fully rendered
-        // Using requestAnimationFrame to ensure DOM is ready
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                setupThemeListeners();
-            });
-        });
+        // Note: setupThemeListeners() sera appelé après l'initialisation complète du DOM
+        // voir bloc (async () => {...})() en bas du fichier
 
         // Initialize particles (async to load from DB)
         // DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
@@ -1975,6 +1970,10 @@
             await checkAdminAccess();
             await loadSecurityAudit();
             await loadParticlesSettings();
+
+            // Initialize theme listeners after all DOM elements are loaded
+            setupThemeListeners();
+            console.log('✅ Theme listeners initialized after DOM ready');
 
             // ================================================
             // SETTINGS NAVIGATION COLLAPSIBLE - Système universel

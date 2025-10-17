@@ -115,9 +115,17 @@ function updateThemeToggles(theme) {
         button.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
     });
 
-    // Update theme select dropdowns
-    const themeSelects = document.querySelectorAll('#themeSelect, [data-theme-select]');
+    // Update theme select dropdowns (except manual ones)
+    const themeSelects = document.querySelectorAll('#themeSelect:not([data-manual-theme]), [data-theme-select]:not([data-manual-theme])');
     themeSelects.forEach(select => {
+        if (select.value !== theme) {
+            select.value = theme;
+        }
+    });
+
+    // Update manual theme selects (without triggering change event)
+    const manualSelects = document.querySelectorAll('[data-manual-theme]');
+    manualSelects.forEach(select => {
         if (select.value !== theme) {
             select.value = theme;
         }
@@ -145,8 +153,8 @@ export function setupThemeListeners() {
         });
     });
 
-    // Setup select dropdowns
-    const themeSelects = document.querySelectorAll('#themeSelect, [data-theme-select]');
+    // Setup select dropdowns (except manual ones that need Save button)
+    const themeSelects = document.querySelectorAll('#themeSelect:not([data-manual-theme]), [data-theme-select]:not([data-manual-theme])');
     themeSelects.forEach(select => {
         const newSelect = select.cloneNode(true);
         select.parentNode.replaceChild(newSelect, select);
@@ -189,7 +197,8 @@ export function setupThemeListeners() {
         updateThemeToggles(theme);
     });
 
-    console.log(`✅ Theme service initialized (${themeToggles.length} toggles, ${themeSelects.length} selects, ${themeToggleButtons.length} buttons)`);
+    const manualSelects = document.querySelectorAll('[data-manual-theme]');
+    console.log(`✅ Theme service initialized (${themeToggles.length} toggles, ${themeSelects.length} auto-selects, ${manualSelects.length} manual-selects, ${themeToggleButtons.length} buttons)`);
 }
 
 // Auto-initialize theme on module load
