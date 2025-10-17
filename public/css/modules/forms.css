@@ -46,8 +46,10 @@
   min-height: 42px;
 }
 
-.form-select {
-  max-width: 300px;
+.form-select,
+select.form-input {
+  max-width: 100%;
+  cursor: pointer;
 }
 
 .form-input:focus,
