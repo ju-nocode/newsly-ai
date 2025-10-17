@@ -9,6 +9,18 @@
   gap: 1rem;
 }
 
+.form-fields-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-fields-group .form-group {
+  gap: 0;
+  margin-bottom: 0;
+}
+
 .form-label {
   font-weight: 500;
   font-size: 0.8125rem;

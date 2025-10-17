@@ -507,6 +507,15 @@
   border-color: rgba(59, 130, 246, 0.3);
 }
 
+.settings-card > .btn-primary,
+.settings-card > .btn-danger {
+  margin-top: 0.5rem;
+}
+
+.settings-card > .settings-description {
+  margin-bottom: 1rem;
+}
+
 /* Settings Grid Layouts */
 .settings-grid-2 {
   display: grid;

@@ -233,20 +233,24 @@
                 <p class="settings-section-desc">Gérez les paramètres de votre compte</p>
 
                 <div class="settings-card">
-                    <div class="form-group">
-                        <label class="form-label" data-i18n="settings.languagePreferences">Préférences de langue</label>
-                        <select id="languageSelect" class="form-input">
-                            <option value="fr" data-i18n="settings.french">Français</option>
-                            <option value="en" data-i18n="settings.english">English</option>
-                        </select>
-                    </div>
+                    <div class="form-fields-group">
+                        <div class="form-group">
+                            <label class="form-label" data-i18n="settings.languagePreferences">Préférences de langue</label>
+                            <select id="languageSelect" class="form-input">
+                                <option value="fr" data-i18n="settings.french">Français</option>
+                                <option value="en" data-i18n="settings.english">English</option>
+                            </select>
+                            <p class="form-hint" data-i18n="settings.languageHint">Langue de l'interface</p>
+                        </div>
 
-                    <div class="form-group">
-                        <label class="form-label" data-i18n="settings.theme">Thème</label>
-                        <select id="themeSelect" class="form-input">
-                            <option value="light" data-i18n="settings.light">Clair</option>
-                            <option value="dark" data-i18n="settings.dark">Sombre</option>
-                        </select>
+                        <div class="form-group">
+                            <label class="form-label" data-i18n="settings.theme">Thème</label>
+                            <select id="themeSelect" class="form-input">
+                                <option value="light" data-i18n="settings.light">Clair</option>
+                                <option value="dark" data-i18n="settings.dark">Sombre</option>
+                            </select>
+                            <p class="form-hint" data-i18n="settings.themeHint">Apparence de l'application</p>
+                        </div>
                     </div>
 
                     <button id="saveAccountBtn" class="btn-primary" data-i18n="settings.savePreferences">
@@ -272,38 +276,43 @@
 
                 <div class="security-grid">
                     <div class="settings-card">
-                        <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-primary);" data-i18n="settings.changePassword">Changement de mot de passe</h3>
-                        <div class="form-group">
-                            <label for="currentPassword" class="form-label" data-i18n="settings.currentPassword">Mot de passe actuel</label>
-                            <input
-                                type="password"
-                                id="currentPassword"
-                                class="form-input"
-                                placeholder="••••••••••••••••••••••••"
-                                data-i18n-placeholder="settings.currentPasswordPlaceholder"
-                            >
-                        </div>
+                        <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: var(--text-primary);" data-i18n="settings.changePassword">Changement de mot de passe</h3>
+                        <div class="form-fields-group">
+                            <div class="form-group">
+                                <label for="currentPassword" class="form-label" data-i18n="settings.currentPassword">Mot de passe actuel</label>
+                                <input
+                                    type="password"
+                                    id="currentPassword"
+                                    class="form-input"
+                                    placeholder="••••••••••••••••••••••••"
+                                    data-i18n-placeholder="settings.currentPasswordPlaceholder"
+                                >
+                                <p class="form-hint" data-i18n="settings.currentPasswordHint">Entrez votre mot de passe actuel</p>
+                            </div>
 
-                        <div class="form-group">
-                            <label for="newPassword" class="form-label" data-i18n="settings.newPassword">Nouveau mot de passe</label>
-                            <input
-                                type="password"
-                                id="newPassword"
-                                class="form-input"
-                                placeholder="••••••••••••••••••••••••"
-                                data-i18n-placeholder="settings.newPasswordPlaceholder"
-                            >
-                        </div>
+                            <div class="form-group">
+                                <label for="newPassword" class="form-label" data-i18n="settings.newPassword">Nouveau mot de passe</label>
+                                <input
+                                    type="password"
+                                    id="newPassword"
+                                    class="form-input"
+                                    placeholder="••••••••••••••••••••••••"
+                                    data-i18n-placeholder="settings.newPasswordPlaceholder"
+                                >
+                                <p class="form-hint" data-i18n="settings.newPasswordHint">Minimum 8 caractères</p>
+                            </div>
 
-                        <div class="form-group">
-                            <label for="confirmPassword" class="form-label" data-i18n="settings.confirmPassword">Confirmer le mot de passe</label>
-                            <input
-                                type="password"
-                                id="confirmPassword"
-                                class="form-input"
-                                placeholder="••••••••••••••••••••••••"
-                                data-i18n-placeholder="settings.confirmPasswordPlaceholder"
-                            >
+                            <div class="form-group">
+                                <label for="confirmPassword" class="form-label" data-i18n="settings.confirmPassword">Confirmer le mot de passe</label>
+                                <input
+                                    type="password"
+                                    id="confirmPassword"
+                                    class="form-input"
+                                    placeholder="••••••••••••••••••••••••"
+                                    data-i18n-placeholder="settings.confirmPasswordPlaceholder"
+                                >
+                                <p class="form-hint" data-i18n="settings.confirmPasswordHint">Retapez votre nouveau mot de passe</p>
+                            </div>
                         </div>
 
                         <button id="changePasswordBtn" class="btn-primary" data-i18n="settings.changePasswordBtn">
