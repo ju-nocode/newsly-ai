@@ -112,7 +112,7 @@
                                 disabled
                                 readonly
                             >
-                            <p class="form-hint">L'email ne peut pas être modifié</p>
+                            <p class="form-hint" data-i18n="settings.emailHint">L'email ne peut pas être modifié</p>
                         </div>
 
                         <!-- Username (Obligatoire) -->
@@ -125,10 +125,10 @@
                                 type="text"
                                 id="usernameInput"
                                 class="form-input"
-                                placeholder="@MonNomUtilisateur"
+                                placeholder="Ex: @julien33"
                                 required
                             >
-                            <p class="form-hint">Ex: @julien33</p>
+                            <p class="form-hint" data-i18n="settings.usernameHint">Votre identifiant unique</p>
                         </div>
 
                         <!-- Full Name (Obligatoire) -->
@@ -141,10 +141,10 @@
                                 type="text"
                                 id="fullNameInput"
                                 class="form-input"
-                                placeholder="Julien RICHARD"
+                                placeholder="Ex: Julien RICHARD"
                                 required
                             >
-                            <p class="form-hint">Votre nom et prénom</p>
+                            <p class="form-hint" data-i18n="settings.fullNameHint">Votre nom et prénom</p>
                         </div>
 
                         <!-- Country (Obligatoire) -->
@@ -158,41 +158,44 @@
                                 class="form-input"
                                 required
                             >
-                                <option value="">-- Sélectionnez un pays --</option>
+                                <option value="" data-i18n="settings.selectCountry">-- Sélectionnez un pays --</option>
                             </select>
+                            <p class="form-hint" data-i18n="settings.countryHint">Votre pays de résidence</p>
                         </div>
 
-                    <!-- City (Obligatoire) -->
-                    <div class="form-group">
-                        <label for="cityInput" class="form-label">
-                            <span data-i18n="settings.city">Ville</span>
-                            <span style="color: var(--error); margin-left: 0.25rem;">*</span>
-                        </label>
-                        <input
-                            type="text"
-                            id="cityInput"
-                            class="form-input"
-                            placeholder="Bordeaux"
-                            required
-                        >
-                    </div>
-
-                    <!-- Phone (Optionnel) -->
-                    <div class="form-group">
-                        <label for="phoneInput" class="form-label" data-i18n="settings.phone">Téléphone (optionnel)</label>
-                        <div style="display: flex; gap: 0.5rem;">
-                            <select id="phoneCountryCode" class="form-input" style="width: 120px;">
-                                <!-- Options peuplées dynamiquement depuis countries.js -->
-                            </select>
+                        <!-- City (Obligatoire) -->
+                        <div class="form-group">
+                            <label for="cityInput" class="form-label">
+                                <span data-i18n="settings.city">Ville</span>
+                                <span style="color: var(--error); margin-left: 0.25rem;">*</span>
+                            </label>
                             <input
-                                type="tel"
-                                id="phoneInput"
+                                type="text"
+                                id="cityInput"
                                 class="form-input"
-                                placeholder="6 12 34 56 78"
-                                style="flex: 1;"
+                                placeholder="Ex: Bordeaux"
+                                required
                             >
+                            <p class="form-hint" data-i18n="settings.cityHint">Votre ville de résidence</p>
                         </div>
-                    </div>
+
+                        <!-- Phone (Optionnel) -->
+                        <div class="form-group">
+                            <label for="phoneInput" class="form-label" data-i18n="settings.phone">Téléphone</label>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <select id="phoneCountryCode" class="form-input" style="width: 120px;">
+                                    <!-- Options peuplées dynamiquement depuis countries.js -->
+                                </select>
+                                <input
+                                    type="tel"
+                                    id="phoneInput"
+                                    class="form-input"
+                                    placeholder="Ex: 6 12 34 56 78"
+                                    style="flex: 1;"
+                                >
+                            </div>
+                            <p class="form-hint" data-i18n="settings.phoneHint">Optionnel - Votre numéro de téléphone</p>
+                        </div>
                             </div>
 
                             <button id="updateProfileBtn" class="btn-primary" data-i18n="settings.updateProfile">
