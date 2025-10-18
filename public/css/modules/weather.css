@@ -105,3 +105,67 @@
   font-size: 1.25rem;
   opacity: 0.5;
 }
+
+/* ================================================
+   RESPONSIVE - MOBILE
+================================================ */
+
+@media (max-width: 768px) {
+  .weather-widget {
+    padding: 0.25rem 0.5rem;
+    height: 32px;
+    margin-left: 0;
+  }
+
+  .weather-icon {
+    font-size: 1.25rem;
+  }
+
+  .weather-temp {
+    font-size: 0.8125rem;
+  }
+
+  .weather-city {
+    display: none;
+  }
+
+  .weather-popup {
+    right: -0.5rem;
+    min-width: 200px;
+    padding: 1rem;
+  }
+
+  .weather-popup::before {
+    right: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .weather-widget {
+    padding: 0.25rem 0.5rem;
+    height: 32px;
+  }
+
+  .weather-details {
+    gap: 0;
+  }
+
+  .weather-temp {
+    font-size: 0.75rem;
+  }
+
+  .weather-icon {
+    font-size: 1.125rem;
+  }
+
+  .weather-popup {
+    left: 0.5rem;
+    right: 0.5rem;
+    width: calc(100% - 1rem);
+    min-width: auto;
+  }
+
+  .weather-popup::before {
+    right: 1.5rem;
+  }
+}
