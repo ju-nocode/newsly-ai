@@ -1,123 +1,6 @@
 /* ================================================
-   SIDEBAR
+   SIDEBAR - Modern Vertical Sidebar
 ================================================ */
-
-.dashboard-sidebar {
-  position: fixed;
-  left: 1rem;
-  top: calc(var(--navbar-height) + 1rem);
-  width: calc(var(--sidebar-width) - 1rem);
-  height: calc(100vh - var(--navbar-height) - 2rem);
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
-  padding: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-  z-index: 100;
-  pointer-events: auto;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08),
-              0 2px 8px rgba(0, 0, 0, 0.04);
-}
-
-[data-theme="dark"] .dashboard-sidebar {
-  background: rgba(15, 23, 42, 0.95);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
-              0 2px 8px rgba(0, 0, 0, 0.2);
-  border-color: rgba(255, 255, 255, 0.1);
-}
-
-/* Sidebar collapsed state */
-.dashboard-sidebar.collapsed {
-  width: calc(var(--sidebar-width-collapsed) - 1rem);
-}
-
-/* Toggle button for sidebar */
-.sidebar-toggle {
-  position: fixed;
-  top: calc(var(--navbar-height) + 1.5rem);
-  left: calc(var(--sidebar-width) - 32px);
-  width: 36px;
-  height: 36px;
-  background: var(--primary);
-  border: 3px solid var(--bg-primary);
-  border-radius: 50%;
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 10001 !important;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4),
-              0 2px 8px rgba(59, 130, 246, 0.2);
-  pointer-events: auto !important;
-}
-
-.sidebar-toggle:active {
-  transform: scale(0.92);
-}
-
-.sidebar-toggle:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5),
-              0 3px 12px rgba(59, 130, 246, 0.3);
-  background: var(--primary-dark);
-}
-
-.sidebar-toggle svg {
-  width: 18px;
-  height: 18px;
-  color: white;
-  transition: transform 0.3s ease;
-  stroke-width: 3;
-}
-
-.dashboard-sidebar.collapsed .sidebar-toggle {
-  left: calc(var(--sidebar-width-collapsed) + 1rem - 32px);
-}
-
-.dashboard-sidebar.collapsed .sidebar-toggle svg {
-  transform: rotate(180deg);
-}
-
-/* Hide text when collapsed */
-.dashboard-sidebar.collapsed .collapse-header h2,
-.dashboard-sidebar.collapsed .collapse-icon {
-  opacity: 0;
-  width: 0;
-  overflow: hidden;
-}
-
-.dashboard-sidebar.collapsed .collapse-header {
-  justify-content: center;
-  padding: 0.75rem 0.5rem;
-}
-
-.dashboard-sidebar.collapsed .collapse-header-icon {
-  margin: 0 auto;
-}
-
-.dashboard-sidebar.collapsed .settings-nav-item {
-  justify-content: center;
-  padding: 0.5rem;
-}
-
-.dashboard-sidebar.collapsed .settings-nav-item span {
-  display: none;
-}
-
-.dashboard-sidebar.collapsed .settings-nav-item .settings-nav-icon {
-  margin: 0;
-}
-
-/* Adjust collapse content in collapsed state */
-.dashboard-sidebar.collapsed .collapse-content {
-  max-height: 0 !important;
-  opacity: 0;
-}
 
 /* ================================================
    COLLAPSE MENU - Classe unique pour tous les menus déroulants
@@ -284,10 +167,6 @@
 }
 
 /* Cacher uniquement les textes et checkboxes de la section pays quand sidebar fermé, mais garder les icônes */
-.vertical-sidebar.closed .sidebar-section:has(#countryAll) .sidebar-menu-title {
-  display: none;
-}
-
 .vertical-sidebar.closed .sidebar-section:has(#countryAll) .sidebar-menu-link span {
   display: none;
 }
