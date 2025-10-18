@@ -515,7 +515,14 @@ const createThemeToggle = () => {
         navLinks.insertBefore(themeToggleBtn, navLinks.firstChild);
     }
 
-    // Event listener will be added by theme-service.js
+    // Add event listener directly to ensure it works
+    themeToggleBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const currentTheme = getCurrentTheme();
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        console.log(`🔄 Theme button clicked: ${currentTheme} → ${newTheme}`);
+        toggleTheme(newTheme);
+    });
 };
 
 // PROTECTION DES PAGES
