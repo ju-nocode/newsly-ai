@@ -499,12 +499,13 @@ const createThemeToggle = () => {
         themeToggleBtn.id = 'themeToggleBtn';
         themeToggleBtn.setAttribute('aria-label', 'Toggle dark/light mode');
 
-        // Create img element with Icons8 image (theme-service.js will update it)
+        // Create img element with Icons8 image (with correct color based on theme)
         const img = document.createElement('img');
         const currentTheme = getCurrentTheme();
+        const iconColor = currentTheme === 'dark' ? 'FFFFFF' : '000000';
         img.src = currentTheme === 'dark'
-            ? 'https://img.icons8.com/ios-filled/50/000000/moon-symbol.png'
-            : 'https://img.icons8.com/ios-filled/50/000000/sun--v1.png';
+            ? `https://img.icons8.com/ios-filled/50/${iconColor}/moon-symbol.png`
+            : `https://img.icons8.com/ios-filled/50/${iconColor}/sun--v1.png`;
         img.alt = currentTheme === 'dark' ? 'Dark mode' : 'Light mode';
         img.style.width = '1.25rem';
         img.style.height = '1.25rem';
