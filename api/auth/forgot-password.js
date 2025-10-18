@@ -64,9 +64,19 @@ export default async function handler(req, res) {
     const delay = 1000 + Math.random() * 1000;
 
     // Appel à Supabase (qui gère la vérification interne)
-    const { error } = await supabase.auth.resetPasswordForEmail(normalizedEmail, {
+    const { data, error } = await supabase.auth.resetPasswordForEmail(normalizedEmail, {
       redirectTo: redirectUrl,
     });
+
+    // Debug: Logger les informations pour diagnostiquer
+    console.log('[DEBUG] Reset password request for email:', normalizedEmail);
+    console.log('[DEBUG] Redirect URL:', redirectUrl);
+    console.log('[DEBUG] Supabase response data:', data);
+    if (error) {
+      console.error('[DEBUG] Supabase error:', error);
+      console.error('[DEBUG] Error message:', error.message);
+      console.error('[DEBUG] Error status:', error.status);
+    }
 
     // Attendre le délai même en cas d'erreur (timing attack prevention)
     await new Promise(resolve => setTimeout(resolve, delay));
