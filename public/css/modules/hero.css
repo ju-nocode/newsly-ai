@@ -53,13 +53,10 @@
   margin-bottom: 1.5rem !important;
   letter-spacing: -0.025em !important;
   line-height: 1.1 !important;
-  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-  cursor: pointer !important;
   position: relative !important;
   display: inline-block !important;
-  animation: subtle-float 6s ease-in-out infinite !important;
 
-  /* Aurora gradient effect */
+  /* Aurora gradient effect - Lumière qui bouge DANS les lettres */
   background: linear-gradient(
     90deg,
     var(--aurora-clr-1),
@@ -72,20 +69,20 @@
   background-clip: text !important;
   -webkit-background-clip: text !important;
   color: transparent !important;
-  animation: subtle-float 6s ease-in-out infinite, aurora-gradient 8s ease-in-out infinite !important;
+
+  /* Uniquement l'animation du gradient - PAS de mouvement du texte */
+  animation: aurora-gradient 8s ease-in-out infinite !important;
 
   padding: 0.5rem 1rem !important;
   border-radius: var(--radius-lg) !important;
+
+  /* Réduire la luminosité */
+  filter: brightness(0.85) !important;
 }
 
 .hero-title-aurora:hover {
-  filter: drop-shadow(0 0 30px var(--aurora-clr-1))
-          drop-shadow(0 0 60px var(--aurora-clr-2))
-          drop-shadow(0 0 90px var(--aurora-clr-3))
-          brightness(1.2) !important;
-  transform: scale(1.05) translateY(-5px) !important;
-  letter-spacing: 0.02em !important;
-  animation: hover-pulse 1.5s ease-in-out infinite, aurora-gradient 8s ease-in-out infinite !important;
+  /* Légère augmentation de luminosité au hover - sans mouvement */
+  filter: brightness(1) !important;
 }
 
 /* Subtle floating animation when not hovering */
