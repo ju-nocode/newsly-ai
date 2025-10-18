@@ -80,30 +80,16 @@ const showEmailConfirmedModal = () => {
     const signupSuccess = document.getElementById('signupSuccess');
     if (!signupSuccess) return;
 
-    // Modifier le contenu du succès pour la confirmation avec meilleur design
+    // Modifier le contenu du succès pour la confirmation - version simplifiée
     signupSuccess.innerHTML = `
         <div class="success-animation-container">
             <div class="success-checkmark"></div>
             <div class="success-glow"></div>
         </div>
-        <h2 class="success-title">🎉 Email validé avec succès !</h2>
+        <h2 class="success-title">Email validé avec succès !</h2>
         <p class="success-subtitle">
             Votre compte est maintenant actif !
         </p>
-        <div class="success-details">
-            <div class="success-detail-item">
-                <span class="success-icon">✓</span>
-                <span>Email vérifié</span>
-            </div>
-            <div class="success-detail-item">
-                <span class="success-icon">✓</span>
-                <span>Compte activé</span>
-            </div>
-            <div class="success-detail-item">
-                <span class="success-icon">✓</span>
-                <span>Prêt à l'emploi</span>
-            </div>
-        </div>
         <button id="goToLoginBtn" class="btn-success-primary">
             Se connecter maintenant →
         </button>
