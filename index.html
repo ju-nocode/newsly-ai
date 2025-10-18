@@ -388,14 +388,47 @@
 
                     <!-- LOADER - Chargement -->
                     <div class="signup-loader" id="signupLoader">
-                        <div class="spinner"></div>
-                        <h3 style="color: var(--text-primary); margin-bottom: 0.5rem; font-size: 1.25rem; font-weight: 600;">Création de votre compte...</h3>
-                        <p style="color: var(--text-secondary); font-size: 0.95rem;">Veuillez patienter</p>
-                        <div id="emailSentNotification" style="display: none; margin-top: 1rem; padding: 0.75rem 1rem; background: rgba(16, 185, 129, 0.1); border-radius: 8px; border-left: 3px solid var(--success);">
-                            <p style="margin: 0; color: var(--success); font-weight: 500; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem;">
-                                <span style="font-size: 1.25rem;">📧</span>
-                                <span>Email de confirmation envoyé — consultez votre boîte mail</span>
-                            </p>
+                        <!-- Animated Icon Container -->
+                        <div class="loader-icon-container">
+                            <div class="spinner"></div>
+                            <div class="email-icon-animated">📧</div>
+                        </div>
+
+                        <h3 style="color: var(--text-primary); margin-bottom: 0.5rem; margin-top: 1.5rem; font-size: 1.5rem; font-weight: 600;">Création de votre compte...</h3>
+                        <p style="color: var(--text-secondary); font-size: 1rem; margin-bottom: 2rem;">Veuillez patienter</p>
+
+                        <!-- Enhanced Email Notification Card -->
+                        <div id="emailSentNotification" class="email-notification-card" style="display: none;">
+                            <div class="email-notification-header">
+                                <div class="email-notification-icon">
+                                    <div class="email-icon-pulse">📧</div>
+                                </div>
+                                <div class="email-notification-content">
+                                    <h4 style="margin: 0 0 0.25rem 0; color: var(--success); font-size: 1.1rem; font-weight: 600;">Email de confirmation envoyé !</h4>
+                                    <p style="margin: 0; color: var(--text-secondary); font-size: 0.9rem;">Consultez votre boîte mail</p>
+                                </div>
+                            </div>
+
+                            <div class="email-notification-steps">
+                                <div class="notification-step">
+                                    <div class="step-number">1</div>
+                                    <p>Ouvrez votre boîte mail</p>
+                                </div>
+                                <div class="notification-step">
+                                    <div class="step-number">2</div>
+                                    <p>Cliquez sur le lien de confirmation</p>
+                                </div>
+                                <div class="notification-step">
+                                    <div class="step-number">3</div>
+                                    <p>Vous serez automatiquement connecté</p>
+                                </div>
+                            </div>
+
+                            <div class="email-notification-footer">
+                                <p style="margin: 0; color: var(--text-muted); font-size: 0.85rem;">
+                                    📬 Vérifiez aussi vos spams si vous ne voyez pas l'email
+                                </p>
+                            </div>
                         </div>
                     </div>
 
