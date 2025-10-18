@@ -2,15 +2,7 @@
    SMART SEARCH BAR - Command-based Search
 ================================================ */
 
-/* Search wrapper */
-.smart-search-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    flex: 1;
-    max-width: 500px;
-}
+/* Note: .smart-search-wrapper is defined in navbar.css */
 
 /* Search input container */
 .smart-search-container {
