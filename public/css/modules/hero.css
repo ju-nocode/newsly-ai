@@ -13,7 +13,15 @@
   justify-content: center;
   position: relative;
   z-index: 1;
-  background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+  background:
+    linear-gradient(180deg,
+      var(--bg-secondary) 0%,
+      var(--bg-primary) 50%,
+      var(--bg-primary) 100%
+    );
+  /* Anti-banding pour un flou plus doux */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
 .auth-container {
