@@ -71,7 +71,10 @@
 /* 22. Animations System */
 @import url('modules/animations.css');
 
-/* 23. Utilities */
+/* 23. Smart Search Bar */
+@import url('modules/search-bar.css');
+
+/* 24. Utilities */
 @import url('modules/utilities.css');
 
 /* 24. Responsive - Media queries (doit être en dernier) */

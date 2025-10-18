@@ -39,6 +39,33 @@ export function createNavbar(config = {}) {
                 <span class="logo-text">Newsly AI</span>
             </a>
 
+            <!-- Smart Search Bar -->
+            <div class="smart-search-wrapper">
+                <div class="smart-search-container">
+                    <div class="smart-search-icon">
+                        <img src="https://img.icons8.com/ios/18/search--v1.png" alt="Search" class="icon-secondary">
+                    </div>
+                    <input
+                        type="text"
+                        class="smart-search-input"
+                        id="smartSearchInput"
+                        placeholder="Rechercher... (essayez /profile: ou /feed:)"
+                        autocomplete="off"
+                        spellcheck="false"
+                    >
+                    <div class="search-kbd-hint">
+                        <kbd class="search-kbd">⌘</kbd>
+                        <kbd class="search-kbd">K</kbd>
+                    </div>
+                    <button class="smart-search-btn" id="smartSearchBtn" aria-label="Search">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M6.5 0a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13zm0 11.5a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/>
+                            <path d="M13.854 13.146l-2.707-2.707a.5.5 0 0 0-.708.708l2.707 2.707a.5.5 0 0 0 .708-.708z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
             <div class="nav-user-weather">
                 <!-- Weather Widget -->
                 <div class="weather-widget" id="weatherWidget">
