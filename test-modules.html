@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test des Modules UX - Newsly AI</title>
+    <link rel="stylesheet" href="public/css/main.css">
+    <style>
+        body {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .test-section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+        }
+        .test-section h2 {
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        .btn-test {
+            padding: 0.75rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .btn-test:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        .demo-box {
+            width: 100%;
+            height: 200px;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1rem;
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+        }
+        #newsCardsDemo {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .demo-card {
+            padding: 1.5rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="margin-bottom: 2rem;">🎨 Test des Modules UX - Newsly AI</h1>
+
+    <!-- NOTIFICATIONS -->
+    <div class="test-section">
+        <h2>📢 1. Système de Notifications</h2>
+        <p style="margin-bottom: 1rem; color: var(--text-secondary);">
+            Système de toast notifications avec 4 types, positions configurables, et auto-dismiss
+        </p>
+        <div class="button-group">
+            <button class="btn-test" id="testSuccess">✅ Success</button>
+            <button class="btn-test" id="testError">❌ Error</button>
+            <button class="btn-test" id="testWarning">⚠️ Warning</button>
+            <button class="btn-test" id="testInfo">ℹ️ Info</button>
+            <button class="btn-test" id="testAction">🔔 With Action</button>
+            <button class="btn-test" id="testPosition">📍 Different Position</button>
+        </div>
+    </div>
+
+    <!-- LOADERS -->
+    <div class="test-section">
+        <h2>⏳ 2. Système de Loading</h2>
+        <p style="margin-bottom: 1rem; color: var(--text-secondary);">
+            Loaders globaux, progress bar, skeleton screens, et button loaders
+        </p>
+        <div class="button-group">
+            <button class="btn-test" id="testGlobalLoader">🌐 Global Loader</button>
+            <button class="btn-test" id="testProgressBar">📊 Progress Bar</button>
+            <button class="btn-test" id="testSkeletons">💀 Skeleton Screens</button>
+            <button class="btn-test" id="testButtonLoader">🔘 Button Loader</button>
+        </div>
+        <div id="skeletonContainer"></div>
+    </div>
+
+    <!-- ANIMATIONS -->
+    <div class="test-section">
+        <h2>✨ 3. Système d'Animations</h2>
+        <p style="margin-bottom: 1rem; color: var(--text-secondary);">
+            Animations réutilisables pour améliorer l'UX
+        </p>
+        <div class="button-group">
+            <button class="btn-test" id="testFade">🌫️ Fade In</button>
+            <button class="btn-test" id="testSlide">➡️ Slide In</button>
+            <button class="btn-test" id="testScale">🔍 Scale</button>
+            <button class="btn-test" id="testShake">📳 Shake</button>
+            <button class="btn-test" id="testBounce">⬆️ Bounce</button>
+            <button class="btn-test" id="testPulse">💓 Pulse</button>
+            <button class="btn-test" id="testRotate">🔄 Rotate</button>
+            <button class="btn-test" id="testStagger">🎬 Stagger</button>
+        </div>
+        <div id="animationDemo" class="demo-box" style="display: none;">
+            Animation Demo Box
+        </div>
+        <div id="newsCardsDemo"></div>
+    </div>
+
+    <!-- HOVER EFFECTS -->
+    <div class="test-section">
+        <h2>🎯 4. Effets au Survol (CSS)</h2>
+        <p style="margin-bottom: 1rem; color: var(--text-secondary);">
+            Classes CSS pour effets interactifs
+        </p>
+        <div class="button-group">
+            <button class="btn-test hover-lift">⬆️ Lift</button>
+            <button class="btn-test hover-grow">🔍 Grow</button>
+            <button class="btn-test hover-shrink">🔻 Shrink</button>
+            <button class="btn-test hover-rotate">🔄 Rotate</button>
+            <button class="btn-test hover-glow">✨ Glow</button>
+            <button class="btn-test hover-fade">👻 Fade</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { showSuccess, showError, showWarning, showInfo, showNotification } from './public/js/notifications.js';
+        import { showLoader, hideLoader, showProgressBar, updateProgress, hideProgressBar, showSkeletons, hideSkeletons, addButtonLoader, removeButtonLoader } from './public/js/loader.js';
+        import { fadeIn, fadeOut, slideIn, shake, bounce, pulse, rotate, scaleElement, stagger } from './public/js/animations.js';
+
+        // ====== NOTIFICATIONS TESTS ======
+        document.getElementById('testSuccess').addEventListener('click', () => {
+            showSuccess('Opération réussie avec succès !');
+        });
+
+        document.getElementById('testError').addEventListener('click', () => {
+            showError('Une erreur est survenue lors du chargement');
+        });
+
+        document.getElementById('testWarning').addEventListener('click', () => {
+            showWarning('Attention, cette action est irréversible');
+        });
+
+        document.getElementById('testInfo').addEventListener('click', () => {
+            showInfo('Nouvelle mise à jour disponible');
+        });
+
+        document.getElementById('testAction').addEventListener('click', () => {
+            showNotification('Êtes-vous sûr de vouloir continuer ?', 'warning', {
+                duration: 0,
+                action: {
+                    label: 'Confirmer',
+                    callback: () => {
+                        showSuccess('Action confirmée !');
+                    }
+                }
+            });
+        });
+
+        document.getElementById('testPosition').addEventListener('click', () => {
+            showNotification('Notification en bas à gauche', 'info', {
+                position: 'bottom-left',
+                duration: 3000
+            });
+        });
+
+        // ====== LOADER TESTS ======
+        document.getElementById('testGlobalLoader').addEventListener('click', async () => {
+            showLoader('Chargement des données...');
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            hideLoader();
+            showSuccess('Données chargées !');
+        });
+
+        document.getElementById('testProgressBar').addEventListener('click', async () => {
+            showProgressBar(0);
+            for (let i = 0; i <= 100; i += 10) {
+                updateProgress(i);
+                await new Promise(resolve => setTimeout(resolve, 200));
+            }
+            hideProgressBar();
+            showSuccess('Progression terminée !');
+        });
+
+        document.getElementById('testSkeletons').addEventListener('click', async () => {
+            const container = document.getElementById('skeletonContainer');
+            showSkeletons(container, 3, 'news-card');
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            hideSkeletons(container, '<p style="padding: 2rem; text-align: center;">✅ Contenu chargé !</p>');
+        });
+
+        document.getElementById('testButtonLoader').addEventListener('click', async function() {
+            addButtonLoader(this, 'Chargement...');
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            removeButtonLoader(this);
+            showSuccess('Opération terminée !');
+        });
+
+        // ====== ANIMATION TESTS ======
+        const demoBox = document.getElementById('animationDemo');
+
+        document.getElementById('testFade').addEventListener('click', async () => {
+            demoBox.style.display = 'flex';
+            await fadeIn(demoBox, 400);
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            await fadeOut(demoBox, 400);
+        });
+
+        document.getElementById('testSlide').addEventListener('click', async () => {
+            demoBox.style.display = 'flex';
+            await slideIn(demoBox, 'right', 500);
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            await fadeOut(demoBox, 300);
+        });
+
+        document.getElementById('testScale').addEventListener('click', async () => {
+            demoBox.style.display = 'flex';
+            demoBox.style.opacity = '1';
+            await scaleElement(demoBox, 1.2, 300);
+        });
+
+        document.getElementById('testShake').addEventListener('click', async () => {
+            demoBox.style.display = 'flex';
+            demoBox.style.opacity = '1';
+            await shake(demoBox, 15);
+        });
+
+        document.getElementById('testBounce').addEventListener('click', async () => {
+            demoBox.style.display = 'flex';
+            demoBox.style.opacity = '1';
+            await bounce(demoBox);
+        });
+
+        document.getElementById('testPulse').addEventListener('click', async () => {
+            demoBox.style.display = 'flex';
+            demoBox.style.opacity = '1';
+            await pulse(demoBox, 3);
+        });
+
+        document.getElementById('testRotate').addEventListener('click', async () => {
+            demoBox.style.display = 'flex';
+            demoBox.style.opacity = '1';
+            await rotate(demoBox, 360, 500);
+        });
+
+        document.getElementById('testStagger').addEventListener('click', async () => {
+            const container = document.getElementById('newsCardsDemo');
+            container.innerHTML = '';
+
+            // Create demo cards
+            for (let i = 1; i <= 6; i++) {
+                const card = document.createElement('div');
+                card.className = 'demo-card';
+                card.textContent = `Card ${i}`;
+                container.appendChild(card);
+            }
+
+            // Stagger animation
+            await stagger('.demo-card', fadeIn, 100);
+
+            showSuccess('Animation Stagger terminée !');
+        });
+
+        // Initial message
+        setTimeout(() => {
+            showInfo('Page de test des modules UX chargée avec succès !', { duration: 5000 });
+        }, 500);
+    </script>
+</body>
+</html>

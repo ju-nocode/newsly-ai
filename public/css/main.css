@@ -62,8 +62,17 @@
 /* 19. Aurora Effect */
 @import url('modules/aurora.css');
 
-/* 20. Utilities */
+/* 20. Notifications System */
+@import url('modules/notifications.css');
+
+/* 21. Loader System */
+@import url('modules/loader.css');
+
+/* 22. Animations System */
+@import url('modules/animations.css');
+
+/* 23. Utilities */
 @import url('modules/utilities.css');
 
-/* 21. Responsive - Media queries (doit être en dernier) */
+/* 24. Responsive - Media queries (doit être en dernier) */
 @import url('modules/responsive.css');
