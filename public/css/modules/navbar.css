@@ -67,7 +67,7 @@
   gap: 0.4rem;
   text-decoration: none;
   color: var(--text-primary);
-  font-weight: 700;
+  font-weight: 400;
   font-size: 1rem;
 }
 
@@ -83,7 +83,7 @@
 }
 
 .logo-text {
-  font-weight: 700;
+  font-weight: 400;
 }
 
 .nav-links {

@@ -92,7 +92,7 @@
 
 .burger-user-name {
   font-size: 0.875rem;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--text-primary);
   flex: 1;
 }
