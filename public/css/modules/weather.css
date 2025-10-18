@@ -8,13 +8,6 @@
   padding: 0;
   position: relative;
   height: 36px;
-}
-
-.weather-widget,
-.weather-info,
-.weather-icon,
-.weather-temp,
-.weather-city {
   cursor: default;
 }
 
