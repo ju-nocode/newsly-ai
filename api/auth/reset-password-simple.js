@@ -54,8 +54,12 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Token et mot de passe requis' });
     }
 
-    if (newPassword.length < 8) {
-      return res.status(400).json({ error: 'Le mot de passe doit contenir au moins 8 caractères' });
+    if (newPassword.length < 12) {
+      return res.status(400).json({ error: 'Le mot de passe doit contenir au moins 12 caractères' });
+    }
+
+    if (newPassword.length > 100) {
+      return res.status(400).json({ error: 'Le mot de passe est trop long (maximum 100 caractères)' });
     }
 
     // Créer le client Supabase

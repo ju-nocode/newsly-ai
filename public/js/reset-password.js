@@ -53,8 +53,8 @@ resetPasswordForm.addEventListener('submit', async (e) => {
     const confirmPassword = confirmPasswordInput.value.trim();
 
     // Validation côté client
-    if (newPassword.length < 8) {
-        showError('Le mot de passe doit contenir au moins 8 caractères');
+    if (newPassword.length < 12) {
+        showError('Le mot de passe doit contenir au moins 12 caractères');
         return;
     }
 

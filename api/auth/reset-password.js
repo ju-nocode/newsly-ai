@@ -33,11 +33,17 @@ export default async function handler(req, res) {
     console.log('[DEBUG] Token length:', accessToken.length);
     console.log('[DEBUG] Password length:', newPassword.length);
 
-    // Validation du mot de passe
-    if (!validatePassword(newPassword)) {
+    // Validation du mot de passe (Supabase exige minimum 12 caractères)
+    if (newPassword.length < 12) {
       console.error('[DEBUG] Password validation failed');
       return res.status(400).json({
-        error: 'Le mot de passe doit contenir au moins 8 caractères'
+        error: 'Le mot de passe doit contenir au moins 12 caractères'
+      });
+    }
+
+    if (newPassword.length > 100) {
+      return res.status(400).json({
+        error: 'Le mot de passe est trop long (maximum 100 caractères)'
       });
     }
 
