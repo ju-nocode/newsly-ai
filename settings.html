@@ -456,7 +456,7 @@
         import { countries } from './public/js/countries.js';
         import { attachPhoneFormatter } from './public/js/phone-formatter.js';
         import { initNavbar } from './public/js/navbar-component.js';
-        import { setupThemeListeners, setTheme } from './public/js/theme-service.js';
+        import { initThemeSystem, setTheme } from './public/js/theme-manager.js';
 
         // Initialize navbar component
         initNavbar('div.mobile-overlay', { showSettingsNav: true });
@@ -1070,7 +1070,7 @@
             showSuccess('Préférences enregistrées avec succès !');
         });
 
-        // Theme is now managed by theme-service.js
+        // Theme is now managed by theme-manager.js
 
         // Gérer le switch de langue
         const langToggle = document.getElementById('langToggle');
@@ -1658,9 +1658,9 @@
             await loadSecurityAudit();
             await loadParticlesSettings();
 
-            // Initialize theme listeners after all DOM elements are loaded
-            setupThemeListeners();
-            console.log('✅ Theme listeners initialized after DOM ready');
+            // Initialize theme system after all DOM elements are loaded
+            initThemeSystem();
+            console.log('✅ Theme system initialized after DOM ready');
         })();
     </script>
 </body>

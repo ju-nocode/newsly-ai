@@ -421,120 +421,6 @@ export const deleteAccount = async () => {
 };
 
 // ================================================
-// DARK/LIGHT MODE
-// ================================================
-
-// ================================================
-// DARK/LIGHT MODE
-// ================================================
-
-const THEME_STORAGE_KEY = 'theme';
-const THEME_SWITCH_SELECTOR = 'input[type=\"checkbox\"][data-theme-toggle]';
-const THEME_EVENT_NAME = 'newsly-theme-change';
-
-const getStoredTheme = () => localStorage.getItem(THEME_STORAGE_KEY) || 'dark';
-
-const getCurrentTheme = () => document.documentElement.getAttribute('data-theme') || getStoredTheme();
-
-const applyTheme = (theme, { persist = true } = {}) => {
-    document.documentElement.setAttribute('data-theme', theme);
-
-    if (persist) {
-        localStorage.setItem(THEME_STORAGE_KEY, theme);
-    }
-
-    updateThemeControls(theme);
-
-    if (typeof window !== 'undefined') {
-        window.dispatchEvent(new CustomEvent(THEME_EVENT_NAME, { detail: { theme } }));
-    }
-};
-
-const toggleTheme = (explicitTheme) => {
-    const currentTheme = getCurrentTheme();
-    const targetTheme = explicitTheme || (currentTheme === 'dark' ? 'light' : 'dark');
-    applyTheme(targetTheme);
-};
-
-const updateThemeControls = (theme) => {
-    // DÉSACTIVÉ - Theme button updates are now handled by theme-service.js
-    // Only update checkboxes here to avoid conflicts
-
-    document.querySelectorAll(THEME_SWITCH_SELECTOR).forEach((input) => {
-        input.checked = theme === 'dark';
-    });
-
-    // Theme text and button icons are now managed by theme-service.js
-};
-
-const handleThemeSwitchChange = (event) => {
-    const desiredTheme = event.target.checked ? 'dark' : 'light';
-    toggleTheme(desiredTheme);
-};
-
-const attachThemeSwitchListeners = () => {
-    document.querySelectorAll(THEME_SWITCH_SELECTOR).forEach((input) => {
-        input.removeEventListener('change', handleThemeSwitchChange);
-        input.addEventListener('change', handleThemeSwitchChange);
-    });
-
-    updateThemeControls(getCurrentTheme());
-};
-
-// Initialiser le thème au chargement
-const initTheme = () => {
-    const savedTheme = getStoredTheme();
-    applyTheme(savedTheme, { persist: false });
-};
-
-// Créer le bouton de toggle du thème
-const createThemeToggle = () => {
-    const navLinks = document.querySelector('.nav-links');
-    if (!navLinks) return;
-
-    let themeToggleBtn = document.getElementById('themeToggleBtn');
-    if (!themeToggleBtn) {
-        themeToggleBtn = document.createElement('button');
-        themeToggleBtn.className = 'theme-toggle';
-        themeToggleBtn.id = 'themeToggleBtn';
-        themeToggleBtn.setAttribute('aria-label', 'Toggle dark/light mode');
-
-        // Create img element with Icons8 image (with correct color based on theme)
-        const img = document.createElement('img');
-        const currentTheme = getCurrentTheme();
-        const iconColor = currentTheme === 'dark' ? 'FFFFFF' : '000000';
-        img.src = currentTheme === 'dark'
-            ? `https://img.icons8.com/ios-filled/50/${iconColor}/moon-symbol.png`
-            : `https://img.icons8.com/ios-filled/50/${iconColor}/sun--v1.png`;
-        img.alt = currentTheme === 'dark' ? 'Dark mode' : 'Light mode';
-        img.style.width = '1.25rem';
-        img.style.height = '1.25rem';
-        img.style.display = 'block';
-
-        themeToggleBtn.appendChild(img);
-        navLinks.insertBefore(themeToggleBtn, navLinks.firstChild);
-    }
-
-    // Add event listener directly to ensure it works
-    themeToggleBtn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        const currentTheme = getCurrentTheme();
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        console.log(`🔄 Theme button clicked: ${currentTheme} → ${newTheme}`);
-        toggleTheme(newTheme);
-
-        // Update button icon
-        const img = themeToggleBtn.querySelector('img');
-        if (img) {
-            const iconColor = newTheme === 'dark' ? 'FFFFFF' : '000000';
-            img.src = newTheme === 'dark'
-                ? `https://img.icons8.com/ios-filled/50/${iconColor}/moon-symbol.png`
-                : `https://img.icons8.com/ios-filled/50/${iconColor}/sun--v1.png`;
-            img.alt = newTheme === 'dark' ? 'Dark mode' : 'Light mode';
-        }
-    });
-};
-
 // PROTECTION DES PAGES
 // ================================================
 
@@ -624,21 +510,8 @@ export const saveParticlesConfigToDB = async (config) => {
 // Charger la session immÃ©diatement au chargement du module
 loadSession();
 
-document.addEventListener("DOMContentLoaded", () => {
-    initTheme();
-    createThemeToggle();
-    attachThemeSwitchListeners();
-    loadSession(); // Recharger pour être sûr
-});
-
-
-
 // Expose getParticlesConfig globally for particles-config.js
 if (typeof window !== 'undefined') {
-    window.newslyToggleTheme = toggleTheme;
-    window.newslyApplyTheme = (theme) => applyTheme(theme);
-    window.newslyGetTheme = getCurrentTheme;
-    window.newslyAttachThemeSwitchListeners = attachThemeSwitchListeners;
     window.getParticlesConfigFromDB = getParticlesConfig;
 }
 

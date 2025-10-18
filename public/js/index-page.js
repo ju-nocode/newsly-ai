@@ -5,7 +5,7 @@ import { translatePage } from './translation-service.js';
 import { countries } from './countries.js';
 import { attachPhoneFormatter } from './phone-formatter.js';
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-import { setupThemeListeners } from './theme-service.js';
+import { initThemeSystem } from './theme-manager.js';
 
 // Détection de confirmation email - Écoute localStorage + BroadcastChannel + Polling
 let emailConfirmationInterval = null;
@@ -827,6 +827,6 @@ window.addEventListener('DOMContentLoaded', () => {
 // Update burger menu with user info on load
 window.addEventListener('DOMContentLoaded', () => {
     updateBurgerMenuUserInfo();
-    // Initialize theme service
-    setupThemeListeners();
+    // Initialize theme system
+    initThemeSystem();
 });

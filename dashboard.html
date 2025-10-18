@@ -171,19 +171,17 @@
         import { checkAuth, logout, getUserProfile, fetchNews, deleteAccount, currentUser } from './public/js/app.js';
         import { displayNews, escapeHtml, showError, showSuccess } from './public/js/dashboard-utils.js';
         import { tSync as t, translatePage } from './public/js/translation-service.js';
-        // DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
-        // import { initParticles } from './public/js/particles-config.js';
         import { initNavbar } from './public/js/navbar-component.js';
-        import { setupThemeListeners } from './public/js/theme-service.js';
+        import { initThemeSystem } from './public/js/theme-manager.js';
 
         // Initialize navbar component
         initNavbar('div.mobile-overlay', { showMobileSidebarBtn: true });
 
-        // Initialize theme listeners after navbar is fully rendered
+        // Initialize theme system after navbar is rendered
         // Using requestAnimationFrame to ensure DOM is ready
         requestAnimationFrame(() => {
             requestAnimationFrame(() => {
-                setupThemeListeners();
+                initThemeSystem();
             });
         });
 
@@ -507,7 +505,7 @@
         // Refresh weather every 10 minutes
         setInterval(loadWeather, 10 * 60 * 1000);
 
-        // Theme is now managed by theme-service.js
+        // Theme is now managed by theme-manager.js
 
         // Gérer les topics personnalisés
         const topicSearch = document.getElementById('topicSearch');
