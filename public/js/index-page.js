@@ -80,14 +80,31 @@ const showEmailConfirmedModal = () => {
     const signupSuccess = document.getElementById('signupSuccess');
     if (!signupSuccess) return;
 
-    // Modifier le contenu du succès pour la confirmation
+    // Modifier le contenu du succès pour la confirmation avec meilleur design
     signupSuccess.innerHTML = `
-        <div class="success-checkmark"></div>
-        <h2 class="modal-title" style="color: var(--success); margin-top: 1rem;">🎉 Email validé avec succès !</h2>
-        <p class="modal-subtitle" style="margin-bottom: 2rem;">
+        <div class="success-animation-container">
+            <div class="success-checkmark"></div>
+            <div class="success-glow"></div>
+        </div>
+        <h2 class="success-title">🎉 Email validé avec succès !</h2>
+        <p class="success-subtitle">
             Votre compte est maintenant actif !
         </p>
-        <button id="goToLoginBtn" class="btn-primary" style="width: 100%; padding: 0.875rem; font-size: 1rem;">
+        <div class="success-details">
+            <div class="success-detail-item">
+                <span class="success-icon">✓</span>
+                <span>Email vérifié</span>
+            </div>
+            <div class="success-detail-item">
+                <span class="success-icon">✓</span>
+                <span>Compte activé</span>
+            </div>
+            <div class="success-detail-item">
+                <span class="success-icon">✓</span>
+                <span>Prêt à l'emploi</span>
+            </div>
+        </div>
+        <button id="goToLoginBtn" class="btn-success-primary">
             Se connecter maintenant →
         </button>
     `;
@@ -95,8 +112,26 @@ const showEmailConfirmedModal = () => {
     // Afficher le succès
     signupSuccess.classList.add('active');
 
-    // Confettis plein écran 🎉
-    createConfetti();
+    // Confettis uniquement quand l'utilisateur revient sur l'onglet
+    let confettiPlayed = false;
+
+    const playConfettiOnFocus = () => {
+        if (!confettiPlayed && !document.hidden) {
+            confettiPlayed = true;
+            createConfetti();
+            // Retirer l'event listener après la première utilisation
+            document.removeEventListener('visibilitychange', playConfettiOnFocus);
+        }
+    };
+
+    // Si la page est déjà visible (l'utilisateur n'a pas changé d'onglet), jouer immédiatement
+    if (!document.hidden) {
+        confettiPlayed = true;
+        createConfetti();
+    } else {
+        // Sinon, attendre que l'utilisateur revienne sur l'onglet
+        document.addEventListener('visibilitychange', playConfettiOnFocus);
+    }
 
     // Bouton "Se connecter"
     const goToLoginBtn = document.getElementById('goToLoginBtn');
