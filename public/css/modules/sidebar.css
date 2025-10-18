@@ -182,6 +182,14 @@
   min-height: 38px;
 }
 
+.sidebar-menu-link span {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
 .sidebar-menu-link:hover {
   background: rgba(59, 130, 246, 0.08);
   color: var(--text-primary);
