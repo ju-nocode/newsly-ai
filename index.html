@@ -310,8 +310,34 @@
                     <button type="submit" class="btn-submit" data-i18n="auth.loginBtn">Se connecter</button>
                 </form>
 
+                <div style="text-align: center; margin: 1rem 0;">
+                    <a href="#" id="forgotPasswordLink" style="color: var(--primary); text-decoration: none; font-size: 0.875rem; font-weight: 500;">
+                        Mot de passe oublié ?
+                    </a>
+                </div>
+
                 <p class="modal-footer">
                     <span data-i18n="auth.noAccount">Pas de compte ?</span> <a href="#" id="switchToSignup" data-i18n="auth.createAccount">Créer un compte</a>
+                </p>
+            </div>
+
+            <!-- Forgot Password Form -->
+            <div class="modal-content" id="forgotPasswordForm" style="display: none;">
+                <h2 class="modal-title">Mot de passe oublié</h2>
+                <p class="modal-subtitle">Entrez votre email pour recevoir un lien de réinitialisation</p>
+
+                <form class="auth-form" id="forgotPasswordFormElement">
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" id="forgotPasswordEmail" required placeholder="votre@email.com">
+                    </div>
+                    <div id="forgotPasswordError" class="error-message" style="display: none;"></div>
+                    <div id="forgotPasswordSuccess" class="success-message" style="display: none;"></div>
+                    <button type="submit" class="btn-submit">Envoyer le lien</button>
+                </form>
+
+                <p class="modal-footer">
+                    <a href="#" id="backToLogin">← Retour à la connexion</a>
                 </p>
             </div>
 

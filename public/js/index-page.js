@@ -334,12 +334,88 @@ switchToSignup.addEventListener('click', (e) => {
     e.preventDefault();
     loginFormDiv.style.display = 'none';
     signupFormDiv.style.display = 'block';
+    forgotPasswordFormDiv.style.display = 'none';
 });
 
 switchToLogin.addEventListener('click', (e) => {
     e.preventDefault();
     signupFormDiv.style.display = 'none';
     loginFormDiv.style.display = 'block';
+    forgotPasswordFormDiv.style.display = 'none';
+});
+
+// Forgot Password - Elements
+const forgotPasswordFormDiv = document.getElementById('forgotPasswordForm');
+const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+const backToLogin = document.getElementById('backToLogin');
+
+// Switch to Forgot Password
+forgotPasswordLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    loginFormDiv.style.display = 'none';
+    signupFormDiv.style.display = 'none';
+    forgotPasswordFormDiv.style.display = 'block';
+});
+
+// Back to Login from Forgot Password
+backToLogin.addEventListener('click', (e) => {
+    e.preventDefault();
+    forgotPasswordFormDiv.style.display = 'none';
+    loginFormDiv.style.display = 'block';
+});
+
+// Gérer la soumission du formulaire "Mot de passe oublié"
+document.getElementById('forgotPasswordFormElement').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById('forgotPasswordEmail').value.trim();
+    const errorDiv = document.getElementById('forgotPasswordError');
+    const successDiv = document.getElementById('forgotPasswordSuccess');
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+
+    // Cacher les messages précédents
+    errorDiv.style.display = 'none';
+    successDiv.style.display = 'none';
+
+    // Désactiver le bouton pendant l'envoi
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Envoi en cours...';
+
+    try {
+        const response = await fetch('/api/auth/forgot-password', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            successDiv.textContent = data.message || 'Un email de réinitialisation a été envoyé.';
+            successDiv.style.display = 'block';
+
+            // Réinitialiser le formulaire
+            document.getElementById('forgotPasswordFormElement').reset();
+
+            // Retour à la page de login après 3 secondes
+            setTimeout(() => {
+                forgotPasswordFormDiv.style.display = 'none';
+                loginFormDiv.style.display = 'block';
+            }, 3000);
+        } else {
+            errorDiv.textContent = data.error || 'Erreur lors de l\'envoi de l\'email';
+            errorDiv.style.display = 'block';
+        }
+    } catch (error) {
+        console.error('Forgot password error:', error);
+        errorDiv.textContent = 'Erreur de connexion au serveur';
+        errorDiv.style.display = 'block';
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Envoyer le lien';
+    }
 });
 
 // Gérer la soumission login
