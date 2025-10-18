@@ -35,7 +35,7 @@ export function createNavbar(config = {}) {
             ` : ''}
 
             <a href="dashboard.html" class="logo">
-                <img src="https://img.icons8.com/ios-filled/24/news.png" alt="News" class="logo-icon icon-white">
+                <img src="https://img.icons8.com/ios/24/news.png" alt="News" class="logo-icon icon-white">
                 <span class="logo-text">Newsly AI</span>
             </a>
 
@@ -76,7 +76,7 @@ export function createNavbar(config = {}) {
                     <!-- Theme Toggle avec Switch -->
                     <div class="burger-item">
                         <div class="burger-item-label">
-                            <img src="https://img.icons8.com/ios-filled/20/sun--v1.png" alt="Theme" class="icon-secondary" data-theme-icon>
+                            <img src="https://img.icons8.com/ios/20/sun--v1.png" alt="Theme" class="icon-secondary" data-theme-icon>
                             <span id="themeText" data-i18n="nav.darkMode">Mode sombre</span>
                         </div>
                         <label class="toggle-switch">
@@ -88,7 +88,7 @@ export function createNavbar(config = {}) {
                     <!-- Language Toggle avec Switch -->
                     <div class="burger-item">
                         <div class="burger-item-label">
-                            <img src="https://img.icons8.com/ios-filled/20/globe.png" alt="Language" class="icon-secondary">
+                            <img src="https://img.icons8.com/ios/20/globe.png" alt="Language" class="icon-secondary">
                             <span id="langLabel">Français / English</span>
                         </div>
                         <label class="toggle-switch">
@@ -101,18 +101,18 @@ export function createNavbar(config = {}) {
 
                     ${showSettingsNav ? `
                     <button class="burger-link" id="dashboardBtn">
-                        <img src="https://img.icons8.com/ios-filled/20/dashboard.png" alt="Dashboard" class="icon-secondary">
+                        <img src="https://img.icons8.com/ios/20/dashboard.png" alt="Dashboard" class="icon-secondary">
                         <span data-i18n="nav.dashboard">Dashboard</span>
                     </button>
                     ` : `
                     <button class="burger-link" id="settingsBtn">
-                        <img src="https://img.icons8.com/ios-filled/20/settings.png" alt="Settings" class="icon-secondary">
+                        <img src="https://img.icons8.com/ios/20/settings.png" alt="Settings" class="icon-secondary">
                         <span data-i18n="nav.settings">Paramètres</span>
                     </button>
                     `}
 
                     <button class="burger-link" id="logoutBtn">
-                        <img src="https://img.icons8.com/ios-filled/20/exit.png" alt="Logout" class="icon-secondary">
+                        <img src="https://img.icons8.com/ios/20/exit.png" alt="Logout" class="icon-secondary">
                         <span data-i18n="nav.logout">Déconnexion</span>
                     </button>
                 </div>

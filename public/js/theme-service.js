@@ -72,11 +72,11 @@ function updateThemeToggles(theme) {
     themeIcons.forEach(icon => {
         if (isDark) {
             // Dark mode → show moon (representing current state)
-            icon.src = 'https://img.icons8.com/ios-filled/20/moon-symbol.png';
+            icon.src = 'https://img.icons8.com/ios/20/moon-symbol.png';
             icon.alt = 'Dark mode';
         } else {
             // Light mode → show sun (representing current state)
-            icon.src = 'https://img.icons8.com/ios-filled/20/sun--v1.png';
+            icon.src = 'https://img.icons8.com/ios/20/sun--v1.png';
             icon.alt = 'Light mode';
         }
     });
@@ -104,11 +104,11 @@ function updateThemeToggles(theme) {
 
         if (isDark) {
             // Dark mode → show moon
-            img.src = 'https://img.icons8.com/ios-filled/20/moon-symbol.png';
+            img.src = 'https://img.icons8.com/ios/20/moon-symbol.png';
             img.alt = 'Dark mode';
         } else {
             // Light mode → show sun
-            img.src = 'https://img.icons8.com/ios-filled/20/sun--v1.png';
+            img.src = 'https://img.icons8.com/ios/20/sun--v1.png';
             img.alt = 'Light mode';
         }
 
