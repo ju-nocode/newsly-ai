@@ -80,7 +80,8 @@ resetPasswordForm.addEventListener('submit', async (e) => {
 
     try {
         // SÉCURITÉ: Appel à l'API backend (pas d'exposition des clés)
-        const response = await fetch('/api/auth/reset-password', {
+        // Utilise l'API simplifiée avec plus de debug pour diagnostiquer
+        const response = await fetch('/api/auth/reset-password-simple', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
