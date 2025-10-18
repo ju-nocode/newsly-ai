@@ -24,7 +24,8 @@
         "ignore": [
           "-webkit-overflow-scrolling",
           "min-height: auto",
-          "user-select"
+          "user-select",
+          "-webkit-text-size-adjust"
         ]
       }
     ],
