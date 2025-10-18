@@ -16,38 +16,18 @@ export default async function handler(req, res) {
   }
 
   try {
-    console.log('[DEBUG] Reset password - Request received');
-
     // Vérifier les variables d'environnement
     const supabaseUrl = process.env.SUPABASE_URL;
     const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-    console.log('[DEBUG] Env check:', {
-      hasUrl: !!supabaseUrl,
-      hasKey: !!supabaseServiceKey,
-      url: supabaseUrl,
-      keyLength: supabaseServiceKey?.length
-    });
-
     if (!supabaseUrl || !supabaseServiceKey) {
       console.error('[ERROR] Missing environment variables');
       return res.status(500).json({
-        error: 'Configuration serveur manquante',
-        debug: {
-          hasUrl: !!supabaseUrl,
-          hasKey: !!supabaseServiceKey
-        }
+        error: 'Configuration serveur manquante'
       });
     }
 
     const { accessToken, newPassword } = req.body;
-
-    console.log('[DEBUG] Body received:', {
-      hasToken: !!accessToken,
-      hasPassword: !!newPassword,
-      tokenLength: accessToken?.length,
-      passwordLength: newPassword?.length
-    });
 
     // Validation basique
     if (!accessToken || !newPassword) {
@@ -63,51 +43,32 @@ export default async function handler(req, res) {
     }
 
     // Créer le client Supabase
-    console.log('[DEBUG] Creating Supabase client...');
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
     // Vérifier le token
-    console.log('[DEBUG] Verifying token...');
     const { data: { user }, error: getUserError } = await supabase.auth.getUser(accessToken);
 
-    if (getUserError) {
-      console.error('[DEBUG] Get user error:', {
-        message: getUserError.message,
-        status: getUserError.status,
-        name: getUserError.name
-      });
+    if (getUserError || !user) {
+      console.error('[SECURITY] Invalid recovery token attempt');
       return res.status(401).json({
-        error: 'Token de réinitialisation invalide ou expiré',
-        debug: getUserError.message
+        error: 'Token de réinitialisation invalide ou expiré'
       });
     }
-
-    if (!user) {
-      console.error('[DEBUG] No user found');
-      return res.status(401).json({ error: 'Utilisateur non trouvé' });
-    }
-
-    console.log('[DEBUG] User found:', user.id);
 
     // Mettre à jour le mot de passe
-    console.log('[DEBUG] Updating password...');
     const { error: updateError } = await supabase.auth.admin.updateUserById(
       user.id,
       { password: newPassword }
     );
 
     if (updateError) {
-      console.error('[DEBUG] Update error:', {
-        message: updateError.message,
-        code: updateError.code
-      });
+      console.error('[SECURITY] Password update failed:', updateError.code);
       return res.status(500).json({
-        error: 'Erreur lors de la mise à jour du mot de passe',
-        debug: updateError.message
+        error: 'Erreur lors de la mise à jour du mot de passe'
       });
     }
 
-    console.log('[SUCCESS] Password updated for user:', user.id);
+    console.log('[SECURITY] Password reset successful');
 
     return res.status(200).json({
       success: true,
@@ -115,18 +76,9 @@ export default async function handler(req, res) {
     });
 
   } catch (error) {
-    console.error('[EXCEPTION] Caught error:', {
-      name: error.name,
-      message: error.message,
-      stack: error.stack
-    });
-
+    console.error('[SECURITY] Reset password exception:', error.name);
     return res.status(500).json({
-      error: 'Erreur serveur',
-      debug: {
-        name: error.name,
-        message: error.message
-      }
+      error: 'Erreur serveur'
     });
   }
 }

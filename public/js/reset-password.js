@@ -31,12 +31,6 @@ const extractTokenFromUrl = () => {
     const accessToken = hashParams.get('access_token');
     const type = hashParams.get('type');
 
-    console.log('[DEBUG] URL params:', {
-        hasAccessToken: !!accessToken,
-        type: type,
-        hash: window.location.hash.substring(0, 50) + '...'
-    });
-
     if (type === 'recovery' && accessToken) {
         recoveryToken = accessToken;
         return true;
