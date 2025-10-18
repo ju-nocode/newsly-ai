@@ -522,6 +522,16 @@ const createThemeToggle = () => {
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
         console.log(`🔄 Theme button clicked: ${currentTheme} → ${newTheme}`);
         toggleTheme(newTheme);
+
+        // Update button icon
+        const img = themeToggleBtn.querySelector('img');
+        if (img) {
+            const iconColor = newTheme === 'dark' ? 'FFFFFF' : '000000';
+            img.src = newTheme === 'dark'
+                ? `https://img.icons8.com/ios-filled/50/${iconColor}/moon-symbol.png`
+                : `https://img.icons8.com/ios-filled/50/${iconColor}/sun--v1.png`;
+            img.alt = newTheme === 'dark' ? 'Dark mode' : 'Light mode';
+        }
     });
 };
 
