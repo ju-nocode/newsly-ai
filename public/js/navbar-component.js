@@ -92,6 +92,14 @@ export function createNavbar(config = {}) {
 
                     <div class="burger-divider"></div>
 
+                    <!-- Weather Location Refresh Button -->
+                    <button class="burger-link" id="refreshWeatherBtn">
+                        <img src="https://img.icons8.com/ios/20/marker.png" alt="Weather" class="icon-secondary">
+                        <span data-i18n="nav.refreshWeather">Actualiser la météo</span>
+                    </button>
+
+                    <div class="burger-divider"></div>
+
                     ${showSettingsNav ? `
                     <button class="burger-link" id="dashboardBtn">
                         <img src="https://img.icons8.com/ios/20/dashboard.png" alt="Dashboard" class="icon-secondary">

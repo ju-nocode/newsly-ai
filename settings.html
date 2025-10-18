@@ -457,6 +457,7 @@
         import { attachPhoneFormatter } from './public/js/phone-formatter.js';
         import { initNavbar } from './public/js/navbar-component.js';
         import { initThemeSystem, setTheme } from './public/js/theme-manager.js';
+        import { initWeatherWidget, refreshWeatherLocation } from './public/js/weather.js';
 
         // Initialize navbar component
         initNavbar('div.mobile-overlay', { showSettingsNav: true });
@@ -1658,9 +1659,26 @@
             await loadSecurityAudit();
             await loadParticlesSettings();
 
-            // Initialize theme system after all DOM elements are loaded
+            // Initialize theme system and weather widget after all DOM elements are loaded
             initThemeSystem();
-            console.log('✅ Theme system initialized after DOM ready');
+            initWeatherWidget();
+
+            // Setup weather refresh button
+            const refreshWeatherBtn = document.getElementById('refreshWeatherBtn');
+            if (refreshWeatherBtn) {
+                refreshWeatherBtn.addEventListener('click', () => {
+                    refreshWeatherLocation();
+                    // Close burger menu after refresh
+                    const burgerBtn = document.getElementById('burgerBtn');
+                    const burgerMenu = document.getElementById('burgerMenu');
+                    if (burgerBtn && burgerMenu) {
+                        burgerBtn.classList.remove('active');
+                        burgerMenu.classList.remove('show');
+                    }
+                });
+            }
+
+            console.log('✅ Theme system and weather widget initialized after DOM ready');
         })();
     </script>
 </body>

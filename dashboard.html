@@ -173,15 +173,32 @@
         import { tSync as t, translatePage } from './public/js/translation-service.js';
         import { initNavbar } from './public/js/navbar-component.js';
         import { initThemeSystem } from './public/js/theme-manager.js';
+        import { initWeatherWidget, refreshWeatherLocation } from './public/js/weather.js';
 
         // Initialize navbar component
         initNavbar('div.mobile-overlay', { showMobileSidebarBtn: true });
 
-        // Initialize theme system after navbar is rendered
+        // Initialize theme system and weather widget after navbar is rendered
         // Using requestAnimationFrame to ensure DOM is ready
         requestAnimationFrame(() => {
             requestAnimationFrame(() => {
                 initThemeSystem();
+                initWeatherWidget();
+
+                // Setup weather refresh button
+                const refreshWeatherBtn = document.getElementById('refreshWeatherBtn');
+                if (refreshWeatherBtn) {
+                    refreshWeatherBtn.addEventListener('click', () => {
+                        refreshWeatherLocation();
+                        // Close burger menu after refresh
+                        const burgerBtn = document.getElementById('burgerBtn');
+                        const burgerMenu = document.getElementById('burgerMenu');
+                        if (burgerBtn && burgerMenu) {
+                            burgerBtn.classList.remove('active');
+                            burgerMenu.classList.remove('show');
+                        }
+                    });
+                }
             });
         });
 
@@ -394,118 +411,7 @@
         // ================================================
         // WEATHER WIDGET
         // ================================================
-
-        const weatherWidget = document.getElementById('weatherWidget');
-
-        const getWeatherIcon = (weatherCode) => {
-            // WMO Weather codes: https://open-meteo.com/en/docs
-            if (weatherCode === 0) return '🌤️'; // Clear sky
-            if (weatherCode <= 3) return '⛅'; // Partly cloudy
-            if (weatherCode <= 48) return '🌫️'; // Fog
-            if (weatherCode <= 67) return '🌫️'; // Rain
-            if (weatherCode <= 77) return '🌫️'; // Snow
-            if (weatherCode <= 82) return '🌫️'; // Showers
-            if (weatherCode <= 99) return '⛈️'; // Thunderstorm
-            return '🌤️';
-        };
-
-        const fetchWeather = async (lat, lon) => {
-            try {
-                // AbortController pour timeout de 5 secondes
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 5000);
-
-                const response = await fetch(
-                    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&timezone=auto`,
-                    { signal: controller.signal }
-                );
-                clearTimeout(timeoutId);
-
-                const data = await response.json();
-
-                const temp = Math.round(data.current.temperature_2m);
-                const weatherCode = data.current.weather_code;
-                const icon = getWeatherIcon(weatherCode);
-
-                // Get city name from reverse geocoding using Nominatim (OpenStreetMap)
-                const geoController = new AbortController();
-                const geoTimeoutId = setTimeout(() => geoController.abort(), 5000);
-
-                const geoResponse = await fetch(
-                    `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=fr`,
-                    { signal: geoController.signal }
-                );
-                clearTimeout(geoTimeoutId);
-
-                const geoData = await geoResponse.json();
-                const city = geoData.address?.city || geoData.address?.town || geoData.address?.village || geoData.address?.state || 'Votre position';
-
-                weatherWidget.innerHTML = `
-                    <div class="weather-info">
-                        <span class="weather-icon">${icon}</span>
-                        <div class="weather-details">
-                            <span class="weather-temp">${temp}°C</span>
-                            <span class="weather-city">${city}</span>
-                        </div>
-                    </div>
-                `;
-            } catch (error) {
-                console.error('Erreur météo:', error);
-                weatherWidget.innerHTML = `
-                    <div class="weather-error">
-                        <span>🌫️</span>
-                    </div>
-                `;
-            }
-        };
-
-        const loadWeather = () => {
-            // Check if geolocation is available in localStorage
-            const savedLat = localStorage.getItem('weatherLat');
-            const savedLon = localStorage.getItem('weatherLon');
-
-            if (savedLat && savedLon) {
-                fetchWeather(parseFloat(savedLat), parseFloat(savedLon));
-            } else if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        const lat = position.coords.latitude;
-                        const lon = position.coords.longitude;
-                        localStorage.setItem('weatherLat', lat);
-                        localStorage.setItem('weatherLon', lon);
-                        fetchWeather(lat, lon);
-                    },
-                    (error) => {
-                        console.log('Géolocalisation refusée, utilisation de Paris par défaut');
-                        // Afficher un message à l'utilisateur
-                        weatherWidget.innerHTML = `
-                            <div class="weather-info" style="opacity: 0.7;">
-                                <span class="weather-icon">☀️</span>
-                                <div class="weather-details">
-                                    <div class="weather-temp" style="font-size: 0.875rem;">Position par défaut</div>
-                                    <div class="weather-location" style="font-size: 0.75rem;">Géolocalisation désactivée</div>
-                                </div>
-                            </div>
-                        `;
-                        // Puis charger météo Paris après 2s
-                        setTimeout(() => {
-                            fetchWeather(48.8566, 2.3522); // Paris par défaut
-                        }, 2000);
-                    }
-                );
-            } else {
-                // Paris par défaut si pas de géolocalisation
-                fetchWeather(48.8566, 2.3522);
-            }
-        };
-
-        // Load weather on page load
-        loadWeather();
-
-        // Refresh weather every 10 minutes
-        setInterval(loadWeather, 10 * 60 * 1000);
-
-        // Theme is now managed by theme-manager.js
+        // Weather is now managed by weather.js module
 
         // Gérer les topics personnalisés
         const topicSearch = document.getElementById('topicSearch');
