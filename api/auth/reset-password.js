@@ -19,25 +19,47 @@ export default async function handler(req, res) {
   }
 
   try {
+    console.log('[DEBUG] Reset password - Request received');
+    console.log('[DEBUG] Body keys:', Object.keys(req.body));
+
     const { accessToken, newPassword } = req.body;
 
     // Validation
     if (!accessToken || !newPassword) {
+      console.error('[DEBUG] Missing fields:', { hasToken: !!accessToken, hasPassword: !!newPassword });
       return res.status(400).json({ error: 'Token et mot de passe requis' });
     }
 
+    console.log('[DEBUG] Token length:', accessToken.length);
+    console.log('[DEBUG] Password length:', newPassword.length);
+
     // Validation du mot de passe
     if (!validatePassword(newPassword)) {
+      console.error('[DEBUG] Password validation failed');
       return res.status(400).json({
         error: 'Le mot de passe doit contenir au moins 8 caractères'
       });
     }
 
+    console.log('[DEBUG] Creating Supabase client...');
+    console.log('[DEBUG] Supabase URL:', supabaseUrl);
+    console.log('[DEBUG] Has Service Key:', !!supabaseServiceKey);
+
     // Créer un client Supabase avec le service key
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
+    console.log('[DEBUG] Getting user from token...');
+
     // Vérifier et décoder le token de récupération
     const { data: { user }, error: getUserError } = await supabase.auth.getUser(accessToken);
+
+    console.log('[DEBUG] Get user result:', { hasUser: !!user, hasError: !!getUserError });
+
+    if (getUserError) {
+      console.error('[DEBUG] Get user error:', getUserError);
+      console.error('[DEBUG] Error message:', getUserError.message);
+      console.error('[DEBUG] Error status:', getUserError.status);
+    }
 
     if (getUserError || !user) {
       console.error('[SECURITY] Invalid recovery token');
@@ -46,6 +68,9 @@ export default async function handler(req, res) {
       });
     }
 
+    console.log('[DEBUG] User found, ID:', user.id);
+    console.log('[DEBUG] Updating password...');
+
     // Mettre à jour le mot de passe avec le service key
     const { error: updateError } = await supabase.auth.admin.updateUserById(
       user.id,
@@ -53,6 +78,9 @@ export default async function handler(req, res) {
     );
 
     if (updateError) {
+      console.error('[DEBUG] Update error:', updateError);
+      console.error('[DEBUG] Update error message:', updateError.message);
+      console.error('[DEBUG] Update error code:', updateError.code);
       console.error('[SECURITY] Password update error:', updateError.code);
       return res.status(500).json({
         error: 'Erreur lors de la réinitialisation du mot de passe'
@@ -68,6 +96,10 @@ export default async function handler(req, res) {
     });
 
   } catch (error) {
+    console.error('[DEBUG] Exception caught:', error);
+    console.error('[DEBUG] Exception name:', error.name);
+    console.error('[DEBUG] Exception message:', error.message);
+    console.error('[DEBUG] Exception stack:', error.stack);
     console.error('[SECURITY] Reset password exception:', error.name);
     return res.status(500).json({
       error: 'Une erreur est survenue. Veuillez réessayer plus tard.'

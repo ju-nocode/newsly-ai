@@ -93,7 +93,14 @@ resetPasswordForm.addEventListener('submit', async (e) => {
 
         const data = await response.json();
 
+        console.log('[DEBUG] API Response:', {
+            status: response.status,
+            ok: response.ok,
+            data: data
+        });
+
         if (!response.ok) {
+            console.error('[ERROR] API returned error:', data);
             showError(data.error || 'Erreur lors de la réinitialisation');
             submitBtn.disabled = false;
             submitBtn.textContent = 'Réinitialiser le mot de passe';
