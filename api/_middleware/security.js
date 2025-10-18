@@ -34,10 +34,10 @@ export const validateEmail = (email) => {
     return emailRegex.test(email) && email.length >= 5 && email.length <= 255;
 };
 
-// Validation mot de passe
+// Validation mot de passe (Supabase exige 12 caractères minimum)
 export const validatePassword = (password) => {
     if (!password || typeof password !== 'string') return false;
-    return password.length >= 8 && password.length <= 100;
+    return password.length >= 12 && password.length <= 100;
 };
 
 // Validation username
