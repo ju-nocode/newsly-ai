@@ -273,8 +273,16 @@
   display: none;
 }
 
-/* Cacher la section pays quand sidebar fermé */
-.vertical-sidebar.closed .sidebar-section:has(#countryAll) {
+/* Cacher uniquement les textes et checkboxes de la section pays quand sidebar fermé, mais garder les icônes */
+.vertical-sidebar.closed .sidebar-section:has(#countryAll) .sidebar-menu-title {
+  display: none;
+}
+
+.vertical-sidebar.closed .sidebar-section:has(#countryAll) .sidebar-menu-link span {
+  display: none;
+}
+
+.vertical-sidebar.closed .sidebar-section:has(#countryAll) .sidebar-menu-link input[type="checkbox"] {
   display: none;
 }
 
