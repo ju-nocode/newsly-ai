@@ -133,7 +133,7 @@
 
 /* Sidebar Section Title */
 .sidebar-section-title {
-  padding: 0.875rem 1rem;
+  padding: 1rem 1rem 0.5rem 1rem;
   margin: 0;
   font-size: 0.6875rem;
   font-weight: 500;
@@ -141,6 +141,11 @@
   letter-spacing: 0.1em;
   color: var(--text-muted);
   border-bottom: none;
+}
+
+/* Première section : moins de padding en haut */
+.sidebar-section:first-of-type .sidebar-section-title {
+  padding-top: 0.75rem;
 }
 
 /* Cacher le titre quand sidebar fermée */
@@ -151,7 +156,7 @@
 /* Sidebar Menu */
 .sidebar-menu {
   list-style: none;
-  padding: 0;
+  padding: 0 0 0.5rem 0;
   margin: 0;
 }
 
