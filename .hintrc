@@ -25,7 +25,8 @@
           "-webkit-overflow-scrolling",
           "min-height: auto",
           "user-select",
-          "-webkit-text-size-adjust"
+          "-webkit-text-size-adjust",
+          "image-rendering: crisp-edges"
         ]
       }
     ],

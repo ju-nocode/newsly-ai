@@ -462,8 +462,29 @@
         // Initialize navbar component
         initNavbar('div.mobile-overlay', { showSettingsNav: true });
 
-        // Note: setupThemeListeners() sera appelé après l'initialisation complète du DOM
-        // voir bloc (async () => {...})() en bas du fichier
+        // Initialize theme system and weather widget after navbar is rendered
+        // Using requestAnimationFrame to ensure DOM is ready
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                initThemeSystem();
+                initWeatherWidget();
+
+                // Setup weather refresh button
+                const refreshWeatherBtn = document.getElementById('refreshWeatherBtn');
+                if (refreshWeatherBtn) {
+                    refreshWeatherBtn.addEventListener('click', () => {
+                        refreshWeatherLocation();
+                        // Close burger menu after refresh
+                        const burgerBtn = document.getElementById('burgerBtn');
+                        const burgerMenu = document.getElementById('burgerMenu');
+                        if (burgerBtn && burgerMenu) {
+                            burgerBtn.classList.remove('active');
+                            burgerMenu.classList.remove('show');
+                        }
+                    });
+                }
+            });
+        });
 
         // Initialize particles (async to load from DB)
         // DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
@@ -1659,26 +1680,7 @@
             await loadSecurityAudit();
             await loadParticlesSettings();
 
-            // Initialize theme system and weather widget after all DOM elements are loaded
-            initThemeSystem();
-            initWeatherWidget();
-
-            // Setup weather refresh button
-            const refreshWeatherBtn = document.getElementById('refreshWeatherBtn');
-            if (refreshWeatherBtn) {
-                refreshWeatherBtn.addEventListener('click', () => {
-                    refreshWeatherLocation();
-                    // Close burger menu after refresh
-                    const burgerBtn = document.getElementById('burgerBtn');
-                    const burgerMenu = document.getElementById('burgerMenu');
-                    if (burgerBtn && burgerMenu) {
-                        burgerBtn.classList.remove('active');
-                        burgerMenu.classList.remove('show');
-                    }
-                });
-            }
-
-            console.log('✅ Theme system and weather widget initialized after DOM ready');
+            console.log('✅ Settings page fully loaded');
         })();
     </script>
 </body>
