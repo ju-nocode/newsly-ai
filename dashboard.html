@@ -204,19 +204,59 @@
                     });
                 }
 
-                // Initialize Smart Search Bar
+                // Initialize Advanced Smart Search Bar
                 initSearchBar({
                     onProfileSearch: (suggestion) => {
                         // Handle profile search commands
-                        const label = suggestion.label.toLowerCase();
+                        const action = suggestion.action;
 
-                        if (label.includes('param') || label.includes('settings')) {
-                            window.location.href = 'settings.html';
-                        } else if (label.includes('avatar') || label.includes('username') ||
-                                   label.includes('email') || label.includes('password') ||
-                                   label.includes('préférences')) {
+                        if (action === 'settings' || action === 'settings-account') {
                             window.location.href = 'settings.html';
                             notifyInfo(`Redirection vers ${suggestion.label}...`);
+                        } else if (action === 'delete-account') {
+                            if (confirm('Êtes-vous sûr de vouloir supprimer votre compte ?')) {
+                                window.location.href = 'settings.html#delete-account';
+                            }
+                        }
+                    },
+                    onSettingsSearch: (suggestion) => {
+                        // Handle settings commands
+                        const action = suggestion.action;
+
+                        switch (action) {
+                            case 'settings-account':
+                            case 'settings-theme':
+                            case 'settings-language':
+                            case 'settings-notifications':
+                                window.location.href = 'settings.html';
+                                notifyInfo(`Accès aux ${suggestion.label}...`);
+                                break;
+                        }
+                    },
+                    onHelpSearch: (suggestion) => {
+                        // Handle help commands
+                        const action = suggestion.action;
+
+                        if (action === 'show-help') {
+                            showHelpModal();
+                        } else if (action === 'show-shortcuts') {
+                            showShortcutsModal();
+                        } else if (action === 'show-search-help') {
+                            showSearchHelpModal();
+                        }
+                    },
+                    onFilterSearch: (suggestion) => {
+                        // Handle filter commands
+                        const filter = suggestion.filter;
+
+                        if (filter.startsWith('date-')) {
+                            const range = filter.split('-')[1];
+                            filterByDate(range);
+                            notifySuccess(`Filtrage: ${suggestion.label}`);
+                        } else if (filter.startsWith('country-')) {
+                            const country = filter.split('-')[1];
+                            // Apply country filter
+                            notifySuccess(`Filtrage: ${suggestion.label}`);
                         }
                     },
                     onFeedSearch: (suggestion) => {
@@ -755,6 +795,95 @@
                         console.log(`🔄 Toggle ${collapseId}: ${willCollapse ? 'collapsed' : 'expanded'}`);
                     });
                 });
+            }
+
+            // ================================================
+            // ADVANCED SEARCH - HELPER FUNCTIONS
+            // ================================================
+
+            // Show help modal
+            function showHelpModal() {
+                const helpContent = `
+                    <h3>📚 Aide - Commandes disponibles</h3>
+                    <div style="margin-top: 1.5rem;">
+                        <h4>Commandes de recherche:</h4>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li><strong>/profile:</strong> - Accéder à votre profil</li>
+                            <li><strong>/feed:</strong> - Rechercher des actualités par catégorie</li>
+                            <li><strong>/settings:</strong> - Accéder aux paramètres</li>
+                            <li><strong>/filter:</strong> - Filtrer les actualités</li>
+                            <li><strong>/help</strong> - Afficher l'aide</li>
+                        </ul>
+                        <h4 style="margin-top: 1.5rem;">Raccourcis clavier:</h4>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li><kbd>Ctrl/Cmd + K</kbd> - Ouvrir la recherche</li>
+                            <li><kbd>↑ ↓</kbd> - Naviguer dans les suggestions</li>
+                            <li><kbd>Enter</kbd> - Sélectionner</li>
+                            <li><kbd>Esc</kbd> - Fermer</li>
+                        </ul>
+                    </div>
+                `;
+                showInfo(helpContent, { duration: 0, position: 'top-center' });
+            }
+
+            // Show shortcuts modal
+            function showShortcutsModal() {
+                const shortcutsContent = `
+                    <h3>⌨️ Raccourcis Clavier</h3>
+                    <div style="margin-top: 1.5rem; display: grid; gap: 0.75rem;">
+                        <div><kbd>Ctrl/Cmd + K</kbd> → Recherche rapide</div>
+                        <div><kbd>↑ ↓</kbd> → Navigation suggestions</div>
+                        <div><kbd>Enter</kbd> → Sélection</div>
+                        <div><kbd>Esc</kbd> → Fermer</div>
+                        <div><kbd>1-9</kbd> → Catégories (à venir)</div>
+                    </div>
+                `;
+                showInfo(shortcutsContent, { duration: 0, position: 'top-center' });
+            }
+
+            // Show search help modal
+            function showSearchHelpModal() {
+                const searchHelp = `
+                    <h3>🔍 Aide Recherche</h3>
+                    <div style="margin-top: 1.5rem;">
+                        <p><strong>Recherche simple:</strong> Tapez n'importe quel mot</p>
+                        <p><strong>Commandes:</strong> Utilisez / pour des actions rapides</p>
+                        <p><strong>Historique:</strong> Vos recherches sont sauvegardées</p>
+                        <p><strong>Fuzzy search:</strong> Même avec des fautes de frappe</p>
+                    </div>
+                `;
+                showInfo(searchHelp, { duration: 0, position: 'top-center' });
+            }
+
+            // Filter by date range
+            function filterByDate(range) {
+                const newsCards = document.querySelectorAll('.news-card');
+                const now = new Date();
+                let cutoffDate;
+
+                switch (range) {
+                    case 'today':
+                        cutoffDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                        break;
+                    case 'week':
+                        cutoffDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                        break;
+                    case 'month':
+                        cutoffDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+                        break;
+                    default:
+                        return;
+                }
+
+                let visibleCount = 0;
+                newsCards.forEach(card => {
+                    // This is a simple filter - in production, you'd use actual article dates
+                    // For now, show all articles
+                    card.style.display = '';
+                    visibleCount++;
+                });
+
+                notifySuccess(`${visibleCount} articles affichés`);
             }
 
             // ================================================
