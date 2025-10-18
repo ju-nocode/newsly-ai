@@ -77,7 +77,7 @@
   position: relative;
 }
 
-.vertical-sidebar.closed .sidebar-menu-link:hover::after {
+.vertical-sidebar.closed .sidebar-menu-link[data-tooltip]:hover::after {
   content: attr(data-tooltip);
   position: absolute;
   left: 100%;
