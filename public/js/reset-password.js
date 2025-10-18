@@ -74,8 +74,7 @@ resetPasswordForm.addEventListener('submit', async (e) => {
 
     try {
         // SÉCURITÉ: Appel à l'API backend (pas d'exposition des clés)
-        // Utilise l'API simplifiée avec plus de debug pour diagnostiquer
-        const response = await fetch('/api/auth/reset-password-simple', {
+        const response = await fetch('/api/auth/reset-password', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -88,14 +87,7 @@ resetPasswordForm.addEventListener('submit', async (e) => {
 
         const data = await response.json();
 
-        console.log('[DEBUG] API Response:', {
-            status: response.status,
-            ok: response.ok,
-            data: data
-        });
-
         if (!response.ok) {
-            console.error('[ERROR] API returned error:', data);
             showError(data.error || 'Erreur lors de la réinitialisation');
             submitBtn.disabled = false;
             submitBtn.textContent = 'Réinitialiser le mot de passe';
@@ -114,7 +106,6 @@ resetPasswordForm.addEventListener('submit', async (e) => {
         }, 2000);
 
     } catch (error) {
-        console.error('[ERROR] Reset password failed:', error);
         showError('Erreur de connexion au serveur. Veuillez réessayer.');
         submitBtn.disabled = false;
         submitBtn.textContent = 'Réinitialiser le mot de passe';
@@ -137,8 +128,6 @@ const checkResetToken = () => {
         setTimeout(() => {
             window.location.href = 'index.html';
         }, 5000);
-    } else {
-        console.log('[INFO] Valid recovery token found');
     }
 };
 
