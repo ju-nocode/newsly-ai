@@ -56,15 +56,15 @@
 
 /* Hero Title with Aurora Effect - Dedicated class */
 .hero-title-aurora {
-  font-size: 6rem !important;
-  font-weight: 800 !important;
-  margin-bottom: 1.5rem !important;
-  letter-spacing: -0.025em !important;
-  line-height: 1.1 !important;
-  position: relative !important;
-  display: inline-block !important;
+  font-size: 6rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  position: relative;
+  display: inline-block;
 
-  /* Aurora gradient effect - Lumière qui bouge DANS les lettres */
+  /* Aurora gradient animé DANS les lettres transparentes */
   background: linear-gradient(
     90deg,
     var(--aurora-clr-1),
@@ -72,25 +72,19 @@
     var(--aurora-clr-3),
     var(--aurora-clr-4),
     var(--aurora-clr-1)
-  ) !important;
-  background-size: 200% 100% !important;
-  background-clip: text !important;
-  -webkit-background-clip: text !important;
-  color: transparent !important;
+  );
+  background-size: 300% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 
-  /* Uniquement l'animation du gradient - PAS de mouvement du texte */
-  animation: aurora-gradient 8s ease-in-out infinite !important;
+  /* Animation du gradient à l'intérieur des lettres */
+  animation: aurora-gradient 10s ease-in-out infinite;
 
-  padding: 0.5rem 1rem !important;
-  border-radius: var(--radius-lg) !important;
-
-  /* Réduire la luminosité */
-  filter: brightness(0.85) !important;
-}
-
-.hero-title-aurora:hover {
-  /* Légère augmentation de luminosité au hover - sans mouvement */
-  filter: brightness(1) !important;
+  /* Pas d'interaction au hover */
+  pointer-events: none;
+  user-select: none;
 }
 
 /* Subtle floating animation when not hovering */
