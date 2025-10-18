@@ -486,6 +486,44 @@
         </div>
     </div>
 
+    <!-- Delete Account Confirmation Modal -->
+    <div class="modal-overlay" id="deleteAccountModal">
+        <div class="modal-container">
+            <button class="modal-close" id="closeDeleteModal">&times;</button>
+
+            <div class="modal-content">
+                <h2 class="modal-title" style="color: var(--error);">⚠️ Supprimer mon compte</h2>
+                <p class="modal-subtitle" data-i18n="settings.deleteAccountWarning">
+                    Cette action est irréversible et supprimera définitivement :
+                </p>
+
+                <div style="margin: 1.5rem 0; padding: 1rem; background: var(--bg-secondary); border-radius: var(--radius-md); border-left: 3px solid var(--error);">
+                    <ul style="margin: 0; padding-left: 1.25rem; color: var(--text-secondary); line-height: 1.8;">
+                        <li>Votre compte et toutes vos informations personnelles</li>
+                        <li>Vos préférences et paramètres</li>
+                        <li>Votre historique et vos données</li>
+                        <li>Votre accès à l'application</li>
+                    </ul>
+                </div>
+
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9375rem;">
+                    <strong style="color: var(--error);">ATTENTION :</strong> Cette action ne peut pas être annulée. Toutes vos données seront perdues définitivement.
+                </p>
+
+                <div id="deleteAccountError" class="error-message" style="display: none;"></div>
+
+                <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                    <button type="button" class="btn-primary" id="cancelDeleteBtn" style="flex: 1; background: var(--bg-secondary); color: var(--text-primary);">
+                        ✕ Annuler
+                    </button>
+                    <button type="button" class="btn-danger" id="confirmDeleteBtn" style="flex: 1;">
+                        🗑️ Supprimer définitivement
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Particles.js Library -->
     <!-- DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
@@ -887,18 +925,55 @@
             }
         });
 
-        // Supprimer le compte
-        document.getElementById('deleteAccountBtn').addEventListener('click', async () => {
-            if (confirm('⚠️ Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible !')) {
-                if (confirm('🚨 DERNIÈRE CONFIRMATION : Toutes vos données seront perdues. Continuer ?')) {
-                    const result = await deleteAccount();
-                    if (result.success) {
-                        alert('✅ Compte supprimé avec succès');
-                        window.location.href = 'index.html';
-                    } else {
-                        showError(result.error || 'Erreur lors de la suppression');
-                    }
-                }
+        // Modal de suppression de compte
+        const deleteAccountModal = document.getElementById('deleteAccountModal');
+        const closeDeleteModal = document.getElementById('closeDeleteModal');
+        const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+        const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+        const deleteAccountError = document.getElementById('deleteAccountError');
+
+        // Ouvrir la modal de suppression
+        document.getElementById('deleteAccountBtn').addEventListener('click', () => {
+            deleteAccountModal.classList.add('show');
+            deleteAccountError.style.display = 'none';
+        });
+
+        // Fermer la modal - bouton X
+        closeDeleteModal.addEventListener('click', () => {
+            deleteAccountModal.classList.remove('show');
+        });
+
+        // Fermer la modal - bouton Annuler
+        cancelDeleteBtn.addEventListener('click', () => {
+            deleteAccountModal.classList.remove('show');
+        });
+
+        // Fermer la modal - clic sur l'overlay
+        deleteAccountModal.addEventListener('click', (e) => {
+            if (e.target === deleteAccountModal) {
+                deleteAccountModal.classList.remove('show');
+            }
+        });
+
+        // Confirmer la suppression
+        confirmDeleteBtn.addEventListener('click', async () => {
+            // Désactiver le bouton pendant le traitement
+            confirmDeleteBtn.disabled = true;
+            confirmDeleteBtn.textContent = '⏳ Suppression en cours...';
+
+            const result = await deleteAccount();
+
+            if (result.success) {
+                deleteAccountModal.classList.remove('show');
+                showSuccess('✅ Compte supprimé avec succès');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+            } else {
+                deleteAccountError.textContent = result.error || 'Erreur lors de la suppression';
+                deleteAccountError.style.display = 'block';
+                confirmDeleteBtn.disabled = false;
+                confirmDeleteBtn.textContent = '🗑️ Supprimer définitivement';
             }
         });
 
