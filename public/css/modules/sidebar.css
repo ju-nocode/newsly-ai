@@ -3,109 +3,6 @@
 ================================================ */
 
 /* ================================================
-   COLLAPSE MENU - Classe unique pour tous les menus déroulants
-================================================ */
-
-.collapse-header {
-  padding: 0.75rem 0.75rem;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  user-select: none;
-  pointer-events: auto;
-}
-
-.collapse-header-separator {
-  border-top: 1px solid var(--border);
-  margin-top: 0;
-}
-
-.collapse-header:hover {
-  background: rgba(59, 130, 246, 0.08);
-  transform: translateX(2px);
-}
-
-.collapse-header:active {
-  transform: scale(0.98);
-}
-
-.collapse-header .collapse-icon {
-  margin-left: auto;
-  font-size: 0.75rem;
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-  color: var(--text-muted);
-  display: inline-block;
-  flex-shrink: 0;
-}
-
-.collapse-header.collapsed .collapse-icon {
-  transform: rotate(-90deg);
-}
-
-.collapse-header:hover .collapse-icon {
-  color: var(--primary);
-  transform: scale(1.15);
-}
-
-.collapse-header.collapsed:hover .collapse-icon {
-  transform: rotate(-90deg) scale(1.15);
-}
-
-.collapse-header-icon {
-  width: 16px;
-  height: 16px;
-  object-fit: contain;
-  flex-shrink: 0;
-  filter: var(--icon-filter-primary);
-  opacity: 0.7;
-}
-
-[data-theme="dark"] .collapse-header-icon {
-  filter: brightness(0) invert(1);
-  opacity: 0.7;
-}
-
-.collapse-header:hover .collapse-header-icon {
-  opacity: 1;
-}
-
-.collapse-header h2 {
-  color: var(--text-muted);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  min-width: 0;
-}
-
-.collapse-content {
-  max-height: 2000px;
-  overflow: hidden;
-  transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-              padding 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  opacity: 1;
-  transform-origin: top;
-}
-
-.collapse-content.collapsed {
-  max-height: 0 !important;
-  opacity: 0;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  transition: max-height 0.25s cubic-bezier(0.4, 0, 1, 1),
-              opacity 0.2s cubic-bezier(0.4, 0, 1, 1),
-              padding 0.25s cubic-bezier(0.4, 0, 1, 1);
-}
-
-/* ================================================
    VERTICAL SIDEBAR - Modern Sidebar Design
 ================================================ */
 
@@ -214,7 +111,7 @@
 /* Sidebar Section */
 .sidebar-section {
   padding: 0;
-  border-bottom: none; /* Pas de bordure car géré par collapse-header */
+  border-bottom: none;
 }
 
 .sidebar-section:first-of-type {
@@ -234,39 +131,21 @@
   border-top-color: rgba(255, 255, 255, 0.05);
 }
 
-/* Sidebar Collapse Headers - Override defaults */
-.sidebar-section .collapse-header {
+/* Sidebar Section Title */
+.sidebar-section-title {
   padding: 0.875rem 1rem;
-  border-bottom: none;
-  margin-bottom: 0;
-  background: transparent;
-}
-
-.sidebar-section .collapse-header h2 {
+  margin: 0;
   font-size: 0.6875rem;
   font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  border-bottom: none;
 }
 
-/* Hover state spécifique à la sidebar */
-.sidebar-section .collapse-header:hover {
-  background: rgba(59, 130, 246, 0.06);
-  transform: none;
-}
-
-/* Cacher les textes des collapse headers quand sidebar fermée */
-.vertical-sidebar.closed .sidebar-section .collapse-header h2,
-.vertical-sidebar.closed .sidebar-section .collapse-header .collapse-icon {
+/* Cacher le titre quand sidebar fermée */
+.vertical-sidebar.closed .sidebar-section-title {
   display: none;
-}
-
-.vertical-sidebar.closed .sidebar-section .collapse-header {
-  justify-content: center;
-  padding: 0.75rem 0.5rem;
-}
-
-/* Le contenu collapse dans la sidebar ne doit pas avoir de padding top/bottom par défaut */
-.sidebar-section .collapse-content {
-  padding: 0;
 }
 
 /* Sidebar Menu */

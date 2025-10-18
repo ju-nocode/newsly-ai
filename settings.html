@@ -27,12 +27,8 @@
         <div class="sidebar-content">
             <!-- Paramètres du compte -->
             <div class="sidebar-section">
-                <div class="collapse-header" data-collapse-id="account-settings">
-                    <img src="https://img.icons8.com/ios/16/settings.png" alt="Paramètres" class="collapse-header-icon">
-                    <h2 data-i18n="settings.accountSettings">Paramètres du compte</h2>
-                    <span class="collapse-icon">▼</span>
-                </div>
-                <ul class="sidebar-menu collapse-content" data-collapse-target="account-settings">
+                <h3 class="sidebar-section-title" data-i18n="settings.accountSettings">Paramètres du compte</h3>
+                <ul class="sidebar-menu">
                     <li class="sidebar-menu-item">
                         <a class="sidebar-menu-link active" href="#" data-section="profile">
                             <img src="https://img.icons8.com/ios/18/user.png" alt="Profil" class="sidebar-icon">
@@ -56,12 +52,8 @@
 
             <!-- Navigation -->
             <div class="sidebar-section">
-                <div class="collapse-header" data-collapse-id="navigation-settings">
-                    <img src="https://img.icons8.com/ios/16/compass.png" alt="Navigation" class="collapse-header-icon">
-                    <h2>Navigation</h2>
-                    <span class="collapse-icon">▼</span>
-                </div>
-                <ul class="sidebar-menu collapse-content" data-collapse-target="navigation-settings">
+                <h3 class="sidebar-section-title">Navigation</h3>
+                <ul class="sidebar-menu">
                     <li class="sidebar-menu-item">
                         <a class="sidebar-menu-link" href="dashboard.html">
                             <img src="https://img.icons8.com/ios/18/dashboard.png" alt="Dashboard" class="sidebar-icon">
@@ -509,12 +501,11 @@
         import { attachPhoneFormatter } from './public/js/phone-formatter.js';
         import { initNavbar } from './public/js/navbar-component.js';
         import { setupThemeListeners, setTheme } from './public/js/theme-service.js';
-        import { initCollapseMenus } from './public/js/collapse-menu.js';
 
         // Initialize navbar component
         initNavbar('div.mobile-overlay', { showSettingsNav: true });
 
-        // Note: setupThemeListeners() et initCollapseMenus() seront appelés après l'initialisation complète du DOM
+        // Note: setupThemeListeners() sera appelé après l'initialisation complète du DOM
         // voir bloc (async () => {...})() en bas du fichier
 
         // Initialize particles (async to load from DB)
@@ -1967,10 +1958,6 @@
             // Initialize theme listeners after all DOM elements are loaded
             setupThemeListeners();
             console.log('✅ Theme listeners initialized after DOM ready');
-
-            // Initialize collapse menus (sidebar sections)
-            initCollapseMenus();
-            console.log('✅ Collapse menus initialized after DOM ready');
         })();
     </script>
 </body>

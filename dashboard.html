@@ -27,12 +27,8 @@
         <div class="sidebar-content">
             <!-- Catégories -->
             <div class="sidebar-section">
-                <div class="collapse-header" data-collapse-id="categories">
-                    <img src="https://img.icons8.com/ios/16/stack.png" alt="Catégories" class="collapse-header-icon">
-                    <h2 data-i18n="sidebar.categories">Catégories</h2>
-                    <span class="collapse-icon">▼</span>
-                </div>
-                <ul class="sidebar-menu collapse-content" data-collapse-target="categories">
+                <h3 class="sidebar-section-title" data-i18n="sidebar.categories">Catégories</h3>
+                <ul class="sidebar-menu">
                     <li class="sidebar-menu-item">
                         <a class="sidebar-menu-link active" href="#" data-category="general">
                             <img src="https://img.icons8.com/ios/18/newspaper.png" alt="Général" class="sidebar-icon">
@@ -80,12 +76,8 @@
 
             <!-- Pays -->
             <div class="sidebar-section">
-                <div class="collapse-header" data-collapse-id="countries">
-                    <img src="https://img.icons8.com/ios/16/globe--v1.png" alt="Pays" class="collapse-header-icon">
-                    <h2 data-i18n="sidebar.countries">Pays</h2>
-                    <span class="collapse-icon">▼</span>
-                </div>
-                <ul class="sidebar-menu collapse-content" data-collapse-target="countries">
+                <h3 class="sidebar-section-title" data-i18n="sidebar.countries">Pays</h3>
+                <ul class="sidebar-menu">
                     <li class="sidebar-menu-item">
                         <label class="sidebar-menu-link" style="cursor: pointer;" data-tooltip="Tous les pays">
                             <img src="https://img.icons8.com/ios/18/globe--v1.png" alt="Tous" class="sidebar-icon">
@@ -133,12 +125,8 @@
 
             <!-- Navigation -->
             <div class="sidebar-section">
-                <div class="collapse-header" data-collapse-id="navigation">
-                    <img src="https://img.icons8.com/ios/16/compass.png" alt="Navigation" class="collapse-header-icon">
-                    <h2>Navigation</h2>
-                    <span class="collapse-icon">▼</span>
-                </div>
-                <ul class="sidebar-menu collapse-content" data-collapse-target="navigation">
+                <h3 class="sidebar-section-title">Navigation</h3>
+                <ul class="sidebar-menu">
                     <li class="sidebar-menu-item">
                         <a class="sidebar-menu-link" href="settings.html">
                             <img src="https://img.icons8.com/ios/18/settings.png" alt="Paramètres" class="sidebar-icon">
@@ -184,20 +172,17 @@
         import { tSync as t, translatePage } from './public/js/translation-service.js';
         // DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
         // import { initParticles } from './public/js/particles-config.js';
-        import { initCollapseMenus } from './public/js/collapse-menu.js';
         import { initNavbar } from './public/js/navbar-component.js';
         import { setupThemeListeners } from './public/js/theme-service.js';
 
         // Initialize navbar component
         initNavbar('div.mobile-overlay', { showMobileSidebarBtn: true });
 
-        // Initialize theme listeners and collapse menus after navbar is fully rendered
+        // Initialize theme listeners after navbar is fully rendered
         // Using requestAnimationFrame to ensure DOM is ready
         requestAnimationFrame(() => {
             requestAnimationFrame(() => {
                 setupThemeListeners();
-                // Initialize collapse menus after DOM is ready
-                initCollapseMenus();
             });
         });
 
