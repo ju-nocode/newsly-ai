@@ -27,71 +27,51 @@
         <div class="sidebar-content">
             <!-- Catégories -->
             <div class="sidebar-section">
-                <h3 class="sidebar-menu-title" data-i18n="sidebar.categories">Catégories</h3>
-                <ul class="sidebar-menu">
+                <div class="collapse-header" data-collapse-id="categories">
+                    <img src="https://img.icons8.com/ios/16/stack.png" alt="Catégories" class="collapse-header-icon">
+                    <h2 data-i18n="sidebar.categories">Catégories</h2>
+                    <span class="collapse-icon">▼</span>
+                </div>
+                <ul class="sidebar-menu collapse-content" data-collapse-target="categories">
                     <li class="sidebar-menu-item">
                         <a class="sidebar-menu-link active" href="#" data-category="general">
-                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor">
-                                <rect x="1" y="1" width="14" height="14" rx="1.5" stroke-width="1.5"/>
-                                <line x1="1" y1="4" x2="15" y2="4" stroke-width="1.5"/>
-                            </svg>
+                            <img src="https://img.icons8.com/ios/18/newspaper.png" alt="Général" class="sidebar-icon">
                             <span data-i18n="category.general">Général</span>
                         </a>
                     </li>
                     <li class="sidebar-menu-item">
                         <a class="sidebar-menu-link" href="#" data-category="business">
-                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor">
-                                <rect x="2" y="4" width="12" height="10" rx="1.5" stroke-width="1.5"/>
-                                <path d="M5 4V2.5C5 1.67 5.67 1 6.5 1h3C10.33 1 11 1.67 11 2.5V4" stroke-width="1.5"/>
-                            </svg>
+                            <img src="https://img.icons8.com/ios/18/business.png" alt="Business" class="sidebar-icon">
                             <span data-i18n="category.business">Business</span>
                         </a>
                     </li>
                     <li class="sidebar-menu-item">
                         <a class="sidebar-menu-link" href="#" data-category="technology">
-                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor">
-                                <rect x="2" y="2" width="12" height="10" rx="1.5" stroke-width="1.5"/>
-                                <rect x="5" y="5" width="6" height="4" rx="0.5" stroke-width="1.5"/>
-                                <line x1="8" y1="12" x2="8" y2="14" stroke-width="1.5"/>
-                                <line x1="5" y1="14" x2="11" y2="14" stroke-width="1.5"/>
-                            </svg>
+                            <img src="https://img.icons8.com/ios/18/laptop.png" alt="Technologie" class="sidebar-icon">
                             <span data-i18n="category.technology">Technologie</span>
                         </a>
                     </li>
                     <li class="sidebar-menu-item">
                         <a class="sidebar-menu-link" href="#" data-category="science">
-                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor">
-                                <path d="M5 10L6 14H10L11 10" stroke-width="1.5" stroke-linecap="round"/>
-                                <ellipse cx="8" cy="10" rx="3" ry="1.5" stroke-width="1.5"/>
-                                <path d="M8 10V3" stroke-width="1.5"/>
-                                <circle cx="8" cy="3" r="1.5" stroke-width="1.5"/>
-                            </svg>
+                            <img src="https://img.icons8.com/ios/18/test-tube.png" alt="Science" class="sidebar-icon">
                             <span data-i18n="category.science">Science</span>
                         </a>
                     </li>
                     <li class="sidebar-menu-item">
                         <a class="sidebar-menu-link" href="#" data-category="health">
-                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor">
-                                <path d="M8 13.5C8 13.5 3 10 3 6C3 4.5 4 3 5.5 3C6.5 3 7.5 3.5 8 4.5C8.5 3.5 9.5 3 10.5 3C12 3 13 4.5 13 6C13 10 8 13.5 8 13.5Z" stroke-width="1.5" stroke-linejoin="round"/>
-                            </svg>
+                            <img src="https://img.icons8.com/ios/18/heart-health.png" alt="Santé" class="sidebar-icon">
                             <span data-i18n="category.health">Santé</span>
                         </a>
                     </li>
                     <li class="sidebar-menu-item">
                         <a class="sidebar-menu-link" href="#" data-category="sports">
-                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor">
-                                <circle cx="8" cy="8" r="6" stroke-width="1.5"/>
-                                <path d="M8 3L9.5 6.5L13 7L10 9.5L11 13L8 11L5 13L6 9.5L3 7L6.5 6.5L8 3Z" stroke-width="1.5" stroke-linejoin="round"/>
-                            </svg>
+                            <img src="https://img.icons8.com/ios/18/football2.png" alt="Sports" class="sidebar-icon">
                             <span data-i18n="category.sports">Sports</span>
                         </a>
                     </li>
                     <li class="sidebar-menu-item">
                         <a class="sidebar-menu-link" href="#" data-category="entertainment">
-                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor">
-                                <rect x="1" y="3" width="14" height="10" rx="1.5" stroke-width="1.5"/>
-                                <path d="M5 8L8 6V10L5 8Z" fill="currentColor"/>
-                            </svg>
+                            <img src="https://img.icons8.com/ios/18/theater.png" alt="Divertissement" class="sidebar-icon">
                             <span data-i18n="category.entertainment">Divertissement</span>
                         </a>
                     </li>
@@ -100,75 +80,50 @@
 
             <!-- Pays -->
             <div class="sidebar-section">
-                <h3 class="sidebar-menu-title" data-i18n="sidebar.countries">Pays</h3>
-                <ul class="sidebar-menu">
+                <div class="collapse-header" data-collapse-id="countries">
+                    <img src="https://img.icons8.com/ios/16/globe--v1.png" alt="Pays" class="collapse-header-icon">
+                    <h2 data-i18n="sidebar.countries">Pays</h2>
+                    <span class="collapse-icon">▼</span>
+                </div>
+                <ul class="sidebar-menu collapse-content" data-collapse-target="countries">
                     <li class="sidebar-menu-item">
                         <label class="sidebar-menu-link" style="cursor: pointer;" data-tooltip="Tous les pays">
-                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor">
-                                <circle cx="8" cy="8" r="6" stroke-width="1.5"/>
-                                <ellipse cx="8" cy="8" rx="2.5" ry="6" stroke-width="1.5"/>
-                                <line x1="2" y1="8" x2="14" y2="8" stroke-width="1.5"/>
-                                <path d="M8 2C9.5 4 9.5 6 8 8C6.5 6 6.5 4 8 2Z" stroke-width="1.5"/>
-                                <path d="M8 14C9.5 12 9.5 10 8 8C6.5 10 6.5 12 8 14Z" stroke-width="1.5"/>
-                            </svg>
+                            <img src="https://img.icons8.com/ios/18/globe--v1.png" alt="Tous" class="sidebar-icon">
                             <input type="checkbox" value="all" id="countryAll" checked style="margin-right: 0.5rem;">
                             <span data-i18n="country.all">Tous</span>
                         </label>
                     </li>
                     <li class="sidebar-menu-item">
                         <label class="sidebar-menu-link" style="cursor: pointer;" data-tooltip="🇺🇸 États-Unis">
-                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor">
-                                <rect x="2" y="3" width="12" height="10" rx="1" stroke-width="1.5"/>
-                                <line x1="2" y1="5" x2="14" y2="5" stroke-width="1.5"/>
-                                <line x1="2" y1="7" x2="14" y2="7" stroke-width="1.5"/>
-                                <line x1="2" y1="9" x2="14" y2="9" stroke-width="1.5"/>
-                                <line x1="2" y1="11" x2="14" y2="11" stroke-width="1.5"/>
-                            </svg>
+                            <img src="https://img.icons8.com/ios/18/usa.png" alt="USA" class="sidebar-icon">
                             <input type="checkbox" class="country-checkbox" value="us" style="margin-right: 0.5rem;">
                             <span data-i18n="country.us">🇺🇸 États-Unis</span>
                         </label>
                     </li>
                     <li class="sidebar-menu-item">
                         <label class="sidebar-menu-link" style="cursor: pointer;" data-tooltip="🇫🇷 France">
-                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor">
-                                <rect x="2" y="3" width="12" height="10" rx="1" stroke-width="1.5"/>
-                                <line x1="6.67" y1="3" x2="6.67" y2="13" stroke-width="1.5"/>
-                                <line x1="9.33" y1="3" x2="9.33" y2="13" stroke-width="1.5"/>
-                            </svg>
+                            <img src="https://img.icons8.com/ios/18/france.png" alt="France" class="sidebar-icon">
                             <input type="checkbox" class="country-checkbox" value="fr" style="margin-right: 0.5rem;">
                             <span data-i18n="country.fr">🇫🇷 France</span>
                         </label>
                     </li>
                     <li class="sidebar-menu-item">
                         <label class="sidebar-menu-link" style="cursor: pointer;" data-tooltip="🇬🇧 Royaume-Uni">
-                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor">
-                                <rect x="2" y="3" width="12" height="10" rx="1" stroke-width="1.5"/>
-                                <line x1="2" y1="3" x2="14" y2="13" stroke-width="1.5"/>
-                                <line x1="14" y1="3" x2="2" y2="13" stroke-width="1.5"/>
-                                <line x1="8" y1="3" x2="8" y2="13" stroke-width="1.5"/>
-                                <line x1="2" y1="8" x2="14" y2="8" stroke-width="1.5"/>
-                            </svg>
+                            <img src="https://img.icons8.com/ios/18/great-britain.png" alt="UK" class="sidebar-icon">
                             <input type="checkbox" class="country-checkbox" value="gb" style="margin-right: 0.5rem;">
                             <span data-i18n="country.gb">🇬🇧 Royaume-Uni</span>
                         </label>
                     </li>
                     <li class="sidebar-menu-item">
                         <label class="sidebar-menu-link" style="cursor: pointer;" data-tooltip="🇨🇦 Canada">
-                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor">
-                                <rect x="2" y="3" width="12" height="10" rx="1" stroke-width="1.5"/>
-                                <path d="M8 5L7 7L5 7L6.5 8.5L6 10L8 9L10 10L9.5 8.5L11 7L9 7L8 5Z" stroke-width="1.5" stroke-linejoin="round"/>
-                            </svg>
+                            <img src="https://img.icons8.com/ios/18/canada.png" alt="Canada" class="sidebar-icon">
                             <input type="checkbox" class="country-checkbox" value="ca" style="margin-right: 0.5rem;">
                             <span data-i18n="country.ca">🇨🇦 Canada</span>
                         </label>
                     </li>
                     <li class="sidebar-menu-item">
                         <label class="sidebar-menu-link" style="cursor: pointer;" data-tooltip="🇩🇪 Allemagne">
-                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor">
-                                <rect x="2" y="3" width="12" height="10" rx="1" stroke-width="1.5"/>
-                                <line x1="2" y1="6.33" x2="14" y2="6.33" stroke-width="1.5"/>
-                                <line x1="2" y1="9.67" x2="14" y2="9.67" stroke-width="1.5"/>
-                            </svg>
+                            <img src="https://img.icons8.com/ios/18/germany.png" alt="Allemagne" class="sidebar-icon">
                             <input type="checkbox" class="country-checkbox" value="de" style="margin-right: 0.5rem;">
                             <span data-i18n="country.de">🇩🇪 Allemagne</span>
                         </label>
@@ -178,24 +133,21 @@
 
             <!-- Navigation -->
             <div class="sidebar-section">
-                <h3 class="sidebar-menu-title">Navigation</h3>
-                <ul class="sidebar-menu">
+                <div class="collapse-header" data-collapse-id="navigation">
+                    <img src="https://img.icons8.com/ios/16/compass.png" alt="Navigation" class="collapse-header-icon">
+                    <h2>Navigation</h2>
+                    <span class="collapse-icon">▼</span>
+                </div>
+                <ul class="sidebar-menu collapse-content" data-collapse-target="navigation">
                     <li class="sidebar-menu-item">
                         <a class="sidebar-menu-link" href="settings.html">
-                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor">
-                                <circle cx="8" cy="8" r="2.5" stroke-width="1.5"/>
-                                <path d="M8 2v1.5M8 12.5V14M14 8h-1.5M3.5 8H2M12.5 12.5l-1-1M4.5 4.5l-1-1M12.5 3.5l-1 1M4.5 11.5l-1 1" stroke-width="1.5" stroke-linecap="round"/>
-                            </svg>
+                            <img src="https://img.icons8.com/ios/18/settings.png" alt="Paramètres" class="sidebar-icon">
                             <span data-i18n="nav.settings">Paramètres</span>
                         </a>
                     </li>
                     <li class="sidebar-menu-item">
                         <a class="sidebar-menu-link" href="#" id="sidebarLogoutBtn">
-                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor">
-                                <path d="M6 13H2V3H6" stroke-width="1.5" stroke-linecap="round"/>
-                                <path d="M11 11L14 8L11 5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                <line x1="14" y1="8" x2="6" y2="8" stroke-width="1.5" stroke-linecap="round"/>
-                            </svg>
+                            <img src="https://img.icons8.com/ios/18/exit.png" alt="Déconnexion" class="sidebar-icon">
                             <span data-i18n="nav.logout">Déconnexion</span>
                         </a>
                     </li>
