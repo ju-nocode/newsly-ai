@@ -191,16 +191,15 @@
         // Initialize navbar component
         initNavbar('div.mobile-overlay', { showMobileSidebarBtn: true });
 
-        // Initialize theme listeners after navbar is fully rendered
+        // Initialize theme listeners and collapse menus after navbar is fully rendered
         // Using requestAnimationFrame to ensure DOM is ready
         requestAnimationFrame(() => {
             requestAnimationFrame(() => {
                 setupThemeListeners();
+                // Initialize collapse menus after DOM is ready
+                initCollapseMenus();
             });
         });
-
-        // Initialize collapse menus
-        initCollapseMenus();
 
         // Initialize particles (async to load from DB)
         // DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
