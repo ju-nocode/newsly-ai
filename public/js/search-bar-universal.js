@@ -22,22 +22,22 @@ const SEARCH_COMMANDS = {
         icon: '👤',
         suggestions: [
             {
+                value: '/profile: info',
+                label: 'Mes informations',
+                desc: 'Nom, email, avatar',
+                action: () => window.location.href = 'settings.html#profile'
+            },
+            {
                 value: '/profile: account',
                 label: 'Compte',
-                desc: 'Paramètres du compte',
+                desc: 'Langue, thème, préférences',
                 action: () => window.location.href = 'settings.html#account'
             },
             {
-                value: '/profile: password',
-                label: 'Mot de passe',
-                desc: 'Modifier votre mot de passe',
+                value: '/profile: security',
+                label: 'Sécurité',
+                desc: 'Mot de passe et sécurité',
                 action: () => window.location.href = 'settings.html#security'
-            },
-            {
-                value: '/profile: preferences',
-                label: 'Préférences',
-                desc: 'Vos préférences',
-                action: () => window.location.href = 'settings.html#preferences'
             }
         ]
     },
@@ -105,22 +105,22 @@ const SEARCH_COMMANDS = {
         action: () => window.location.href = 'settings.html',
         suggestions: [
             {
+                value: '/settings: profile',
+                label: 'Profil',
+                desc: 'Informations personnelles',
+                action: () => window.location.href = 'settings.html#profile'
+            },
+            {
                 value: '/settings: account',
                 label: 'Compte',
-                desc: 'Paramètres du compte',
+                desc: 'Langue, thème, préférences',
                 action: () => window.location.href = 'settings.html#account'
             },
             {
-                value: '/settings: theme',
-                label: 'Thème',
-                desc: 'Apparence et thème',
-                action: () => window.location.href = 'settings.html#appearance'
-            },
-            {
-                value: '/settings: notifications',
-                label: 'Notifications',
-                desc: 'Gérer les notifications',
-                action: () => window.location.href = 'settings.html#notifications'
+                value: '/settings: security',
+                label: 'Sécurité',
+                desc: 'Mot de passe et sessions',
+                action: () => window.location.href = 'settings.html#security'
             }
         ]
     },
@@ -220,8 +220,6 @@ const searchState = {
  * Initialize universal search bar
  */
 export function initUniversalSearchBar() {
-    console.log('🔍 Initializing Universal Search Bar...');
-
     const searchInput = document.getElementById('smartSearchInput');
     if (!searchInput) {
         console.warn('⚠️ Search input not found');
@@ -278,8 +276,6 @@ export function initUniversalSearchBar() {
             }
         }
     });
-
-    console.log('✅ Universal Search Bar initialized');
 }
 
 /**
@@ -287,7 +283,6 @@ export function initUniversalSearchBar() {
  */
 function handleSearchInput(e) {
     const query = e.target.value;
-    console.log('⌨️ Search input:', query);
 
     // Clear previous timeout
     if (searchState.searchTimeout) {
@@ -296,14 +291,12 @@ function handleSearchInput(e) {
 
     // Empty query - show default suggestions
     if (!query || query.trim().length === 0) {
-        console.log('Empty query - showing default');
         showDefaultSuggestions();
         return;
     }
 
     // Just "/" - show all commands
     if (query === '/') {
-        console.log('Just "/" - showing all commands');
         showAllCommands();
         return;
     }
@@ -402,13 +395,10 @@ function handleSearchKeydown(e) {
  * Handle search focus
  */
 function handleSearchFocus() {
-    console.log('🎯 Search focus triggered');
     const searchInput = document.getElementById('smartSearchInput');
     const query = searchInput?.value || '';
-    console.log('Query:', query);
 
     if (!query || query.trim().length === 0) {
-        console.log('Showing default suggestions...');
         showDefaultSuggestions();
     } else if (query.length >= 1) {
         handleSearchInput({ target: searchInput });
@@ -466,9 +456,7 @@ function showDefaultSuggestions() {
  * Show all available commands
  */
 function showAllCommands() {
-    console.log('📋 Showing all commands...');
     let container = getSuggestionsContainer();
-    console.log('Container:', container);
     container.innerHTML = '';
 
     // Header
@@ -511,7 +499,6 @@ function showAllCommands() {
         container.style.zIndex = '10001';
         container.classList.add('show');
         searchState.isOpen = true;
-        console.log('✅ Dropdown visible. Opacity:', window.getComputedStyle(container).opacity);
     });
 }
 
@@ -572,7 +559,6 @@ function showPartialCommandMatches(query) {
         container.style.zIndex = '10001';
         container.classList.add('show');
         searchState.isOpen = true;
-        console.log('✅ Dropdown visible. Opacity:', window.getComputedStyle(container).opacity);
     });
     updateSelectedSuggestion();
 }
@@ -642,7 +628,6 @@ function showCommandSuggestions(commandType, query) {
         container.style.zIndex = '10001';
         container.classList.add('show');
         searchState.isOpen = true;
-        console.log('✅ Dropdown visible. Opacity:', window.getComputedStyle(container).opacity);
     });
 }
 
@@ -719,7 +704,6 @@ function showSearchHistory(history) {
         container.style.zIndex = '10001';
         container.classList.add('show');
         searchState.isOpen = true;
-        console.log('✅ Dropdown visible. Opacity:', window.getComputedStyle(container).opacity);
     });
 }
 
@@ -845,7 +829,6 @@ function getSuggestionsContainer() {
 
         // Attach to body instead of wrapper to avoid layout issues
         document.body.appendChild(container);
-        console.log('📦 Dropdown container created and appended to body');
 
         // Position it relative to search input
         positionDropdown(container);
@@ -865,7 +848,6 @@ function positionDropdown(container) {
     }
 
     const rect = searchInput.getBoundingClientRect();
-    console.log('📍 Positioning dropdown at:', { top: rect.bottom + 8, left: rect.left, width: rect.width });
 
     container.style.position = 'fixed';
     container.style.top = `${rect.bottom + 8}px`;
