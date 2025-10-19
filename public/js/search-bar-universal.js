@@ -508,8 +508,10 @@ function showAllCommands() {
         container.style.transform = 'translateY(0)';
         container.style.pointerEvents = 'auto';
         container.style.display = 'block';
+        container.style.zIndex = '10001';
         container.classList.add('show');
         searchState.isOpen = true;
+        console.log('✅ Dropdown visible. Opacity:', window.getComputedStyle(container).opacity);
     });
 }
 
@@ -567,8 +569,10 @@ function showPartialCommandMatches(query) {
         container.style.transform = 'translateY(0)';
         container.style.pointerEvents = 'auto';
         container.style.display = 'block';
+        container.style.zIndex = '10001';
         container.classList.add('show');
         searchState.isOpen = true;
+        console.log('✅ Dropdown visible. Opacity:', window.getComputedStyle(container).opacity);
     });
     updateSelectedSuggestion();
 }
@@ -635,8 +639,10 @@ function showCommandSuggestions(commandType, query) {
         container.style.transform = 'translateY(0)';
         container.style.pointerEvents = 'auto';
         container.style.display = 'block';
+        container.style.zIndex = '10001';
         container.classList.add('show');
         searchState.isOpen = true;
+        console.log('✅ Dropdown visible. Opacity:', window.getComputedStyle(container).opacity);
     });
 }
 
@@ -710,8 +716,10 @@ function showSearchHistory(history) {
         container.style.transform = 'translateY(0)';
         container.style.pointerEvents = 'auto';
         container.style.display = 'block';
+        container.style.zIndex = '10001';
         container.classList.add('show');
         searchState.isOpen = true;
+        console.log('✅ Dropdown visible. Opacity:', window.getComputedStyle(container).opacity);
     });
 }
 
@@ -827,8 +835,17 @@ function getSuggestionsContainer() {
         container.id = 'searchSuggestionsContainer';
         container.className = 'search-suggestions-container';
 
+        // Set initial hidden state with inline styles
+        container.style.position = 'fixed';
+        container.style.opacity = '0';
+        container.style.transform = 'translateY(-10px)';
+        container.style.pointerEvents = 'none';
+        container.style.display = 'block';
+        container.style.zIndex = '10001';
+
         // Attach to body instead of wrapper to avoid layout issues
         document.body.appendChild(container);
+        console.log('📦 Dropdown container created and appended to body');
 
         // Position it relative to search input
         positionDropdown(container);

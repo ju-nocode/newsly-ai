@@ -326,26 +326,45 @@
         };
 
         // Gérer les clics sur les catégories
+        // Function to switch category and update URL
+        function switchToCategory(category) {
+            // Retirer la classe active de tous les boutons de catégorie
+            document.querySelectorAll('.sidebar-menu-link[data-category]').forEach(b => b.classList.remove('active'));
+
+            // Ajouter la classe active au bouton correspondant
+            const activeBtn = document.querySelector(`.sidebar-menu-link[data-category="${category}"]`);
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+
+                // Mettre à jour le titre
+                const title = activeBtn.querySelector('span').textContent;
+                document.getElementById('categoryTitle').textContent = `Actualités ${title}`;
+            }
+
+            // Charger les news de cette catégorie
+            currentCategory = category;
+            loadNews(category);
+
+            // Update URL with query parameter
+            const url = new URL(window.location);
+            url.searchParams.set('category', category);
+            window.history.pushState({}, '', url);
+        }
+
         document.querySelectorAll('.sidebar-menu-link[data-category]').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
-                // Retirer la classe active de tous les boutons de catégorie
-                document.querySelectorAll('.sidebar-menu-link[data-category]').forEach(b => b.classList.remove('active'));
-
-                // Ajouter la classe active au bouton cliqué
-                btn.classList.add('active');
-
-                // Charger les news de cette catégorie
                 const category = btn.dataset.category;
-                currentCategory = category;
-
-                // Mettre à jour le titre
-                const title = btn.querySelector('span').textContent;
-                document.getElementById('categoryTitle').textContent = `Actualités ${title}`;
-
-                loadNews(category);
+                switchToCategory(category);
             });
         });
+
+        // Handle URL parameter on page load
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlCategory = urlParams.get('category');
+        if (urlCategory) {
+            switchToCategory(urlCategory);
+        }
 
         // ================================================
         // COUNTRY FILTER

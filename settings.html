@@ -1287,27 +1287,53 @@
 
         // Handle section switching from VERTICAL SIDEBAR
         const sidebarLinks = document.querySelectorAll('.sidebar-menu-link[data-section]');
+
+        function switchToSection(sectionId) {
+            // Remove active class from all sidebar links
+            sidebarLinks.forEach(l => l.classList.remove('active'));
+
+            // Add active class to clicked item
+            const activeLink = document.querySelector(`.sidebar-menu-link[data-section="${sectionId}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+
+            // Hide all sections
+            sections.forEach(section => section.classList.remove('active'));
+
+            // Show selected section
+            const targetSection = document.getElementById(`section-${sectionId}`);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+
+            // Update URL hash
+            window.location.hash = sectionId;
+        }
+
         sidebarLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const sectionId = link.dataset.section;
-
-                // Remove active class from all sidebar links
-                sidebarLinks.forEach(l => l.classList.remove('active'));
-
-                // Add active class to clicked item
-                link.classList.add('active');
-
-                // Hide all sections
-                sections.forEach(section => section.classList.remove('active'));
-
-                // Show selected section
-                const targetSection = document.getElementById(`section-${sectionId}`);
-                if (targetSection) {
-                    targetSection.classList.add('active');
-                }
+                switchToSection(sectionId);
             });
         });
+
+        // Handle URL hash on page load and hash change
+        function handleHashChange() {
+            const hash = window.location.hash.substring(1); // Remove #
+            if (hash && document.getElementById(`section-${hash}`)) {
+                switchToSection(hash);
+            }
+        }
+
+        // Listen for hash changes
+        window.addEventListener('hashchange', handleHashChange);
+
+        // Handle hash on page load
+        if (window.location.hash) {
+            handleHashChange();
+        }
 
         // ================================================
         // SECURITY AUDIT

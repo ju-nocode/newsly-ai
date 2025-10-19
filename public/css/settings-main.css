@@ -13,6 +13,9 @@
 /* 3. Navigation */
 @import url('modules/navbar.css');
 
+/* 3b. Search Bar */
+@import url('modules/search-bar.css');
+
 /* 4. Icons - Filters & utilities */
 @import url('modules/icons.css');
 
