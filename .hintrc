@@ -33,5 +33,11 @@
     "detect-css-reflows/composite": "off",
     "detect-css-reflows/paint": "off",
     "css-prefix-order": "off"
-  }
+  },
+  "browserslist": [
+    "defaults",
+    "not ie 11",
+    "not ios_saf <= 26",
+    "not safari <= 26"
+  ]
 }

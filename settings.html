@@ -458,6 +458,7 @@
         import { initNavbar } from './public/js/navbar-component.js';
         import { initThemeSystem, setTheme } from './public/js/theme-manager.js';
         import { initWeatherWidget, refreshWeatherLocation } from './public/js/weather.js';
+        import { initUniversalSearchBar } from './public/js/search-bar-universal.js';
 
         // Initialize navbar component
         initNavbar('div.mobile-overlay', { showSettingsNav: true });
@@ -468,6 +469,9 @@
             requestAnimationFrame(() => {
                 initThemeSystem();
                 initWeatherWidget();
+
+                // Initialize Universal Search Bar
+                initUniversalSearchBar();
 
                 // Setup weather refresh button
                 const refreshWeatherBtn = document.getElementById('refreshWeatherBtn');

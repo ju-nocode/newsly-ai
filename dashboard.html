@@ -177,7 +177,7 @@
         import { showSuccess as notifySuccess, showError as notifyError, showInfo, showWarning as notifyWarning } from './public/js/notifications.js';
         import { showLoader, hideLoader, showSkeletons, hideSkeletons, addButtonLoader, removeButtonLoader } from './public/js/loader.js';
         import { fadeIn, shake, stagger, ripple } from './public/js/animations.js';
-        import { initSearchBar, updateSearchResults } from './public/js/search-bar.js';
+        import { initUniversalSearchBar } from './public/js/search-bar-universal.js';
 
         // Initialize navbar component
         initNavbar('div.mobile-overlay', { showMobileSidebarBtn: true });
@@ -204,148 +204,8 @@
                     });
                 }
 
-                // Initialize Advanced Smart Search Bar
-                initSearchBar({
-                    onProfileSearch: (suggestion) => {
-                        // Handle profile search commands
-                        const action = suggestion.action;
-
-                        if (action === 'settings' || action === 'settings-account') {
-                            window.location.href = 'settings.html';
-                            notifyInfo(`Redirection vers ${suggestion.label}...`);
-                        } else if (action === 'delete-account') {
-                            if (confirm('Êtes-vous sûr de vouloir supprimer votre compte ?')) {
-                                window.location.href = 'settings.html#delete-account';
-                            }
-                        }
-                    },
-                    onSettingsSearch: (suggestion) => {
-                        // Handle settings commands
-                        const action = suggestion.action;
-
-                        switch (action) {
-                            case 'settings-account':
-                            case 'settings-theme':
-                            case 'settings-language':
-                            case 'settings-notifications':
-                                window.location.href = 'settings.html';
-                                notifyInfo(`Accès aux ${suggestion.label}...`);
-                                break;
-                        }
-                    },
-                    onHelpSearch: (suggestion) => {
-                        // Handle help commands
-                        const action = suggestion.action;
-
-                        if (action === 'show-help') {
-                            showHelpModal();
-                        } else if (action === 'show-shortcuts') {
-                            showShortcutsModal();
-                        } else if (action === 'show-search-help') {
-                            showSearchHelpModal();
-                        }
-                    },
-                    onFilterSearch: (suggestion) => {
-                        // Handle filter commands
-                        const filter = suggestion.filter;
-
-                        if (filter.startsWith('date-')) {
-                            const range = filter.split('-')[1];
-                            filterByDate(range);
-                            notifySuccess(`Filtrage: ${suggestion.label}`);
-                        } else if (filter.startsWith('country-')) {
-                            const country = filter.split('-')[1];
-                            // Apply country filter
-                            notifySuccess(`Filtrage: ${suggestion.label}`);
-                        }
-                    },
-                    onFeedSearch: (suggestion) => {
-                        // Handle feed search commands
-                        const category = suggestion.value.split(':')[1].trim().toLowerCase();
-
-                        // Map to actual categories
-                        const categoryMap = {
-                            'technology': 'technology',
-                            'business': 'business',
-                            'sports': 'sports',
-                            'science': 'science',
-                            'entertainment': 'entertainment',
-                            'health': 'health'
-                        };
-
-                        const mappedCategory = categoryMap[category] || 'general';
-
-                        // Update active category
-                        document.querySelectorAll('.sidebar-menu-link[data-category]').forEach(btn => {
-                            btn.classList.remove('active');
-                            if (btn.dataset.category === mappedCategory) {
-                                btn.classList.add('active');
-                            }
-                        });
-
-                        // Update title
-                        document.getElementById('categoryTitle').textContent =
-                            `Actualités ${suggestion.label}`;
-
-                        // Load news
-                        currentCategory = mappedCategory;
-                        loadNews(mappedCategory);
-
-                        notifySuccess(`Chargement: ${suggestion.label}`);
-                    },
-                    onNewsSearch: (query, execute = false) => {
-                        if (execute) {
-                            // Execute search - filter current news
-                            const newsCards = document.querySelectorAll('.news-card');
-                            const searchQuery = query.toLowerCase();
-                            let foundCount = 0;
-
-                            newsCards.forEach(card => {
-                                const title = card.querySelector('.news-title')?.textContent.toLowerCase() || '';
-                                const desc = card.querySelector('.news-description')?.textContent.toLowerCase() || '';
-
-                                if (title.includes(searchQuery) || desc.includes(searchQuery)) {
-                                    card.style.display = '';
-                                    foundCount++;
-                                } else {
-                                    card.style.display = 'none';
-                                }
-                            });
-
-                            if (foundCount === 0) {
-                                notifyWarning('Aucun article trouvé');
-                            } else {
-                                notifySuccess(`${foundCount} article(s) trouvé(s)`);
-                            }
-                        } else {
-                            // Real-time search preview
-                            const newsCards = document.querySelectorAll('.news-card');
-                            const searchQuery = query.toLowerCase();
-                            const results = [];
-
-                            newsCards.forEach(card => {
-                                const title = card.querySelector('.news-title')?.textContent || '';
-                                const desc = card.querySelector('.news-description')?.textContent || '';
-                                const img = card.querySelector('.news-image')?.src || '';
-                                const source = card.querySelector('.news-source')?.textContent || '';
-                                const url = card.querySelector('.news-link')?.href || '';
-
-                                if (title.toLowerCase().includes(searchQuery) ||
-                                    desc.toLowerCase().includes(searchQuery)) {
-                                    results.push({
-                                        title,
-                                        description: desc,
-                                        urlToImage: img,
-                                        source: { name: source },
-                                        url
-                                    });
-                                }
-                            });
-
-                            updateSearchResults(results);
-                        }
-                    }
-                });
+                // Initialize Universal Smart Search Bar (autonomous module)
+                initUniversalSearchBar();
             });
         });
 
