@@ -475,6 +475,38 @@
 }
 
 /* ================================================
+   COMMAND OVERVIEW ITEMS
+================================================ */
+
+.search-command-overview {
+    position: relative;
+    cursor: pointer;
+}
+
+.search-command-overview .search-command-icon {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+    margin-right: 0.75rem;
+}
+
+.search-command-overview:hover {
+    background: var(--bg-secondary);
+    border-left: 3px solid var(--primary);
+}
+
+.search-command-overview .search-suggestion-label {
+    font-family: 'Monaco', 'Courier New', monospace;
+    font-size: 0.875rem;
+    color: var(--primary);
+    font-weight: 500;
+}
+
+.search-command-overview .search-suggestion-shortcut {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+/* ================================================
    FUZZY MATCH INDICATOR
 ================================================ */
 

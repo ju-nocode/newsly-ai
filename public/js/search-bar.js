@@ -369,13 +369,73 @@ function showCommandSuggestions(commandType, query) {
 }
 
 /**
+ * Show default commands (when no history)
+ */
+function showDefaultCommands() {
+    let container = document.getElementById('searchSuggestionsContainer');
+
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'searchSuggestionsContainer';
+        container.className = 'search-suggestions-container';
+
+        const searchWrapper = document.querySelector('.smart-search-wrapper');
+        if (searchWrapper) {
+            searchWrapper.appendChild(container);
+        }
+    }
+
+    container.innerHTML = '';
+
+    // Add header
+    const header = document.createElement('div');
+    header.className = 'search-suggestion-header';
+    header.innerHTML = `
+        <span class="search-command-icon">⚡</span>
+        <span class="search-command-desc">Commandes disponibles</span>
+    `;
+    container.appendChild(header);
+
+    // Add all command types
+    Object.entries(SEARCH_COMMANDS).forEach(([type, command]) => {
+        const item = document.createElement('div');
+        item.className = 'search-suggestion-item search-command-overview';
+
+        item.innerHTML = `
+            <span class="search-command-icon">${command.icon}</span>
+            <div class="search-suggestion-content">
+                <div class="search-suggestion-label">${command.prefix}</div>
+                <div class="search-suggestion-desc">${command.description}</div>
+            </div>
+            <div class="search-suggestion-shortcut">→</div>
+        `;
+
+        item.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            const searchInput = document.getElementById('smartSearchInput');
+            if (searchInput) {
+                searchInput.value = command.prefix + ' ';
+                searchInput.focus();
+                handleSearchInput({ target: searchInput });
+            }
+        });
+
+        container.appendChild(item);
+    });
+
+    container.classList.add('show');
+    searchState.isOpen = true;
+}
+
+/**
  * Show search history
  */
 function showSearchHistory() {
     const history = searchState.history.getRecentSearches(5);
 
     if (history.length === 0) {
-        closeSearchSuggestions();
+        // Show default commands instead of closing
+        showDefaultCommands();
         return;
     }
 
