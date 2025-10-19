@@ -989,6 +989,45 @@ function detectCommandType(query) {
 }
 
 /**
+ * Find the action for a query (from history or favorites)
+ */
+function findActionForQuery(query) {
+    const trimmedQuery = query.trim();
+
+    // Détecter le type de commande
+    const commandType = detectCommandType(trimmedQuery);
+
+    if (!commandType) {
+        console.warn('No command type found for:', trimmedQuery);
+        return null;
+    }
+
+    const command = SEARCH_COMMANDS[commandType];
+
+    // Si c'est exactement le prefix (ex: "/settings"), utiliser l'action principale
+    if (trimmedQuery.toLowerCase() === command.prefix.toLowerCase() ||
+        command.aliases?.some(alias => trimmedQuery.toLowerCase() === alias.toLowerCase())) {
+        console.log('Found main command action for:', trimmedQuery);
+        return command.action;
+    }
+
+    // Sinon, chercher dans les suggestions
+    if (command.suggestions && command.suggestions.length > 0) {
+        const suggestion = command.suggestions.find(s =>
+            s.value.toLowerCase() === trimmedQuery.toLowerCase()
+        );
+
+        if (suggestion) {
+            console.log('Found suggestion action for:', trimmedQuery);
+            return suggestion.action;
+        }
+    }
+
+    console.warn('No action found for query:', trimmedQuery);
+    return null;
+}
+
+/**
  * Show default suggestions (history or commands)
  */
 async function showDefaultSuggestions() {
@@ -1281,18 +1320,22 @@ function showFavoritesAndHistory(favorites, history) {
                 <button class="search-remove-history" data-query="${escapeHtml(item.query)}" style="margin-left: auto; background: transparent; border: none; width: 24px; height: 24px; cursor: pointer; font-size: 1.25rem; opacity: 0.6;">×</button>
             `;
 
+            // Find the real action for this query
+            const realAction = findActionForQuery(item.query);
+
             // Add to searchResults for keyboard navigation
             searchState.searchResults.push({
                 value: item.query,
                 label: item.query,
                 desc: timeAgo,
-                action: () => {
+                action: realAction || (() => {
+                    // Fallback: re-type the query
                     const searchInput = document.getElementById('smartSearchInput');
                     if (searchInput) {
                         searchInput.value = item.query;
                         handleSearchInput({ target: searchInput });
                     }
-                }
+                })
             });
 
             historyItem.addEventListener('mousedown', (e) => {
@@ -1394,18 +1437,22 @@ function showSearchHistory(history) {
             <button class="search-remove-history" data-query="${escapeHtml(item.query)}" style="margin-left: auto; background: transparent; border: none; width: 24px; height: 24px; cursor: pointer; font-size: 1.25rem; opacity: 0.6;">×</button>
         `;
 
+        // Find the real action for this query
+        const realAction = findActionForQuery(item.query);
+
         // Add to searchResults for keyboard navigation
         searchState.searchResults.push({
             value: item.query,
             label: item.query,
             desc: timeAgo,
-            action: () => {
+            action: realAction || (() => {
+                // Fallback: re-type the query
                 const searchInput = document.getElementById('smartSearchInput');
                 if (searchInput) {
                     searchInput.value = item.query;
                     handleSearchInput({ target: searchInput });
                 }
-            }
+            })
         });
 
         historyItem.addEventListener('mousedown', (e) => {
