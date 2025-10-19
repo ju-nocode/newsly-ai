@@ -1179,6 +1179,9 @@ function showSearchHistory(history) {
     let container = getSuggestionsContainer();
     container.innerHTML = '';
 
+    // Build searchResults array for keyboard navigation
+    searchState.searchResults = [];
+
     // Header
     const header = document.createElement('div');
     header.className = 'search-suggestion-header';
@@ -1192,7 +1195,8 @@ function showSearchHistory(history) {
     // History items
     history.forEach((item, index) => {
         const historyItem = document.createElement('div');
-        historyItem.className = 'search-suggestion-item search-history-item';
+        historyItem.className = 'search-suggestion-item';
+        historyItem.dataset.index = index;
 
         const icon = item.type === 'command' ? '⚡' : '🔍';
         const timeAgo = getTimeAgo(item.timestamp);
@@ -1206,16 +1210,31 @@ function showSearchHistory(history) {
             <button class="search-remove-history" data-query="${escapeHtml(item.query)}" style="margin-left: auto; background: transparent; border: none; width: 24px; height: 24px; cursor: pointer; font-size: 1.25rem; opacity: 0.6;">×</button>
         `;
 
+        // Add to searchResults for keyboard navigation
+        searchState.searchResults.push({
+            value: item.query,
+            label: item.query,
+            desc: timeAgo,
+            action: () => {
+                const searchInput = document.getElementById('smartSearchInput');
+                if (searchInput) {
+                    searchInput.value = item.query;
+                    handleSearchInput({ target: searchInput });
+                }
+            }
+        });
+
         historyItem.addEventListener('mousedown', (e) => {
             if (e.target.classList.contains('search-remove-history')) {
                 return;
             }
             e.preventDefault();
-            const searchInput = document.getElementById('smartSearchInput');
-            if (searchInput) {
-                searchInput.value = item.query;
-                handleSearchInput({ target: searchInput });
-            }
+            searchState.searchResults[index].action();
+        });
+
+        historyItem.addEventListener('mouseenter', () => {
+            searchState.selectedIndex = index;
+            updateSelectedSuggestion();
         });
 
         container.appendChild(historyItem);
@@ -1231,6 +1250,8 @@ function showSearchHistory(history) {
         });
     }
 
+    searchState.selectedIndex = 0;
+
     positionDropdown(container);
 
     // Force reflow before adding show class
@@ -1245,6 +1266,7 @@ function showSearchHistory(history) {
         container.style.zIndex = '10001';
         container.classList.add('show');
         searchState.isOpen = true;
+        updateSelectedSuggestion();
     });
 }
 
