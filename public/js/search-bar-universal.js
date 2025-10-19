@@ -4,6 +4,11 @@
 // Module complètement autonome qui fonctionne sur toutes les pages
 
 /**
+ * Import User Intelligence System
+ */
+import { userIntelligence } from './user-intelligence-system.js';
+
+/**
  * Search command configuration with universal actions
  */
 const SEARCH_COMMANDS = {
@@ -147,28 +152,326 @@ const SEARCH_COMMANDS = {
 };
 
 /**
- * Search history manager
+ * Database manager for user search preferences
+ * Now uses the centralized User Intelligence System
+ */
+class SearchPreferencesDB {
+    constructor() {
+        this.intelligence = userIntelligence;
+        this.supabase = window.supabase;
+        this.syncInProgress = false;
+    }
+
+    get isAuthenticated() {
+        return this.intelligence.isAuthenticated;
+    }
+
+    get currentUser() {
+        return this.intelligence.currentUser;
+    }
+
+    async checkAuthStatus() {
+        return await this.intelligence.checkAuth();
+    }
+
+    /**
+     * Load user preferences from database or localStorage
+     */
+    async loadUserPreferences() {
+        await this.checkAuthStatus();
+
+        if (!this.isAuthenticated) {
+            return this.loadFromLocalStorage();
+        }
+
+        try {
+            const { data, error } = await this.supabase
+                .from('user_search_preferences')
+                .select('*')
+                .eq('user_id', this.currentUser.id)
+                .single();
+
+            if (error || !data) {
+                // First time user - return defaults
+                return this.getDefaultPreferences();
+            }
+
+            return data;
+        } catch (e) {
+            console.error('Error loading user preferences from DB:', e);
+            return this.loadFromLocalStorage();
+        }
+    }
+
+    /**
+     * Save user preferences to database or localStorage
+     */
+    async saveUserPreferences(preferences) {
+        await this.checkAuthStatus();
+
+        if (!this.isAuthenticated) {
+            this.saveToLocalStorage(preferences);
+            return;
+        }
+
+        if (this.syncInProgress) return;
+
+        try {
+            this.syncInProgress = true;
+
+            const { error } = await this.supabase
+                .from('user_search_preferences')
+                .upsert({
+                    user_id: this.currentUser.id,
+                    ...preferences,
+                    updated_at: new Date().toISOString()
+                }, {
+                    onConflict: 'user_id'
+                });
+
+            if (error) {
+                console.error('Error saving preferences to DB:', error);
+                this.saveToLocalStorage(preferences);
+            }
+        } catch (e) {
+            console.error('Error saving user preferences:', e);
+            this.saveToLocalStorage(preferences);
+        } finally {
+            this.syncInProgress = false;
+        }
+    }
+
+    /**
+     * Update search history
+     */
+    async updateHistory(history) {
+        const prefs = await this.loadUserPreferences();
+        prefs.search_history = history;
+        await this.saveUserPreferences(prefs);
+    }
+
+    /**
+     * Add to favorites
+     */
+    async addFavorite(command) {
+        const prefs = await this.loadUserPreferences();
+        const favorites = prefs.favorite_commands || [];
+
+        if (!favorites.includes(command)) {
+            favorites.push(command);
+            prefs.favorite_commands = favorites;
+            await this.saveUserPreferences(prefs);
+        }
+    }
+
+    /**
+     * Remove from favorites
+     */
+    async removeFavorite(command) {
+        const prefs = await this.loadUserPreferences();
+        const favorites = prefs.favorite_commands || [];
+        prefs.favorite_commands = favorites.filter(c => c !== command);
+        await this.saveUserPreferences(prefs);
+    }
+
+    /**
+     * Increment command usage stats
+     */
+    async incrementCommandUsage(command) {
+        const prefs = await this.loadUserPreferences();
+        const stats = prefs.command_stats || {};
+        stats[command] = (stats[command] || 0) + 1;
+        prefs.command_stats = stats;
+        await this.saveUserPreferences(prefs);
+    }
+
+    /**
+     * Get personalized suggestions based on usage
+     */
+    async getPersonalizedSuggestions(limit = 5) {
+        const prefs = await this.loadUserPreferences();
+        const stats = prefs.command_stats || {};
+
+        // Sort by usage count
+        return Object.entries(stats)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, limit)
+            .map(([command]) => command);
+    }
+
+    /**
+     * Get favorite commands
+     */
+    async getFavorites() {
+        const prefs = await this.loadUserPreferences();
+        return prefs.favorite_commands || [];
+    }
+
+    /**
+     * Get custom shortcuts
+     */
+    async getCustomShortcuts() {
+        const prefs = await this.loadUserPreferences();
+        return prefs.custom_shortcuts || {};
+    }
+
+    /**
+     * Add custom shortcut
+     */
+    async addCustomShortcut(shortcut, command) {
+        const prefs = await this.loadUserPreferences();
+        const shortcuts = prefs.custom_shortcuts || {};
+        shortcuts[shortcut] = command;
+        prefs.custom_shortcuts = shortcuts;
+        await this.saveUserPreferences(prefs);
+    }
+
+    /**
+     * Load from localStorage (fallback)
+     */
+    loadFromLocalStorage() {
+        try {
+            const stored = localStorage.getItem('newsly-search-preferences');
+            if (stored) {
+                return JSON.parse(stored);
+            }
+        } catch (e) {
+            console.error('Error loading from localStorage:', e);
+        }
+        return this.getDefaultPreferences();
+    }
+
+    /**
+     * Save to localStorage (fallback)
+     */
+    saveToLocalStorage(preferences) {
+        try {
+            localStorage.setItem('newsly-search-preferences', JSON.stringify(preferences));
+        } catch (e) {
+            console.error('Error saving to localStorage:', e);
+        }
+    }
+
+    /**
+     * Get default preferences
+     */
+    getDefaultPreferences() {
+        return {
+            search_history: [],
+            favorite_commands: [],
+            custom_shortcuts: {},
+            command_stats: {},
+            preferences: {
+                maxHistoryItems: 10,
+                showFavoritesFirst: true,
+                enableShortcuts: true
+            }
+        };
+    }
+
+    /**
+     * Migrate localStorage data to database (one-time)
+     */
+    async migrateLocalStorageToDatabase() {
+        await this.checkAuthStatus();
+
+        if (!this.isAuthenticated) return;
+
+        try {
+            // Check if user already has data in database
+            const { data: existing } = await this.supabase
+                .from('user_search_preferences')
+                .select('id')
+                .eq('user_id', this.currentUser.id)
+                .single();
+
+            if (existing) return; // Already migrated
+
+            // Get localStorage data
+            const localHistory = localStorage.getItem('newsly-search-history');
+            const localPrefs = localStorage.getItem('newsly-search-preferences');
+
+            let historyData = [];
+            let prefsData = this.getDefaultPreferences();
+
+            if (localHistory) {
+                try {
+                    historyData = JSON.parse(localHistory);
+                } catch (e) {}
+            }
+
+            if (localPrefs) {
+                try {
+                    prefsData = JSON.parse(localPrefs);
+                } catch (e) {}
+            }
+
+            // Merge with history
+            if (historyData.length > 0) {
+                prefsData.search_history = historyData;
+            }
+
+            // Save to database
+            await this.saveUserPreferences(prefsData);
+
+            console.log('✅ Successfully migrated localStorage to database');
+        } catch (e) {
+            console.error('Error migrating to database:', e);
+        }
+    }
+}
+
+/**
+ * Search history manager (now uses SearchPreferencesDB)
  */
 class SearchHistory {
     constructor(maxItems = 10) {
         this.maxItems = maxItems;
         this.storageKey = 'newsly-search-history';
+        this.db = new SearchPreferencesDB();
+        this.cache = null;
+        this.cacheTimestamp = 0;
+        this.cacheDuration = 30000; // 30 seconds
     }
 
-    getHistory() {
+    /**
+     * Get history from DB or localStorage
+     */
+    async getHistory() {
+        // Use cache if available and not expired
+        if (this.cache && (Date.now() - this.cacheTimestamp) < this.cacheDuration) {
+            return this.cache;
+        }
+
         try {
-            const history = localStorage.getItem(this.storageKey);
-            return history ? JSON.parse(history) : [];
+            const prefs = await this.db.loadUserPreferences();
+            const history = prefs.search_history || [];
+
+            // Update cache
+            this.cache = history;
+            this.cacheTimestamp = Date.now();
+
+            return history;
         } catch (e) {
             console.error('Error reading search history:', e);
-            return [];
+
+            // Fallback to localStorage
+            try {
+                const localHistory = localStorage.getItem(this.storageKey);
+                return localHistory ? JSON.parse(localHistory) : [];
+            } catch (fallbackError) {
+                return [];
+            }
         }
     }
 
-    addToHistory(query, type = 'search') {
+    /**
+     * Add to history (async with DB sync)
+     */
+    async addToHistory(query, type = 'search', commandValue = null) {
         if (!query || query.trim().length === 0) return;
 
-        const history = this.getHistory();
+        const history = await this.getHistory();
         const newEntry = {
             query,
             type,
@@ -184,23 +487,95 @@ class SearchHistory {
         // Limit to maxItems
         const limited = filtered.slice(0, this.maxItems);
 
+        // Update cache
+        this.cache = limited;
+        this.cacheTimestamp = Date.now();
+
         try {
+            // Save to DB
+            await this.db.updateHistory(limited);
+
+            // Also increment command usage stats if it's a command
+            if (type === 'command' && commandValue) {
+                await this.db.incrementCommandUsage(commandValue);
+            }
+
+            // Fallback: Save to localStorage too
             localStorage.setItem(this.storageKey, JSON.stringify(limited));
         } catch (e) {
             console.error('Error saving search history:', e);
+
+            // Fallback to localStorage only
+            try {
+                localStorage.setItem(this.storageKey, JSON.stringify(limited));
+            } catch (fallbackError) {
+                console.error('Error saving to localStorage:', fallbackError);
+            }
         }
     }
 
-    clearHistory() {
+    /**
+     * Clear history from both DB and localStorage
+     */
+    async clearHistory() {
         try {
+            // Clear from DB
+            const prefs = await this.db.loadUserPreferences();
+            prefs.search_history = [];
+            await this.db.saveUserPreferences(prefs);
+
+            // Clear cache
+            this.cache = [];
+            this.cacheTimestamp = Date.now();
+
+            // Clear from localStorage
             localStorage.removeItem(this.storageKey);
         } catch (e) {
             console.error('Error clearing search history:', e);
+
+            // Fallback: Clear localStorage only
+            try {
+                localStorage.removeItem(this.storageKey);
+            } catch (fallbackError) {
+                console.error('Error clearing localStorage:', fallbackError);
+            }
         }
     }
 
-    getRecentSearches(limit = 5) {
-        return this.getHistory().slice(0, limit);
+    /**
+     * Get recent searches
+     */
+    async getRecentSearches(limit = 5) {
+        const history = await this.getHistory();
+        return history.slice(0, limit);
+    }
+
+    /**
+     * Get favorites
+     */
+    async getFavorites() {
+        return await this.db.getFavorites();
+    }
+
+    /**
+     * Add to favorites
+     */
+    async addFavorite(command) {
+        await this.db.addFavorite(command);
+    }
+
+    /**
+     * Remove from favorites
+     */
+    async removeFavorite(command) {
+        await this.db.removeFavorite(command);
+    }
+
+    /**
+     * Get personalized suggestions
+     */
+    async getPersonalizedSuggestions(limit = 5) {
+        return await this.db.getPersonalizedSuggestions(limit);
     }
 }
 
@@ -276,6 +651,15 @@ export function initUniversalSearchBar() {
             }
         }
     });
+
+    // Migrate localStorage to database (one-time, async)
+    if (searchState.history.db && searchState.history.db.migrateLocalStorageToDatabase) {
+        setTimeout(() => {
+            searchState.history.db.migrateLocalStorageToDatabase().catch(err => {
+                console.error('Migration failed:', err);
+            });
+        }, 2000); // Wait 2s after page load to avoid slowing down initial render
+    }
 }
 
 /**
@@ -442,10 +826,14 @@ function detectCommandType(query) {
 /**
  * Show default suggestions (history or commands)
  */
-function showDefaultSuggestions() {
-    const history = searchState.history.getRecentSearches(5);
+async function showDefaultSuggestions() {
+    const history = await searchState.history.getRecentSearches(5);
+    const favorites = await searchState.history.getFavorites();
 
-    if (history.length > 0) {
+    // Show favorites first if enabled and available
+    if (favorites.length > 0) {
+        showFavoritesAndHistory(favorites, history);
+    } else if (history.length > 0) {
         showSearchHistory(history);
     } else {
         showAllCommands();
@@ -632,6 +1020,124 @@ function showCommandSuggestions(commandType, query) {
 }
 
 /**
+ * Show favorites and history combined
+ */
+function showFavoritesAndHistory(favorites, history) {
+    let container = getSuggestionsContainer();
+    container.innerHTML = '';
+
+    // Favorites section
+    if (favorites.length > 0) {
+        const favHeader = document.createElement('div');
+        favHeader.className = 'search-suggestion-header';
+        favHeader.innerHTML = `
+            <span class="search-command-icon">⭐</span>
+            <span class="search-command-desc">Favoris</span>
+        `;
+        container.appendChild(favHeader);
+
+        favorites.forEach((favCommand) => {
+            // Find command in SEARCH_COMMANDS
+            let commandData = null;
+            for (const [key, cmd] of Object.entries(SEARCH_COMMANDS)) {
+                if (cmd.prefix === favCommand || cmd.aliases?.includes(favCommand)) {
+                    commandData = cmd;
+                    break;
+                }
+            }
+
+            if (commandData) {
+                const item = document.createElement('div');
+                item.className = 'search-suggestion-item';
+                item.innerHTML = `
+                    <span style="font-size: 1.25rem;">${commandData.icon || '⭐'}</span>
+                    <div class="search-suggestion-content">
+                        <div class="search-suggestion-label">${commandData.prefix}</div>
+                        <div class="search-suggestion-desc">${commandData.description}</div>
+                    </div>
+                `;
+
+                item.addEventListener('mousedown', (e) => {
+                    e.preventDefault();
+                    const searchInput = document.getElementById('smartSearchInput');
+                    if (searchInput) {
+                        searchInput.value = commandData.prefix;
+                        handleSearchInput({ target: searchInput });
+                    }
+                });
+
+                container.appendChild(item);
+            }
+        });
+    }
+
+    // History section
+    if (history.length > 0) {
+        const histHeader = document.createElement('div');
+        histHeader.className = 'search-suggestion-header';
+        histHeader.innerHTML = `
+            <span class="search-command-icon">🕒</span>
+            <span class="search-command-desc">Recherches récentes</span>
+            <button class="search-clear-history" id="clearHistoryBtn" style="margin-left: auto; padding: 0.25rem 0.5rem; background: transparent; border: 1px solid var(--border); border-radius: 4px; font-size: 0.75rem; cursor: pointer;">Effacer</button>
+        `;
+        container.appendChild(histHeader);
+
+        history.slice(0, 3).forEach((item) => {
+            const historyItem = document.createElement('div');
+            historyItem.className = 'search-suggestion-item search-history-item';
+
+            const icon = item.type === 'command' ? '⚡' : '🔍';
+            const timeAgo = getTimeAgo(item.timestamp);
+
+            historyItem.innerHTML = `
+                <span style="font-size: 1.125rem;">${icon}</span>
+                <div class="search-suggestion-content">
+                    <div class="search-suggestion-label">${escapeHtml(item.query)}</div>
+                    <div class="search-suggestion-desc">${timeAgo}</div>
+                </div>
+            `;
+
+            historyItem.addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                const searchInput = document.getElementById('smartSearchInput');
+                if (searchInput) {
+                    searchInput.value = item.query;
+                    handleSearchInput({ target: searchInput });
+                }
+            });
+
+            container.appendChild(historyItem);
+        });
+
+        // Clear history button
+        const clearBtn = container.querySelector('#clearHistoryBtn');
+        if (clearBtn) {
+            clearBtn.addEventListener('click', async (e) => {
+                e.stopPropagation();
+                await searchState.history.clearHistory();
+                showDefaultSuggestions();
+            });
+        }
+    }
+
+    positionDropdown(container);
+
+    // Force reflow before adding show class
+    container.offsetHeight;
+
+    requestAnimationFrame(() => {
+        // Force visibility with inline styles AND class
+        container.style.opacity = '1';
+        container.style.transform = 'translateY(0)';
+        container.style.pointerEvents = 'auto';
+        container.style.display = 'block';
+        container.style.zIndex = '10001';
+        container.classList.add('show');
+        searchState.isOpen = true;
+    });
+}
+
+/**
  * Show search history
  */
 function showSearchHistory(history) {
@@ -683,9 +1189,9 @@ function showSearchHistory(history) {
     // Clear history button
     const clearBtn = container.querySelector('#clearHistoryBtn');
     if (clearBtn) {
-        clearBtn.addEventListener('click', (e) => {
+        clearBtn.addEventListener('click', async (e) => {
             e.stopPropagation();
-            searchState.history.clearHistory();
+            await searchState.history.clearHistory();
             closeSearchSuggestions();
         });
     }
@@ -774,9 +1280,9 @@ function createSuggestionItem(suggestion, index) {
 /**
  * Execute suggestion action
  */
-function executeSuggestion(suggestion) {
-    // Add to history
-    searchState.history.addToHistory(suggestion.value, 'command');
+async function executeSuggestion(suggestion) {
+    // Add to history and increment stats
+    await searchState.history.addToHistory(suggestion.value, 'command', suggestion.value);
 
     // Execute action
     if (suggestion.action && typeof suggestion.action === 'function') {

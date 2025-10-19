@@ -458,7 +458,11 @@
         import { initNavbar } from './public/js/navbar-component.js';
         import { initThemeSystem, setTheme } from './public/js/theme-manager.js';
         import { initWeatherWidget, refreshWeatherLocation } from './public/js/weather.js';
+        import { userIntelligence } from './public/js/user-intelligence-system.js';
         import { initUniversalSearchBar } from './public/js/search-bar-universal.js';
+
+        // Make userIntelligence globally accessible for console testing
+        window.userIntelligence = userIntelligence;
 
         // Initialize navbar component
         initNavbar('div.mobile-overlay', { showSettingsNav: true });

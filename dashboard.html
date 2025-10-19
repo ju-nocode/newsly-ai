@@ -177,7 +177,11 @@
         import { showSuccess as notifySuccess, showError as notifyError, showInfo, showWarning as notifyWarning } from './public/js/notifications.js';
         import { showLoader, hideLoader, showSkeletons, hideSkeletons, addButtonLoader, removeButtonLoader } from './public/js/loader.js';
         import { fadeIn, shake, stagger, ripple } from './public/js/animations.js';
+        import { userIntelligence } from './public/js/user-intelligence-system.js';
         import { initUniversalSearchBar } from './public/js/search-bar-universal.js';
+
+        // Make userIntelligence globally accessible for console testing
+        window.userIntelligence = userIntelligence;
 
         // Initialize navbar component
         initNavbar('div.mobile-overlay', { showMobileSidebarBtn: true });
