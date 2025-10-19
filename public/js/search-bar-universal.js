@@ -9,15 +9,29 @@
 import { userIntelligence } from './user-intelligence-system.js';
 
 /**
- * Search command configuration with universal actions
+ * Import Search Commands Loader
  */
-const SEARCH_COMMANDS = {
+import { initializeSearchCommands } from './search-commands-loader.js';
+
+/**
+ * Search command configuration with universal actions
+ * These are the LOCAL FALLBACK commands used when database is unavailable
+ */
+const LOCAL_SEARCH_COMMANDS = {
     dashboard: {
         prefix: '/dashboard',
-        aliases: ['/home', '/accueil'],
+        aliases: ['/home', '/accueil', '/db'],
         description: 'Aller au tableau de bord',
         icon: '🏠',
         action: () => window.location.href = 'dashboard.html',
+        suggestions: []
+    },
+    index: {
+        prefix: '/index',
+        aliases: ['/landing', '/welcome', '/start'],
+        description: 'Page d\'accueil',
+        icon: '🌟',
+        action: () => window.location.href = 'index.html',
         suggestions: []
     },
     profile: {
@@ -48,10 +62,18 @@ const SEARCH_COMMANDS = {
     },
     feed: {
         prefix: '/feed:',
-        aliases: ['/news:', '/actu:', '/articles:'],
+        aliases: ['/news:', '/actu:', '/articles:', '/cat:'],
         description: 'Rechercher des actualités',
         icon: '📰',
         suggestions: [
+            {
+                value: '/feed: general',
+                label: 'Général',
+                desc: 'Actualités générales',
+                action: () => {
+                    window.location.href = 'dashboard.html?category=general';
+                }
+            },
             {
                 value: '/feed: technology',
                 label: 'Technologie',
@@ -104,7 +126,7 @@ const SEARCH_COMMANDS = {
     },
     settings: {
         prefix: '/settings',
-        aliases: ['/config', '/options', '/parametres'],
+        aliases: ['/config', '/options', '/parametres', '/params'],
         description: 'Accéder aux paramètres',
         icon: '⚙️',
         action: () => window.location.href = 'settings.html',
@@ -126,8 +148,85 @@ const SEARCH_COMMANDS = {
                 label: 'Sécurité',
                 desc: 'Mot de passe et sessions',
                 action: () => window.location.href = 'settings.html#security'
+            },
+            {
+                value: '/settings: notifications',
+                label: 'Notifications',
+                desc: 'Gérer les notifications',
+                action: () => window.location.href = 'settings.html#notifications'
+            },
+            {
+                value: '/settings: privacy',
+                label: 'Confidentialité',
+                desc: 'Paramètres de confidentialité',
+                action: () => window.location.href = 'settings.html#privacy'
+            },
+            {
+                value: '/settings: preferences',
+                label: 'Préférences',
+                desc: 'Préférences utilisateur',
+                action: () => window.location.href = 'settings.html#preferences'
             }
         ]
+    },
+    theme: {
+        prefix: '/theme:',
+        aliases: ['/apparence:', '/mode:'],
+        description: 'Changer le thème',
+        icon: '🎨',
+        suggestions: [
+            {
+                value: '/theme: light',
+                label: 'Clair',
+                desc: 'Activer le mode clair',
+                action: () => {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    localStorage.setItem('theme', 'light');
+                }
+            },
+            {
+                value: '/theme: dark',
+                label: 'Sombre',
+                desc: 'Activer le mode sombre',
+                action: () => {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                }
+            },
+            {
+                value: '/theme: auto',
+                label: 'Automatique',
+                desc: 'Suivre le système',
+                action: () => {
+                    localStorage.removeItem('theme');
+                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+                }
+            }
+        ]
+    },
+    logout: {
+        prefix: '/logout',
+        aliases: ['/deconnexion', '/signout', '/exit'],
+        description: 'Se déconnecter',
+        icon: '🚪',
+        action: async () => {
+            if (confirm('Voulez-vous vraiment vous déconnecter ?')) {
+                if (window.supabase) {
+                    await window.supabase.auth.signOut();
+                }
+                window.location.href = 'index.html';
+            }
+        },
+        suggestions: []
+    },
+    password: {
+        prefix: '/password',
+        aliases: ['/reset', '/mdp', '/forgot'],
+        description: 'Réinitialiser mot de passe',
+        icon: '🔑',
+        action: () => window.location.href = 'reset-password.html',
+        suggestions: []
     },
     help: {
         prefix: '/help',
@@ -138,7 +237,7 @@ const SEARCH_COMMANDS = {
             {
                 value: '/help: commands',
                 label: 'Commandes',
-                desc: 'Liste des commandes',
+                desc: 'Liste des commandes disponibles',
                 action: () => showHelpModal('commands')
             },
             {
@@ -146,10 +245,21 @@ const SEARCH_COMMANDS = {
                 label: 'Raccourcis',
                 desc: 'Raccourcis clavier',
                 action: () => showHelpModal('shortcuts')
+            },
+            {
+                value: '/help: search',
+                label: 'Recherche',
+                desc: 'Comment utiliser la recherche',
+                action: () => showHelpModal('search')
             }
         ]
     }
 };
+
+/**
+ * Active search commands (will be loaded from DB or use local fallback)
+ */
+let SEARCH_COMMANDS = { ...LOCAL_SEARCH_COMMANDS };
 
 /**
  * Database manager for user search preferences
@@ -543,6 +653,40 @@ class SearchHistory {
     }
 
     /**
+     * Remove specific item from history
+     */
+    async removeFromHistory(query) {
+        try {
+            const history = await this.getHistory();
+            const filtered = history.filter(item => item.query !== query);
+
+            // Update cache
+            this.cache = filtered;
+            this.cacheTimestamp = Date.now();
+
+            // Save to DB
+            await this.db.updateHistory(filtered);
+
+            // Fallback: Save to localStorage too
+            localStorage.setItem(this.storageKey, JSON.stringify(filtered));
+        } catch (e) {
+            console.error('Error removing from search history:', e);
+
+            // Fallback to localStorage only
+            try {
+                const localHistory = localStorage.getItem(this.storageKey);
+                if (localHistory) {
+                    const history = JSON.parse(localHistory);
+                    const filtered = history.filter(item => item.query !== query);
+                    localStorage.setItem(this.storageKey, JSON.stringify(filtered));
+                }
+            } catch (fallbackError) {
+                console.error('Error removing from localStorage:', fallbackError);
+            }
+        }
+    }
+
+    /**
      * Get recent searches
      */
     async getRecentSearches(limit = 5) {
@@ -594,12 +738,21 @@ const searchState = {
 /**
  * Initialize universal search bar
  */
-export function initUniversalSearchBar() {
+export async function initUniversalSearchBar() {
     const searchInput = document.getElementById('smartSearchInput');
     if (!searchInput) {
         console.warn('⚠️ Search input not found');
         return;
     }
+
+    // Load search commands from database (async)
+    initializeSearchCommands(LOCAL_SEARCH_COMMANDS).then(commands => {
+        SEARCH_COMMANDS = commands;
+        console.log('✅ Search commands initialized:', Object.keys(SEARCH_COMMANDS).length, 'commands');
+    }).catch(err => {
+        console.error('Error initializing search commands:', err);
+        // Keep using local fallback
+    });
 
     // Event listeners
     searchInput.addEventListener('input', handleSearchInput);
@@ -746,16 +899,23 @@ function handleSearchKeydown(e) {
     switch (e.key) {
         case 'ArrowDown':
             e.preventDefault();
-            searchState.selectedIndex = Math.min(
-                searchState.selectedIndex + 1,
-                searchState.searchResults.length - 1
-            );
+            // Navigation circulaire: si on est à la fin, revenir au début
+            if (searchState.selectedIndex >= searchState.searchResults.length - 1) {
+                searchState.selectedIndex = 0;
+            } else {
+                searchState.selectedIndex++;
+            }
             updateSelectedSuggestion();
             break;
 
         case 'ArrowUp':
             e.preventDefault();
-            searchState.selectedIndex = Math.max(searchState.selectedIndex - 1, 0);
+            // Navigation circulaire: si on est au début, aller à la fin
+            if (searchState.selectedIndex <= 0) {
+                searchState.selectedIndex = searchState.searchResults.length - 1;
+            } else {
+                searchState.selectedIndex--;
+            }
             updateSelectedSuggestion();
             break;
 
@@ -871,7 +1031,7 @@ function showAllCommands() {
         desc: command.description,
         action: command.action
     }));
-    searchState.selectedIndex = -1;
+    searchState.selectedIndex = 0;
 
     positionDropdown(container);
 
@@ -887,6 +1047,7 @@ function showAllCommands() {
         container.style.zIndex = '10001';
         container.classList.add('show');
         searchState.isOpen = true;
+        updateSelectedSuggestion();
     });
 }
 
@@ -1000,7 +1161,7 @@ function showCommandSuggestions(commandType, query) {
     });
 
     searchState.searchResults = suggestions;
-    searchState.selectedIndex = -1;
+    searchState.selectedIndex = 0;
 
     positionDropdown(container);
 
@@ -1016,6 +1177,7 @@ function showCommandSuggestions(commandType, query) {
         container.style.zIndex = '10001';
         container.classList.add('show');
         searchState.isOpen = true;
+        updateSelectedSuggestion();
     });
 }
 
@@ -1111,6 +1273,7 @@ function showFavoritesAndHistory(favorites, history) {
                     <div class="search-suggestion-label">${escapeHtml(item.query)}</div>
                     <div class="search-suggestion-desc">${timeAgo}</div>
                 </div>
+                <button class="search-remove-history" data-query="${escapeHtml(item.query)}" style="margin-left: auto; background: transparent; border: none; width: 24px; height: 24px; cursor: pointer; font-size: 1.25rem; opacity: 0.6;">×</button>
             `;
 
             // Add to searchResults for keyboard navigation
@@ -1128,6 +1291,9 @@ function showFavoritesAndHistory(favorites, history) {
             });
 
             historyItem.addEventListener('mousedown', (e) => {
+                if (e.target.classList.contains('search-remove-history')) {
+                    return;
+                }
                 e.preventDefault();
                 searchState.searchResults[itemIndex].action();
             });
@@ -1136,6 +1302,19 @@ function showFavoritesAndHistory(favorites, history) {
                 searchState.selectedIndex = itemIndex;
                 updateSelectedSuggestion();
             });
+
+            // Add remove button handler
+            const removeBtn = historyItem.querySelector('.search-remove-history');
+            if (removeBtn) {
+                removeBtn.addEventListener('mousedown', async (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const query = removeBtn.getAttribute('data-query');
+                    await searchState.history.removeFromHistory(query);
+                    // Refresh the display
+                    showDefaultSuggestions();
+                });
+            }
 
             container.appendChild(historyItem);
             itemIndex++;
@@ -1236,6 +1415,19 @@ function showSearchHistory(history) {
             searchState.selectedIndex = index;
             updateSelectedSuggestion();
         });
+
+        // Add remove button handler
+        const removeBtn = historyItem.querySelector('.search-remove-history');
+        if (removeBtn) {
+            removeBtn.addEventListener('mousedown', async (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const query = removeBtn.getAttribute('data-query');
+                await searchState.history.removeFromHistory(query);
+                // Refresh the display
+                showDefaultSuggestions();
+            });
+        }
 
         container.appendChild(historyItem);
     });
@@ -1338,13 +1530,15 @@ function createSuggestionItem(suggestion, index) {
  * Execute suggestion action
  */
 async function executeSuggestion(suggestion) {
-    // Add to history and increment stats
-    await searchState.history.addToHistory(suggestion.value, 'command', suggestion.value);
-
-    // Execute action
+    // Execute action FIRST (before async operations)
     if (suggestion.action && typeof suggestion.action === 'function') {
         suggestion.action();
     }
+
+    // Add to history and increment stats (async, in background)
+    searchState.history.addToHistory(suggestion.value, 'command', suggestion.value).catch(err => {
+        console.error('Error adding to history:', err);
+    });
 
     // Close suggestions
     closeSearchSuggestions();
@@ -1361,10 +1555,19 @@ async function executeSuggestion(suggestion) {
  * Update selected suggestion visual state
  */
 function updateSelectedSuggestion() {
-    const items = document.querySelectorAll('.search-suggestion-item:not(.search-history-item)');
+    const container = document.getElementById('searchSuggestionsContainer');
+    if (!container) return;
+
+    const items = container.querySelectorAll('.search-suggestion-item');
     items.forEach((item, index) => {
         if (index === searchState.selectedIndex) {
             item.classList.add('selected');
+            // Scroll into view if needed
+            item.scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest',
+                inline: 'nearest'
+            });
         } else {
             item.classList.remove('selected');
         }
