@@ -579,7 +579,12 @@ class SearchHistory {
      * Add to history (async with DB sync)
      */
     async addToHistory(query, type = 'search', commandValue = null) {
-        if (!query || query.trim().length === 0) return;
+        if (!query || query.trim().length === 0) {
+            console.log('⚠️ Empty query, skipping history');
+            return;
+        }
+
+        console.log('📝 Adding to history:', { query, type, commandValue });
 
         const history = await this.getHistory();
         const newEntry = {
@@ -597,29 +602,37 @@ class SearchHistory {
         // Limit to maxItems
         const limited = filtered.slice(0, this.maxItems);
 
-        // Update cache
+        // Update cache IMMÉDIATEMENT pour affichage dynamique
         this.cache = limited;
         this.cacheTimestamp = Date.now();
+        console.log('✅ Cache updated, new history length:', limited.length);
 
         try {
             // Save to DB
+            console.log('💾 Saving to Supabase...');
             await this.db.updateHistory(limited);
+            console.log('✅ Saved to Supabase');
 
             // Also increment command usage stats if it's a command
             if (type === 'command' && commandValue) {
+                console.log('📊 Incrementing command stats...');
                 await this.db.incrementCommandUsage(commandValue);
+                console.log('✅ Stats updated');
             }
 
             // Fallback: Save to localStorage too
             localStorage.setItem(this.storageKey, JSON.stringify(limited));
+            console.log('✅ Saved to localStorage');
+
         } catch (e) {
-            console.error('Error saving search history:', e);
+            console.error('❌ Error saving search history to DB:', e);
 
             // Fallback to localStorage only
             try {
                 localStorage.setItem(this.storageKey, JSON.stringify(limited));
+                console.log('✅ Saved to localStorage (fallback)');
             } catch (fallbackError) {
-                console.error('Error saving to localStorage:', fallbackError);
+                console.error('❌ Error saving to localStorage:', fallbackError);
             }
         }
     }
@@ -753,10 +766,36 @@ export async function initUniversalSearchBar() {
         SEARCH_COMMANDS = commands;
         console.log('✅ Search commands initialized:', Object.keys(SEARCH_COMMANDS).length, 'commands');
 
-        // Vérifier qu'une commande a bien ses actions
-        const testCmd = Object.values(SEARCH_COMMANDS)[0];
-        if (testCmd && testCmd.suggestions && testCmd.suggestions.length > 0) {
-            console.log('🧪 Test suggestion has action:', !!testCmd.suggestions[0].action);
+        // Vérifier TOUTES les commandes et suggestions
+        let totalSuggestions = 0;
+        let suggestionsWithActions = 0;
+        let commandsWithActions = 0;
+
+        Object.entries(SEARCH_COMMANDS).forEach(([key, cmd]) => {
+            // Vérifier la commande principale
+            if (cmd.action) commandsWithActions++;
+
+            // Vérifier les suggestions
+            if (cmd.suggestions && cmd.suggestions.length > 0) {
+                cmd.suggestions.forEach(s => {
+                    totalSuggestions++;
+                    if (s.action) suggestionsWithActions++;
+                    else console.warn('⚠️ Suggestion sans action:', cmd.prefix, '→', s.label);
+                });
+            }
+        });
+
+        console.log('📊 Stats:', {
+            commands: Object.keys(SEARCH_COMMANDS).length,
+            commandsWithActions,
+            totalSuggestions,
+            suggestionsWithActions
+        });
+
+        if (suggestionsWithActions < totalSuggestions) {
+            console.error('❌ PROBLÈME: Certaines suggestions n\'ont pas d\'action!');
+        } else {
+            console.log('✅ PARFAIT: Toutes les suggestions ont leurs actions!');
         }
     }).catch(err => {
         console.error('Error initializing search commands:', err);
@@ -1605,10 +1644,14 @@ async function executeSuggestion(suggestion) {
         actionType: typeof suggestion.action
     });
 
-    // Add to history (async, non-bloquant)
-    searchState.history.addToHistory(suggestion.value, 'command', suggestion.value).catch(err => {
-        console.error('Error adding to history:', err);
-    });
+    // Add to history AVANT l'exécution (pour que ça s'enregistre même si la page redirige)
+    try {
+        console.log('💾 Saving to history:', suggestion.value);
+        await searchState.history.addToHistory(suggestion.value, 'command', suggestion.value);
+        console.log('✅ Saved to history successfully');
+    } catch (err) {
+        console.error('❌ Error adding to history:', err);
+    }
 
     // Execute action
     if (suggestion.action && typeof suggestion.action === 'function') {
