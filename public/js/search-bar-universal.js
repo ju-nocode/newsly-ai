@@ -1026,6 +1026,10 @@ function showFavoritesAndHistory(favorites, history) {
     let container = getSuggestionsContainer();
     container.innerHTML = '';
 
+    // Build searchResults array for keyboard navigation
+    searchState.searchResults = [];
+    let itemIndex = 0;
+
     // Favorites section
     if (favorites.length > 0) {
         const favHeader = document.createElement('div');
@@ -1049,6 +1053,7 @@ function showFavoritesAndHistory(favorites, history) {
             if (commandData) {
                 const item = document.createElement('div');
                 item.className = 'search-suggestion-item';
+                item.dataset.index = itemIndex;
                 item.innerHTML = `
                     <span style="font-size: 1.25rem;">${commandData.icon || '⭐'}</span>
                     <div class="search-suggestion-content">
@@ -1057,16 +1062,26 @@ function showFavoritesAndHistory(favorites, history) {
                     </div>
                 `;
 
+                // Add to searchResults for keyboard navigation
+                searchState.searchResults.push({
+                    value: commandData.prefix + (commandData.prefix.endsWith(':') ? ' ' : ''),
+                    label: commandData.prefix,
+                    desc: commandData.description,
+                    action: commandData.action
+                });
+
                 item.addEventListener('mousedown', (e) => {
                     e.preventDefault();
-                    const searchInput = document.getElementById('smartSearchInput');
-                    if (searchInput) {
-                        searchInput.value = commandData.prefix;
-                        handleSearchInput({ target: searchInput });
-                    }
+                    executeSuggestion(searchState.searchResults[itemIndex]);
+                });
+
+                item.addEventListener('mouseenter', () => {
+                    searchState.selectedIndex = itemIndex;
+                    updateSelectedSuggestion();
                 });
 
                 container.appendChild(item);
+                itemIndex++;
             }
         });
     }
@@ -1084,7 +1099,8 @@ function showFavoritesAndHistory(favorites, history) {
 
         history.slice(0, 3).forEach((item) => {
             const historyItem = document.createElement('div');
-            historyItem.className = 'search-suggestion-item search-history-item';
+            historyItem.className = 'search-suggestion-item';
+            historyItem.dataset.index = itemIndex;
 
             const icon = item.type === 'command' ? '⚡' : '🔍';
             const timeAgo = getTimeAgo(item.timestamp);
@@ -1097,16 +1113,32 @@ function showFavoritesAndHistory(favorites, history) {
                 </div>
             `;
 
-            historyItem.addEventListener('mousedown', (e) => {
-                e.preventDefault();
-                const searchInput = document.getElementById('smartSearchInput');
-                if (searchInput) {
-                    searchInput.value = item.query;
-                    handleSearchInput({ target: searchInput });
+            // Add to searchResults for keyboard navigation
+            searchState.searchResults.push({
+                value: item.query,
+                label: item.query,
+                desc: timeAgo,
+                action: () => {
+                    const searchInput = document.getElementById('smartSearchInput');
+                    if (searchInput) {
+                        searchInput.value = item.query;
+                        handleSearchInput({ target: searchInput });
+                    }
                 }
             });
 
+            historyItem.addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                searchState.searchResults[itemIndex].action();
+            });
+
+            historyItem.addEventListener('mouseenter', () => {
+                searchState.selectedIndex = itemIndex;
+                updateSelectedSuggestion();
+            });
+
             container.appendChild(historyItem);
+            itemIndex++;
         });
 
         // Clear history button
@@ -1119,6 +1151,8 @@ function showFavoritesAndHistory(favorites, history) {
             });
         }
     }
+
+    searchState.selectedIndex = 0;
 
     positionDropdown(container);
 
@@ -1134,6 +1168,7 @@ function showFavoritesAndHistory(favorites, history) {
         container.style.zIndex = '10001';
         container.classList.add('show');
         searchState.isOpen = true;
+        updateSelectedSuggestion();
     });
 }
 
