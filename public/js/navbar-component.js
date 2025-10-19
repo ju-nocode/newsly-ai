@@ -40,10 +40,10 @@ export function createNavbar(config = {}) {
             </a>
 
             <!-- Smart Search Bar -->
-            <div class="smart-search-wrapper">
-                <div class="smart-search-container">
-                    <div class="smart-search-icon">
-                        <img src="https://img.icons8.com/ios/18/search--v1.png" alt="Search" class="icon-secondary">
+            <div class="smart-search-wrapper" style="position: relative; display: flex; align-items: center; flex: 1; max-width: 600px; min-width: 200px;">
+                <div class="smart-search-container" style="position: relative; flex: 1; display: flex; align-items: center; background: var(--bg-secondary, #f3f4f6); border: 1px solid var(--border, #e5e7eb); border-radius: 8px; height: 42px; transition: all 0.2s ease;">
+                    <div class="smart-search-icon" style="position: absolute; left: 1rem; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 1;">
+                        <img src="https://img.icons8.com/ios/18/search--v1.png" alt="Search" class="icon-secondary" style="width: 18px; height: 18px; opacity: 0.6;">
                     </div>
                     <input
                         type="text"
@@ -52,12 +52,13 @@ export function createNavbar(config = {}) {
                         placeholder="Rechercher... (essayez /profile: ou /feed:)"
                         autocomplete="off"
                         spellcheck="false"
+                        style="flex: 1; padding: 0.75rem 3rem; background: transparent; border: none; outline: none; color: var(--text-primary, #111827); font-size: 0.9375rem; font-family: inherit; width: 100%; height: 100%;"
                     >
-                    <div class="search-kbd-hint">
-                        <kbd class="search-kbd">⌘</kbd>
-                        <kbd class="search-kbd">K</kbd>
+                    <div class="search-kbd-hint" style="position: absolute; right: 3rem; display: flex; align-items: center; gap: 0.25rem; pointer-events: none; z-index: 1;">
+                        <kbd class="search-kbd" style="padding: 0.25rem 0.5rem; background: var(--bg-tertiary, #e5e7eb); border: 1px solid var(--border, #d1d5db); border-radius: 4px; font-size: 0.75rem; color: var(--text-secondary, #6b7280); font-family: 'Monaco', monospace;">⌘</kbd>
+                        <kbd class="search-kbd" style="padding: 0.25rem 0.5rem; background: var(--bg-tertiary, #e5e7eb); border: 1px solid var(--border, #d1d5db); border-radius: 4px; font-size: 0.75rem; color: var(--text-secondary, #6b7280); font-family: 'Monaco', monospace;">K</kbd>
                     </div>
-                    <button class="smart-search-btn" id="smartSearchBtn" aria-label="Search">
+                    <button class="smart-search-btn" id="smartSearchBtn" aria-label="Search" style="position: absolute; right: 0.5rem; background: transparent; border: none; padding: 0.5rem; border-radius: 4px; cursor: pointer; color: var(--text-secondary, #6b7280); display: flex; align-items: center; justify-content: center; transition: all 0.2s; z-index: 1;">
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                             <path d="M6.5 0a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13zm0 11.5a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/>
                             <path d="M13.854 13.146l-2.707-2.707a.5.5 0 0 0-.708.708l2.707 2.707a.5.5 0 0 0 .708-.708z"/>
