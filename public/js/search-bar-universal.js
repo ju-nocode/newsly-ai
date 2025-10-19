@@ -1565,11 +1565,13 @@ function createSuggestionItem(suggestion, index) {
         <div class="search-suggestion-shortcut">↵</div>
     `;
 
-    // Mousedown pour exécuter avant le blur
+    // Utiliser mousedown pour exécuter AVANT le blur
     item.addEventListener('mousedown', (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Empêche le blur
         e.stopPropagation();
-        console.log('🖱️ Suggestion clicked:', suggestion.label, suggestion);
+        console.log('🖱️ Suggestion mousedown:', suggestion.label, suggestion);
+
+        // Exécuter immédiatement
         executeSuggestion(suggestion);
     });
 
@@ -1586,13 +1588,33 @@ function createSuggestionItem(suggestion, index) {
  */
 async function executeSuggestion(suggestion) {
     console.log('🚀 Executing suggestion:', suggestion);
+    console.log('📝 Suggestion details:', {
+        label: suggestion.label,
+        value: suggestion.value,
+        hasAction: !!suggestion.action,
+        actionType: typeof suggestion.action
+    });
 
-    // Execute action FIRST (before async operations)
+    // Add to history (async, non-bloquant)
+    searchState.history.addToHistory(suggestion.value, 'command', suggestion.value).catch(err => {
+        console.error('Error adding to history:', err);
+    });
+
+    // Execute action
     if (suggestion.action && typeof suggestion.action === 'function') {
-        console.log('✅ Action found, executing...');
+        console.log('✅ Action found, executing NOW...');
+
         try {
-            suggestion.action();
-            console.log('✅ Action executed successfully');
+            const result = suggestion.action();
+            console.log('✅ Action executed, result:', result);
+
+            // Si c'est une Promise, attendre
+            if (result instanceof Promise) {
+                console.log('⏳ Waiting for async action...');
+                await result;
+                console.log('✅ Async action completed');
+            }
+
         } catch (error) {
             console.error('❌ Error executing action:', error);
         }
@@ -1600,20 +1622,9 @@ async function executeSuggestion(suggestion) {
         console.warn('⚠️ No action found for suggestion:', suggestion);
     }
 
-    // Add to history and increment stats (async, in background)
-    searchState.history.addToHistory(suggestion.value, 'command', suggestion.value).catch(err => {
-        console.error('Error adding to history:', err);
-    });
-
-    // Close suggestions
-    closeSearchSuggestions();
-
-    // Clear input
-    const searchInput = document.getElementById('smartSearchInput');
-    if (searchInput) {
-        searchInput.value = '';
-        searchInput.blur();
-    }
+    // NE PAS fermer ni blur - laisser la navigation se faire
+    // La page va recharger de toute façon si c'est une navigation
+    console.log('🏁 executeSuggestion completed');
 }
 
 /**
@@ -1660,9 +1671,12 @@ function getSuggestionsContainer() {
 
         // Empêcher le blur quand on clique dans le container
         container.addEventListener('mousedown', (e) => {
-            e.preventDefault(); // Empêche le blur de l'input
-            console.log('🖱️ Mousedown sur container, blur prevented');
-        });
+            // Ne preventDefault que si c'est sur le container lui-même, pas sur les items
+            if (e.target === container || e.target.classList.contains('search-suggestion-header')) {
+                e.preventDefault(); // Empêche le blur de l'input
+                console.log('🖱️ Mousedown sur container/header, blur prevented');
+            }
+        }, true); // Capture phase pour attraper avant les items
 
         // Attach to body instead of wrapper to avoid layout issues
         document.body.appendChild(container);
