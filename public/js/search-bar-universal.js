@@ -1644,6 +1644,14 @@ async function executeSuggestion(suggestion) {
         actionType: typeof suggestion.action
     });
 
+    // Clear input and close dropdown IMMEDIATELY
+    const searchInput = document.getElementById('smartSearchInput');
+    if (searchInput) {
+        searchInput.value = '';
+        searchInput.blur();
+    }
+    closeSearchSuggestions();
+
     // Add to history AVANT l'exécution (pour que ça s'enregistre même si la page redirige)
     try {
         console.log('💾 Saving to history:', suggestion.value);
@@ -1675,8 +1683,6 @@ async function executeSuggestion(suggestion) {
         console.warn('⚠️ No action found for suggestion:', suggestion);
     }
 
-    // NE PAS fermer ni blur - laisser la navigation se faire
-    // La page va recharger de toute façon si c'est une navigation
     console.log('🏁 executeSuggestion completed');
 }
 
