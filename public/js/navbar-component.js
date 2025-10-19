@@ -38,8 +38,8 @@ export function createNavbar(config = {}) {
                 </a>
             </div>
 
-            <!-- Center Section: Smart Search Bar -->
-            <div class="smart-search-wrapper" style="position: relative; display: flex; align-items: center; flex: 1; max-width: 600px; min-width: 200px;">
+            <!-- Center Section: Smart Search Bar (Floating Centered) -->
+            <div class="smart-search-wrapper">
                 <div class="smart-search-container" style="position: relative; flex: 1; display: flex; align-items: center; background: var(--bg-secondary, #f3f4f6); border: 1px solid var(--border, #e5e7eb); border-radius: 8px; height: 42px; transition: all 0.2s ease;">
                     <div class="smart-search-icon" style="position: absolute; left: 1rem; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 1;">
                         <img src="https://img.icons8.com/ios/18/search--v1.png" alt="Search" class="icon-secondary" style="width: 18px; height: 18px; opacity: 0.6;">
