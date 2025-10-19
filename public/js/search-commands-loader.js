@@ -198,21 +198,20 @@ export function setCachedCommands(commands) {
  * Main function to initialize search commands
  */
 export async function initializeSearchCommands(localCommands) {
-    // Try to get from cache first
-    let cachedCommands = getCachedCommands();
-    if (cachedCommands) {
-        console.log('✅ Using cached search commands');
-        return cachedCommands;
-    }
+    console.log('🔄 Initializing search commands...');
+
+    // NE PAS utiliser le cache car JSON.stringify supprime les fonctions
+    // On charge toujours depuis la DB ou on utilise les commandes locales
 
     // Load from database
     const dbCommands = await loadSearchCommandsFromDB();
 
-    // Merge with local fallback
-    const mergedCommands = mergeCommands(dbCommands, localCommands);
+    if (dbCommands && Object.keys(dbCommands).length > 0) {
+        console.log('✅ Using database commands:', Object.keys(dbCommands).length);
+        return dbCommands;
+    }
 
-    // Cache the result
-    setCachedCommands(mergedCommands);
-
-    return mergedCommands;
+    // Fallback: use local commands
+    console.log('✅ Using local commands fallback:', Object.keys(localCommands).length);
+    return localCommands;
 }

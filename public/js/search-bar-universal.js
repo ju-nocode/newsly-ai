@@ -745,13 +745,23 @@ export async function initUniversalSearchBar() {
         return;
     }
 
+    // Nettoyer le vieux cache (qui n'avait pas les actions)
+    localStorage.removeItem('newsly-search-commands-cache');
+
     // Load search commands from database (async)
     initializeSearchCommands(LOCAL_SEARCH_COMMANDS).then(commands => {
         SEARCH_COMMANDS = commands;
         console.log('✅ Search commands initialized:', Object.keys(SEARCH_COMMANDS).length, 'commands');
+
+        // Vérifier qu'une commande a bien ses actions
+        const testCmd = Object.values(SEARCH_COMMANDS)[0];
+        if (testCmd && testCmd.suggestions && testCmd.suggestions.length > 0) {
+            console.log('🧪 Test suggestion has action:', !!testCmd.suggestions[0].action);
+        }
     }).catch(err => {
         console.error('Error initializing search commands:', err);
         // Keep using local fallback
+        SEARCH_COMMANDS = LOCAL_SEARCH_COMMANDS;
     });
 
     // Event listeners
