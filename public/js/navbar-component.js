@@ -12,34 +12,33 @@ export function createNavbar(config = {}) {
     <!-- Navigation Top Bar -->
     <nav class="navbar dashboard-nav">
         <div class="nav-container">
-            ${showMobileSidebarBtn ? `
-            <!-- Bouton burger pour menu mobile -->
-            <button class="mobile-menu-btn" id="mobileSidebarBtn" aria-label="Ouvrir menu">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
-            </button>
-            ` : ''}
+            <!-- Left Section: Logo (+ optional mobile button) -->
+            <div class="nav-left">
+                ${showMobileSidebarBtn ? `
+                <button class="mobile-menu-btn" id="mobileSidebarBtn" aria-label="Ouvrir menu">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                ` : ''}
+                ${showSettingsNav ? `
+                <button class="mobile-menu-btn" id="mobileSettingsNavBtn" aria-label="Ouvrir menu paramètres">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                ` : ''}
+                <a href="dashboard.html" class="logo">
+                    <img src="https://img.icons8.com/ios/24/news.png" alt="News" class="logo-icon icon-white">
+                    <span class="logo-text">Newsly AI</span>
+                </a>
+            </div>
 
-            ${showSettingsNav ? `
-            <!-- Bouton burger pour menu mobile (settings nav) -->
-            <button class="mobile-menu-btn" id="mobileSettingsNavBtn" aria-label="Ouvrir menu paramètres">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
-            </button>
-            ` : ''}
-
-            <a href="dashboard.html" class="logo">
-                <img src="https://img.icons8.com/ios/24/news.png" alt="News" class="logo-icon icon-white">
-                <span class="logo-text">Newsly AI</span>
-            </a>
-
-            <!-- Smart Search Bar -->
+            <!-- Center Section: Smart Search Bar -->
             <div class="smart-search-wrapper" style="position: relative; display: flex; align-items: center; flex: 1; max-width: 600px; min-width: 200px;">
                 <div class="smart-search-container" style="position: relative; flex: 1; display: flex; align-items: center; background: var(--bg-secondary, #f3f4f6); border: 1px solid var(--border, #e5e7eb); border-radius: 8px; height: 42px; transition: all 0.2s ease;">
                     <div class="smart-search-icon" style="position: absolute; left: 1rem; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 1;">
@@ -67,18 +66,20 @@ export function createNavbar(config = {}) {
                 </div>
             </div>
 
-            <div class="nav-user-weather">
-                <!-- Weather Widget -->
-                <div class="weather-widget" id="weatherWidget">
-                    <div class="weather-loading">
-                        <span>🌤️</span>
+            <!-- Right Section: Weather + Burger -->
+            <div class="nav-right">
+                <div class="nav-user-weather">
+                    <!-- Weather Widget -->
+                    <div class="weather-widget" id="weatherWidget">
+                        <div class="weather-loading">
+                            <span>🌤️</span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="nav-links">
-                <!-- Burger Menu -->
-                <button class="burger-menu" id="burgerBtn">
+                <div class="nav-links">
+                    <!-- Burger Menu -->
+                    <button class="burger-menu" id="burgerBtn">
                     <span class="burger-line"></span>
                     <span class="burger-line"></span>
                     <span class="burger-line"></span>
@@ -144,6 +145,7 @@ export function createNavbar(config = {}) {
                         <img src="https://img.icons8.com/ios/20/exit.png" alt="Logout" class="icon-secondary">
                         <span data-i18n="nav.logout">Déconnexion</span>
                     </button>
+                </div>
                 </div>
             </div>
         </div>
