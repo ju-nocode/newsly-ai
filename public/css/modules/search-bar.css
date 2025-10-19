@@ -106,13 +106,14 @@
     top: calc(100% + 0.5rem);
     left: 0;
     right: 0;
+    width: 100%;
     background: var(--bg-primary);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
     max-height: 400px;
     overflow-y: auto;
-    z-index: 10000;
+    z-index: 10001;
     opacity: 0;
     transform: translateY(-10px);
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -293,8 +294,8 @@
     }
 
     .search-suggestions-container {
-        left: -1rem;
-        right: -1rem;
+        left: 0;
+        right: 0;
         border-radius: var(--radius-md);
     }
 
@@ -481,12 +482,15 @@
 .search-command-overview {
     position: relative;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
 .search-command-overview .search-command-icon {
     font-size: 1.25rem;
     flex-shrink: 0;
-    margin-right: 0.75rem;
+    line-height: 1;
 }
 
 .search-command-overview:hover {
