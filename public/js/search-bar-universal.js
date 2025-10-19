@@ -287,6 +287,7 @@ export function initUniversalSearchBar() {
  */
 function handleSearchInput(e) {
     const query = e.target.value;
+    console.log('⌨️ Search input:', query);
 
     // Clear previous timeout
     if (searchState.searchTimeout) {
@@ -295,12 +296,14 @@ function handleSearchInput(e) {
 
     // Empty query - show default suggestions
     if (!query || query.trim().length === 0) {
+        console.log('Empty query - showing default');
         showDefaultSuggestions();
         return;
     }
 
     // Just "/" - show all commands
     if (query === '/') {
+        console.log('Just "/" - showing all commands');
         showAllCommands();
         return;
     }
@@ -399,10 +402,13 @@ function handleSearchKeydown(e) {
  * Handle search focus
  */
 function handleSearchFocus() {
+    console.log('🎯 Search focus triggered');
     const searchInput = document.getElementById('smartSearchInput');
     const query = searchInput?.value || '';
+    console.log('Query:', query);
 
     if (!query || query.trim().length === 0) {
+        console.log('Showing default suggestions...');
         showDefaultSuggestions();
     } else if (query.length >= 1) {
         handleSearchInput({ target: searchInput });
@@ -460,7 +466,9 @@ function showDefaultSuggestions() {
  * Show all available commands
  */
 function showAllCommands() {
+    console.log('📋 Showing all commands...');
     let container = getSuggestionsContainer();
+    console.log('Container:', container);
     container.innerHTML = '';
 
     // Header
@@ -790,9 +798,13 @@ function getSuggestionsContainer() {
  */
 function positionDropdown(container) {
     const searchInput = document.getElementById('smartSearchInput');
-    if (!searchInput) return;
+    if (!searchInput) {
+        console.warn('⚠️ Search input not found for positioning');
+        return;
+    }
 
     const rect = searchInput.getBoundingClientRect();
+    console.log('📍 Positioning dropdown at:', { top: rect.bottom + 8, left: rect.left, width: rect.width });
 
     container.style.position = 'fixed';
     container.style.top = `${rect.bottom + 8}px`;
