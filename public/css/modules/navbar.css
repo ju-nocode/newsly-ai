@@ -114,7 +114,6 @@
 
 /* Smart Search Bar in Navbar - Centered in grid */
 .smart-search-wrapper {
-  position: relative !important;
   display: flex;
   align-items: center;
   justify-self: center;

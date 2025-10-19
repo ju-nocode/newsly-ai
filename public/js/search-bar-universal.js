@@ -260,6 +260,25 @@ export function initUniversalSearchBar() {
         }
     });
 
+    // Reposition dropdown on scroll/resize
+    window.addEventListener('scroll', () => {
+        if (searchState.isOpen) {
+            const container = document.getElementById('searchSuggestionsContainer');
+            if (container) {
+                positionDropdown(container);
+            }
+        }
+    }, true);
+
+    window.addEventListener('resize', () => {
+        if (searchState.isOpen) {
+            const container = document.getElementById('searchSuggestionsContainer');
+            if (container) {
+                positionDropdown(container);
+            }
+        }
+    });
+
     console.log('✅ Universal Search Bar initialized');
 }
 
@@ -470,6 +489,7 @@ function showAllCommands() {
     }));
     searchState.selectedIndex = -1;
 
+    positionDropdown(container);
     container.classList.add('show');
     searchState.isOpen = true;
 }
@@ -517,6 +537,7 @@ function showPartialCommandMatches(query) {
     }));
     searchState.selectedIndex = 0;
 
+    positionDropdown(container);
     container.classList.add('show');
     searchState.isOpen = true;
     updateSelectedSuggestion();
@@ -573,6 +594,7 @@ function showCommandSuggestions(commandType, query) {
     searchState.searchResults = suggestions;
     searchState.selectedIndex = -1;
 
+    positionDropdown(container);
     container.classList.add('show');
     searchState.isOpen = true;
 }
@@ -636,6 +658,7 @@ function showSearchHistory(history) {
         });
     }
 
+    positionDropdown(container);
     container.classList.add('show');
     searchState.isOpen = true;
 }
@@ -752,13 +775,29 @@ function getSuggestionsContainer() {
         container.id = 'searchSuggestionsContainer';
         container.className = 'search-suggestions-container';
 
-        const searchWrapper = document.querySelector('.smart-search-wrapper');
-        if (searchWrapper) {
-            searchWrapper.appendChild(container);
-        }
+        // Attach to body instead of wrapper to avoid layout issues
+        document.body.appendChild(container);
+
+        // Position it relative to search input
+        positionDropdown(container);
     }
 
     return container;
+}
+
+/**
+ * Position dropdown relative to search input
+ */
+function positionDropdown(container) {
+    const searchInput = document.getElementById('smartSearchInput');
+    if (!searchInput) return;
+
+    const rect = searchInput.getBoundingClientRect();
+
+    container.style.position = 'fixed';
+    container.style.top = `${rect.bottom + 8}px`;
+    container.style.left = `${rect.left}px`;
+    container.style.width = `${rect.width}px`;
 }
 
 /**

@@ -102,18 +102,14 @@
 ================================================ */
 
 .search-suggestions-container {
-    position: absolute !important;
-    top: calc(100% + 0.5rem) !important;
-    left: 0 !important;
-    right: 0 !important;
-    width: 100% !important;
+    position: fixed;
     background: var(--bg-primary);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
     max-height: 400px;
     overflow-y: auto;
-    z-index: 10001 !important;
+    z-index: 10001;
     opacity: 0;
     transform: translateY(-10px);
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
