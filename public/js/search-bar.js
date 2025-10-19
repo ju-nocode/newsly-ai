@@ -290,6 +290,12 @@ function handleSearchInput(e) {
         return;
     }
 
+    // Just "/" - show all available commands
+    if (query === '/') {
+        showAllCommands();
+        return;
+    }
+
     // Detect command type (with aliases support)
     const commandType = detectCommandType(query);
     searchState.currentCommand = commandType;
@@ -297,6 +303,9 @@ function handleSearchInput(e) {
     if (commandType) {
         // Show command suggestions with fuzzy matching
         showCommandSuggestions(commandType, query);
+    } else if (query.startsWith('/')) {
+        // Partial command - show matching commands
+        showPartialCommandMatches(query);
     } else if (query.length >= 2) {
         // Regular search with debounce
         searchState.searchTimeout = setTimeout(() => {
@@ -366,6 +375,171 @@ function showCommandSuggestions(commandType, query) {
 
     // Display suggestions
     displaySuggestions(suggestions, commandType);
+}
+
+/**
+ * Show partial command matches when user types "/x..."
+ */
+function showPartialCommandMatches(query) {
+    const lowerQuery = query.toLowerCase();
+
+    // Find matching commands
+    const matches = Object.entries(SEARCH_COMMANDS).filter(([type, command]) => {
+        return command.prefix.toLowerCase().startsWith(lowerQuery) ||
+               command.aliases?.some(alias => alias.toLowerCase().startsWith(lowerQuery));
+    });
+
+    if (matches.length === 0) {
+        closeSearchSuggestions();
+        return;
+    }
+
+    let container = document.getElementById('searchSuggestionsContainer');
+
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'searchSuggestionsContainer';
+        container.className = 'search-suggestions-container';
+
+        const searchWrapper = document.querySelector('.smart-search-wrapper');
+        if (searchWrapper) {
+            searchWrapper.appendChild(container);
+        }
+    }
+
+    container.innerHTML = '';
+
+    // Add header
+    const header = document.createElement('div');
+    header.className = 'search-suggestion-header';
+    header.innerHTML = `
+        <span class="search-command-icon">⚡</span>
+        <span class="search-command-desc">Commandes correspondantes</span>
+        <span class="search-suggestion-hint" style="margin-left: auto; font-size: 0.75rem; color: var(--text-secondary);">Tab pour compléter</span>
+    `;
+    container.appendChild(header);
+
+    // Add matching commands
+    matches.forEach(([type, command], index) => {
+        const item = document.createElement('div');
+        item.className = 'search-suggestion-item search-command-overview';
+        item.dataset.index = index;
+        item.dataset.value = command.prefix + ' ';
+
+        item.innerHTML = `
+            <span class="search-command-icon">${command.icon}</span>
+            <div class="search-suggestion-content">
+                <div class="search-suggestion-label">${command.prefix}</div>
+                <div class="search-suggestion-desc">${command.description}</div>
+            </div>
+            <div class="search-suggestion-shortcut">⇥</div>
+        `;
+
+        item.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            const searchInput = document.getElementById('smartSearchInput');
+            if (searchInput) {
+                searchInput.value = command.prefix + ' ';
+                searchInput.focus();
+                handleSearchInput({ target: searchInput });
+            }
+        });
+
+        item.addEventListener('mouseenter', () => {
+            searchState.selectedIndex = index;
+            updateSelectedSuggestion();
+        });
+
+        container.appendChild(item);
+    });
+
+    // Store matches as search results for Tab autocomplete
+    searchState.searchResults = matches.map(([type, command]) => ({
+        value: command.prefix + ' ',
+        label: command.prefix,
+        desc: command.description
+    }));
+    searchState.selectedIndex = 0; // Select first by default
+
+    container.classList.add('show');
+    searchState.isOpen = true;
+    updateSelectedSuggestion();
+}
+
+/**
+ * Show all commands when user types "/"
+ */
+function showAllCommands() {
+    let container = document.getElementById('searchSuggestionsContainer');
+
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'searchSuggestionsContainer';
+        container.className = 'search-suggestions-container';
+
+        const searchWrapper = document.querySelector('.smart-search-wrapper');
+        if (searchWrapper) {
+            searchWrapper.appendChild(container);
+        }
+    }
+
+    container.innerHTML = '';
+
+    // Add header
+    const header = document.createElement('div');
+    header.className = 'search-suggestion-header';
+    header.innerHTML = `
+        <span class="search-command-icon">⚡</span>
+        <span class="search-command-desc">Commandes disponibles</span>
+        <span class="search-suggestion-hint" style="margin-left: auto; font-size: 0.75rem; color: var(--text-secondary);">Appuyez sur Tab pour compléter</span>
+    `;
+    container.appendChild(header);
+
+    // Add all command types
+    const commands = Object.entries(SEARCH_COMMANDS);
+    commands.forEach(([type, command], index) => {
+        const item = document.createElement('div');
+        item.className = 'search-suggestion-item search-command-overview';
+        item.dataset.index = index;
+        item.dataset.value = command.prefix + ' ';
+
+        item.innerHTML = `
+            <span class="search-command-icon">${command.icon}</span>
+            <div class="search-suggestion-content">
+                <div class="search-suggestion-label">${command.prefix}</div>
+                <div class="search-suggestion-desc">${command.description}</div>
+            </div>
+            <div class="search-suggestion-shortcut">⇥</div>
+        `;
+
+        item.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            const searchInput = document.getElementById('smartSearchInput');
+            if (searchInput) {
+                searchInput.value = command.prefix + ' ';
+                searchInput.focus();
+                handleSearchInput({ target: searchInput });
+            }
+        });
+
+        item.addEventListener('mouseenter', () => {
+            searchState.selectedIndex = index;
+            updateSelectedSuggestion();
+        });
+
+        container.appendChild(item);
+    });
+
+    // Store commands as search results for Tab autocomplete
+    searchState.searchResults = commands.map(([type, command]) => ({
+        value: command.prefix + ' ',
+        label: command.prefix,
+        desc: command.description
+    }));
+    searchState.selectedIndex = -1;
+
+    container.classList.add('show');
+    searchState.isOpen = true;
 }
 
 /**
@@ -637,6 +811,47 @@ function performRegularSearch(query) {
  * Handle keyboard navigation
  */
 function handleSearchKeydown(e) {
+    // Tab for autocomplete - handle even if not open
+    if (e.key === 'Tab') {
+        const query = e.target.value;
+
+        // If just "/", autocomplete to first command
+        if (query === '/') {
+            e.preventDefault();
+            const firstCommand = Object.values(SEARCH_COMMANDS)[0];
+            e.target.value = firstCommand.prefix + ' ';
+            handleSearchInput({ target: e.target });
+            return;
+        }
+
+        // If typing partial command (starts with / but not complete)
+        if (query.startsWith('/') && !detectCommandType(query)) {
+            e.preventDefault();
+            // Find matching command
+            const lowerQuery = query.toLowerCase();
+            for (const command of Object.values(SEARCH_COMMANDS)) {
+                if (command.prefix.toLowerCase().startsWith(lowerQuery) ||
+                    command.aliases?.some(alias => alias.toLowerCase().startsWith(lowerQuery))) {
+                    e.target.value = command.prefix + ' ';
+                    handleSearchInput({ target: e.target });
+                    return;
+                }
+            }
+        }
+
+        // If suggestions are open, autocomplete selected or first suggestion
+        if (searchState.isOpen && searchState.searchResults.length > 0) {
+            e.preventDefault();
+            const index = searchState.selectedIndex >= 0 ? searchState.selectedIndex : 0;
+            const suggestion = searchState.searchResults[index];
+
+            // Autocomplete with the suggestion value
+            e.target.value = suggestion.value;
+            handleSearchInput({ target: e.target });
+            return;
+        }
+    }
+
     if (!searchState.isOpen) return;
 
     switch (e.key) {
