@@ -109,17 +109,19 @@
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
     max-height: 400px;
     overflow-y: auto;
-    z-index: 10001;
+    z-index: 10001 !important;
     opacity: 0;
     transform: translateY(-10px);
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity 0.2s ease, transform 0.2s ease;
     pointer-events: none;
+    display: block;
 }
 
 .search-suggestions-container.show {
-    opacity: 1;
-    transform: translateY(0);
+    opacity: 1 !important;
+    transform: translateY(0) !important;
     pointer-events: auto;
+    display: block !important;
 }
 
 /* Suggestion header */

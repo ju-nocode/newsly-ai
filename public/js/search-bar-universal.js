@@ -498,8 +498,19 @@ function showAllCommands() {
     searchState.selectedIndex = -1;
 
     positionDropdown(container);
-    container.classList.add('show');
-    searchState.isOpen = true;
+
+    // Force reflow before adding show class
+    container.offsetHeight;
+
+    requestAnimationFrame(() => {
+        // Force visibility with inline styles AND class
+        container.style.opacity = '1';
+        container.style.transform = 'translateY(0)';
+        container.style.pointerEvents = 'auto';
+        container.style.display = 'block';
+        container.classList.add('show');
+        searchState.isOpen = true;
+    });
 }
 
 /**
@@ -546,8 +557,19 @@ function showPartialCommandMatches(query) {
     searchState.selectedIndex = 0;
 
     positionDropdown(container);
-    container.classList.add('show');
-    searchState.isOpen = true;
+
+    // Force reflow before adding show class
+    container.offsetHeight;
+
+    requestAnimationFrame(() => {
+        // Force visibility with inline styles AND class
+        container.style.opacity = '1';
+        container.style.transform = 'translateY(0)';
+        container.style.pointerEvents = 'auto';
+        container.style.display = 'block';
+        container.classList.add('show');
+        searchState.isOpen = true;
+    });
     updateSelectedSuggestion();
 }
 
@@ -603,8 +625,19 @@ function showCommandSuggestions(commandType, query) {
     searchState.selectedIndex = -1;
 
     positionDropdown(container);
-    container.classList.add('show');
-    searchState.isOpen = true;
+
+    // Force reflow before adding show class
+    container.offsetHeight;
+
+    requestAnimationFrame(() => {
+        // Force visibility with inline styles AND class
+        container.style.opacity = '1';
+        container.style.transform = 'translateY(0)';
+        container.style.pointerEvents = 'auto';
+        container.style.display = 'block';
+        container.classList.add('show');
+        searchState.isOpen = true;
+    });
 }
 
 /**
@@ -667,8 +700,19 @@ function showSearchHistory(history) {
     }
 
     positionDropdown(container);
-    container.classList.add('show');
-    searchState.isOpen = true;
+
+    // Force reflow before adding show class
+    container.offsetHeight;
+
+    requestAnimationFrame(() => {
+        // Force visibility with inline styles AND class
+        container.style.opacity = '1';
+        container.style.transform = 'translateY(0)';
+        container.style.pointerEvents = 'auto';
+        container.style.display = 'block';
+        container.classList.add('show');
+        searchState.isOpen = true;
+    });
 }
 
 /**
@@ -818,6 +862,11 @@ function positionDropdown(container) {
 function closeSearchSuggestions() {
     const container = document.getElementById('searchSuggestionsContainer');
     if (container) {
+        // Remove inline styles to hide
+        container.style.opacity = '0';
+        container.style.transform = 'translateY(-10px)';
+        container.style.pointerEvents = 'none';
+
         container.classList.remove('show');
         setTimeout(() => {
             if (!searchState.isOpen) {
