@@ -805,11 +805,3 @@ function escapeHtml(text) {
     div.textContent = text;
     return div.innerHTML;
 }
-
-// Auto-initialize if module is loaded
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initUniversalSearchBar);
-} else {
-    // DOM already loaded
-    setTimeout(initUniversalSearchBar, 100);
-}
