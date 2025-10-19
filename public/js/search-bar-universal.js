@@ -952,10 +952,15 @@ function handleSearchFocus() {
 /**
  * Handle search blur
  */
-function handleSearchBlur() {
+function handleSearchBlur(e) {
+    // Don't close if clicking inside the suggestions container
     setTimeout(() => {
+        const suggestionsContainer = document.getElementById('searchSuggestionsContainer');
+        if (suggestionsContainer && suggestionsContainer.matches(':hover')) {
+            return; // User is hovering over suggestions, don't close
+        }
         closeSearchSuggestions();
-    }, 200);
+    }, 300);
 }
 
 /**
@@ -1513,8 +1518,11 @@ function createSuggestionItem(suggestion, index) {
         <div class="search-suggestion-shortcut">↵</div>
     `;
 
+    // Mousedown pour exécuter avant le blur
     item.addEventListener('mousedown', (e) => {
         e.preventDefault();
+        e.stopPropagation();
+        console.log('🖱️ Suggestion clicked:', suggestion.label, suggestion);
         executeSuggestion(suggestion);
     });
 
@@ -1530,9 +1538,19 @@ function createSuggestionItem(suggestion, index) {
  * Execute suggestion action
  */
 async function executeSuggestion(suggestion) {
+    console.log('🚀 Executing suggestion:', suggestion);
+
     // Execute action FIRST (before async operations)
     if (suggestion.action && typeof suggestion.action === 'function') {
-        suggestion.action();
+        console.log('✅ Action found, executing...');
+        try {
+            suggestion.action();
+            console.log('✅ Action executed successfully');
+        } catch (error) {
+            console.error('❌ Error executing action:', error);
+        }
+    } else {
+        console.warn('⚠️ No action found for suggestion:', suggestion);
     }
 
     // Add to history and increment stats (async, in background)
@@ -1592,6 +1610,12 @@ function getSuggestionsContainer() {
         container.style.pointerEvents = 'none';
         container.style.display = 'block';
         container.style.zIndex = '10001';
+
+        // Empêcher le blur quand on clique dans le container
+        container.addEventListener('mousedown', (e) => {
+            e.preventDefault(); // Empêche le blur de l'input
+            console.log('🖱️ Mousedown sur container, blur prevented');
+        });
 
         // Attach to body instead of wrapper to avoid layout issues
         document.body.appendChild(container);
