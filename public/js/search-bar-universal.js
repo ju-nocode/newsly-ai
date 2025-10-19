@@ -290,25 +290,40 @@ class SearchPreferencesDB {
     async loadUserPreferences() {
         await this.checkAuthStatus();
 
+        console.log('🔐 User authenticated:', this.isAuthenticated);
+        console.log('👤 Current user:', this.currentUser);
+
         if (!this.isAuthenticated) {
+            console.log('⚠️ User not authenticated, using localStorage');
             return this.loadFromLocalStorage();
         }
 
         try {
+            console.log('📥 Loading from Supabase for user:', this.currentUser.id);
             const { data, error } = await this.supabase
                 .from('user_search_preferences')
                 .select('*')
                 .eq('user_id', this.currentUser.id)
                 .single();
 
-            if (error || !data) {
-                // First time user - return defaults
+            if (error) {
+                console.log('⚠️ Error loading preferences:', error.message);
+                if (error.code === 'PGRST116') {
+                    console.log('📝 No preferences found, creating defaults');
+                    return this.getDefaultPreferences();
+                }
+                throw error;
+            }
+
+            if (!data) {
+                console.log('📝 No data, using defaults');
                 return this.getDefaultPreferences();
             }
 
+            console.log('✅ Loaded preferences from DB:', data);
             return data;
         } catch (e) {
-            console.error('Error loading user preferences from DB:', e);
+            console.error('❌ Error loading user preferences from DB:', e);
             return this.loadFromLocalStorage();
         }
     }
