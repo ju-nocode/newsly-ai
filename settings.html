@@ -831,6 +831,15 @@
                 if (currentAvatarUrl) {
                     document.getElementById('burgerAvatarImage').src = currentAvatarUrl;
                 }
+
+                // ✅ Track profile update in user_activity_log
+                if (userIntelligence) {
+                    userIntelligence.logActivity('profile_update', {
+                        fields_updated: Object.keys(profileData),
+                        has_avatar: !!currentAvatarUrl,
+                        timestamp: new Date().toISOString()
+                    }).catch(err => console.error('Error logging profile update:', err));
+                }
             } else {
                 showError(result.error || 'Erreur lors de la mise à jour');
             }
@@ -871,8 +880,25 @@
                 document.getElementById('currentPassword').value = '';
                 document.getElementById('newPassword').value = '';
                 document.getElementById('confirmPassword').value = '';
+
+                // ✅ Track password change in user_activity_log (SECURITY EVENT)
+                if (userIntelligence) {
+                    userIntelligence.logActivity('password_change', {
+                        success: true,
+                        timestamp: new Date().toISOString()
+                    }).catch(err => console.error('Error logging password change:', err));
+                }
             } else {
                 showError(result.error || 'Erreur lors du changement de mot de passe');
+
+                // ✅ Track failed password change attempt
+                if (userIntelligence) {
+                    userIntelligence.logActivity('password_change_failed', {
+                        success: false,
+                        error: result.error,
+                        timestamp: new Date().toISOString()
+                    }).catch(err => console.error('Error logging failed password change:', err));
+                }
             }
         });
 
@@ -912,6 +938,13 @@
             confirmDeleteBtn.disabled = true;
             confirmDeleteBtn.textContent = '⏳ Suppression en cours...';
 
+            // ✅ Track account deletion attempt BEFORE deleting
+            if (userIntelligence) {
+                await userIntelligence.logActivity('account_deletion_attempt', {
+                    timestamp: new Date().toISOString()
+                }).catch(err => console.error('Error logging deletion attempt:', err));
+            }
+
             const result = await deleteAccount();
 
             if (result.success) {
@@ -925,6 +958,14 @@
                 deleteAccountError.style.display = 'block';
                 confirmDeleteBtn.disabled = false;
                 confirmDeleteBtn.textContent = '🗑️ Supprimer définitivement';
+
+                // ✅ Track failed deletion attempt
+                if (userIntelligence) {
+                    userIntelligence.logActivity('account_deletion_failed', {
+                        error: result.error,
+                        timestamp: new Date().toISOString()
+                    }).catch(err => console.error('Error logging failed deletion:', err));
+                }
             }
         });
 

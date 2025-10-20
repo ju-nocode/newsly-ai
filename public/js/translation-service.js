@@ -363,6 +363,8 @@ export const changeLanguage = async (lang) => {
         lang = 'fr';
     }
 
+    const previousLang = localStorage.getItem('language') || 'fr';
+
     // Save to localStorage
     localStorage.setItem('language', lang);
 
@@ -377,6 +379,15 @@ export const changeLanguage = async (lang) => {
 
     // Save to database
     await saveLanguageToDatabase(lang);
+
+    // ✅ Track language change in user_activity_log
+    if (previousLang !== lang && window.userIntelligence) {
+        window.userIntelligence.logActivity('language_change', {
+            from_language: previousLang,
+            to_language: lang,
+            timestamp: new Date().toISOString()
+        }).catch(err => console.error('Error logging language change:', err));
+    }
 
     console.log(`🌍 Language changed to: ${lang}`);
     return lang;

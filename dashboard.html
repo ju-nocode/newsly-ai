@@ -332,6 +332,8 @@
         // Gérer les clics sur les catégories
         // Function to switch category and update URL
         function switchToCategory(category) {
+            const previousCategory = currentCategory;
+
             // Retirer la classe active de tous les boutons de catégorie
             document.querySelectorAll('.sidebar-menu-link[data-category]').forEach(b => b.classList.remove('active'));
 
@@ -347,6 +349,16 @@
 
             // Charger les news de cette catégorie
             currentCategory = category;
+
+            // ✅ Track category change in user_activity_log
+            if (userIntelligence && previousCategory !== category) {
+                userIntelligence.logActivity('category_change', {
+                    from_category: previousCategory,
+                    to_category: category,
+                    timestamp: new Date().toISOString()
+                }).catch(err => console.error('Error logging category change:', err));
+            }
+
             loadNews(category);
 
             // Update URL with query parameter
@@ -379,6 +391,8 @@
 
         // Gérer la sélection "Tous"
         countryAll.addEventListener('change', () => {
+            const previousCountries = [...selectedCountries];
+
             if (countryAll.checked) {
                 // Si "Tous" est coché, cocher automatiquement tous les pays
                 countryCheckboxes.forEach(cb => cb.checked = true);
@@ -388,6 +402,17 @@
                 countryCheckboxes.forEach(cb => cb.checked = false);
                 selectedCountries = ['us']; // Par défaut : US
             }
+
+            // ✅ Track country filter change
+            if (userIntelligence && JSON.stringify(previousCountries) !== JSON.stringify(selectedCountries)) {
+                userIntelligence.logActivity('country_filter_change', {
+                    from_countries: previousCountries,
+                    to_countries: selectedCountries,
+                    filter_type: 'all',
+                    timestamp: new Date().toISOString()
+                }).catch(err => console.error('Error logging country change:', err));
+            }
+
             // Recharger les news
             loadNews(currentCategory);
         });
@@ -395,6 +420,8 @@
         // Gérer les sélections individuelles
         countryCheckboxes.forEach(checkbox => {
             checkbox.addEventListener('change', () => {
+                const previousCountries = [...selectedCountries];
+
                 // Si au moins une checkbox pays est cochée, décocher "Tous"
                 const anyChecked = Array.from(countryCheckboxes).some(cb => cb.checked);
                 const allChecked = Array.from(countryCheckboxes).every(cb => cb.checked);
@@ -418,6 +445,17 @@
 
                 if (selectedCountries.length === 0) {
                     selectedCountries = ['us'];
+                }
+
+                // ✅ Track country filter change
+                if (userIntelligence && JSON.stringify(previousCountries) !== JSON.stringify(selectedCountries)) {
+                    userIntelligence.logActivity('country_filter_change', {
+                        from_countries: previousCountries,
+                        to_countries: selectedCountries,
+                        filter_type: 'individual',
+                        country_changed: checkbox.value,
+                        timestamp: new Date().toISOString()
+                    }).catch(err => console.error('Error logging country change:', err));
                 }
 
                 // Recharger les news avec les pays sélectionnés

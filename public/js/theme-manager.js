@@ -22,6 +22,8 @@ export async function setTheme(theme) {
         theme = 'dark';
     }
 
+    const previousTheme = getTheme();
+
     // Apply theme to document
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem(THEME_STORAGE_KEY, theme);
@@ -34,6 +36,15 @@ export async function setTheme(theme) {
 
     // Save to database
     await saveThemeToDatabase(theme);
+
+    // ✅ Track theme change in user_activity_log
+    if (previousTheme !== theme && window.userIntelligence) {
+        window.userIntelligence.logActivity('theme_change', {
+            from_theme: previousTheme,
+            to_theme: theme,
+            timestamp: new Date().toISOString()
+        }).catch(err => console.error('Error logging theme change:', err));
+    }
 
     console.log(`🎨 Theme changed to: ${theme}`);
     return theme;
