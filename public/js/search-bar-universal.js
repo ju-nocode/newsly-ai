@@ -998,6 +998,49 @@ function handleSearchKeydown(e) {
 
         case 'Enter':
             e.preventDefault();
+
+            // COMPORTEMENT INTELLIGENT:
+            // 1. Si l'utilisateur a tapé un prefix incomplet (ex: "/settings" alors que le prefix complet est "/settings:")
+            //    → Compléter pour afficher les sous-menus
+            // 2. Si l'utilisateur a tapé exactement le prefix (ex: "/settings") ET qu'il y a des sous-menus
+            //    → Ne PAS exécuter l'action, juste afficher les sous-menus (laisser ouvert)
+            // 3. Si l'utilisateur a sélectionné un sous-menu → Exécuter
+
+            const currentQuery = e.target.value.trim();
+            const commandType = detectCommandType(currentQuery);
+
+            if (commandType) {
+                const command = SEARCH_COMMANDS[commandType];
+
+                // Vérifier si l'utilisateur a tapé exactement le prefix sans ":"
+                const typedPrefix = currentQuery.toLowerCase();
+                const hasColon = command.prefix.endsWith(':');
+
+                // Cas 1: L'utilisateur a tapé "/profile" mais le prefix est "/profile:"
+                if (hasColon && !typedPrefix.endsWith(':') &&
+                    (typedPrefix === command.prefix.toLowerCase().slice(0, -1) ||
+                     command.aliases?.some(alias => typedPrefix === alias.toLowerCase().slice(0, -1)))) {
+
+                    // Compléter avec ": "
+                    e.target.value = command.prefix + ' ';
+                    handleSearchInput({ target: e.target });
+                    return;
+                }
+
+                // Cas 2: L'utilisateur a tapé exactement le prefix (ex: "/settings")
+                // ET la commande a des sous-menus
+                // → Ne rien faire, laisser les sous-menus affichés
+                const isExactPrefix = typedPrefix === command.prefix.toLowerCase() ||
+                                    command.aliases?.some(alias => typedPrefix === alias.toLowerCase());
+
+                if (isExactPrefix && command.suggestions && command.suggestions.length > 0) {
+                    // Les sous-menus sont déjà affichés, ne rien exécuter
+                    // L'utilisateur peut naviguer avec les flèches et re-appuyer sur ENTER
+                    return;
+                }
+            }
+
+            // Comportement normal: exécuter la suggestion sélectionnée
             if (searchState.selectedIndex >= 0 && searchState.searchResults.length > 0) {
                 const suggestion = searchState.searchResults[searchState.selectedIndex];
                 executeSuggestion(suggestion);
