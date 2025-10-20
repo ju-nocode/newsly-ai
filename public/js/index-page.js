@@ -1,20 +1,14 @@
 import { login, signup } from './app.js';
-import { isUserAuthenticated } from './logout.js';
 import { translatePage } from './translation-service.js';
 // DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
 // import { defaultParticlesConfig } from './particles-config.js';
 import { countries } from './countries.js';
 import { attachPhoneFormatter } from './phone-formatter.js';
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+import { initSupabase } from './config.js';
 import { initThemeSystem } from './theme-manager.js';
 
 // Initialize Supabase globally
-if (!window.supabase) {
-    const SUPABASE_URL = 'https://xpjittnwdmnecglfpqtl.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhwaml0dG53ZG1uZWNnbGZwcXRsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzI0OTc4ODQsImV4cCI6MjA0ODA3Mzg4NH0.qvYSu9Pl-o8ndhIuuWgZnPR8VuPIKGxKbQR1hXnqoFE';
-    window.supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    console.log('✅ Supabase initialized globally on index page');
-}
+await initSupabase();
 
 // Détection de confirmation email - Écoute localStorage + BroadcastChannel + Polling
 let emailConfirmationInterval = null;
@@ -141,19 +135,15 @@ const showEmailConfirmedModal = () => {
     }
 };
 
-// Si l'utilisateur est déjà connecté, rediriger vers le dashboard
-(async () => {
-    const isAuth = await isUserAuthenticated();
-    if (isAuth) {
-        window.location.href = 'dashboard.html';
-    } else {
-        // Hide app links in footer when not logged in
-        const appLinksSection = document.getElementById('appLinksSection');
-        if (appLinksSection) {
-            appLinksSection.style.display = 'none';
-        }
-    }
-})();
+// Note: On ne vérifie PAS l'auth au chargement de index.html
+// car ça cause une boucle de redirection.
+// L'utilisateur sera redirigé vers dashboard APRÈS le login.
+
+// Hide app links in footer when not logged in (on index page)
+const appLinksSection = document.getElementById('appLinksSection');
+if (appLinksSection) {
+    appLinksSection.style.display = 'none';
+}
 
 // Traductions spécifiques à index.html
 const indexTranslations = {
@@ -779,31 +769,16 @@ if (burgerBtnIndex && burgerMenuIndex) {
     });
 }
 
-// Sync burger menu with user state
+// Sync burger menu with user state (simplified for index page)
 async function updateBurgerMenuUserInfo() {
-    const isAuth = await isUserAuthenticated();
-    // Note: isUserAuthenticated returns boolean, not user object
-    // We'll need to get user profile separately if needed
-    const user = null; // Simplified for now
+    // On index page, user is not logged in by default
     const burgerUserInfo = document.getElementById('burgerUserInfoIndex');
     const burgerAuthButtons = document.getElementById('burgerAuthButtons');
     const dashboardLink = document.getElementById('dashboardLinkIndex');
-    const userName = document.getElementById('userNameDisplayIndex');
-    const avatarImg = document.getElementById('burgerAvatarImageIndex');
 
-    if (user) {
-        // User is logged in - show user info
-        burgerUserInfo.style.display = 'flex';
-        burgerAuthButtons.style.display = 'none';
-        dashboardLink.style.display = 'flex';
-        userName.textContent = `User: ${user.full_name || user.username || 'User'}`;
-        avatarImg.src = user.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.full_name || user.username || 'User')}&background=3ecf8e&color=fff&size=72`;
-    } else {
-        // User not logged in - show auth buttons
-        burgerUserInfo.style.display = 'none';
-        burgerAuthButtons.style.display = 'block';
-        dashboardLink.style.display = 'none';
-    }
+    if (burgerUserInfo) burgerUserInfo.style.display = 'none';
+    if (burgerAuthButtons) burgerAuthButtons.style.display = 'block';
+    if (dashboardLink) dashboardLink.style.display = 'none';
 }
 
 // Dashboard link navigation

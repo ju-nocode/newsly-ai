@@ -168,9 +168,9 @@
     -->
 
     <script type="module">
-        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
         import { checkAuth, getUserProfile, fetchNews, deleteAccount, currentUser } from './public/js/app.js';
         import { performLogout, protectPage } from './public/js/logout.js';
+        import { initSupabase } from './public/js/config.js';
         import { displayNews, escapeHtml, showError, showSuccess } from './public/js/dashboard-utils.js';
         import { tSync as t, translatePage } from './public/js/translation-service.js';
         import { initNavbar } from './public/js/navbar-component.js';
@@ -183,11 +183,7 @@
         import { initUniversalSearchBar } from './public/js/search-bar-universal.js';
 
         // Initialize Supabase globally FIRST
-        if (!window.supabase) {
-            const SUPABASE_URL = 'https://xpjittnwdmnecglfpqtl.supabase.co';
-            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhwaml0dG53ZG1uZWNnbGZwcXRsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzI0OTc4ODQsImV4cCI6MjA0ODA3Mzg4NH0.qvYSu9Pl-o8ndhIuuWgZnPR8VuPIKGxKbQR1hXnqoFE';
-            window.supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        }
+        await initSupabase();
 
         // Protect this page - redirect to login if not authenticated
         await protectPage();
