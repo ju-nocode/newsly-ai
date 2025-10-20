@@ -516,3 +516,58 @@ if (typeof window !== 'undefined') {
 }
 
 export { currentUser, authToken, loadSession, safeLocalStorage };
+
+// ================================================
+// SECURITY AUDIT HELPER
+// ================================================
+
+/**
+ * Log a security event to user_activity_log
+ * @param {string} activityType - Type d'activité (login, logout, password_change, etc.)
+ * @param {object} context - Contexte additionnel (ip, device, etc.)
+ */
+export const logSecurityEvent = async (activityType, context = {}) => {
+    if (!authToken) {
+        loadSession();
+        if (!authToken) {
+            console.warn('⚠️ Cannot log security event: not authenticated');
+            return { success: false, error: 'Non authentifié' };
+        }
+    }
+
+    try {
+        // Enrichir le contexte avec des infos du navigateur
+        const enrichedContext = {
+            ...context,
+            userAgent: navigator.userAgent,
+            timestamp: new Date().toISOString(),
+            platform: navigator.platform,
+            language: navigator.language
+        };
+
+        const response = await fetch(`${API_BASE_URL}/api/user/activity-log`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${authToken}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                activity_type: activityType,
+                context: enrichedContext,
+                device_type: /Mobile|Android|iPhone/i.test(navigator.userAgent) ? 'mobile' : 'desktop'
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to log security event: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log(`✅ Security event logged: ${activityType}`);
+        return { success: true, data };
+
+    } catch (error) {
+        console.error('Error logging security event:', error);
+        return { success: false, error: error.message };
+    }
+};

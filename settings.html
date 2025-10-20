@@ -203,11 +203,11 @@
                         <input type="file" id="avatarInput" accept="image/*" style="display: none;">
 
                         <div class="avatar-actions">
-                            <button type="button" id="uploadAvatarBtn" class="btn-primary">
-                                ✏️ Modifier
+                            <button type="button" id="uploadAvatarBtn" class="btn-secondary">
+                                Modifier
                             </button>
-                            <button type="button" id="removeAvatarBtn" class="btn-danger">
-                                🗑️ Supprimer
+                            <button type="button" id="removeAvatarBtn" class="btn-secondary-danger">
+                                Supprimer
                             </button>
                         </div>
 
@@ -1348,102 +1348,91 @@
         const loadSecurityAudit = async () => {
             const auditContainer = document.getElementById('securityAuditContainer');
 
-            // Récupérer l'IP publique
-            let publicIP = 'Non disponible';
+            // Afficher un loader pendant le chargement
+            auditContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Chargement de l\'audit de sécurité...</p>';
+
             try {
-                const ipResponse = await fetch('https://api.ipify.org?format=json');
-                const ipData = await ipResponse.json();
-                publicIP = ipData.ip;
-            } catch (error) {
-                console.warn('Impossible de récupérer l\'IP publique:', error);
-            }
-
-            // Get audit events from localStorage (mock data for now)
-            const auditEvents = [
-                {
-                    type: 'success',
-                    icon: '✅',
-                    title: 'Connexion réussie',
-                    description: 'Vous vous êtes connecté à votre compte',
-                    timestamp: new Date(),
-                    ip: publicIP,
-                    device: 'Chrome sur Windows'
-                },
-                {
-                    type: 'info',
-                    icon: '✏️',
-                    title: 'Changement de mot de passe',
-                    description: 'Votre mot de passe a été modifié avec succès',
-                    timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-                    ip: publicIP,
-                    device: 'Chrome sur Windows'
-                },
-                {
-                    type: 'info',
-                    icon: '📝',
-                    title: 'Mise à jour du profil',
-                    description: 'Vos informations de profil ont été modifiées',
-                    timestamp: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
-                    ip: publicIP,
-                    device: 'Chrome sur Windows'
-                },
-                {
-                    type: 'success',
-                    icon: '✅',
-                    title: 'Connexion réussie',
-                    description: 'Vous vous êtes connecté à votre compte',
-                    timestamp: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
-                    ip: publicIP,
-                    device: 'Safari sur macOS'
-                },
-                {
-                    type: 'warning',
-                    icon: '⚠️',
-                    title: 'Tentative de connexion échouée',
-                    description: 'Mot de passe incorrect',
-                    timestamp: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
-                    ip: '203.45.67.89',
-                    device: 'Firefox sur Linux'
+                // Récupérer le token de session
+                const session = JSON.parse(localStorage.getItem('session'));
+                if (!session?.access_token) {
+                    auditContainer.innerHTML = '<p style="text-align: center; color: var(--error);">Session expirée. Veuillez vous reconnecter.</p>';
+                    return;
                 }
-            ];
 
-            if (auditEvents.length === 0) {
-                auditContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Aucune activité récente</p>';
-                return;
-            }
-
-            let auditHTML = '<div class="audit-list">';
-
-            auditEvents.forEach(event => {
-                const formattedDate = event.timestamp.toLocaleDateString('fr-FR', {
-                    day: '2-digit',
-                    month: 'long',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
+                // Appeler l'API security-audit
+                const response = await fetch('/api/user/security-audit', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${session.access_token}`,
+                        'Content-Type': 'application/json'
+                    }
                 });
 
-                auditHTML += `
-                    <div class="audit-item">
-                        <div class="audit-icon ${event.type}">
-                            ${event.icon}
-                        </div>
-                        <div class="audit-content">
-                            <div class="audit-title">${escapeHtml(event.title)}</div>
-                            <div class="audit-description">${escapeHtml(event.description)}</div>
-                            <div class="audit-meta">
-                                <span>📅 ${formattedDate}</span>
-                                <span>✏️ ${escapeHtml(event.ip)}</span>
-                                <span>📝 ${escapeHtml(event.device)}</span>
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${await response.text()}`);
+                }
+
+                const data = await response.json();
+                const auditEvents = data.events || [];
+
+                // Afficher l'IP actuelle si disponible
+                if (data.currentIP && data.currentIP !== 'Non disponible') {
+                    console.log('🌐 Votre IP actuelle:', data.currentIP);
+                }
+
+                // Si aucun événement
+                if (auditEvents.length === 0) {
+                    auditContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Aucune activité de sécurité récente</p>';
+                    return;
+                }
+
+                // Construire le HTML
+                let auditHTML = '<div class="audit-list">';
+
+                auditEvents.forEach(event => {
+                    const timestamp = new Date(event.timestamp);
+                    const formattedDate = timestamp.toLocaleDateString('fr-FR', {
+                        day: '2-digit',
+                        month: 'long',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+
+                    auditHTML += `
+                        <div class="audit-item">
+                            <div class="audit-icon ${event.type}">
+                                ${event.icon}
                             </div>
+                            <div class="audit-content">
+                                <div class="audit-title">${escapeHtml(event.title)}</div>
+                                <div class="audit-description">${escapeHtml(event.description)}</div>
+                                <div class="audit-meta">
+                                    <span>📅 ${formattedDate}</span>
+                                    <span>🌐 ${escapeHtml(event.ip)}</span>
+                                    <span>💻 ${escapeHtml(event.device)}</span>
+                                </div>
+                            </div>
+                            <span class="audit-badge ${event.type}">${event.type}</span>
                         </div>
-                        <span class="audit-badge ${event.type}">${event.type}</span>
+                    `;
+                });
+
+                auditHTML += '</div>';
+                auditContainer.innerHTML = auditHTML;
+
+            } catch (error) {
+                console.error('Erreur lors du chargement de l\'audit de sécurité:', error);
+                auditContainer.innerHTML = `
+                    <div style="text-align: center; padding: 2rem;">
+                        <p style="color: var(--error); margin-bottom: 0.5rem;">❌ Erreur lors du chargement</p>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">${escapeHtml(error.message)}</p>
+                        <button onclick="loadSecurityAudit()" class="btn-primary" style="margin-top: 1rem;">
+                            🔄 Réessayer
+                        </button>
                     </div>
                 `;
-            });
-
-            auditHTML += '</div>';
-            auditContainer.innerHTML = auditHTML;
+            }
         };
 
         // ================================================

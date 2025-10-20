@@ -362,24 +362,8 @@
   width: 100%;
 }
 
-.avatar-actions .btn-primary,
-.avatar-actions .btn-danger {
+.avatar-actions button {
   flex: 1;
-  padding: 0.625rem 1rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  border-radius: var(--radius-md);
-  transition: all 0.2s;
-}
-
-.avatar-actions .btn-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-}
-
-.avatar-actions .btn-danger:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
 .avatar-upload-card .form-hint {
