@@ -8,6 +8,14 @@ import { attachPhoneFormatter } from './phone-formatter.js';
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 import { initThemeSystem } from './theme-manager.js';
 
+// Initialize Supabase globally
+if (!window.supabase) {
+    const SUPABASE_URL = 'https://xpjittnwdmnecglfpqtl.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhwaml0dG53ZG1uZWNnbGZwcXRsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzI0OTc4ODQsImV4cCI6MjA0ODA3Mzg4NH0.qvYSu9Pl-o8ndhIuuWgZnPR8VuPIKGxKbQR1hXnqoFE';
+    window.supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    console.log('✅ Supabase initialized globally on index page');
+}
+
 // Détection de confirmation email - Écoute localStorage + BroadcastChannel + Polling
 let emailConfirmationInterval = null;
 let broadcastChannel = null;
