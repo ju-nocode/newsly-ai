@@ -212,7 +212,7 @@
                                 </button>
                             </div>
 
-                            <button type="button" id="generateAvatarBtn" class="btn-success" style="width: 100%;" title="Max 2MB - JPG, PNG ou GIF">
+                            <button type="button" id="generateAvatarBtn" class="btn-success" style="width: 100%;" title="Max 10MB - Optimisé pour photos iPhone">
                                 <span class="btn-text">Générer avatar</span>
                             </button>
                         </div>
@@ -815,18 +815,19 @@
             }
         });
 
-        // Fonction pour compresser l'image
+        // Fonction pour compresser l'image (optimisée pour photos iPhone)
         const compressImage = (file) => {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     const img = new Image();
                     img.onload = () => {
-                        // Redimensionner à max 200x200 pour limiter la taille
-                        const MAX_SIZE = 200;
+                        // Redimensionner à max 400x400 pour une meilleure qualité
+                        const MAX_SIZE = 400;
                         let width = img.width;
                         let height = img.height;
 
+                        // Calculer les nouvelles dimensions en gardant le ratio
                         if (width > height) {
                             if (width > MAX_SIZE) {
                                 height = Math.round((height * MAX_SIZE) / width);
@@ -844,10 +845,16 @@
                         canvas.width = width;
                         canvas.height = height;
                         const ctx = canvas.getContext('2d');
+
+                        // Améliorer la qualité du rendu
+                        ctx.imageSmoothingEnabled = true;
+                        ctx.imageSmoothingQuality = 'high';
+
+                        // Dessiner l'image
                         ctx.drawImage(img, 0, 0, width, height);
 
-                        // Convertir en base64 avec compression JPEG (qualité 0.8)
-                        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.8);
+                        // Convertir en base64 avec compression JPEG (qualité 0.85 pour meilleur rendu)
+                        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.85);
                         resolve(compressedBase64);
                     };
                     img.onerror = reject;
@@ -869,10 +876,10 @@
                 return;
             }
 
-            // Validation: taille max 2MB
-            const maxSize = 2 * 1024 * 1024; // 2MB en bytes
+            // Validation: taille max 10MB (photos iPhone supportées)
+            const maxSize = 10 * 1024 * 1024; // 10MB en bytes
             if (file.size > maxSize) {
-                showError('L\'image ne doit pas dépasser 2 MB');
+                showError('L\'image ne doit pas dépasser 10 MB');
                 return;
             }
 

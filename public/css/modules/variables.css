@@ -20,12 +20,18 @@
   --primary: #3b82f6;
   --primary-dark: #2563eb;
   --primary-light: #60a5fa;
+  --primary-rgb: 59, 130, 246;
   --secondary: #8b5cf6;
+  --secondary-rgb: 139, 92, 246;
   --success: #10b981;
+  --success-light: #3ecf8e;
   --success-hover: #059669;
+  --success-rgb: 16, 185, 129;
   --error: #ef4444;
   --error-hover: #dc2626;
+  --error-rgb: 239, 68, 68;
   --warning: #f59e0b;
+  --warning-rgb: 251, 191, 36;
 
   /* Spacing */
   --spacing-xs: 0.25rem;
@@ -109,12 +115,18 @@
   --primary: #3b82f6;
   --primary-dark: #2563eb;
   --primary-light: #60a5fa;
+  --primary-rgb: 59, 130, 246;
   --secondary: #8b5cf6;
+  --secondary-rgb: 139, 92, 246;
   --success: #10b981;
+  --success-light: #3ecf8e;
   --success-hover: #059669;
+  --success-rgb: 16, 185, 129;
   --error: #ef4444;
   --error-hover: #dc2626;
+  --error-rgb: 239, 68, 68;
   --warning: #f59e0b;
+  --warning-rgb: 251, 191, 36;
 
   /* Animated Dot Grid Background */
   --dot-color: rgba(59, 130, 246, 0.15);

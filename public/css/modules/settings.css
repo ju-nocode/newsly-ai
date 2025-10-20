@@ -29,12 +29,12 @@
 }
 
 .settings-nav-item:hover {
-  background: rgba(59, 130, 246, 0.08);
+  background: rgba(var(--primary-rgb), 0.08);
   color: var(--text-primary);
 }
 
 .settings-nav-item.active {
-  background: rgba(59, 130, 246, 0.12);
+  background: rgba(var(--primary-rgb), 0.12);
   color: var(--primary);
   font-weight: 500;
   border-left: 3px solid var(--primary);
@@ -140,8 +140,8 @@
 }
 
 .role-badge.user {
-  background: rgba(62, 207, 142, 0.15);
-  color: #3ecf8e;
+  background: rgba(var(--success-rgb), 0.15);
+  color: var(--success-light);
 }
 
 /* Security Audit */
@@ -179,23 +179,23 @@
 }
 
 .audit-icon.success {
-  background: rgba(62, 207, 142, 0.15);
+  background: rgba(var(--success-rgb), 0.15);
   color: var(--success);
 }
 
 .audit-icon.warning {
-  background: rgba(251, 191, 36, 0.15);
-  color: #f59e0b;
+  background: rgba(var(--warning-rgb), 0.15);
+  color: var(--warning);
 }
 
 .audit-icon.error {
-  background: rgba(239, 68, 68, 0.15);
+  background: rgba(var(--error-rgb), 0.15);
   color: var(--error);
 }
 
 .audit-icon.info {
-  background: rgba(59, 130, 246, 0.15);
-  color: #3b82f6;
+  background: rgba(var(--primary-rgb), 0.15);
+  color: var(--primary);
 }
 
 .audit-content {
@@ -239,17 +239,17 @@
 }
 
 .audit-badge.success {
-  background: rgba(62, 207, 142, 0.1);
+  background: rgba(var(--success-rgb), 0.1);
   color: var(--success);
 }
 
 .audit-badge.warning {
-  background: rgba(251, 191, 36, 0.1);
-  color: #f59e0b;
+  background: rgba(var(--warning-rgb), 0.1);
+  color: var(--warning);
 }
 
 .audit-badge.error {
-  background: rgba(239, 68, 68, 0.1);
+  background: rgba(var(--error-rgb), 0.1);
   color: var(--error);
 }
 
@@ -324,7 +324,7 @@
 .avatar-preview:hover {
   border-color: var(--primary);
   transform: scale(1.02);
-  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.15);
+  box-shadow: 0 8px 20px rgba(var(--primary-rgb), 0.15);
 }
 
 .avatar-preview img {
@@ -339,7 +339,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.9), rgba(139, 92, 246, 0.9));
+  background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.9), rgba(var(--secondary-rgb), 0.9));
   display: flex;
   align-items: center;
   justify-content: center;
