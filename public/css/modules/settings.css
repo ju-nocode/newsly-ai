@@ -275,7 +275,7 @@
   display: grid;
   grid-template-columns: 1fr 280px;
   gap: 2rem;
-  align-items: start;
+  align-items: stretch;
 }
 
 .profile-info-section {
@@ -288,12 +288,11 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 1.5rem;
-  margin-bottom: 1.5rem;
   box-shadow: 0 2px 4px var(--shadow);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 1rem;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   height: 100%;
@@ -366,6 +365,8 @@
 
 .avatar-actions button {
   flex: 1;
+  /* Force button styles to apply */
+  min-height: 38px;
 }
 
 .avatar-upload-card .form-hint {
