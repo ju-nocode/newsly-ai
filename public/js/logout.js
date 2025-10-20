@@ -78,14 +78,20 @@ export async function performLogout(skipConfirmation = false) {
  * @returns {boolean} - True if authenticated
  */
 export async function isUserAuthenticated() {
+    console.log('🔍 isUserAuthenticated called');
+    console.log('🔍 window.supabase exists:', !!window.supabase);
+
     if (!window.supabase) {
+        console.warn('⚠️ Supabase not initialized!');
         return false;
     }
 
     try {
         const { data: { user }, error } = await window.supabase.auth.getUser();
+        console.log('🔍 Supabase getUser response:', { user: user?.email, error: error?.message });
         return !!user && !error;
     } catch (e) {
+        console.error('❌ Error checking auth:', e);
         return false;
     }
 }
