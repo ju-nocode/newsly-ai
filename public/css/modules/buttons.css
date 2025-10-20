@@ -6,17 +6,17 @@
 .btn-submit {
   background: var(--primary);
   color: #fff;
-  padding: 0.5rem 1rem;
-  border-radius: var(--radius-md);
-  font-weight: 500;
-  font-size: 0.8125rem;
+  padding: var(--btn-padding);
+  border-radius: var(--btn-border-radius);
+  font-weight: var(--btn-font-weight);
+  font-size: var(--btn-font-size);
   border: none;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: var(--btn-transition);
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  line-height: 1.4;
+  line-height: var(--line-height-normal);
   white-space: nowrap;
   text-decoration: none;
 }
@@ -32,15 +32,16 @@
   background: var(--error);
   color: white;
   border: none;
-  padding: 0.5rem 1rem;
-  border-radius: var(--radius-md);
-  font-size: 0.8125rem;
-  font-weight: 500;
+  padding: var(--btn-padding);
+  border-radius: var(--btn-border-radius);
+  font-size: var(--btn-font-size);
+  font-weight: var(--btn-font-weight);
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: var(--btn-transition);
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  line-height: var(--line-height-normal);
 }
 
 .btn-danger:hover {
@@ -99,16 +100,16 @@
   background: transparent;
   color: var(--text-primary);
   border: 1.5px solid var(--border);
-  padding: 0.5rem 1rem;
-  border-radius: var(--radius-md);
-  font-size: 0.8125rem;
-  font-weight: 500;
+  padding: var(--btn-padding);
+  border-radius: var(--btn-border-radius);
+  font-size: var(--btn-font-size);
+  font-weight: var(--btn-font-weight);
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: var(--btn-transition);
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  line-height: 1.4;
+  line-height: var(--line-height-normal);
   white-space: nowrap;
 }
 
@@ -125,16 +126,16 @@
   background: transparent;
   color: var(--text-primary);
   border: 1.5px solid var(--border);
-  padding: 0.5rem 1rem;
-  border-radius: var(--radius-md);
-  font-size: 0.8125rem;
-  font-weight: 500;
+  padding: var(--btn-padding);
+  border-radius: var(--btn-border-radius);
+  font-size: var(--btn-font-size);
+  font-weight: var(--btn-font-weight);
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: var(--btn-transition);
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  line-height: 1.4;
+  line-height: var(--line-height-normal);
   white-space: nowrap;
 }
 

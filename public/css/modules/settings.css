@@ -254,20 +254,20 @@
 }
 
 .settings-section-title {
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
   margin-bottom: 0.5rem;
   color: var(--text-primary);
   letter-spacing: -0.02em;
-  line-height: 1.2;
+  line-height: var(--line-height-tight);
 }
 
 .settings-section-desc {
-  font-size: 0.9375rem;
+  font-size: var(--font-size-base);
   color: var(--text-muted);
   margin-bottom: 1.5rem;
-  line-height: 1.5;
-  font-weight: 400;
+  line-height: var(--line-height-normal);
+  font-weight: var(--font-weight-normal);
 }
 
 /* Profile Layout - Grid-based */
@@ -301,11 +301,12 @@
 }
 
 .avatar-upload-card .card-title {
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
   color: var(--text-primary);
   margin-bottom: 0.5rem;
   text-align: center;
+  line-height: var(--line-height-tight);
 }
 
 .avatar-preview {
@@ -368,9 +369,10 @@
 
 .avatar-upload-card .form-hint {
   text-align: center;
-  font-size: 0.8125rem;
+  font-size: var(--font-size-sm);
   color: var(--text-muted);
-  font-weight: 400;
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
 }
 
 .settings-card {
@@ -412,19 +414,19 @@
 }
 
 .settings-card-title {
-  font-size: 1.125rem;
-  font-weight: 500;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
   margin-bottom: 1.25rem;
   color: var(--text-primary);
   letter-spacing: -0.01em;
-  line-height: 1.3;
+  line-height: var(--line-height-tight);
 }
 
 .settings-description {
   color: var(--text-secondary);
   margin-bottom: 1.25rem;
-  line-height: 1.6;
-  font-size: 0.875rem;
+  line-height: var(--line-height-relaxed);
+  font-size: var(--btn-font-size);
 }
 
 /* Security section grid layout */
