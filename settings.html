@@ -196,27 +196,26 @@
 
                         <div class="avatar-preview" id="avatarPreview">
                             <img id="avatarImage" src="https://ui-avatars.com/api/?name=User&background=3b82f6&color=fff&size=200" alt="Avatar">
-                            <div class="avatar-overlay" id="avatarOverlay">
-                                <span class="avatar-edit-icon">📷</span>
-                            </div>
+                            <div class="avatar-overlay" id="avatarOverlay"></div>
                         </div>
 
                         <input type="file" id="avatarInput" accept="image/*" style="display: none;">
 
-                        <div class="avatar-actions">
-                            <button type="button" id="uploadAvatarBtn" class="btn-primary">
-                                📤 Modifier
-                            </button>
-                            <button type="button" id="removeAvatarBtn" class="btn-danger">
-                                🗑️ Supprimer
+                        <!-- Boutons collés en bas -->
+                        <div class="avatar-buttons-container">
+                            <div class="avatar-actions">
+                                <button type="button" id="uploadAvatarBtn" class="btn-primary">
+                                    Modifier
+                                </button>
+                                <button type="button" id="removeAvatarBtn" class="btn-danger">
+                                    Supprimer
+                                </button>
+                            </div>
+
+                            <button type="button" id="generateAvatarBtn" class="btn-success" style="width: 100%;" title="Max 2MB - JPG, PNG ou GIF">
+                                <span class="btn-text">Générer avatar</span>
                             </button>
                         </div>
-
-                        <button type="button" id="generateAvatarBtn" class="btn-success" style="width: 100%;">
-                            <span class="btn-text">🎨 Générer avatar</span>
-                        </button>
-
-                        <p class="form-hint">Max 2MB - JPG, PNG ou GIF</p>
                     </div>
                 </div>
             </section>

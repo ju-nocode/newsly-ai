@@ -83,7 +83,9 @@
 }
 
 .btn-danger:hover {
-  background: var(--error-hover);
+  background: var(--error-hover, #dc2626);
+  border-color: var(--error-hover, #dc2626);
+  color: white;
   text-decoration: none;
 }
 
@@ -131,7 +133,9 @@
 }
 
 .btn-success:hover {
-  background: #059669;
+  background: var(--success-hover, #059669);
+  border-color: var(--success-hover, #059669);
+  color: white;
   text-decoration: none;
 }
 
