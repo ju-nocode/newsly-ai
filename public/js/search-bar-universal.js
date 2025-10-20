@@ -19,9 +19,9 @@ import { initializeSearchCommands } from './search-commands-loader.js';
 import { setTheme } from './theme-manager.js';
 
 /**
- * Import Logout Module
+ * Import App Module (logout function)
  */
-import { performLogout } from './logout.js';
+import { logout } from './app.js';
 
 /**
  * Search command configuration with universal actions
@@ -206,7 +206,7 @@ const LOCAL_SEARCH_COMMANDS = {
         aliases: ['/deconnexion', '/signout', '/exit'],
         description: 'Se déconnecter',
         icon: '🚪',
-        action: () => performLogout(),
+        action: () => logout(),
         suggestions: []
     },
     password: {
