@@ -16,7 +16,7 @@ export function getTheme() {
  * Set theme and update all UI elements
  * @param {string} theme - 'light' or 'dark'
  */
-export function setTheme(theme) {
+export async function setTheme(theme) {
     if (theme !== 'light' && theme !== 'dark') {
         console.warn(`Invalid theme: ${theme}. Using 'dark' as default.`);
         theme = 'dark';
@@ -32,8 +32,43 @@ export function setTheme(theme) {
     // Dispatch event for cross-component communication
     window.dispatchEvent(new CustomEvent(THEME_EVENT_NAME, { detail: { theme } }));
 
+    // Save to database
+    await saveThemeToDatabase(theme);
+
     console.log(`🎨 Theme changed to: ${theme}`);
     return theme;
+}
+
+/**
+ * Save theme to database via API
+ * @param {string} theme - Theme to save
+ */
+async function saveThemeToDatabase(theme) {
+    try {
+        const session = JSON.parse(localStorage.getItem('session'));
+        if (!session?.access_token) {
+            console.log('⚠️ No session found, theme not saved to database');
+            return;
+        }
+
+        const response = await fetch('/api/user/settings', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${session.access_token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ theme })
+        });
+
+        if (!response.ok) {
+            console.error('Failed to save theme to database:', await response.text());
+            return;
+        }
+
+        console.log('✅ Theme saved to database');
+    } catch (error) {
+        console.error('Error saving theme to database:', error);
+    }
 }
 
 /**
@@ -165,10 +200,47 @@ export function setupThemeListeners() {
 }
 
 /**
+ * Load theme from database
+ */
+async function loadThemeFromDatabase() {
+    try {
+        const session = JSON.parse(localStorage.getItem('session'));
+        if (!session?.access_token) {
+            return null;
+        }
+
+        const response = await fetch('/api/user/settings', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${session.access_token}`
+            }
+        });
+
+        if (!response.ok) {
+            return null;
+        }
+
+        const data = await response.json();
+        return data.theme || null;
+    } catch (error) {
+        console.error('Error loading theme from database:', error);
+        return null;
+    }
+}
+
+/**
  * Initialize theme on page load
  */
-export function initTheme() {
-    const savedTheme = getTheme();
+export async function initTheme() {
+    // Try to load from database first
+    const dbTheme = await loadThemeFromDatabase();
+    const savedTheme = dbTheme || getTheme();
+
+    // If database theme differs from localStorage, update localStorage
+    if (dbTheme && dbTheme !== getTheme()) {
+        localStorage.setItem(THEME_STORAGE_KEY, dbTheme);
+    }
+
     document.documentElement.setAttribute('data-theme', savedTheme);
     updateAllThemeControls(savedTheme);
     console.log(`✅ Theme initialized: ${savedTheme}`);
@@ -179,12 +251,20 @@ export function initTheme() {
  * Complete theme system initialization
  * Call this after DOM is ready and navbar is loaded
  */
-export function initThemeSystem() {
-    initTheme();
+export async function initThemeSystem() {
+    await initTheme();
     createNavbarThemeButton();
     setupThemeListeners();
     console.log('✅ Theme system fully initialized');
 }
 
 // Auto-initialize theme on module load (before DOM ready)
-initTheme();
+// Use async IIFE to handle the Promise
+(async () => {
+    // Quick init with localStorage first (no waiting for API)
+    const localTheme = getTheme();
+    document.documentElement.setAttribute('data-theme', localTheme);
+
+    // Then load from database in background
+    await initTheme();
+})();
