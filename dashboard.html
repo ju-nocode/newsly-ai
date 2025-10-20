@@ -168,9 +168,7 @@
     -->
 
     <script type="module">
-        import { checkAuth, getUserProfile, fetchNews, deleteAccount, currentUser } from './public/js/app.js';
-        import { performLogout, protectPage } from './public/js/logout.js';
-        import { initSupabase } from './public/js/config.js';
+        import { checkAuth, logout, getUserProfile, fetchNews, deleteAccount, currentUser } from './public/js/app.js';
         import { displayNews, escapeHtml, showError, showSuccess } from './public/js/dashboard-utils.js';
         import { tSync as t, translatePage } from './public/js/translation-service.js';
         import { initNavbar } from './public/js/navbar-component.js';
@@ -181,12 +179,6 @@
         import { fadeIn, shake, stagger, ripple } from './public/js/animations.js';
         import { userIntelligence } from './public/js/user-intelligence-system.js';
         import { initUniversalSearchBar } from './public/js/search-bar-universal.js';
-
-        // Initialize Supabase globally FIRST
-        await initSupabase();
-
-        // Protect this page - redirect to login if not authenticated
-        await protectPage();
 
         // Make userIntelligence globally accessible for console testing
         window.userIntelligence = userIntelligence;
@@ -232,7 +224,11 @@
         let currentCategory = 'general';
         let selectedCountries = ['us']; // Par défaut : États-Unis
 
-        // Note: L'authentification est déjà vérifiée par protectPage() au début du script
+        // Vérifier l'authentification
+        const isAuth = checkAuth();
+        if (!isAuth) {
+            window.location.href = 'index.html';
+        }
 
         // Charger le profil utilisateur
         const loadProfile = async () => {
@@ -546,7 +542,7 @@
         });
 
         document.getElementById('logoutBtn').addEventListener('click', () => {
-            performLogout();
+            logout();
         });
 
         // Bouton Logout (sidebar)
@@ -554,7 +550,7 @@
         if (sidebarLogoutBtn) {
             sidebarLogoutBtn.addEventListener('click', (e) => {
                 e.preventDefault();
-                performLogout();
+                logout();
             });
         }
 
