@@ -82,134 +82,136 @@
                 <h2 class="settings-section-title" data-i18n="settings.profile">Profil</h2>
                 <p class="settings-section-desc" data-i18n="settings.manageProfile">Gérez vos informations personnelles</p>
 
-                <!-- Profile Card with Avatar -->
-                <div class="settings-card">
-                    <div class="profile-layout">
-                        <!-- Profile Info Grid -->
-                        <div class="profile-info-section">
-                            <div class="settings-grid-2">
-                        <!-- Email (Read-only) -->
-                        <div class="form-group">
-                            <label for="emailDisplay" class="form-label" data-i18n="settings.email">Email</label>
-                            <input
-                                type="email"
-                                id="emailDisplay"
-                                class="form-input"
-                                placeholder="exemple@email.com"
-                                disabled
-                                readonly
-                            >
-                            <p class="form-hint" data-i18n="settings.emailHint">L'email ne peut pas être modifié</p>
-                        </div>
-
-                        <!-- Username (Obligatoire) -->
-                        <div class="form-group">
-                            <label for="usernameInput" class="form-label">
-                                <span data-i18n="settings.username">Nom d'utilisateur</span>
-                                <span style="color: var(--error); margin-left: 0.25rem;">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                id="usernameInput"
-                                class="form-input"
-                                placeholder="Ex: @julien33"
-                                required
-                            >
-                            <p class="form-hint" data-i18n="settings.usernameHint">Votre identifiant unique</p>
-                        </div>
-
-                        <!-- Full Name (Obligatoire) -->
-                        <div class="form-group">
-                            <label for="fullNameInput" class="form-label">
-                                <span data-i18n="settings.fullName">Nom complet</span>
-                                <span style="color: var(--error); margin-left: 0.25rem;">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                id="fullNameInput"
-                                class="form-input"
-                                placeholder="Ex: Julien RICHARD"
-                                required
-                            >
-                            <p class="form-hint" data-i18n="settings.fullNameHint">Votre nom et prénom</p>
-                        </div>
-
-                        <!-- Country (Obligatoire) -->
-                        <div class="form-group">
-                            <label for="countrySelect" class="form-label">
-                                <span data-i18n="settings.country">Pays</span>
-                                <span style="color: var(--error); margin-left: 0.25rem;">*</span>
-                            </label>
-                            <select
-                                id="countrySelect"
-                                class="form-input"
-                                required
-                            >
-                                <option value="" data-i18n="settings.selectCountry">-- Sélectionnez un pays --</option>
-                            </select>
-                            <p class="form-hint" data-i18n="settings.countryHint">Votre pays de résidence</p>
-                        </div>
-
-                        <!-- City (Obligatoire) -->
-                        <div class="form-group">
-                            <label for="cityInput" class="form-label">
-                                <span data-i18n="settings.city">Ville</span>
-                                <span style="color: var(--error); margin-left: 0.25rem;">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                id="cityInput"
-                                class="form-input"
-                                placeholder="Ex: Bordeaux"
-                                required
-                            >
-                            <p class="form-hint" data-i18n="settings.cityHint">Votre ville de résidence</p>
-                        </div>
-
-                        <!-- Phone (Optionnel) -->
-                        <div class="form-group">
-                            <label for="phoneInput" class="form-label" data-i18n="settings.phone">Téléphone</label>
-                            <div style="display: flex; gap: 0.5rem;">
-                                <select id="phoneCountryCode" class="form-input" style="width: 120px;">
-                                    <!-- Options peuplées dynamiquement depuis countries.js -->
-                                </select>
+                <!-- Profile Grid Layout -->
+                <div class="profile-grid">
+                    <!-- Profile Info Card -->
+                    <div class="settings-card profile-info-section">
+                        <div class="settings-grid-2">
+                            <!-- Email (Read-only) -->
+                            <div class="form-group">
+                                <label for="emailDisplay" class="form-label" data-i18n="settings.email">Email</label>
                                 <input
-                                    type="tel"
-                                    id="phoneInput"
+                                    type="email"
+                                    id="emailDisplay"
                                     class="form-input"
-                                    placeholder="Ex: 6 12 34 56 78"
-                                    style="flex: 1;"
+                                    placeholder="exemple@email.com"
+                                    disabled
+                                    readonly
                                 >
-                            </div>
-                            <p class="form-hint" data-i18n="settings.phoneHint">Optionnel - Votre numéro de téléphone</p>
-                        </div>
+                                <p class="form-hint" data-i18n="settings.emailHint">L'email ne peut pas être modifié</p>
                             </div>
 
-                            <button id="updateProfileBtn" class="btn-primary" data-i18n="settings.updateProfile">
-                                📝 Enregistrer
+                            <!-- Username (Obligatoire) -->
+                            <div class="form-group">
+                                <label for="usernameInput" class="form-label">
+                                    <span data-i18n="settings.username">Nom d'utilisateur</span>
+                                    <span style="color: var(--error); margin-left: 0.25rem;">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="usernameInput"
+                                    class="form-input"
+                                    placeholder="Ex: @julien33"
+                                    required
+                                >
+                                <p class="form-hint" data-i18n="settings.usernameHint">Votre identifiant unique</p>
+                            </div>
+
+                            <!-- Full Name (Obligatoire) -->
+                            <div class="form-group">
+                                <label for="fullNameInput" class="form-label">
+                                    <span data-i18n="settings.fullName">Nom complet</span>
+                                    <span style="color: var(--error); margin-left: 0.25rem;">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="fullNameInput"
+                                    class="form-input"
+                                    placeholder="Ex: Julien RICHARD"
+                                    required
+                                >
+                                <p class="form-hint" data-i18n="settings.fullNameHint">Votre nom et prénom</p>
+                            </div>
+
+                            <!-- Country (Obligatoire) -->
+                            <div class="form-group">
+                                <label for="countrySelect" class="form-label">
+                                    <span data-i18n="settings.country">Pays</span>
+                                    <span style="color: var(--error); margin-left: 0.25rem;">*</span>
+                                </label>
+                                <select
+                                    id="countrySelect"
+                                    class="form-input"
+                                    required
+                                >
+                                    <option value="" data-i18n="settings.selectCountry">-- Sélectionnez un pays --</option>
+                                </select>
+                                <p class="form-hint" data-i18n="settings.countryHint">Votre pays de résidence</p>
+                            </div>
+
+                            <!-- City (Obligatoire) -->
+                            <div class="form-group">
+                                <label for="cityInput" class="form-label">
+                                    <span data-i18n="settings.city">Ville</span>
+                                    <span style="color: var(--error); margin-left: 0.25rem;">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="cityInput"
+                                    class="form-input"
+                                    placeholder="Ex: Bordeaux"
+                                    required
+                                >
+                                <p class="form-hint" data-i18n="settings.cityHint">Votre ville de résidence</p>
+                            </div>
+
+                            <!-- Phone (Optionnel) -->
+                            <div class="form-group">
+                                <label for="phoneInput" class="form-label" data-i18n="settings.phone">Téléphone</label>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <select id="phoneCountryCode" class="form-input" style="width: 120px;">
+                                        <!-- Options peuplées dynamiquement depuis countries.js -->
+                                    </select>
+                                    <input
+                                        type="tel"
+                                        id="phoneInput"
+                                        class="form-input"
+                                        placeholder="Ex: 6 12 34 56 78"
+                                        style="flex: 1;"
+                                    >
+                                </div>
+                                <p class="form-hint" data-i18n="settings.phoneHint">Optionnel - Votre numéro de téléphone</p>
+                            </div>
+                        </div>
+
+                        <button id="updateProfileBtn" class="btn-primary" data-i18n="settings.updateProfile">
+                            📝 Enregistrer
+                        </button>
+                    </div>
+
+                    <!-- Avatar Upload Card -->
+                    <div class="avatar-upload-card">
+                        <h3 class="card-title" data-i18n="settings.avatar">Photo de profil</h3>
+
+                        <div class="avatar-preview" id="avatarPreview">
+                            <img id="avatarImage" src="https://ui-avatars.com/api/?name=User&background=3b82f6&color=fff&size=200" alt="Avatar">
+                            <div class="avatar-overlay" id="avatarOverlay">
+                                <span class="avatar-edit-icon">📷</span>
+                            </div>
+                        </div>
+
+                        <input type="file" id="avatarInput" accept="image/*" style="display: none;">
+
+                        <div class="avatar-actions">
+                            <button type="button" id="uploadAvatarBtn" class="btn-primary">
+                                ✏️ Modifier
+                            </button>
+                            <button type="button" id="removeAvatarBtn" class="btn-danger">
+                                🗑️ Supprimer
                             </button>
                         </div>
 
-                        <!-- Avatar Upload Section -->
-                        <div class="avatar-upload-container">
-                            <label class="form-label" data-i18n="settings.avatar">Photo de profil</label>
-                            <div class="avatar-preview" id="avatarPreview">
-                                <img id="avatarImage" src="https://ui-avatars.com/api/?name=User&background=3b82f6&color=fff&size=200" alt="Avatar">
-                                <div class="avatar-overlay" id="avatarOverlay">
-                                    <span class="avatar-edit-icon">📷</span>
-                                </div>
-                            </div>
-                            <input type="file" id="avatarInput" accept="image/*" style="display: none;">
-                            <div class="avatar-buttons">
-                                <button type="button" id="uploadAvatarBtn" class="btn-primary">
-                                    ✏️ Changer
-                                </button>
-                                <button type="button" id="removeAvatarBtn" class="btn-danger">
-                                    🗑️ Supprimer
-                                </button>
-                            </div>
-                            <p class="form-hint">Max 2MB - JPG, PNG ou GIF</p>
-                        </div>
+                        <p class="form-hint">Max 2MB - JPG, PNG ou GIF</p>
                     </div>
                 </div>
             </section>
@@ -450,7 +452,7 @@
     <script type="module">
         import { checkAuth, getUserProfile, updateUserProfile, changePassword, deleteAccount, logout } from './public/js/app.js';
         import { escapeHtml, showSuccess, showError } from './public/js/dashboard-utils.js';
-        import { translatePage } from './public/js/translation-service.js';
+        import { translatePage, changeLanguage } from './public/js/translation-service.js';
         // DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
         // import { initParticles } from './public/js/particles-config.js';
         import { countries } from './public/js/countries.js';
@@ -1107,17 +1109,17 @@
         const savedLang = localStorage.getItem('language') || 'fr';
         langToggle.checked = savedLang === 'en';
 
-        langToggle.addEventListener('change', () => {
+        langToggle.addEventListener('change', async () => {
             const newLang = langToggle.checked ? 'en' : 'fr';
-            localStorage.setItem('language', newLang);
+
+            // Use centralized language change function (includes translatePage)
+            await changeLanguage(newLang);
 
             // Mettre à jour le label du switch dans le burger menu
             const langLabel = document.getElementById('langLabel');
             if (langLabel) {
                 langLabel.textContent = newLang === 'en' ? 'English / Français' : 'Français / English';
             }
-
-            translatePage();
         });
 
         // Bouton Dashboard
