@@ -98,6 +98,8 @@ const fallbackTranslations = {
 
         'settings.title': 'Paramètres du compte',
         'settings.profile': 'Profil',
+        'settings.identity': 'Identité',
+        'settings.photo': 'Photo',
         'settings.email': 'Email',
         'settings.username': 'Nom d\'utilisateur',
         'settings.usernamePlaceholder': 'Votre nom d\'utilisateur',
@@ -199,6 +201,8 @@ const fallbackTranslations = {
 
         'settings.title': 'Account Settings',
         'settings.profile': 'Profile',
+        'settings.identity': 'Identity',
+        'settings.photo': 'Photo',
         'settings.email': 'Email',
         'settings.username': 'Username',
         'settings.usernamePlaceholder': 'Your username',
