@@ -448,6 +448,7 @@
     -->
 
     <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
         import { checkAuth, getUserProfile, updateUserProfile, changePassword, deleteAccount } from './public/js/app.js';
         import { performLogout, protectPage } from './public/js/logout.js';
         import { escapeHtml, showSuccess, showError } from './public/js/dashboard-utils.js';
@@ -461,7 +462,13 @@
         import { initWeatherWidget, refreshWeatherLocation } from './public/js/weather.js';
         import { userIntelligence } from './public/js/user-intelligence-system.js';
         import { initUniversalSearchBar } from './public/js/search-bar-universal.js';
-        // protectPage already imported above
+
+        // Initialize Supabase globally FIRST
+        if (!window.supabase) {
+            const SUPABASE_URL = 'https://xpjittnwdmnecglfpqtl.supabase.co';
+            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhwaml0dG53ZG1uZWNnbGZwcXRsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzI0OTc4ODQsImV4cCI6MjA0ODA3Mzg4NH0.qvYSu9Pl-o8ndhIuuWgZnPR8VuPIKGxKbQR1hXnqoFE';
+            window.supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        }
 
         // Protect this page - redirect to login if not authenticated
         await protectPage();
