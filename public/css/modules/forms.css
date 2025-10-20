@@ -36,14 +36,14 @@
   background: var(--bg-secondary);
   border: 1px solid var(--border);
   color: var(--text-primary);
-  padding: 0.625rem 0.875rem;
+  padding: 0.5rem 0.85rem;
   border-radius: var(--btn-border-radius);
   font-size: var(--btn-font-size);
   transition: var(--btn-transition);
   line-height: var(--line-height-normal);
   font-weight: var(--font-weight-normal);
   width: 100%;
-  min-height: 42px;
+  min-height: 32px;
 }
 
 .form-select,
