@@ -229,11 +229,7 @@
         let currentCategory = 'general';
         let selectedCountries = ['us']; // Par défaut : États-Unis
 
-        // Vérifier l'authentification
-        const isAuth = checkAuth();
-        if (!isAuth) {
-            window.location.href = 'index.html';
-        }
+        // Note: L'authentification est déjà vérifiée par protectPage() au début du script
 
         // Charger le profil utilisateur
         const loadProfile = async () => {
