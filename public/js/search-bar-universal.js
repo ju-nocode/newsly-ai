@@ -19,6 +19,11 @@ import { initializeSearchCommands } from './search-commands-loader.js';
 import { setTheme } from './theme-manager.js';
 
 /**
+ * Import Logout Module
+ */
+import { performLogout } from './logout.js';
+
+/**
  * Search command configuration with universal actions
  * These are the LOCAL FALLBACK commands used when database is unavailable
  */
@@ -201,14 +206,7 @@ const LOCAL_SEARCH_COMMANDS = {
         aliases: ['/deconnexion', '/signout', '/exit'],
         description: 'Se déconnecter',
         icon: '🚪',
-        action: async () => {
-            if (confirm('Voulez-vous vraiment vous déconnecter ?')) {
-                if (window.supabase) {
-                    await window.supabase.auth.signOut();
-                }
-                window.location.href = 'index.html';
-            }
-        },
+        action: () => performLogout(),
         suggestions: []
     },
     password: {
@@ -999,51 +997,27 @@ function handleSearchKeydown(e) {
         case 'Enter':
             e.preventDefault();
 
-            // COMPORTEMENT INTELLIGENT:
-            // 1. Si l'utilisateur a tapé un prefix incomplet (ex: "/settings" alors que le prefix complet est "/settings:")
-            //    → Compléter pour afficher les sous-menus
-            // 2. Si l'utilisateur a tapé exactement le prefix (ex: "/settings") ET qu'il y a des sous-menus
-            //    → Ne PAS exécuter l'action, juste afficher les sous-menus (laisser ouvert)
-            // 3. Si l'utilisateur a sélectionné un sous-menu → Exécuter
-
-            const currentQuery = e.target.value.trim();
-            const commandType = detectCommandType(currentQuery);
-
-            if (commandType) {
-                const command = SEARCH_COMMANDS[commandType];
-
-                // Vérifier si l'utilisateur a tapé exactement le prefix sans ":"
-                const typedPrefix = currentQuery.toLowerCase();
-                const hasColon = command.prefix.endsWith(':');
-
-                // Cas 1: L'utilisateur a tapé "/profile" mais le prefix est "/profile:"
-                if (hasColon && !typedPrefix.endsWith(':') &&
-                    (typedPrefix === command.prefix.toLowerCase().slice(0, -1) ||
-                     command.aliases?.some(alias => typedPrefix === alias.toLowerCase().slice(0, -1)))) {
-
-                    // Compléter avec ": "
-                    e.target.value = command.prefix + ' ';
-                    handleSearchInput({ target: e.target });
-                    return;
-                }
-
-                // Cas 2: L'utilisateur a tapé exactement le prefix (ex: "/settings")
-                // ET la commande a des sous-menus
-                // → Ne rien faire, laisser les sous-menus affichés
-                const isExactPrefix = typedPrefix === command.prefix.toLowerCase() ||
-                                    command.aliases?.some(alias => typedPrefix === alias.toLowerCase());
-
-                if (isExactPrefix && command.suggestions && command.suggestions.length > 0) {
-                    // Les sous-menus sont déjà affichés, ne rien exécuter
-                    // L'utilisateur peut naviguer avec les flèches et re-appuyer sur ENTER
-                    return;
-                }
-            }
-
-            // Comportement normal: exécuter la suggestion sélectionnée
             if (searchState.selectedIndex >= 0 && searchState.searchResults.length > 0) {
-                const suggestion = searchState.searchResults[searchState.selectedIndex];
-                executeSuggestion(suggestion);
+                const selectedItem = searchState.searchResults[searchState.selectedIndex];
+
+                // CAS 1: Item sélectionné a des sous-menus (menu principal)
+                // → Afficher les sous-menus au lieu d'exécuter
+                if (selectedItem.hasSubmenus && selectedItem.commandType) {
+                    // Mettre à jour l'input avec le prefix
+                    e.target.value = selectedItem.value;
+                    // Afficher les sous-menus
+                    showCommandSuggestions(selectedItem.commandType, selectedItem.value);
+                    return;
+                }
+
+                // CAS 2: Item sélectionné a une action → Exécuter
+                if (selectedItem.action) {
+                    executeSuggestion(selectedItem);
+                    return;
+                }
+
+                // CAS 3: Aucune action (ne devrait pas arriver)
+                console.warn('⚠️ Selected item has no action and no submenus:', selectedItem);
             }
             break;
 
@@ -1189,11 +1163,17 @@ function showAllCommands() {
     });
 
     // Store as results for navigation
+    // IMPORTANT: Pour les menus principaux, si la commande a des sous-menus,
+    // l'action doit être d'afficher les sous-menus, PAS d'exécuter l'action principale
     searchState.searchResults = commands.map(([type, command]) => ({
         value: command.prefix + (command.prefix.endsWith(':') ? ' ' : ''),
         label: command.prefix,
         desc: command.description,
-        action: command.action
+        commandType: type, // Garder le type pour afficher les sous-menus
+        hasSubmenus: command.suggestions && command.suggestions.length > 0,
+        action: (command.suggestions && command.suggestions.length > 0)
+            ? null  // Pas d'action si il y a des sous-menus
+            : command.action  // Action directe si pas de sous-menus
     }));
     searchState.selectedIndex = 0;
 
@@ -1254,7 +1234,11 @@ function showPartialCommandMatches(query) {
         value: command.prefix + (command.prefix.endsWith(':') ? ' ' : ''),
         label: command.prefix,
         desc: command.description,
-        action: command.action
+        commandType: type,
+        hasSubmenus: command.suggestions && command.suggestions.length > 0,
+        action: (command.suggestions && command.suggestions.length > 0)
+            ? null
+            : command.action
     }));
     searchState.selectedIndex = 0;
 
@@ -1281,11 +1265,14 @@ function showPartialCommandMatches(query) {
  */
 function showCommandSuggestions(commandType, query) {
     const command = SEARCH_COMMANDS[commandType];
-    if (!command || !command.suggestions || command.suggestions.length === 0) {
-        // Execute command directly if no suggestions
-        if (command.action) {
-            command.action();
-        }
+    if (!command) {
+        closeSearchSuggestions();
+        return;
+    }
+
+    // Si pas de suggestions, fermer (l'action sera exécutée via ENTER)
+    if (!command.suggestions || command.suggestions.length === 0) {
+        closeSearchSuggestions();
         return;
     }
 

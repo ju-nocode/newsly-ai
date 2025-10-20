@@ -179,6 +179,10 @@
         import { fadeIn, shake, stagger, ripple } from './public/js/animations.js';
         import { userIntelligence } from './public/js/user-intelligence-system.js';
         import { initUniversalSearchBar } from './public/js/search-bar-universal.js';
+        import { protectPage } from './public/js/logout.js';
+
+        // Protect this page - redirect to login if not authenticated
+        await protectPage();
 
         // Make userIntelligence globally accessible for console testing
         window.userIntelligence = userIntelligence;
