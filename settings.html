@@ -204,13 +204,17 @@
                         <input type="file" id="avatarInput" accept="image/*" style="display: none;">
 
                         <div class="avatar-actions">
-                            <button type="button" id="uploadAvatarBtn" class="btn-secondary">
-                                Modifier
+                            <button type="button" id="uploadAvatarBtn" class="btn-primary">
+                                📤 Modifier
                             </button>
-                            <button type="button" id="removeAvatarBtn" class="btn-secondary-danger">
-                                Supprimer
+                            <button type="button" id="removeAvatarBtn" class="btn-danger">
+                                🗑️ Supprimer
                             </button>
                         </div>
+
+                        <button type="button" id="generateAvatarBtn" class="btn-success" style="width: 100%;">
+                            <span class="btn-text">🎨 Générer avatar</span>
+                        </button>
 
                         <p class="form-hint">Max 2MB - JPG, PNG ou GIF</p>
                     </div>
@@ -708,6 +712,108 @@
             const userName = document.getElementById('usernameInput').value || 'User';
             avatarImage.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=3b82f6&color=fff&size=200`;
             showSuccess('Photo supprimée (cliquez sur "Mettre à jour" pour sauvegarder)');
+        });
+
+        // Bouton "Générer avatar"
+        document.getElementById('generateAvatarBtn').addEventListener('click', async () => {
+            const btn = document.getElementById('generateAvatarBtn');
+            const btnText = btn.querySelector('.btn-text');
+
+            try {
+                // Ajouter le spinner
+                btn.classList.add('loading');
+                btn.disabled = true;
+
+                // Créer le spinner
+                const spinner = document.createElement('span');
+                spinner.className = 'btn-spinner';
+                btn.insertBefore(spinner, btnText);
+
+                // Générer un seed aléatoire pour un avatar unique
+                const seed = Math.random().toString(36).substring(2, 15);
+
+                // Styles disponibles de DiceBear (avatars géométriques/abstraits)
+                const styles = [
+                    'adventurer',
+                    'adventurer-neutral',
+                    'avataaars',
+                    'big-ears',
+                    'big-smile',
+                    'bottts',
+                    'croodles',
+                    'fun-emoji',
+                    'icons',
+                    'identicon',
+                    'initials',
+                    'lorelei',
+                    'micah',
+                    'miniavs',
+                    'personas',
+                    'pixel-art',
+                    'shapes',
+                    'thumbs'
+                ];
+
+                const randomStyle = styles[Math.floor(Math.random() * styles.length)];
+
+                // Générer l'URL de l'avatar SVG depuis DiceBear
+                const avatarUrl = `https://api.dicebear.com/7.x/${randomStyle}/svg?seed=${seed}&size=200`;
+
+                // Charger l'image SVG et la convertir en JPEG
+                const response = await fetch(avatarUrl);
+                const svgBlob = await response.blob();
+
+                // Créer une URL temporaire pour le blob SVG
+                const svgUrl = URL.createObjectURL(svgBlob);
+
+                // Créer une image pour charger le SVG
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+
+                await new Promise((resolve, reject) => {
+                    img.onload = resolve;
+                    img.onerror = reject;
+                    img.src = svgUrl;
+                });
+
+                // Convertir le SVG en canvas JPEG
+                const canvas = document.createElement('canvas');
+                canvas.width = 200;
+                canvas.height = 200;
+                const ctx = canvas.getContext('2d');
+
+                // Fond blanc pour le JPEG
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, 200, 200);
+
+                // Dessiner l'image SVG
+                ctx.drawImage(img, 0, 0, 200, 200);
+
+                // Convertir en base64 JPEG
+                const jpegBase64 = canvas.toDataURL('image/jpeg', 0.9);
+
+                // Libérer l'URL temporaire
+                URL.revokeObjectURL(svgUrl);
+
+                // Mettre à jour l'avatar
+                avatarImage.src = jpegBase64;
+                currentAvatarUrl = jpegBase64;
+
+                const sizeKB = Math.round((jpegBase64.length * 0.75) / 1024);
+                showSuccess(`Avatar généré (${sizeKB} KB) ! Cliquez sur "Enregistrer" pour sauvegarder`);
+
+            } catch (error) {
+                console.error('Erreur lors de la génération de l\'avatar:', error);
+                showError('Erreur lors de la génération de l\'avatar. Veuillez réessayer.');
+            } finally {
+                // Retirer le spinner
+                const spinner = btn.querySelector('.btn-spinner');
+                if (spinner) {
+                    spinner.remove();
+                }
+                btn.classList.remove('loading');
+                btn.disabled = false;
+            }
         });
 
         // Fonction pour compresser l'image
