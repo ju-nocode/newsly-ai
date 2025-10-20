@@ -65,8 +65,9 @@
 
 /* Landing page navbar: Logo left, Weather+Burger right */
 .navbar-landing .nav-container {
-  grid-template-columns: auto 1fr;
+  display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 /* Left Section: Logo + optional mobile button */
