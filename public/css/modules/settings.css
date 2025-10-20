@@ -288,6 +288,8 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 4px var(--shadow);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -299,7 +301,7 @@
 
 .avatar-upload-card:hover {
   box-shadow: 0 4px 12px var(--shadow-lg);
-  border-color: rgba(59, 130, 246, 0.3);
+  border-color: var(--border);
 }
 
 .avatar-upload-card .card-title {
@@ -390,7 +392,7 @@
 
 .settings-card:hover {
   box-shadow: 0 4px 12px var(--shadow-lg);
-  border-color: rgba(59, 130, 246, 0.3);
+  border-color: var(--border);
 }
 
 .settings-card > .btn-primary,
