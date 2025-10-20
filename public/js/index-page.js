@@ -1,4 +1,5 @@
-import { checkAuth, login, signup } from './app.js';
+import { login, signup } from './app.js';
+import { isUserAuthenticated } from './logout.js';
 import { translatePage } from './translation-service.js';
 // DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
 // import { defaultParticlesConfig } from './particles-config.js';
@@ -133,15 +134,18 @@ const showEmailConfirmedModal = () => {
 };
 
 // Si l'utilisateur est déjà connecté, rediriger vers le dashboard
-if (checkAuth()) {
-    window.location.href = 'dashboard.html';
-} else {
-    // Hide app links in footer when not logged in
-    const appLinksSection = document.getElementById('appLinksSection');
-    if (appLinksSection) {
-        appLinksSection.style.display = 'none';
+(async () => {
+    const isAuth = await isUserAuthenticated();
+    if (isAuth) {
+        window.location.href = 'dashboard.html';
+    } else {
+        // Hide app links in footer when not logged in
+        const appLinksSection = document.getElementById('appLinksSection');
+        if (appLinksSection) {
+            appLinksSection.style.display = 'none';
+        }
     }
-}
+})();
 
 // Traductions spécifiques à index.html
 const indexTranslations = {
@@ -769,7 +773,10 @@ if (burgerBtnIndex && burgerMenuIndex) {
 
 // Sync burger menu with user state
 async function updateBurgerMenuUserInfo() {
-    const user = await checkAuth();
+    const isAuth = await isUserAuthenticated();
+    // Note: isUserAuthenticated returns boolean, not user object
+    // We'll need to get user profile separately if needed
+    const user = null; // Simplified for now
     const burgerUserInfo = document.getElementById('burgerUserInfoIndex');
     const burgerAuthButtons = document.getElementById('burgerAuthButtons');
     const dashboardLink = document.getElementById('dashboardLinkIndex');
