@@ -6,6 +6,7 @@ import { countries } from './countries.js';
 import { attachPhoneFormatter } from './phone-formatter.js';
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 import { initThemeSystem } from './theme-manager.js';
+import { initWeatherWidget } from './weather.js';
 
 // Détection de confirmation email - Écoute localStorage + BroadcastChannel + Polling
 let emailConfirmationInterval = null;
@@ -829,4 +830,6 @@ window.addEventListener('DOMContentLoaded', () => {
     updateBurgerMenuUserInfo();
     // Initialize theme system
     initThemeSystem();
+    // Initialize weather widget for index page
+    initWeatherWidget('weatherWidgetIndex');
 });

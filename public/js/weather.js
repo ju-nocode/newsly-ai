@@ -91,11 +91,12 @@ function updateWeatherWidget(widget, data) {
 
 /**
  * Load weather for current location or saved coordinates
+ * @param {string} widgetId - ID of the weather widget element (default: 'weatherWidget')
  */
-export async function loadWeather() {
-    const weatherWidget = document.getElementById('weatherWidget');
+export async function loadWeather(widgetId = 'weatherWidget') {
+    const weatherWidget = document.getElementById(widgetId);
     if (!weatherWidget) {
-        console.warn('⚠️ Weather widget element not found');
+        console.warn(`⚠️ Weather widget element "${widgetId}" not found`);
         return;
     }
 
@@ -146,15 +147,16 @@ export async function loadWeather() {
 
 /**
  * Initialize weather widget with auto-refresh
+ * @param {string} widgetId - ID of the weather widget element (default: 'weatherWidget')
  */
-export function initWeatherWidget() {
+export function initWeatherWidget(widgetId = 'weatherWidget') {
     // Load weather on init
-    loadWeather();
+    loadWeather(widgetId);
 
     // Refresh weather every 10 minutes
-    setInterval(loadWeather, 10 * 60 * 1000);
+    setInterval(() => loadWeather(widgetId), 10 * 60 * 1000);
 
-    console.log('✅ Weather widget initialized');
+    console.log(`✅ Weather widget "${widgetId}" initialized`);
 }
 
 /**
