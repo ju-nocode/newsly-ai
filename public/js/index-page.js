@@ -1,5 +1,5 @@
 import { checkAuth, login, signup } from './app.js';
-import { translatePage } from './translation-service.js';
+import { translatePage, changeLanguage } from './translation-service.js';
 // DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
 // import { defaultParticlesConfig } from './particles-config.js';
 import { countries } from './countries.js';
@@ -809,10 +809,10 @@ langToggle.checked = savedLang === 'en';
 
 langToggle.addEventListener('change', async () => {
     const newLang = langToggle.checked ? 'en' : 'fr';
-    localStorage.setItem('language', newLang);
-    // Appliquer les traductions
+    // Use centralized language change function
+    await changeLanguage(newLang);
+    // Apply index-specific translations
     applyIndexTranslations(newLang);
-    await translatePage();
 });
 
 // Initialize particles with default config

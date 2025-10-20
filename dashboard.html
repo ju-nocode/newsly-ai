@@ -170,7 +170,7 @@
     <script type="module">
         import { checkAuth, logout, getUserProfile, fetchNews, deleteAccount, currentUser } from './public/js/app.js';
         import { displayNews, escapeHtml, showError, showSuccess } from './public/js/dashboard-utils.js';
-        import { tSync as t, translatePage } from './public/js/translation-service.js';
+        import { tSync as t, translatePage, changeLanguage } from './public/js/translation-service.js';
         import { initNavbar } from './public/js/navbar-component.js';
         import { initThemeSystem } from './public/js/theme-manager.js';
         import { initWeatherWidget, refreshWeatherLocation } from './public/js/weather.js';
@@ -510,19 +510,17 @@
 
         langToggle.checked = savedLang === 'en';
 
-        langToggle.addEventListener('change', () => {
+        langToggle.addEventListener('change', async () => {
             const newLang = langToggle.checked ? 'en' : 'fr';
 
-            localStorage.setItem('language', newLang);
+            // Use centralized language change function (includes translatePage)
+            await changeLanguage(newLang);
 
             // Mettre à jour le label du switch dans le burger menu
             const langLabel = document.getElementById('langLabel');
             if (langLabel) {
                 langLabel.textContent = newLang === 'en' ? 'English / Français' : 'Français / English';
             }
-
-            // Traduire toute la page
-            translatePage();
 
             // Mettre à jour le titre de la catégorie actuelle
             const activeBtn = document.querySelector('.sidebar-menu-link[data-category].active');

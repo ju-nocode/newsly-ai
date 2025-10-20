@@ -349,5 +349,102 @@ export const preloadTranslations = async () => {
     }
 };
 
+/**
+ * Change language and save to database
+ * @param {string} lang - Language code (fr/en)
+ */
+export const changeLanguage = async (lang) => {
+    if (lang !== 'fr' && lang !== 'en') {
+        console.warn(`Invalid language: ${lang}. Using 'fr' as default.`);
+        lang = 'fr';
+    }
+
+    // Save to localStorage
+    localStorage.setItem('language', lang);
+
+    // Clear translation cache for new language
+    translationCache = {};
+
+    // Preload new language
+    await preloadTranslations();
+
+    // Translate current page
+    await translatePage();
+
+    // Save to database
+    await saveLanguageToDatabase(lang);
+
+    console.log(`🌍 Language changed to: ${lang}`);
+    return lang;
+};
+
+/**
+ * Save language to database via API
+ * @param {string} language - Language to save
+ */
+async function saveLanguageToDatabase(language) {
+    try {
+        const session = JSON.parse(localStorage.getItem('session'));
+        if (!session?.access_token) {
+            console.log('⚠️ No session found, language not saved to database');
+            return;
+        }
+
+        const response = await fetch('/api/user/settings', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${session.access_token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ language })
+        });
+
+        if (!response.ok) {
+            console.error('Failed to save language to database:', await response.text());
+            return;
+        }
+
+        console.log('✅ Language saved to database');
+    } catch (error) {
+        console.error('Error saving language to database:', error);
+    }
+}
+
+/**
+ * Load language from database on init
+ */
+export const loadLanguageFromDatabase = async () => {
+    try {
+        const session = JSON.parse(localStorage.getItem('session'));
+        if (!session?.access_token) {
+            return localStorage.getItem('language') || 'fr';
+        }
+
+        const response = await fetch('/api/user/settings', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${session.access_token}`
+            }
+        });
+
+        if (!response.ok) {
+            return localStorage.getItem('language') || 'fr';
+        }
+
+        const data = await response.json();
+        const dbLang = data.language || 'fr';
+
+        // Sync with localStorage if different
+        if (dbLang !== localStorage.getItem('language')) {
+            localStorage.setItem('language', dbLang);
+        }
+
+        return dbLang;
+    } catch (error) {
+        console.error('Error loading language from database:', error);
+        return localStorage.getItem('language') || 'fr';
+    }
+};
+
 // Auto-preload on import
 preloadTranslations();
