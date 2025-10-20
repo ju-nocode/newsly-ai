@@ -304,13 +304,10 @@
   border-color: var(--border);
 }
 
-.avatar-upload-card .card-title {
-  font-size: var(--font-size-md);
-  font-weight: var(--font-weight-semibold);
-  color: var(--text-primary);
-  margin-bottom: 0.5rem;
-  text-align: center;
-  line-height: var(--line-height-tight);
+.avatar-upload-card .settings-card-title {
+  text-align: left;
+  align-self: flex-start;
+  width: 100%;
 }
 
 .avatar-preview {
