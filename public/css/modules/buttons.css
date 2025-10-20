@@ -4,34 +4,62 @@
 
 .btn-primary,
 .btn-submit {
+  appearance: button;
   background: var(--primary);
   color: #fff;
   padding: var(--btn-padding);
   border-radius: var(--btn-border-radius);
   font-weight: var(--btn-font-weight);
   font-size: var(--btn-font-size);
-  border: none;
+  border: 1px solid var(--primary);
   cursor: pointer;
   transition: var(--btn-transition);
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   line-height: var(--line-height-normal);
   white-space: nowrap;
   text-decoration: none;
+  text-align: center;
+  box-sizing: border-box;
+  box-shadow: var(--bg-primary) 4px 4px 0 0, var(--primary) 4px 4px 0 1px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  overflow: visible;
+  vertical-align: middle;
 }
 
 .btn-primary:hover,
 .btn-submit:hover {
   background: var(--primary-dark);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  text-decoration: none;
+}
+
+.btn-primary:focus,
+.btn-submit:focus {
+  text-decoration: none;
+  outline: 0;
+}
+
+.btn-primary:active,
+.btn-submit:active {
+  box-shadow: rgba(0, 0, 0, 0.125) 0 3px 5px inset;
+  outline: 0;
+}
+
+.btn-primary:not([disabled]):active,
+.btn-submit:not([disabled]):active {
+  box-shadow: var(--bg-primary) 2px 2px 0 0, var(--primary) 2px 2px 0 1px;
+  transform: translate(2px, 2px);
 }
 
 .btn-danger {
+  appearance: button;
   background: var(--error);
   color: white;
-  border: none;
+  border: 1px solid var(--error);
   padding: var(--btn-padding);
   border-radius: var(--btn-border-radius);
   font-size: var(--btn-font-size);
@@ -40,14 +68,38 @@
   transition: var(--btn-transition);
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   line-height: var(--line-height-normal);
+  white-space: nowrap;
+  text-align: center;
+  box-sizing: border-box;
+  box-shadow: var(--bg-primary) 4px 4px 0 0, var(--error) 4px 4px 0 1px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  overflow: visible;
+  vertical-align: middle;
 }
 
 .btn-danger:hover {
   background: var(--error-hover);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+  text-decoration: none;
+}
+
+.btn-danger:focus {
+  text-decoration: none;
+  outline: 0;
+}
+
+.btn-danger:active {
+  box-shadow: rgba(0, 0, 0, 0.125) 0 3px 5px inset;
+  outline: 0;
+}
+
+.btn-danger:not([disabled]):active {
+  box-shadow: var(--bg-primary) 2px 2px 0 0, var(--error) 2px 2px 0 1px;
+  transform: translate(2px, 2px);
 }
 
 .btn-submit {
@@ -97,9 +149,10 @@
 
 /* Secondary button (outline style) */
 .btn-secondary {
-  background: transparent;
+  appearance: button;
+  background: var(--bg-primary);
   color: var(--text-primary);
-  border: 1.5px solid var(--border);
+  border: 1px solid var(--border);
   padding: var(--btn-padding);
   border-radius: var(--btn-border-radius);
   font-size: var(--btn-font-size);
@@ -108,24 +161,48 @@
   transition: var(--btn-transition);
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   line-height: var(--line-height-normal);
   white-space: nowrap;
+  text-align: center;
+  box-sizing: border-box;
+  box-shadow: var(--bg-tertiary) 4px 4px 0 0, var(--border) 4px 4px 0 1px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  overflow: visible;
+  vertical-align: middle;
 }
 
 .btn-secondary:hover {
   background: var(--bg-tertiary);
   border-color: var(--primary);
   color: var(--primary);
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+  text-decoration: none;
+}
+
+.btn-secondary:focus {
+  text-decoration: none;
+  outline: 0;
+}
+
+.btn-secondary:active {
+  box-shadow: rgba(0, 0, 0, 0.125) 0 3px 5px inset;
+  outline: 0;
+}
+
+.btn-secondary:not([disabled]):active {
+  box-shadow: var(--bg-tertiary) 2px 2px 0 0, var(--border) 2px 2px 0 1px;
+  transform: translate(2px, 2px);
 }
 
 /* Secondary danger button (outline red) */
 .btn-secondary-danger {
-  background: transparent;
+  appearance: button;
+  background: var(--bg-primary);
   color: var(--text-primary);
-  border: 1.5px solid var(--border);
+  border: 1px solid var(--border);
   padding: var(--btn-padding);
   border-radius: var(--btn-border-radius);
   font-size: var(--btn-font-size);
@@ -134,17 +211,40 @@
   transition: var(--btn-transition);
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   line-height: var(--line-height-normal);
   white-space: nowrap;
+  text-align: center;
+  box-sizing: border-box;
+  box-shadow: var(--bg-tertiary) 4px 4px 0 0, var(--border) 4px 4px 0 1px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  overflow: visible;
+  vertical-align: middle;
 }
 
 .btn-secondary-danger:hover {
   background: rgba(239, 68, 68, 0.1);
   border-color: var(--error);
   color: var(--error);
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.15);
+  text-decoration: none;
+}
+
+.btn-secondary-danger:focus {
+  text-decoration: none;
+  outline: 0;
+}
+
+.btn-secondary-danger:active {
+  box-shadow: rgba(0, 0, 0, 0.125) 0 3px 5px inset;
+  outline: 0;
+}
+
+.btn-secondary-danger:not([disabled]):active {
+  box-shadow: var(--bg-tertiary) 2px 2px 0 0, var(--border) 2px 2px 0 1px;
+  transform: translate(2px, 2px);
 }
 
 /* Button group */
