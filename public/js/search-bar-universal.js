@@ -14,6 +14,11 @@ import { userIntelligence } from './user-intelligence-system.js';
 import { initializeSearchCommands } from './search-commands-loader.js';
 
 /**
+ * Import Theme Manager
+ */
+import { setTheme } from './theme-manager.js';
+
+/**
  * Search command configuration with universal actions
  * These are the LOCAL FALLBACK commands used when database is unavailable
  */
@@ -24,14 +29,6 @@ const LOCAL_SEARCH_COMMANDS = {
         description: 'Aller au tableau de bord',
         icon: '🏠',
         action: () => window.location.href = 'dashboard.html',
-        suggestions: []
-    },
-    index: {
-        prefix: '/index',
-        aliases: ['/landing', '/welcome', '/start'],
-        description: 'Page d\'accueil',
-        icon: '🌟',
-        action: () => window.location.href = 'index.html',
         suggestions: []
     },
     profile: {
@@ -179,19 +176,13 @@ const LOCAL_SEARCH_COMMANDS = {
                 value: '/theme: light',
                 label: 'Clair',
                 desc: 'Activer le mode clair',
-                action: () => {
-                    document.documentElement.setAttribute('data-theme', 'light');
-                    localStorage.setItem('theme', 'light');
-                }
+                action: () => setTheme('light')
             },
             {
                 value: '/theme: dark',
                 label: 'Sombre',
                 desc: 'Activer le mode sombre',
-                action: () => {
-                    document.documentElement.setAttribute('data-theme', 'dark');
-                    localStorage.setItem('theme', 'dark');
-                }
+                action: () => setTheme('dark')
             },
             {
                 value: '/theme: auto',
@@ -200,7 +191,7 @@ const LOCAL_SEARCH_COMMANDS = {
                 action: () => {
                     localStorage.removeItem('theme');
                     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                    document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+                    setTheme(prefersDark ? 'dark' : 'light');
                 }
             }
         ]
@@ -334,32 +325,50 @@ class SearchPreferencesDB {
     async saveUserPreferences(preferences) {
         await this.checkAuthStatus();
 
+        console.log('💾 saveUserPreferences called');
+        console.log('🔐 isAuthenticated:', this.isAuthenticated);
+        console.log('👤 currentUser:', this.currentUser);
+        console.log('📦 preferences to save:', preferences);
+
         if (!this.isAuthenticated) {
+            console.log('⚠️ Not authenticated, saving to localStorage instead');
             this.saveToLocalStorage(preferences);
             return;
         }
 
-        if (this.syncInProgress) return;
+        if (this.syncInProgress) {
+            console.log('⏳ Sync already in progress, skipping');
+            return;
+        }
 
         try {
             this.syncInProgress = true;
 
-            const { error } = await this.supabase
+            const dataToSave = {
+                user_id: this.currentUser.id,
+                ...preferences,
+                updated_at: new Date().toISOString()
+            };
+
+            console.log('💾 Upserting to Supabase:', dataToSave);
+
+            const { data, error } = await this.supabase
                 .from('user_search_preferences')
-                .upsert({
-                    user_id: this.currentUser.id,
-                    ...preferences,
-                    updated_at: new Date().toISOString()
-                }, {
+                .upsert(dataToSave, {
                     onConflict: 'user_id'
-                });
+                })
+                .select();
 
             if (error) {
-                console.error('Error saving preferences to DB:', error);
+                console.error('❌ Error saving preferences to DB:', error);
+                console.error('❌ Error details:', JSON.stringify(error));
                 this.saveToLocalStorage(preferences);
+            } else {
+                console.log('✅ Preferences saved successfully to DB!');
+                console.log('✅ Saved data:', data);
             }
         } catch (e) {
-            console.error('Error saving user preferences:', e);
+            console.error('❌ Exception saving user preferences:', e);
             this.saveToLocalStorage(preferences);
         } finally {
             this.syncInProgress = false;
@@ -370,9 +379,13 @@ class SearchPreferencesDB {
      * Update search history
      */
     async updateHistory(history) {
+        console.log('📝 updateHistory called with', history.length, 'items');
         const prefs = await this.loadUserPreferences();
+        console.log('📥 Current prefs loaded:', prefs);
         prefs.search_history = history;
+        console.log('📝 Updated prefs.search_history to', history.length, 'items');
         await this.saveUserPreferences(prefs);
+        console.log('✅ updateHistory completed');
     }
 
     /**

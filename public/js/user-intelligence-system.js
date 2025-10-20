@@ -26,10 +26,17 @@ class UserIntelligenceSystem {
      * Initialize the system
      */
     async init() {
+        console.log('🚀 User Intelligence System initializing...');
         await this.checkAuth();
+        console.log('🔐 Authentication check complete:', this.isAuthenticated);
         if (this.isAuthenticated) {
+            console.log('👤 User:', this.currentUser?.email);
             await this.ensureUserTables();
+            console.log('✅ User tables ensured');
+        } else {
+            console.log('⚠️ User not authenticated');
         }
+        console.log('✅ User Intelligence System initialized');
     }
 
     /**
@@ -59,11 +66,18 @@ class UserIntelligenceSystem {
         if (!this.isAuthenticated) return;
 
         try {
-            await this.supabase.rpc('initialize_user_preferences', {
+            console.log('🔧 Calling initialize_user_preferences RPC for user:', this.currentUser.id);
+            const { data, error } = await this.supabase.rpc('initialize_user_preferences', {
                 p_user_id: this.currentUser.id
             });
+
+            if (error) {
+                console.error('❌ Error from RPC initialize_user_preferences:', error);
+            } else {
+                console.log('✅ RPC initialize_user_preferences completed:', data);
+            }
         } catch (e) {
-            console.error('Error initializing user tables:', e);
+            console.error('❌ Exception initializing user tables:', e);
         }
     }
 
