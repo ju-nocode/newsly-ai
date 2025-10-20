@@ -1261,6 +1261,71 @@ function showPartialCommandMatches(query) {
 }
 
 /**
+ * Show single command without submenus
+ */
+function showSingleCommand(command) {
+    let container = getSuggestionsContainer();
+    container.innerHTML = '';
+
+    // Header
+    const header = document.createElement('div');
+    header.className = 'search-suggestion-header';
+    header.innerHTML = `
+        <span class="search-command-icon">${command.icon}</span>
+        <span class="search-command-desc">${command.description}</span>
+    `;
+    container.appendChild(header);
+
+    // Single item
+    const item = document.createElement('div');
+    item.className = 'search-suggestion-item selected';
+    item.dataset.index = '0';
+    item.innerHTML = `
+        <span style="font-size: 1.125rem;">${command.icon}</span>
+        <div class="search-suggestion-content">
+            <div class="search-suggestion-label">${command.prefix}</div>
+            <div class="search-suggestion-desc">${command.description}</div>
+        </div>
+        <span style="margin-left: auto; font-size: 0.75rem; opacity: 0.6;">ENTER pour exécuter</span>
+    `;
+
+    // Add click handler
+    item.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        if (command.action) {
+            command.action();
+        }
+    });
+
+    container.appendChild(item);
+
+    // Store in searchResults for ENTER to work
+    searchState.searchResults = [{
+        value: command.prefix,
+        label: command.prefix,
+        desc: command.description,
+        action: command.action
+    }];
+    searchState.selectedIndex = 0;
+
+    positionDropdown(container);
+
+    // Force reflow before adding show class
+    container.offsetHeight;
+
+    requestAnimationFrame(() => {
+        container.style.opacity = '1';
+        container.style.transform = 'translateY(0)';
+        container.style.pointerEvents = 'auto';
+        container.style.display = 'block';
+        container.style.zIndex = '10001';
+        container.classList.add('show');
+        searchState.isOpen = true;
+        updateSelectedSuggestion();
+    });
+}
+
+/**
  * Show command suggestions
  */
 function showCommandSuggestions(commandType, query) {
@@ -1270,9 +1335,9 @@ function showCommandSuggestions(commandType, query) {
         return;
     }
 
-    // Si pas de suggestions, fermer (l'action sera exécutée via ENTER)
+    // Si pas de suggestions, afficher juste la commande elle-même
     if (!command.suggestions || command.suggestions.length === 0) {
-        closeSearchSuggestions();
+        showSingleCommand(command);
         return;
     }
 

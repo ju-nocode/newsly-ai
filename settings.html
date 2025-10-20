@@ -448,7 +448,8 @@
     -->
 
     <script type="module">
-        import { checkAuth, getUserProfile, updateUserProfile, changePassword, deleteAccount, logout } from './public/js/app.js';
+        import { checkAuth, getUserProfile, updateUserProfile, changePassword, deleteAccount } from './public/js/app.js';
+        import { performLogout, protectPage } from './public/js/logout.js';
         import { escapeHtml, showSuccess, showError } from './public/js/dashboard-utils.js';
         import { translatePage } from './public/js/translation-service.js';
         // DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
@@ -460,7 +461,7 @@
         import { initWeatherWidget, refreshWeatherLocation } from './public/js/weather.js';
         import { userIntelligence } from './public/js/user-intelligence-system.js';
         import { initUniversalSearchBar } from './public/js/search-bar-universal.js';
-        import { protectPage } from './public/js/logout.js';
+        // protectPage already imported above
 
         // Protect this page - redirect to login if not authenticated
         await protectPage();
@@ -1131,7 +1132,7 @@
 
         // Bouton Logout (burger menu)
         document.getElementById('logoutBtn').addEventListener('click', () => {
-            logout();
+            performLogout();
         });
 
         // Bouton Logout (sidebar)
@@ -1139,7 +1140,7 @@
         if (sidebarLogoutBtn) {
             sidebarLogoutBtn.addEventListener('click', (e) => {
                 e.preventDefault();
-                logout();
+                performLogout();
             });
         }
 

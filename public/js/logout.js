@@ -109,9 +109,10 @@ export async function protectPage() {
 /**
  * Initialize logout buttons on the page
  * Automatically finds all elements with data-logout attribute
+ * Call this manually if needed for dynamic logout buttons
  */
 export function initLogoutButtons() {
-    const logoutButtons = document.querySelectorAll('[data-logout], .logout-btn, #logoutBtn');
+    const logoutButtons = document.querySelectorAll('[data-logout], .logout-btn');
 
     logoutButtons.forEach(btn => {
         btn.addEventListener('click', async (e) => {
@@ -121,11 +122,4 @@ export function initLogoutButtons() {
     });
 
     console.log(`✅ Initialized ${logoutButtons.length} logout buttons`);
-}
-
-// Auto-initialize logout buttons when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initLogoutButtons);
-} else {
-    initLogoutButtons();
 }

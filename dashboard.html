@@ -168,7 +168,8 @@
     -->
 
     <script type="module">
-        import { checkAuth, logout, getUserProfile, fetchNews, deleteAccount, currentUser } from './public/js/app.js';
+        import { checkAuth, getUserProfile, fetchNews, deleteAccount, currentUser } from './public/js/app.js';
+        import { performLogout, protectPage } from './public/js/logout.js';
         import { displayNews, escapeHtml, showError, showSuccess } from './public/js/dashboard-utils.js';
         import { tSync as t, translatePage } from './public/js/translation-service.js';
         import { initNavbar } from './public/js/navbar-component.js';
@@ -179,7 +180,7 @@
         import { fadeIn, shake, stagger, ripple } from './public/js/animations.js';
         import { userIntelligence } from './public/js/user-intelligence-system.js';
         import { initUniversalSearchBar } from './public/js/search-bar-universal.js';
-        import { protectPage } from './public/js/logout.js';
+        // protectPage already imported above
 
         // Protect this page - redirect to login if not authenticated
         await protectPage();
@@ -546,7 +547,7 @@
         });
 
         document.getElementById('logoutBtn').addEventListener('click', () => {
-            logout();
+            performLogout();
         });
 
         // Bouton Logout (sidebar)
@@ -554,7 +555,7 @@
         if (sidebarLogoutBtn) {
             sidebarLogoutBtn.addEventListener('click', (e) => {
                 e.preventDefault();
-                logout();
+                performLogout();
             });
         }
 
