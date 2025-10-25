@@ -690,11 +690,27 @@
             }
         });
 
-        // Initialiser
+        // Initialiser (optimisé pour Chrome iOS)
         (async () => {
-            await translatePage(); // Traduire au chargement
-            await loadProfile();
-            await loadNews('general');
+            // Traduire d'abord (synchrone)
+            await translatePage();
+
+            // Chrome iOS : charger profil + news en parallèle pour éviter freeze
+            if (isChromeIOS || isMobile) {
+                console.log('⚡ Chargement optimisé mobile');
+                // Lancer en parallèle mais ignorer les erreurs pour éviter freeze
+                Promise.all([
+                    loadProfile().catch(err => console.warn('Profile load error:', err)),
+                    loadNews('general').catch(err => console.warn('News load error:', err))
+                ]).catch(() => {
+                    // Si tout échoue, au moins la page ne freeze pas
+                    console.error('Failed to load dashboard data');
+                });
+            } else {
+                // Desktop : chargement séquentiel normal
+                await loadProfile();
+                await loadNews('general');
+            }
 
             // ================================================
             // SIDEBAR COLLAPSIBLE - Système universel
