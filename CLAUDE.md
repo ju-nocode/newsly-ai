@@ -1,12 +1,16 @@
-\# 🧠 Project Memory – Newsly-AI
+# 🧠 Project Memory – Newsly-AI
 
-\## Context Files
+⚠️ **Les contextes suivants DOIVENT être lus à chaque démarrage de session.**
 
-@newsly-ai/.claude/context\_split/context-core.md
-@newsly-ai/.claude/context\_split/context-api.md
-@newsly-ai/.claude/context\_split/context-ui.md
-@newsly-ai/.claude/context\_split/context-db.md
-@newsly-ai/.claude/context\_split/context-security.md
+## Context Files (lecture obligatoire au démarrage)
 
-\## Database Schema
-@newsly-ai/.claude/database-schema.sql
+Les fichiers suivants contiennent l'architecture complète du projet et doivent être consultés systématiquement :
+
+- `.claude/context_split/context-core.md` → Stack, architecture, modules JS, conventions
+- `.claude/context_split/context-api.md` → Routes API, News API, Vercel functions
+- `.claude/context_split/context-ui.md` → Pages HTML, CSS modulaire, design system
+- `.claude/context_split/context-db.md` → Tables Supabase, RLS, queries
+- `.claude/context_split/context-security.md` → Auth JWT, CORS, validation, secrets
+
+## Database Schema
+- `.claude/database-schema.sql` → Schéma complet Supabase (contexte uniquement, ne pas exécuter)
