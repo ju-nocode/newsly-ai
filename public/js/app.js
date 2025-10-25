@@ -117,10 +117,24 @@ export const login = async (email, password) => {
         }
 
         saveSession(data.user, data.session.access_token);
+
+        // Log security event
+        await logSecurityEvent('login', {
+            success: true,
+            email: data.user.email
+        });
+
         return { success: true, user: data.user };
 
     } catch (error) {
         console.error('Login error:', error);
+
+        // Log failed login attempt
+        logSecurityEvent('failed_login', {
+            success: false,
+            error: error.message
+        }).catch(() => {}); // Ignore errors in logging
+
         return { success: false, error: error.message };
     }
 };
@@ -199,7 +213,12 @@ export const resendConfirmation = async (email) => {
 };
 
 // DÃ©connexion
-export const logout = () => {
+export const logout = async () => {
+    // Log security event before clearing session
+    await logSecurityEvent('logout', {
+        timestamp: new Date().toISOString()
+    }).catch(() => {}); // Ignore errors
+
     clearSession();
     window.location.href = 'index.html';
 };
