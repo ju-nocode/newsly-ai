@@ -78,31 +78,15 @@ const loadSession = () => {
 };
 
 // Sauvegarder la session
-// Générer un ID de session unique
-const generateSessionId = () => {
-    return 'sess_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-};
-
 const saveSession = (user, token) => {
     currentUser = user;
     authToken = token;
-
-    // Générer un nouvel ID de session à chaque login
-    const sessionId = generateSessionId();
-    localStorage.setItem('session_id', sessionId);
-
-    localStorage.setItem('session', JSON.stringify({
-        user,
-        access_token: token,
-        session_id: sessionId
-    }));
-
+    localStorage.setItem('session', JSON.stringify({ user, access_token: token }));
     console.log('ðŸ'¾ Session sauvegardÃ©e:', {
         userId: user?.id,
         email: user?.email,
         tokenPresent: !!token,
-        tokenLength: token?.length,
-        sessionId: sessionId
+        tokenLength: token?.length
     });
 };
 
@@ -111,7 +95,6 @@ const clearSession = () => {
     currentUser = null;
     authToken = null;
     localStorage.removeItem('session');
-    localStorage.removeItem('session_id');
 };
 
 // ================================================
@@ -135,14 +118,10 @@ export const login = async (email, password) => {
 
         saveSession(data.user, data.session.access_token);
 
-        // Récupérer le session_id qui vient d'être généré
-        const sessionId = localStorage.getItem('session_id');
-
         // Log security event (non-bloquant)
         logSecurityEvent('login', {
             success: true,
-            email: data.user.email,
-            session_id: sessionId
+            email: data.user.email
         }).catch(err => {
             console.warn('Failed to log security event:', err);
         });
@@ -237,13 +216,9 @@ export const resendConfirmation = async (email) => {
 
 // DÃ©connexion
 export const logout = async () => {
-    // Récupérer le session_id avant de clear
-    const sessionId = localStorage.getItem('session_id');
-
     // Log security event before clearing session
-    await logSecurityEvent('logout', {
-        timestamp: new Date().toISOString(),
-        session_id: sessionId
+    logSecurityEvent('logout', {
+        timestamp: new Date().toISOString()
     }).catch(() => {}); // Ignore errors
 
     clearSession();

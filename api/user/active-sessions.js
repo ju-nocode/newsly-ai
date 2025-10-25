@@ -37,84 +37,34 @@ export default async function handler(req, res) {
             process.env.SUPABASE_SERVICE_ROLE_KEY
         );
 
-        // GET - Récupérer les derniers logins (7 derniers jours)
+        // GET - Récupérer les 3 dernières connexions (simple)
         if (req.method === 'GET') {
-            const sevenDaysAgo = new Date();
-            sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-
-            // Récupérer uniquement les logins récents
+            // Récupérer les 5 derniers logins
             const { data: logins, error: loginsError } = await supabaseAdmin
                 .from('user_activity_log')
                 .select('*')
                 .eq('user_id', user.id)
                 .eq('activity_type', 'login')
-                .gte('created_at', sevenDaysAgo.toISOString())
                 .order('created_at', { ascending: false })
-                .limit(10);
+                .limit(5);
 
             if (loginsError) {
                 console.error('Error fetching logins:', loginsError);
                 return res.status(500).json({ error: 'Erreur lors de la récupération des connexions' });
             }
 
-            // Récupérer tous les logouts récents
-            const { data: logouts } = await supabaseAdmin
-                .from('user_activity_log')
-                .select('*')
-                .eq('user_id', user.id)
-                .eq('activity_type', 'logout')
-                .gte('created_at', sevenDaysAgo.toISOString());
-
-            // Récupérer le dernier global logout pour filtrer les sessions invalides
-            const { data: globalLogouts } = await supabaseAdmin
-                .from('user_global_logout')
-                .select('logout_timestamp')
-                .eq('user_id', user.id)
-                .order('logout_timestamp', { ascending: false })
-                .limit(1);
-
-            const lastGlobalLogout = globalLogouts && globalLogouts.length > 0
-                ? new Date(globalLogouts[0].logout_timestamp)
-                : null;
-
-            // Grouper par IP/Device pour éviter les doublons
-            const seenSessions = new Set();
+            // Grouper par IP pour éviter les doublons, garder seulement 3
+            const seenIPs = new Set();
             const uniqueLogins = [];
 
             for (const login of logins) {
-                const loginDate = new Date(login.created_at);
-
-                // Filtrer les logins créés AVANT le dernier global logout
-                if (lastGlobalLogout && loginDate < lastGlobalLogout) {
-                    continue; // Session invalidée par global logout
-                }
+                if (uniqueLogins.length >= 3) break;
 
                 const context = login.context || {};
-                const sessionKey = `${context.ip || 'unknown'}_${login.device_type || 'desktop'}`;
+                const ip = context.ip || 'unknown';
 
-                // Vérifier s'il y a un logout pour cette session (même session_id) APRÈS le login
-                const loginSessionId = context.session_id;
-                const hasLogout = logouts && logouts.some(logout => {
-                    const logoutDate = new Date(logout.created_at);
-                    const logoutContext = logout.context || {};
-                    const logoutSessionId = logoutContext.session_id;
-
-                    // Un logout correspond si :
-                    // - Il a le même session_id
-                    // - ET il est postérieur au login
-                    if (loginSessionId && logoutSessionId) {
-                        return loginSessionId === logoutSessionId && logoutDate > loginDate;
-                    }
-                    return false;
-                });
-
-                // Si un logout existe pour cette session, ne pas l'afficher
-                if (hasLogout) {
-                    continue;
-                }
-
-                if (!seenSessions.has(sessionKey)) {
-                    seenSessions.add(sessionKey);
+                if (!seenIPs.has(ip)) {
+                    seenIPs.add(ip);
                     uniqueLogins.push({
                         id: login.id,
                         ip: context.ip || 'Non disponible',
@@ -128,7 +78,7 @@ export default async function handler(req, res) {
                 }
             }
 
-            // Identifier la session courante
+            // Identifier la session courante par IP
             const currentIP = req.headers['x-forwarded-for']?.split(',')[0].trim() || req.headers['x-real-ip'] || 'unknown';
             uniqueLogins.forEach(session => {
                 if (session.ip === currentIP) {
