@@ -57,6 +57,9 @@ export default async function handler(req, res) {
             ];
 
             // Récupérer les logs d'activité filtrés
+            console.log('🔍 [security-audit.js] Fetching logs for user:', user.id);
+            console.log('🔍 [security-audit.js] Security activity types:', securityActivityTypes);
+
             const { data: activityLogs, error: logsError } = await supabaseAdmin
                 .from('user_activity_log')
                 .select('*')
@@ -66,9 +69,14 @@ export default async function handler(req, res) {
                 .limit(parseInt(limit, 10));
 
             if (logsError) {
-                console.error('Security audit fetch error:', logsError);
+                console.error('❌ [security-audit.js] Fetch error:', logsError);
                 return res.status(500).json({ error: 'Erreur lors de la récupération de l\'audit de sécurité' });
             }
+
+            console.log('🔍 [security-audit.js] Logs fetched:', {
+                count: activityLogs?.length || 0,
+                logs: activityLogs
+            });
 
             // Transformer les données pour le frontend
             const auditEvents = (activityLogs || []).map(log => {
