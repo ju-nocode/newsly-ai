@@ -43,8 +43,11 @@
 /* 12. Modal */
 @import url('modules/modal.css');
 
-/* 13. Utilities */
+/* 13. Page Loader */
+@import url('modules/page-loader.css');
+
+/* 14. Utilities */
 @import url('modules/utilities.css');
 
-/* 14. Responsive - Media queries (doit être en dernier) */
+/* 15. Responsive - Media queries (doit être en dernier) */
 @import url('modules/responsive.css');

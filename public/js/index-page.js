@@ -8,6 +8,7 @@ import { attachPhoneFormatter } from './phone-formatter.js';
 // import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 import { initThemeSystem } from './theme-manager.js';
 import { initWeatherWidget } from './weather.js';
+import { navigateWithLoader } from './page-loader.js';
 
 // Détection de confirmation email - Écoute localStorage + BroadcastChannel + Polling
 let emailConfirmationInterval = null;
@@ -144,12 +145,12 @@ const isChromeIOS = /CriOS/i.test(navigator.userAgent);
 if (isChromeIOS) {
     setTimeout(() => {
         if (checkAuth()) {
-            window.location.href = 'dashboard.html';
+            navigateWithLoader('dashboard.html');
         }
     }, 100);
 } else {
     if (checkAuth()) {
-        window.location.href = 'dashboard.html';
+        navigateWithLoader('dashboard.html');
     }
 }
 
@@ -444,7 +445,7 @@ document.getElementById('loginFormElement').addEventListener('submit', async (e)
     const result = await login(email, password);
 
     if (result.success) {
-        window.location.href = 'dashboard.html';
+        navigateWithLoader('dashboard.html');
     } else {
         errorDiv.textContent = result.error;
         errorDiv.style.display = 'block';
@@ -811,7 +812,7 @@ async function updateBurgerMenuUserInfo() {
 const dashboardLinkIndex = document.getElementById('dashboardLinkIndex');
 if (dashboardLinkIndex) {
     dashboardLinkIndex.addEventListener('click', () => {
-        window.location.href = 'dashboard.html';
+        navigateWithLoader('dashboard.html');
     });
 }
 

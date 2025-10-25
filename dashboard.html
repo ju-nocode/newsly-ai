@@ -177,6 +177,7 @@
         import { showSuccess as notifySuccess, showError as notifyError, showInfo, showWarning as notifyWarning } from './public/js/notifications.js';
         import { showLoader, hideLoader, showSkeletons, hideSkeletons, addButtonLoader, removeButtonLoader } from './public/js/loader.js';
         import { fadeIn, shake, stagger, ripple } from './public/js/animations.js';
+        import { showPageLoader, hidePageLoader, navigateWithLoader } from './public/js/page-loader.js';
 
         // Détecter Chrome iOS (problèmes de performance avec modules lourds)
         const isChromeIOS = /CriOS/i.test(navigator.userAgent);
@@ -253,7 +254,8 @@
         // Vérifier l'authentification
         const isAuth = checkAuth();
         if (!isAuth) {
-            window.location.href = 'index.html';
+            navigateWithLoader('index.html');
+            return;
         }
 
         // Charger le profil utilisateur
@@ -600,7 +602,7 @@
 
         // Gérer le bouton Settings (burger menu)
         document.getElementById('settingsBtn').addEventListener('click', () => {
-            window.location.href = 'settings.html';
+            navigateWithLoader('settings.html');
         });
 
         document.getElementById('logoutBtn').addEventListener('click', () => {
@@ -692,24 +694,32 @@
 
         // Initialiser (optimisé pour Chrome iOS)
         (async () => {
-            // Traduire d'abord (synchrone)
-            await translatePage();
+            // Afficher le loader pendant le chargement initial
+            showPageLoader();
 
-            // Chrome iOS : charger profil + news en parallèle pour éviter freeze
-            if (isChromeIOS || isMobile) {
-                console.log('⚡ Chargement optimisé mobile');
-                // Lancer en parallèle mais ignorer les erreurs pour éviter freeze
-                Promise.all([
-                    loadProfile().catch(err => console.warn('Profile load error:', err)),
-                    loadNews('general').catch(err => console.warn('News load error:', err))
-                ]).catch(() => {
-                    // Si tout échoue, au moins la page ne freeze pas
-                    console.error('Failed to load dashboard data');
-                });
-            } else {
-                // Desktop : chargement séquentiel normal
-                await loadProfile();
-                await loadNews('general');
+            try {
+                // Traduire d'abord (synchrone)
+                await translatePage();
+
+                // Chrome iOS : charger profil + news en parallèle pour éviter freeze
+                if (isChromeIOS || isMobile) {
+                    console.log('⚡ Chargement optimisé mobile');
+                    // Lancer en parallèle mais ignorer les erreurs pour éviter freeze
+                    await Promise.all([
+                        loadProfile().catch(err => console.warn('Profile load error:', err)),
+                        loadNews('general').catch(err => console.warn('News load error:', err))
+                    ]).catch(() => {
+                        // Si tout échoue, au moins la page ne freeze pas
+                        console.error('Failed to load dashboard data');
+                    });
+                } else {
+                    // Desktop : chargement séquentiel normal
+                    await loadProfile();
+                    await loadNews('general');
+                }
+            } finally {
+                // Masquer le loader une fois tout chargé
+                hidePageLoader();
             }
 
             // ================================================

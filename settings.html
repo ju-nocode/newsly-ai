@@ -500,6 +500,7 @@
         import { initNavbar } from './public/js/navbar-component.js';
         import { initThemeSystem, setTheme } from './public/js/theme-manager.js';
         import { initWeatherWidget, refreshWeatherLocation } from './public/js/weather.js';
+        import { showPageLoader, hidePageLoader, navigateWithLoader } from './public/js/page-loader.js';
 
         // Détecter Chrome iOS (problèmes de performance avec modules lourds)
         const isChromeIOS = /CriOS/i.test(navigator.userAgent);
@@ -573,7 +574,8 @@
         // Vérifier l'authentification
         const isAuth = checkAuth();
         if (!isAuth) {
-            window.location.href = 'index.html';
+            navigateWithLoader('index.html');
+            return;
         }
 
         // Variable globale pour stocker l'avatar
@@ -1056,7 +1058,7 @@
                 // Déconnecter et rediriger vers la page de login
                 setTimeout(() => {
                     localStorage.removeItem('session');
-                    window.location.href = 'index.html?passwordChanged=true';
+                    navigateWithLoader('index.html?passwordChanged=true');
                 }, 2000);
             } else {
                 showError(result.error || 'Erreur lors du changement de mot de passe');
@@ -1115,7 +1117,7 @@
                 deleteAccountModal.classList.remove('show');
                 showSuccess('✅ Compte supprimé avec succès');
                 setTimeout(() => {
-                    window.location.href = 'index.html';
+                    navigateWithLoader('index.html');
                 }, 1500);
             } else {
                 deleteAccountError.textContent = result.error || 'Erreur lors de la suppression';
@@ -1330,7 +1332,7 @@
 
         // Bouton Dashboard
         document.getElementById('dashboardBtn').addEventListener('click', () => {
-            window.location.href = 'dashboard.html';
+            navigateWithLoader('dashboard.html');
         });
 
         // Bouton Logout (burger menu)
@@ -2152,14 +2154,22 @@
 
         // Initialiser
         (async () => {
-            await translatePage();
-            await loadProfile();
-            await loadUserName();
-            await loadSecurityAudit();
-            await loadActiveSessions();
-            await loadParticlesSettings();
+            // Afficher le loader pendant le chargement initial
+            showPageLoader();
 
-            console.log('✅ Settings page fully loaded');
+            try {
+                await translatePage();
+                await loadProfile();
+                await loadUserName();
+                await loadSecurityAudit();
+                await loadActiveSessions();
+                await loadParticlesSettings();
+
+                console.log('✅ Settings page fully loaded');
+            } finally {
+                // Masquer le loader une fois tout chargé
+                hidePageLoader();
+            }
         })();
     </script>
 </body>
