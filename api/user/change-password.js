@@ -97,7 +97,8 @@ export default async function handler(req, res) {
 
         return res.status(200).json({
             message: 'Mot de passe mis à jour avec succès',
-            user: data.user
+            user: data.user,
+            access_token: token  // L'ancien token reste valide
         });
 
     } catch (error) {

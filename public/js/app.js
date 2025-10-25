@@ -389,6 +389,16 @@ export const changePassword = async (newPassword) => {
             throw new Error(data.error || 'Erreur lors du changement de mot de passe');
         }
 
+        // Mettre à jour le token si un nouveau est fourni
+        if (data.access_token) {
+            authToken = data.access_token;
+            const session = JSON.parse(localStorage.getItem('session'));
+            if (session) {
+                session.access_token = data.access_token;
+                localStorage.setItem('session', JSON.stringify(session));
+            }
+        }
+
         return { success: true, message: data.message };
 
     } catch (error) {
