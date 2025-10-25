@@ -294,9 +294,13 @@
 
                 const results = await Promise.all(promises);
 
+                // Debug: afficher les résultats
+                console.log('📰 loadNews results:', results);
+
                 // Combiner tous les articles
                 let allArticles = [];
                 results.forEach((result, index) => {
+                    console.log(`📍 Country ${selectedCountries[index]}:`, result);
                     if (result.success && result.articles) {
                         // Ajouter le code pays à chaque article pour l'affichage
                         const articlesWithCountry = result.articles.map(article => ({
@@ -306,6 +310,8 @@
                         allArticles = allArticles.concat(articlesWithCountry);
                     }
                 });
+
+                console.log(`✅ Total articles chargés: ${allArticles.length}`);
 
                 // Mélanger les articles pour plus de diversité
                 allArticles.sort(() => Math.random() - 0.5);
