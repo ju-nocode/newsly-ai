@@ -316,34 +316,17 @@
 
                 console.log(`✅ Total articles chargés: ${allArticles.length}`);
 
-                // Arrêter les shimmers
-                hideShimmerLoader(newsContainer);
-
                 // Vérifier si toutes les requêtes ont timeout
                 const allTimeout = results.every(r => r.timeout === true);
 
                 // Vérifier si toutes les requêtes ont échoué
                 const allFailed = results.every(r => !r.success);
 
-                // Si aucun article ET que tout a échoué/timeout → erreur
-                if (allArticles.length === 0 && (allTimeout || allFailed)) {
-                    // Timeout ou échec → page loader rouge
-                    console.warn('⚠️ Timeout ou échec API - page loader rouge');
-                    hidePageLoader(true); // Rouge
-
-                    newsContainer.innerHTML = `
-                        <div class="news-empty">
-                            <p>⚠️ Impossible de charger les actualités</p>
-                            <p class="error-details" style="color: var(--text-secondary);">
-                                ${allTimeout ? 'Le serveur ne répond pas (timeout 10s)' : 'API non configurée ou erreur serveur'}
-                            </p>
-                        </div>
-                    `;
-                    return;
-                }
-
                 // Si on a des articles → succès
                 if (allArticles.length > 0) {
+                    // Arrêter les shimmers
+                    hideShimmerLoader(newsContainer);
+
                     // Arrêter le page loader en succès (bleu/vert)
                     hidePageLoader(false);
 
@@ -356,15 +339,23 @@
                         stagger('.news-card', fadeIn, 80);
                     }, 100);
                 } else {
-                    // Pas d'articles mais pas d'erreur non plus (cas rare)
-                    hidePageLoader(false);
-                    newsContainer.innerHTML = `
-                        <div class="news-empty">
-                            <p>ℹ️ Aucune actualité disponible</p>
-                            <p class="error-details" style="color: var(--text-secondary);">Essayez une autre catégorie ou d'autres pays</p>
-                        </div>
-                    `;
-                    showInfo('Aucune actualité disponible pour cette catégorie');
+                    // Aucun article → garder les shimmers figés et page loader rouge
+                    console.warn('⚠️ Aucun article disponible - shimmers figés');
+
+                    // Figer les shimmers (arrêter l'animation mais garder visible)
+                    const shimmerCards = newsContainer.querySelectorAll('.skeleton');
+                    shimmerCards.forEach(skeleton => {
+                        skeleton.style.animation = 'none';
+                        skeleton.style.opacity = '0.4';
+                    });
+
+                    // Page loader rouge si timeout/échec, bleu sinon
+                    if (allTimeout || allFailed) {
+                        hidePageLoader(true); // Rouge
+                        console.warn('⚠️ Échec API - page loader rouge');
+                    } else {
+                        hidePageLoader(false); // Bleu (cas rare)
+                    }
                 }
 
             } catch (error) {
