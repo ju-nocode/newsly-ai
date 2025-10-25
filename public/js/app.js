@@ -562,7 +562,7 @@ export const checkSessionValidity = async () => {
     }
 };
 
-// Vérifier la session toutes les 30 secondes sur les pages protégées
+// Vérifier la session de manière quasi-instantanée sur les pages protégées
 if (typeof window !== 'undefined') {
     const protectedPages = ['dashboard.html', 'settings.html'];
     const currentPage = window.location.pathname.split('/').pop();
@@ -571,8 +571,35 @@ if (typeof window !== 'undefined') {
         // Vérification initiale
         setTimeout(() => checkSessionValidity(), 1000);
 
-        // Vérification périodique toutes les 30 secondes
-        setInterval(() => checkSessionValidity(), 30000);
+        // 1. Vérification périodique toutes les 2 secondes (au lieu de 30s)
+        setInterval(() => checkSessionValidity(), 2000);
+
+        // 2. Vérification immédiate quand l'onglet redevient visible
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                checkSessionValidity();
+            }
+        });
+
+        // 3. Vérification immédiate au focus de la fenêtre
+        window.addEventListener('focus', () => {
+            checkSessionValidity();
+        });
+
+        // 4. Vérification immédiate sur toute interaction utilisateur (clic, touche)
+        let lastCheckTime = Date.now();
+        const checkOnInteraction = () => {
+            // Éviter de checker trop souvent (max 1x par seconde)
+            const now = Date.now();
+            if (now - lastCheckTime > 1000) {
+                lastCheckTime = now;
+                checkSessionValidity();
+            }
+        };
+
+        document.addEventListener('click', checkOnInteraction, { passive: true });
+        document.addEventListener('keydown', checkOnInteraction, { passive: true });
+        document.addEventListener('touchstart', checkOnInteraction, { passive: true });
     }
 }
 
