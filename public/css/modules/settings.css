@@ -576,6 +576,12 @@
   margin-bottom: 0;
   height: 100%;
   max-width: none;
+  display: flex;
+  flex-direction: column;
+}
+
+#section-security .security-grid .settings-card > button {
+  margin-top: auto;
 }
 
 /* ================================================
