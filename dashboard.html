@@ -300,32 +300,7 @@
                 // Debug: afficher les résultats
                 console.log('📰 loadNews results:', results);
 
-                // Vérifier si toutes les requêtes ont timeout
-                const allTimeout = results.every(r => r.timeout === true);
-
-                // Vérifier si toutes les requêtes ont échoué
-                const allFailed = results.every(r => !r.success);
-
-                // Arrêter les shimmers
-                hideShimmerLoader(newsContainer);
-
-                if (allTimeout || allFailed) {
-                    // Timeout ou échec → page loader rouge
-                    console.warn('⚠️ Timeout ou échec API - page loader rouge');
-                    hidePageLoader(true); // Rouge
-
-                    newsContainer.innerHTML = `
-                        <div class="news-empty">
-                            <p>⚠️ Impossible de charger les actualités</p>
-                            <p class="error-details" style="color: var(--text-secondary);">
-                                ${allTimeout ? 'Le serveur ne répond pas (timeout 10s)' : 'API non configurée ou erreur serveur'}
-                            </p>
-                        </div>
-                    `;
-                    return;
-                }
-
-                // Combiner tous les articles
+                // Combiner tous les articles d'abord
                 let allArticles = [];
                 results.forEach((result, index) => {
                     console.log(`📍 Country ${selectedCountries[index]}:`, result);
@@ -341,13 +316,48 @@
 
                 console.log(`✅ Total articles chargés: ${allArticles.length}`);
 
-                // Arrêter le page loader en succès (bleu/vert)
-                hidePageLoader(false);
+                // Arrêter les shimmers
+                hideShimmerLoader(newsContainer);
 
-                // Mélanger les articles pour plus de diversité
-                allArticles.sort(() => Math.random() - 0.5);
+                // Vérifier si toutes les requêtes ont timeout
+                const allTimeout = results.every(r => r.timeout === true);
 
-                if (allArticles.length === 0) {
+                // Vérifier si toutes les requêtes ont échoué
+                const allFailed = results.every(r => !r.success);
+
+                // Si aucun article ET que tout a échoué/timeout → erreur
+                if (allArticles.length === 0 && (allTimeout || allFailed)) {
+                    // Timeout ou échec → page loader rouge
+                    console.warn('⚠️ Timeout ou échec API - page loader rouge');
+                    hidePageLoader(true); // Rouge
+
+                    newsContainer.innerHTML = `
+                        <div class="news-empty">
+                            <p>⚠️ Impossible de charger les actualités</p>
+                            <p class="error-details" style="color: var(--text-secondary);">
+                                ${allTimeout ? 'Le serveur ne répond pas (timeout 10s)' : 'API non configurée ou erreur serveur'}
+                            </p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Si on a des articles → succès
+                if (allArticles.length > 0) {
+                    // Arrêter le page loader en succès (bleu/vert)
+                    hidePageLoader(false);
+
+                    // Mélanger les articles pour plus de diversité
+                    allArticles.sort(() => Math.random() - 0.5);
+
+                    displayNews(allArticles, 'newsContainer');
+                    // Animate news cards on load
+                    setTimeout(() => {
+                        stagger('.news-card', fadeIn, 80);
+                    }, 100);
+                } else {
+                    // Pas d'articles mais pas d'erreur non plus (cas rare)
+                    hidePageLoader(false);
                     newsContainer.innerHTML = `
                         <div class="news-empty">
                             <p>ℹ️ Aucune actualité disponible</p>
@@ -355,12 +365,6 @@
                         </div>
                     `;
                     showInfo('Aucune actualité disponible pour cette catégorie');
-                } else {
-                    displayNews(allArticles, 'newsContainer');
-                    // Animate news cards on load
-                    setTimeout(() => {
-                        stagger('.news-card', fadeIn, 80);
-                    }, 100);
                 }
 
             } catch (error) {
