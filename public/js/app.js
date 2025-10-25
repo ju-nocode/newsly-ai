@@ -138,11 +138,13 @@ export const login = async (email, password) => {
         // Récupérer le session_id qui vient d'être généré
         const sessionId = localStorage.getItem('session_id');
 
-        // Log security event
-        await logSecurityEvent('login', {
+        // Log security event (non-bloquant)
+        logSecurityEvent('login', {
             success: true,
             email: data.user.email,
             session_id: sessionId
+        }).catch(err => {
+            console.warn('Failed to log security event:', err);
         });
 
         return { success: true, user: data.user };
