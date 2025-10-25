@@ -61,6 +61,13 @@ export default async function handler(req, res) {
                 user_agent
             } = req.body;
 
+            console.log('🔍 [activity-log.js] POST received:', {
+                user_id: user.id,
+                activity_type,
+                context,
+                device_type
+            });
+
             if (!activity_type) {
                 return res.status(400).json({ error: 'activity_type requis' });
             }
@@ -75,6 +82,8 @@ export default async function handler(req, res) {
                 created_at: new Date().toISOString()
             };
 
+            console.log('🔍 [activity-log.js] Inserting log:', logData);
+
             const { data, error } = await supabaseAdmin
                 .from('user_activity_log')
                 .insert(logData)
@@ -82,10 +91,11 @@ export default async function handler(req, res) {
                 .single();
 
             if (error) {
-                console.error('Activity log insert error:', error);
+                console.error('❌ [activity-log.js] Insert error:', error);
                 return res.status(400).json({ error: error.message });
             }
 
+            console.log('✅ [activity-log.js] Log inserted successfully:', data);
             return res.status(201).json({ message: 'Log ajouté', log: data });
         }
 
