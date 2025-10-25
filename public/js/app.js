@@ -715,41 +715,21 @@ export const logSecurityEvent = async (activityType, context = {}) => {
     }
 
     try {
-        // Récupérer l'IP publique + géolocalisation (avec fallback rapide)
+        // Récupérer l'IP publique + géolocalisation via ipapi.co (simple et fiable)
         let publicIP = 'Non disponible';
         let location = null;
         try {
-            // Créer un timeout manuel pour fetch
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 3000);
-
-            console.log('Fetching geolocation...');
-            const geoResponse = await fetch('http://ip-api.com/json/?fields=status,message,country,regionName,city,zip,lat,lon,query', {
-                signal: controller.signal
-            });
-            clearTimeout(timeoutId);
-
-            console.log('Geolocation response status:', geoResponse.status);
-
+            const geoResponse = await fetch('https://ipapi.co/json/');
             if (geoResponse.ok) {
                 const geoData = await geoResponse.json();
-                console.log('Geolocation data:', geoData);
-
-                if (geoData.status === 'success') {
-                    publicIP = geoData.query || 'Non disponible';
-                    location = {
-                        city: geoData.city || null,
-                        region: geoData.regionName || null,
-                        country: geoData.country || null,
-                        latitude: geoData.lat || null,
-                        longitude: geoData.lon || null
-                    };
-                    console.log('Location set to:', location);
-                } else {
-                    console.warn('Geolocation status not success:', geoData);
-                }
-            } else {
-                console.warn('Geolocation response not OK:', geoResponse.status);
+                publicIP = geoData.ip || 'Non disponible';
+                location = {
+                    city: geoData.city || null,
+                    region: geoData.region || null,
+                    country: geoData.country_name || null,
+                    latitude: geoData.latitude || null,
+                    longitude: geoData.longitude || null
+                };
             }
         } catch (geoError) {
             console.warn('Could not fetch geolocation:', geoError.message);
@@ -765,8 +745,6 @@ export const logSecurityEvent = async (activityType, context = {}) => {
             platform: navigator.platform,
             language: navigator.language
         };
-
-        console.log('Enriched context being sent:', enrichedContext);
 
         const response = await fetch(`${API_BASE_URL}/api/user/activity-log`, {
             method: 'POST',

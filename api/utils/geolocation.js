@@ -1,5 +1,5 @@
 /**
- * Récupère la géolocalisation d'une IP via ip-api.com
+ * Récupère la géolocalisation d'une IP via ipapi.co
  * @param {string} ip - Adresse IP à géolocaliser
  * @returns {Promise<object|null>} - Objet avec city, region, country ou null
  */
@@ -10,14 +10,7 @@ export async function getIPGeolocation(ip) {
     }
 
     try {
-        // Créer un timeout manuel avec AbortController
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 2000);
-
-        const response = await fetch(`http://ip-api.com/json/${ip}?fields=status,message,country,regionName,city,lat,lon`, {
-            signal: controller.signal
-        });
-        clearTimeout(timeoutId);
+        const response = await fetch(`https://ipapi.co/${ip}/json/`);
 
         if (!response.ok) {
             return null;
@@ -25,16 +18,12 @@ export async function getIPGeolocation(ip) {
 
         const data = await response.json();
 
-        if (data.status !== 'success') {
-            return null;
-        }
-
         return {
             city: data.city || null,
-            region: data.regionName || null,
-            country: data.country || null,
-            latitude: data.lat || null,
-            longitude: data.lon || null
+            region: data.region || null,
+            country: data.country_name || null,
+            latitude: data.latitude || null,
+            longitude: data.longitude || null
         };
     } catch (error) {
         console.warn('Geolocation API error:', error.message);
