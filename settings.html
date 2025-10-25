@@ -834,15 +834,15 @@
             }
         });
 
-        // Fonction pour compresser l'image (optimisée pour photos iPhone)
+        // Fonction pour compresser l'image (haute qualité pour avatar)
         const compressImage = (file) => {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     const img = new Image();
                     img.onload = () => {
-                        // Redimensionner à max 400x400 pour une meilleure qualité
-                        const MAX_SIZE = 400;
+                        // Redimensionner à max 800x800 pour haute qualité
+                        const MAX_SIZE = 800;
                         let width = img.width;
                         let height = img.height;
 
@@ -872,8 +872,8 @@
                         // Dessiner l'image
                         ctx.drawImage(img, 0, 0, width, height);
 
-                        // Convertir en base64 avec compression JPEG (qualité 0.85 pour meilleur rendu)
-                        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.85);
+                        // Convertir en base64 avec haute qualité (0.92 pour avatar)
+                        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.92);
                         resolve(compressedBase64);
                     };
                     img.onerror = reject;
