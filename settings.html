@@ -183,6 +183,25 @@
                                 </div>
                                 <p class="form-hint" data-i18n="settings.phoneHint">Optionnel - Votre numéro de téléphone</p>
                             </div>
+
+                            <!-- Bio (Optionnel) -->
+                            <div class="form-group" style="grid-column: 1 / -1;">
+                                <label for="bioInput" class="form-label" data-i18n="settings.bio">Biographie</label>
+                                <textarea
+                                    id="bioInput"
+                                    class="form-input"
+                                    placeholder="Parlez-nous de vous..."
+                                    rows="4"
+                                    maxlength="500"
+                                    style="resize: vertical; min-height: 100px;"
+                                ></textarea>
+                                <p class="form-hint">
+                                    <span data-i18n="settings.bioHint">Optionnel - Une courte présentation</span>
+                                    <span style="float: right;">
+                                        <span id="bioCount">0</span>/500
+                                    </span>
+                                </p>
+                            </div>
                         </div>
 
                         <button id="updateProfileBtn" class="btn-primary" data-i18n="settings.updateProfile">
