@@ -1556,22 +1556,8 @@
                 const data = await response.json();
                 const auditEvents = data.events || [];
 
-                // 🔍 DEBUG: Afficher ce qui est retourné par l'API
-                console.log('🔍 Security Audit API Response:', {
-                    totalEvents: data.totalEvents,
-                    eventsLength: auditEvents.length,
-                    currentIP: data.currentIP,
-                    events: auditEvents
-                });
-
-                // Afficher l'IP actuelle si disponible
-                if (data.currentIP && data.currentIP !== 'Non disponible') {
-                    console.log('🌐 Votre IP actuelle:', data.currentIP);
-                }
-
                 // Si aucun événement
                 if (auditEvents.length === 0) {
-                    console.warn('⚠️ Aucun événement de sécurité trouvé dans user_activity_log');
                     auditContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Aucune activité de sécurité récente</p>';
                     return;
                 }
