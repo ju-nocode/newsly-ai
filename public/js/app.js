@@ -534,6 +534,60 @@ if (typeof window !== 'undefined') {
     window.getParticlesConfigFromDB = getParticlesConfig;
 }
 
+// Afficher une popup de sécurité
+const showSecurityAlert = (message, callback) => {
+    // Créer l'overlay si il n'existe pas déjà
+    let overlay = document.getElementById('security-alert-overlay');
+
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'security-alert-overlay';
+        overlay.className = 'security-alert-overlay';
+        overlay.innerHTML = `
+            <div class="security-alert-container">
+                <div class="security-alert-header">
+                    <div class="security-alert-icon">🔒</div>
+                    <h3 class="security-alert-title">Sécurité</h3>
+                </div>
+                <div class="security-alert-body">
+                    <p class="security-alert-message"></p>
+                </div>
+                <div class="security-alert-footer">
+                    <button class="security-alert-btn">Compris</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+
+        // Event listener sur le bouton
+        const btn = overlay.querySelector('.security-alert-btn');
+        btn.addEventListener('click', () => {
+            overlay.classList.remove('show');
+            setTimeout(() => {
+                if (overlay.dataset.callback === 'true') {
+                    const callbackFn = overlay.callbackFn;
+                    if (callbackFn) callbackFn();
+                }
+            }, 300);
+        });
+    }
+
+    // Mettre à jour le message
+    overlay.querySelector('.security-alert-message').textContent = message;
+
+    // Stocker le callback
+    if (callback) {
+        overlay.dataset.callback = 'true';
+        overlay.callbackFn = callback;
+    } else {
+        overlay.dataset.callback = 'false';
+        overlay.callbackFn = null;
+    }
+
+    // Afficher
+    setTimeout(() => overlay.classList.add('show'), 10);
+};
+
 // Vérifier la validité de la session (global logout check)
 export const checkSessionValidity = async () => {
     if (!authToken) return;
@@ -553,9 +607,13 @@ export const checkSessionValidity = async () => {
             // ET que c'est à cause d'un global logout (pas juste un token invalide)
             if (data.shouldLogout && data.reason === 'global_logout') {
                 console.warn('Session invalidee:', data.reason);
-                alert(data.message || 'Vous avez été déconnecté de tous les appareils');
-                clearSession();
-                window.location.href = 'index.html';
+                showSecurityAlert(
+                    data.message || 'Vous avez été déconnecté de tous les appareils',
+                    () => {
+                        clearSession();
+                        window.location.href = 'index.html';
+                    }
+                );
             }
         } else if (response.status === 401) {
             // 401 = token invalide, mais on ne force pas le logout ici
