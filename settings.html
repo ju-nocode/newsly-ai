@@ -345,13 +345,16 @@
 
                     <!-- Active Sessions Card -->
                     <div class="settings-card">
-                        <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-primary);">Sessions actives</h3>
+                        <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-primary);">Connexions récentes</h3>
                         <p class="settings-description">
-                            Gérez les appareils connectés à votre compte
+                            Appareils connectés ces 7 derniers jours
                         </p>
                         <div id="activeSessionsContainer">
-                            <p style="text-align: center; color: var(--text-muted);">Chargement des sessions...</p>
+                            <p style="text-align: center; color: var(--text-muted);">Chargement des connexions...</p>
                         </div>
+                        <button id="logoutAllDevicesBtn" class="btn-danger" style="width: 100%; margin-top: 1rem;">
+                            🚪 Déconnecter tous les appareils
+                        </button>
                     </div>
                 </div>
             </section>
@@ -1974,7 +1977,7 @@
                     }
 
                     const deviceIcon = s.device === 'mobile' ? '📱' : '💻';
-                    const currentBadge = s.isCurrentSession ? '<span style="color: var(--success); font-size: 0.75rem; font-weight: 500;">● Session actuelle</span>' : '';
+                    const currentBadge = s.isCurrentSession ? '<span style="color: var(--success); font-size: 0.75rem; font-weight: 500;">● Connexion actuelle</span>' : '';
 
                     sessionsHTML += `
                         <div class="session-item ${s.isCurrentSession ? 'current' : ''}">
@@ -1983,13 +1986,8 @@
                                     ${deviceIcon} ${escapeHtml(s.device)} ${currentBadge}
                                 </div>
                                 <div class="session-location">📍 ${escapeHtml(locationDisplay)}</div>
-                                <div class="session-time">Dernière activité: ${formattedTime}</div>
+                                <div class="session-time">Connexion: ${formattedTime}</div>
                             </div>
-                            ${!s.isCurrentSession ? `
-                                <div class="session-actions">
-                                    <button class="btn-danger" onclick="revokeSession('${s.id}')">Révoquer</button>
-                                </div>
-                            ` : ''}
                         </div>
                     `;
                 });
@@ -2010,9 +2008,9 @@
             }
         };
 
-        // Revoquer une session
-        window.revokeSession = async (sessionId) => {
-            if (!confirm('Voulez-vous vraiment révoquer cette session ?')) {
+        // Déconnecter tous les appareils
+        document.getElementById('logoutAllDevicesBtn').addEventListener('click', async () => {
+            if (!confirm('⚠️ Cela déconnectera TOUS vos appareils (y compris celui-ci). Vous devrez vous reconnecter. Continuer ?')) {
                 return;
             }
 
@@ -2024,20 +2022,25 @@
                         'Authorization': `Bearer ${session.access_token}`,
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ sessionId })
+                    body: JSON.stringify({ logoutAll: true })
                 });
 
+                const data = await response.json();
+
                 if (response.ok) {
-                    showSuccess('Session révoquée avec succès');
-                    await loadActiveSessions();
+                    showSuccess('Tous les appareils ont été déconnectés');
+                    // Déconnecter l'utilisateur actuel et le rediriger
+                    setTimeout(() => {
+                        logout();
+                    }, 1500);
                 } else {
-                    showError('Erreur lors de la révocation');
+                    showError(data.error || 'Erreur lors de la déconnexion');
                 }
             } catch (error) {
-                console.error('Erreur révocation:', error);
-                showError('Erreur lors de la révocation');
+                console.error('Erreur déconnexion:', error);
+                showError('Erreur lors de la déconnexion');
             }
-        };
+        });
 
         // Initialiser
         (async () => {
