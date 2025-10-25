@@ -10,9 +10,14 @@ export async function getIPGeolocation(ip) {
     }
 
     try {
+        // Créer un timeout manuel avec AbortController
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 2000);
+
         const response = await fetch(`http://ip-api.com/json/${ip}?fields=status,message,country,regionName,city,lat,lon`, {
-            timeout: 2000
+            signal: controller.signal
         });
+        clearTimeout(timeoutId);
 
         if (!response.ok) {
             return null;

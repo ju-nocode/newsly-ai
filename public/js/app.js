@@ -719,8 +719,15 @@ export const logSecurityEvent = async (activityType, context = {}) => {
         let publicIP = 'Non disponible';
         let location = null;
         try {
-            // ip-api.com fournit IP + géolocalisation en une seule requête
-            const geoResponse = await fetch('http://ip-api.com/json/?fields=status,message,country,regionName,city,zip,lat,lon,query', { timeout: 3000 });
+            // Créer un timeout manuel pour fetch
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 3000);
+
+            const geoResponse = await fetch('http://ip-api.com/json/?fields=status,message,country,regionName,city,zip,lat,lon,query', {
+                signal: controller.signal
+            });
+            clearTimeout(timeoutId);
+
             if (geoResponse.ok) {
                 const geoData = await geoResponse.json();
                 if (geoData.status === 'success') {
@@ -735,7 +742,7 @@ export const logSecurityEvent = async (activityType, context = {}) => {
                 }
             }
         } catch (geoError) {
-            console.warn('⚠️ Could not fetch geolocation:', geoError.message);
+            console.warn('Could not fetch geolocation:', geoError.message);
         }
 
         // Enrichir le contexte avec des infos du navigateur

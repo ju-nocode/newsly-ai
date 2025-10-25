@@ -38,6 +38,8 @@
     "defaults",
     "not ie 11",
     "not ios_saf <= 26",
-    "not safari <= 26"
+    "not safari <= 26",
+    "not chrome <= 112",
+    "not samsung <= 28"
   ]
 }
