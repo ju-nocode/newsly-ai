@@ -500,41 +500,67 @@
         import { initNavbar } from './public/js/navbar-component.js';
         import { initThemeSystem, setTheme } from './public/js/theme-manager.js';
         import { initWeatherWidget, refreshWeatherLocation } from './public/js/weather.js';
-        import { userIntelligence } from './public/js/user-intelligence-system.js';
-        import { initUniversalSearchBar } from './public/js/search-bar-universal.js';
 
-        // Make userIntelligence globally accessible for console testing
-        window.userIntelligence = userIntelligence;
+        // Détecter Chrome iOS (problèmes de performance avec modules lourds)
+        const isChromeIOS = /CriOS/i.test(navigator.userAgent);
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+        // Lazy load modules lourds uniquement si pas Chrome iOS
+        let userIntelligence = null;
+        let initUniversalSearchBar = null;
+
+        if (!isChromeIOS) {
+            // Import conditionnel des modules lourds
+            import('./public/js/user-intelligence-system.js').then(module => {
+                userIntelligence = module.userIntelligence;
+                window.userIntelligence = userIntelligence;
+            }).catch(err => console.warn('User intelligence system disabled:', err));
+
+            import('./public/js/search-bar-universal.js').then(module => {
+                initUniversalSearchBar = module.initUniversalSearchBar;
+                // Initialiser après un délai pour éviter le freeze
+                setTimeout(() => {
+                    if (initUniversalSearchBar) initUniversalSearchBar();
+                }, 2000);
+            }).catch(err => console.warn('Search bar disabled:', err));
+        } else {
+            console.log('⚡ Chrome iOS détecté - Mode optimisé activé');
+        }
 
         // Initialize navbar component
         initNavbar('div.mobile-overlay', { showSettingsNav: true });
 
         // Initialize theme system and weather widget after navbar is rendered
-        // Using requestAnimationFrame to ensure DOM is ready
-        requestAnimationFrame(() => {
+        // Simplifier pour Chrome iOS (pas de double requestAnimationFrame)
+        const initUIComponents = () => {
+            initThemeSystem();
+            initWeatherWidget();
+
+            // Setup weather refresh button
+            const refreshWeatherBtn = document.getElementById('refreshWeatherBtn');
+            if (refreshWeatherBtn) {
+                refreshWeatherBtn.addEventListener('click', () => {
+                    refreshWeatherLocation();
+                    // Close burger menu after refresh
+                    const burgerBtn = document.getElementById('burgerBtn');
+                    const burgerMenu = document.getElementById('burgerMenu');
+                    if (burgerBtn && burgerMenu) {
+                        burgerBtn.classList.remove('active');
+                        burgerMenu.classList.remove('show');
+                    }
+                });
+            }
+        };
+
+        if (isChromeIOS || isMobile) {
+            // Chrome iOS / Mobile : init directe sans RAF
+            setTimeout(initUIComponents, 100);
+        } else {
+            // Desktop : double RAF pour garantir le DOM
             requestAnimationFrame(() => {
-                initThemeSystem();
-                initWeatherWidget();
-
-                // Initialize Universal Search Bar
-                initUniversalSearchBar();
-
-                // Setup weather refresh button
-                const refreshWeatherBtn = document.getElementById('refreshWeatherBtn');
-                if (refreshWeatherBtn) {
-                    refreshWeatherBtn.addEventListener('click', () => {
-                        refreshWeatherLocation();
-                        // Close burger menu after refresh
-                        const burgerBtn = document.getElementById('burgerBtn');
-                        const burgerMenu = document.getElementById('burgerMenu');
-                        if (burgerBtn && burgerMenu) {
-                            burgerBtn.classList.remove('active');
-                            burgerMenu.classList.remove('show');
-                        }
-                    });
-                }
+                requestAnimationFrame(initUIComponents);
             });
-        });
+        }
 
         // Initialize particles (async to load from DB)
         // DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
