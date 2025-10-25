@@ -441,6 +441,9 @@
         // Initialize navbar component
         initNavbar('div.mobile-overlay', { showSettingsNav: true });
 
+        // Initialize ripple effect EARLY - avant tous les autres listeners
+        initRippleButtons();
+
         // Initialize theme system and weather widget after navbar is rendered
         // Simplifier pour Chrome iOS (pas de double requestAnimationFrame)
         const initUIComponents = () => {
@@ -1810,9 +1813,6 @@
                 // Masquer le loader une fois tout chargé
                 hidePageLoader();
             }
-
-            // Initialiser les micro-interactions (ripple effect)
-            initRippleButtons();
         })();
     </script>
 </body>
