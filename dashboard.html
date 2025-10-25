@@ -339,15 +339,11 @@
                         stagger('.news-card', fadeIn, 80);
                     }, 100);
                 } else {
-                    // Aucun article → garder les shimmers figés et page loader rouge
-                    console.warn('⚠️ Aucun article disponible - shimmers figés');
+                    // Aucun article → garder les shimmers actifs et page loader rouge
+                    console.warn('⚠️ Aucun article disponible - shimmers restent actifs');
 
-                    // Figer les shimmers (arrêter l'animation mais garder visible)
-                    const shimmerCards = newsContainer.querySelectorAll('.skeleton');
-                    shimmerCards.forEach(skeleton => {
-                        skeleton.style.animation = 'none';
-                        skeleton.style.opacity = '0.4';
-                    });
+                    // Les shimmers restent visibles et animés (ne rien faire)
+                    // Le container garde déjà les shimmers affichés
 
                     // Page loader rouge si timeout/échec, bleu sinon
                     if (allTimeout || allFailed) {
