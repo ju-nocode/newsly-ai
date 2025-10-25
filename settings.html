@@ -341,6 +341,9 @@
                         <div id="securityAuditContainer">
                             <p style="text-align: center; color: var(--text-muted);" data-i18n="settings.loadingAudit">Chargement de l'audit...</p>
                         </div>
+                        <button id="clearAuditLogsBtn" class="btn-danger" style="width: 100%; margin-top: 1rem;">
+                            🗑️ Effacer l'historique
+                        </button>
                     </div>
 
                     <!-- Active Sessions Card -->
@@ -2041,6 +2044,37 @@
             } catch (error) {
                 console.error('Erreur déconnexion:', error);
                 showError('Erreur lors de la déconnexion');
+            }
+        });
+
+        // Effacer l'historique d'audit
+        document.getElementById('clearAuditLogsBtn').addEventListener('click', async () => {
+            if (!confirm('⚠️ Êtes-vous sûr de vouloir effacer tout l\'historique de sécurité ? Cette action est irréversible.')) {
+                return;
+            }
+
+            try {
+                const session = JSON.parse(localStorage.getItem('session'));
+                const response = await fetch('/api/user/activity-log/clear', {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${session.access_token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showSuccess('Historique d\'audit effacé');
+                    // Recharger l'audit
+                    loadSecurityAudit();
+                } else {
+                    showError(data.error || 'Erreur lors de la suppression');
+                }
+            } catch (error) {
+                console.error('Erreur suppression:', error);
+                showError('Erreur lors de la suppression de l\'historique');
             }
         });
 
