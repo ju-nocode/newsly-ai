@@ -1025,14 +1025,13 @@
             const result = await changePassword(newPassword);
 
             if (result.success) {
-                showSuccess('Mot de passe changé avec succès !');
-                // Clear fields
-                document.getElementById('currentPassword').value = '';
-                document.getElementById('newPassword').value = '';
-                document.getElementById('confirmPassword').value = '';
+                showSuccess('Mot de passe changé avec succès ! Reconnexion requise...');
 
-                // Recharger l'audit de sécurité pour afficher le nouvel événement
-                setTimeout(() => loadSecurityAudit(), 500);
+                // Déconnecter et rediriger vers la page de login
+                setTimeout(() => {
+                    localStorage.removeItem('session');
+                    window.location.href = 'index.html?passwordChanged=true';
+                }, 2000);
             } else {
                 showError(result.error || 'Erreur lors du changement de mot de passe');
             }
