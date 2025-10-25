@@ -6,7 +6,7 @@ import { attachPhoneFormatter } from './phone-formatter.js';
 // import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 import { initThemeSystem } from './theme-manager.js';
 import { initWeatherWidget } from './weather.js';
-import { navigateWithLoader } from './page-loader.js';
+import { navigateWithLoader, navigateWithBlur } from './page-loader.js';
 import { initRippleButtons } from './micro-interactions.js';
 
 // Détection de confirmation email - Écoute localStorage + BroadcastChannel + Polling
@@ -144,12 +144,12 @@ const isChromeIOS = /CriOS/i.test(navigator.userAgent);
 if (isChromeIOS) {
     setTimeout(() => {
         if (checkAuth()) {
-            navigateWithLoader('dashboard.html');
+            navigateWithBlur('dashboard.html');
         }
     }, 100);
 } else {
     if (checkAuth()) {
-        navigateWithLoader('dashboard.html');
+        navigateWithBlur('dashboard.html');
     }
 }
 
@@ -444,7 +444,7 @@ document.getElementById('loginFormElement').addEventListener('submit', async (e)
     const result = await login(email, password);
 
     if (result.success) {
-        navigateWithLoader('dashboard.html');
+        navigateWithBlur('dashboard.html');
     } else {
         errorDiv.textContent = result.error;
         errorDiv.style.display = 'block';
@@ -811,7 +811,7 @@ async function updateBurgerMenuUserInfo() {
 const dashboardLinkIndex = document.getElementById('dashboardLinkIndex');
 if (dashboardLinkIndex) {
     dashboardLinkIndex.addEventListener('click', () => {
-        navigateWithLoader('dashboard.html');
+        navigateWithBlur('dashboard.html');
     });
 }
 

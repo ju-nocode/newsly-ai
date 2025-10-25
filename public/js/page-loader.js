@@ -94,6 +94,25 @@ export const navigateWithLoader = (url) => {
     }, 100);
 };
 
+/**
+ * Transition avec effet de flou vers une autre page (pour login/signup)
+ * @param {string} url - URL de destination
+ */
+export const navigateWithBlur = (url) => {
+    showPageLoader();
+
+    // Appliquer l'effet de flou progressif sur le body
+    const body = document.body;
+    body.style.transition = 'filter 0.4s ease-out, opacity 0.4s ease-out';
+    body.style.filter = 'blur(10px)';
+    body.style.opacity = '0.6';
+
+    // Naviguer après l'animation de flou
+    setTimeout(() => {
+        window.location.href = url;
+    }, 400);
+};
+
 // Auto-init au chargement du module
 if (typeof window !== 'undefined') {
     if (document.readyState === 'loading') {
