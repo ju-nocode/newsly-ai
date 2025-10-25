@@ -536,13 +536,10 @@ if (typeof window !== 'undefined') {
 
 // Afficher une popup de sécurité
 const showSecurityAlert = (message, callback) => {
-    console.log('🔔 showSecurityAlert called:', message);
-
     // Créer l'overlay si il n'existe pas déjà
     let overlay = document.getElementById('security-alert-overlay');
 
     if (!overlay) {
-        console.log('📦 Creating security alert overlay');
         overlay = document.createElement('div');
         overlay.id = 'security-alert-overlay';
         overlay.className = 'security-alert-overlay';
@@ -561,20 +558,15 @@ const showSecurityAlert = (message, callback) => {
             </div>
         `;
         document.body.appendChild(overlay);
-        console.log('✅ Overlay added to body');
 
         // Event listener sur le bouton
         const btn = overlay.querySelector('.security-alert-btn');
         btn.addEventListener('click', () => {
-            console.log('🖱️ Button clicked, closing popup');
             overlay.classList.remove('show');
             setTimeout(() => {
                 if (overlay.dataset.callback === 'true') {
                     const callbackFn = overlay.callbackFn;
-                    if (callbackFn) {
-                        console.log('🔄 Executing callback');
-                        callbackFn();
-                    }
+                    if (callbackFn) callbackFn();
                 }
             }, 300);
         });
@@ -592,25 +584,16 @@ const showSecurityAlert = (message, callback) => {
         overlay.callbackFn = null;
     }
 
-    // Afficher
-    console.log('👁️ Showing popup');
+    // Afficher avec un léger délai pour l'animation
     setTimeout(() => {
         overlay.classList.add('show');
 
-        // Force le style en cas de problème CSS
+        // Force le style pour garantir l'affichage
         overlay.style.zIndex = '99999';
         overlay.style.display = 'flex';
         overlay.style.opacity = '1';
         overlay.style.visibility = 'visible';
         overlay.style.pointerEvents = 'auto';
-
-        console.log('✅ Popup should now be visible');
-        console.log('📊 Overlay computed style:', {
-            display: window.getComputedStyle(overlay).display,
-            opacity: window.getComputedStyle(overlay).opacity,
-            zIndex: window.getComputedStyle(overlay).zIndex,
-            visibility: window.getComputedStyle(overlay).visibility
-        });
     }, 10);
 };
 

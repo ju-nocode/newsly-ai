@@ -57,11 +57,30 @@ export default async function handler(req, res) {
                 return res.status(500).json({ error: 'Erreur lors de la récupération des connexions' });
             }
 
+            // Récupérer le dernier global logout pour filtrer les sessions invalides
+            const { data: globalLogouts } = await supabaseAdmin
+                .from('user_global_logout')
+                .select('logout_timestamp')
+                .eq('user_id', user.id)
+                .order('logout_timestamp', { ascending: false })
+                .limit(1);
+
+            const lastGlobalLogout = globalLogouts && globalLogouts.length > 0
+                ? new Date(globalLogouts[0].logout_timestamp)
+                : null;
+
             // Grouper par IP/Device pour éviter les doublons
             const seenSessions = new Set();
             const uniqueLogins = [];
 
             for (const login of logins) {
+                const loginDate = new Date(login.created_at);
+
+                // Filtrer les logins créés AVANT le dernier global logout
+                if (lastGlobalLogout && loginDate < lastGlobalLogout) {
+                    continue; // Session invalidée par global logout
+                }
+
                 const context = login.context || {};
                 const sessionKey = `${context.ip || 'unknown'}_${login.device_type || 'desktop'}`;
 

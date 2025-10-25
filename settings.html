@@ -345,7 +345,7 @@
 
                     <!-- Active Sessions Card -->
                     <div class="settings-card">
-                        <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-primary);">Connexions récentes</h3>
+                        <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-primary);">Connexions actives</h3>
                         <p class="settings-description">
                             Appareils connectés ces 7 derniers jours
                         </p>
@@ -1574,7 +1574,7 @@
                     const device = event.device || context.device || 'Desktop';
 
                     // Géolocalisation : afficher ville, pays au lieu de l'IP
-                    let locationDisplay = ip;
+                    let locationDisplay = 'Localisation inconnue';
                     if (context.location && (context.location.city || context.location.country)) {
                         const parts = [];
                         if (context.location.city) parts.push(context.location.city);
@@ -1585,6 +1585,8 @@
                         if (event.location.city) parts.push(event.location.city);
                         if (event.location.country) parts.push(event.location.country);
                         locationDisplay = parts.join(', ');
+                    } else if (ip && ip !== 'Non disponible') {
+                        locationDisplay = ip; // Afficher l'IP si disponible
                     }
 
                     // Convertir platform en label lisible

@@ -145,7 +145,6 @@
   transition: transform 0.3s ease;
   overflow: hidden;
   border: 1px solid var(--border);
-  z-index: 100000;
   pointer-events: auto;
 }
 
