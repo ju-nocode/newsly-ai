@@ -68,6 +68,9 @@ export default async function handler(req, res) {
 
             // Transformer les données pour le frontend
             const auditEvents = (activityLogs || []).map(log => {
+                // Extraire les informations du contexte dès le début
+                const context = log.context || {};
+
                 // Déterminer le type et l'icône
                 let type = 'info';
                 let icon = 'ℹ️';
@@ -147,9 +150,6 @@ export default async function handler(req, res) {
                         description = 'Une activité inhabituelle a été détectée sur votre compte';
                         break;
                 }
-
-                // Extraire les informations du contexte
-                const context = log.context || {};
 
                 // Essayer de récupérer l'IP depuis différentes sources
                 let ip = 'Non disponible';
