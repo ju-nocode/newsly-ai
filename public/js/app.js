@@ -596,7 +596,21 @@ const showSecurityAlert = (message, callback) => {
     console.log('👁️ Showing popup');
     setTimeout(() => {
         overlay.classList.add('show');
+
+        // Force le style en cas de problème CSS
+        overlay.style.zIndex = '99999';
+        overlay.style.display = 'flex';
+        overlay.style.opacity = '1';
+        overlay.style.visibility = 'visible';
+        overlay.style.pointerEvents = 'auto';
+
         console.log('✅ Popup should now be visible');
+        console.log('📊 Overlay computed style:', {
+            display: window.getComputedStyle(overlay).display,
+            opacity: window.getComputedStyle(overlay).opacity,
+            zIndex: window.getComputedStyle(overlay).zIndex,
+            visibility: window.getComputedStyle(overlay).visibility
+        });
     }, 10);
 };
 
