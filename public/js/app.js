@@ -118,13 +118,7 @@ export const login = async (email, password) => {
 
         saveSession(data.user, data.session.access_token);
 
-        // Log security event (non-bloquant)
-        logSecurityEvent('login', {
-            success: true,
-            email: data.user.email
-        }).catch(err => {
-            console.warn('Failed to log security event:', err);
-        });
+        // Le login est maintenant loggé côté backend
 
         return { success: true, user: data.user };
 
@@ -355,9 +349,9 @@ export const updateUserProfile = async (profileData) => {
 };
 
 // Changer le mot de passe
-export const changePassword = async (newPassword) => {
+export const changePassword = async (newPassword, currentPassword = null) => {
     if (!authToken) {
-        return { success: false, error: 'Non authentifiÃ©' };
+        return { success: false, error: 'Non authentifié' };
     }
 
     try {
@@ -367,7 +361,7 @@ export const changePassword = async (newPassword) => {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${authToken}`
             },
-            body: JSON.stringify({ newPassword })
+            body: JSON.stringify({ newPassword, currentPassword })
         });
 
         // Si le token est invalide ou expirÃ©, dÃ©connecter l'utilisateur

@@ -37,7 +37,7 @@ export default async function handler(req, res) {
             return res.status(401).json({ error: 'Token invalide' });
         }
 
-        const { newPassword } = req.body;
+        const { newPassword, currentPassword } = req.body;
 
         if (!newPassword) {
             return res.status(400).json({ error: 'Nouveau mot de passe requis' });
@@ -49,6 +49,45 @@ export default async function handler(req, res) {
 
         if (newPassword.length > 100) {
             return res.status(400).json({ error: 'Le mot de passe est trop long (max 100 caractères)' });
+        }
+
+        // Vérifier si le nouveau password est identique à l'ancien
+        if (currentPassword && newPassword === currentPassword) {
+            // Log security event pour tentative de changement avec même password
+            const supabaseAdmin = createClient(
+                process.env.SUPABASE_URL,
+                process.env.SUPABASE_SERVICE_ROLE_KEY
+            );
+
+            try {
+                const ipHeader = req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || req.socket?.remoteAddress || req.connection?.remoteAddress;
+                const clientIP = ipHeader ? ipHeader.split(',')[0].trim() : 'Non disponible';
+                const location = await getIPGeolocation(clientIP);
+
+                await supabaseAdmin
+                    .from('user_activity_log')
+                    .insert({
+                        user_id: user.id,
+                        activity_type: 'password_change',
+                        context: {
+                            success: false,
+                            reason: 'same_password',
+                            ip: clientIP,
+                            location: location,
+                            timestamp: new Date().toISOString()
+                        },
+                        device_type: /Mobile|Android|iPhone/i.test(req.headers['user-agent']) ? 'mobile' : 'desktop',
+                        user_agent: req.headers['user-agent'] || null,
+                        created_at: new Date().toISOString()
+                    });
+            } catch (logError) {
+                console.error('Error logging same password attempt:', logError);
+            }
+
+            return res.status(400).json({
+                error: 'Le nouveau mot de passe doit être différent de l\'ancien',
+                samePassword: true
+            });
         }
 
         // Utiliser le Service Role pour mettre à jour le mot de passe

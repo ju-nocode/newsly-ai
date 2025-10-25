@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-
+import { getIPGeolocation } from '../utils/geolocation.js';
 import { securityHeaders, validateEmail, validatePassword, rateLimit } from '../_middleware/security.js';
 
 export default async function handler(req, res) {
@@ -54,6 +54,38 @@ export default async function handler(req, res) {
 
         if (error) {
             return res.status(401).json({ error: error.message });
+        }
+
+        // Logger le login dans user_activity_log
+        try {
+            const supabaseAdmin = createClient(
+                process.env.SUPABASE_URL,
+                process.env.SUPABASE_SERVICE_ROLE_KEY
+            );
+
+            const ipHeader = req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || req.socket?.remoteAddress || req.connection?.remoteAddress;
+            const clientIP = ipHeader ? ipHeader.split(',')[0].trim() : 'Non disponible';
+            const location = await getIPGeolocation(clientIP);
+
+            await supabaseAdmin
+                .from('user_activity_log')
+                .insert({
+                    user_id: data.user.id,
+                    activity_type: 'login',
+                    context: {
+                        success: true,
+                        email: data.user.email,
+                        ip: clientIP,
+                        location: location,
+                        timestamp: new Date().toISOString()
+                    },
+                    device_type: /Mobile|Android|iPhone/i.test(req.headers['user-agent']) ? 'mobile' : 'desktop',
+                    user_agent: req.headers['user-agent'] || null,
+                    created_at: new Date().toISOString()
+                });
+        } catch (logError) {
+            console.error('Error logging login activity:', logError);
+            // Continue même si le log échoue
         }
 
         // Retourner les données d'authentification

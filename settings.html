@@ -1022,7 +1022,7 @@
                 return;
             }
 
-            const result = await changePassword(newPassword);
+            const result = await changePassword(newPassword, currentPassword);
 
             if (result.success) {
                 showSuccess('Mot de passe changé avec succès ! Reconnexion requise...');
