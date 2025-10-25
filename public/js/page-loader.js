@@ -54,23 +54,31 @@ export const showPageLoader = () => {
 
 /**
  * Masquer la barre de loader (compléter à 100% puis disparaître)
+ * @param {boolean} error - Si true, affiche en rouge (erreur)
  */
-export const hidePageLoader = () => {
+export const hidePageLoader = (error = false) => {
     if (!loaderBar) return;
 
     clearInterval(loaderInterval);
 
     const progressBar = loaderBar.querySelector('.page-loader-progress');
 
+    // Si erreur, passer en rouge
+    if (error) {
+        loaderBar.classList.add('error');
+    }
+
     // Compléter à 100%
     loaderProgress = 100;
     progressBar.style.width = '100%';
 
-    // Disparaître après 300ms
+    // Disparaître après 300ms (ou 1s si erreur pour laisser voir le rouge)
+    const delay = error ? 1000 : 300;
     setTimeout(() => {
         loaderBar.classList.remove('active');
+        loaderBar.classList.remove('error');
         loaderProgress = 0;
-    }, 300);
+    }, delay);
 };
 
 /**

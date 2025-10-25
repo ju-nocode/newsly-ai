@@ -170,7 +170,7 @@
         import { showLoader, hideLoader, showSkeletons, hideSkeletons, addButtonLoader, removeButtonLoader } from './public/js/loader.js';
         import { fadeIn, shake, stagger, ripple } from './public/js/animations.js';
         import { showPageLoader, hidePageLoader, navigateWithLoader } from './public/js/page-loader.js';
-        import { showShimmerLoader, hideShimmerLoader, showShimmerError } from './public/js/shimmer-loader.js';
+        import { showShimmerLoader, hideShimmerLoader, showShimmerError, showShimmerTimeoutError } from './public/js/shimmer-loader.js';
 
         // Détecter Chrome iOS (problèmes de performance avec modules lourds)
         const isChromeIOS = /CriOS/i.test(navigator.userAgent);
@@ -283,8 +283,16 @@
             // Masquer l'ancien indicateur
             loadingIndicator.style.display = 'none';
 
-            // Afficher le shimmer loader (avec timeout de sécurité 10s)
-            showShimmerLoader(newsContainer, 6, 10000);
+            // Démarrer le page loader
+            showPageLoader();
+
+            // Afficher le shimmer loader avec callback timeout
+            showShimmerLoader(newsContainer, 6, 10000, () => {
+                // Callback après 10s timeout
+                console.warn('⏱️ Timeout atteint - arrêt page loader en rouge');
+                hidePageLoader(true); // true = error state (rouge)
+                showShimmerTimeoutError(newsContainer, 'Le chargement prend trop de temps...');
+            });
 
             try {
                 // Charger les news pour tous les pays sélectionnés
@@ -319,12 +327,15 @@
                 if (allFailed) {
                     // API non configurée ou problème serveur → garder le shimmer
                     console.warn('⚠️ API News non configurée - shimmer reste affiché');
-                    // Le timeout de 10s va masquer le shimmer automatiquement
+                    // Le timeout de 10s va gérer le page loader et le message d'erreur
                     return;
                 }
 
                 // Masquer le shimmer seulement si on a une vraie réponse
                 hideShimmerLoader(newsContainer);
+
+                // Arrêter le page loader en succès (vert)
+                hidePageLoader(false);
 
                 // Mélanger les articles pour plus de diversité
                 allArticles.sort(() => Math.random() - 0.5);
@@ -347,7 +358,8 @@
 
             } catch (error) {
                 console.error('❌ Erreur loadNews:', error);
-                // En cas d'erreur critique, afficher le shimmer error
+                // En cas d'erreur critique, afficher le shimmer error et arrêter le page loader en rouge
+                hidePageLoader(true); // Rouge = error
                 showShimmerError(newsContainer, error.message || 'Erreur lors du chargement des actualités');
                 notifyError('Échec du chargement des actualités', { duration: 6000 });
             } finally {

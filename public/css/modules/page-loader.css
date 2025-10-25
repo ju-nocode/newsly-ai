@@ -25,7 +25,13 @@
     width: 0%;
     background: linear-gradient(90deg, var(--primary), var(--success));
     box-shadow: 0 0 10px rgba(var(--primary-rgb), 0.5);
-    transition: width 0.3s ease;
+    transition: width 0.3s ease, background 0.3s ease;
+}
+
+/* État erreur - barre rouge */
+.page-loader-bar.error .page-loader-progress {
+    background: linear-gradient(90deg, #ef4444, #dc2626);
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
 }
 
 /* Animation pulsante */

@@ -3,7 +3,8 @@
    ================================================ */
 
 /* Container avec skeletons - hérite du grid parent */
-.news-grid.shimmer-loading {
+.news-grid.shimmer-loading,
+.news-grid.shimmer-frozen {
     /* Garde le display: grid de .news-grid */
     /* Pas de redéfinition du grid */
 }
@@ -26,7 +27,6 @@
         var(--bg-secondary) 100%
     );
     background-size: 200% 100%;
-    animation: shimmer 1.5s ease-in-out infinite;
     border-radius: var(--radius-md);
 }
 
@@ -38,6 +38,17 @@
     100% {
         background-position: 200% 0;
     }
+}
+
+/* Animation active uniquement sur shimmer-loading */
+.shimmer-loading .skeleton {
+    animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* État figé - pas d'animation */
+.shimmer-frozen .skeleton {
+    animation: none;
+    opacity: 0.6;
 }
 
 /* Image skeleton */
@@ -125,6 +136,56 @@
     color: var(--text-secondary);
     margin-bottom: 1.5rem;
     max-width: 400px;
+}
+
+/* ================================================
+   TIMEOUT OVERLAY (au-dessus des shimmers figés)
+   ================================================ */
+
+.shimmer-timeout-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 10;
+    animation: fadeIn 0.3s ease;
+}
+
+.shimmer-timeout-message {
+    background: var(--bg-primary);
+    border: 2px solid var(--error);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.shimmer-timeout-icon {
+    font-size: 2rem;
+}
+
+.shimmer-timeout-message p {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 /* ================================================
