@@ -4,7 +4,8 @@ import { translatePage, changeLanguage } from './translation-service.js';
 // import { defaultParticlesConfig } from './particles-config.js';
 import { countries } from './countries.js';
 import { attachPhoneFormatter } from './phone-formatter.js';
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+// DÉSACTIVÉ - Import CDN bloque Chrome iOS et n'est pas utilisé
+// import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 import { initThemeSystem } from './theme-manager.js';
 import { initWeatherWidget } from './weather.js';
 
@@ -135,15 +136,27 @@ const showEmailConfirmedModal = () => {
     }
 };
 
+// Détecter Chrome iOS
+const isChromeIOS = /CriOS/i.test(navigator.userAgent);
+
 // Si l'utilisateur est déjà connecté, rediriger vers le dashboard
-if (checkAuth()) {
-    window.location.href = 'dashboard.html';
+// Sur Chrome iOS, utiliser setTimeout pour éviter freeze au chargement
+if (isChromeIOS) {
+    setTimeout(() => {
+        if (checkAuth()) {
+            window.location.href = 'dashboard.html';
+        }
+    }, 100);
 } else {
-    // Hide app links in footer when not logged in
-    const appLinksSection = document.getElementById('appLinksSection');
-    if (appLinksSection) {
-        appLinksSection.style.display = 'none';
+    if (checkAuth()) {
+        window.location.href = 'dashboard.html';
     }
+}
+
+// Hide app links in footer when not logged in
+const appLinksSection = document.getElementById('appLinksSection');
+if (appLinksSection) {
+    appLinksSection.style.display = 'none';
 }
 
 // Traductions spécifiques à index.html

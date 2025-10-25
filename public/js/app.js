@@ -635,46 +635,51 @@ export const checkSessionValidity = async () => {
 if (typeof window !== 'undefined') {
     const protectedPages = ['dashboard.html', 'settings.html'];
     const currentPage = window.location.pathname.split('/').pop();
+    const isChromeIOS = /CriOS/i.test(navigator.userAgent);
 
     if (protectedPages.includes(currentPage)) {
-        // Attendre que le DOM soit chargé avant d'initialiser
-        document.addEventListener('DOMContentLoaded', () => {
-            // Charger la session d'abord
-            const hasSession = loadSession();
+        // Sur Chrome iOS, désactiver complètement le polling automatique
+        if (isChromeIOS) {
+            console.log('⚡ Chrome iOS: Session polling désactivé (mode manuel uniquement)');
+            // Charger juste la session sans vérification active
+            document.addEventListener('DOMContentLoaded', () => {
+                loadSession();
+            });
+        } else {
+            // Autres navigateurs : système normal
+            document.addEventListener('DOMContentLoaded', () => {
+                const hasSession = loadSession();
 
-            // Ne lancer les vérifications que si on a un token
-            if (hasSession && authToken) {
-                console.log('🔒 Initialisation des vérifications de session');
+                if (hasSession && authToken) {
+                    console.log('🔒 Initialisation des vérifications de session');
 
-                // Détecter si on est sur mobile (Chrome iOS, Safari iOS, etc.)
-                const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-                // Vérification initiale différée
-                setTimeout(() => checkSessionValidity(), 2000);
+                    // Vérification initiale différée
+                    setTimeout(() => checkSessionValidity(), 2000);
 
-                // 1. Vérification périodique adaptée selon l'appareil
-                const checkInterval = isMobile ? 30000 : 10000; // 30s mobile, 10s desktop
-                setInterval(() => {
-                    if (authToken) checkSessionValidity();
-                }, checkInterval);
-
-                // 2. Vérification quand l'onglet redevient visible
-                document.addEventListener('visibilitychange', () => {
-                    if (!document.hidden && authToken) {
-                        checkSessionValidity();
-                    }
-                });
-
-                // 3. Vérification au focus de la fenêtre (desktop uniquement)
-                if (!isMobile) {
-                    window.addEventListener('focus', () => {
+                    // Vérification périodique adaptée
+                    const checkInterval = isMobile ? 30000 : 10000;
+                    setInterval(() => {
                         if (authToken) checkSessionValidity();
-                    });
-                }
+                    }, checkInterval);
 
-                // Note: Les listeners click/touch ont été retirés car ils saturaient Chrome iOS
-            }
-        });
+                    // Vérification visibilité
+                    document.addEventListener('visibilitychange', () => {
+                        if (!document.hidden && authToken) {
+                            checkSessionValidity();
+                        }
+                    });
+
+                    // Focus (desktop uniquement)
+                    if (!isMobile) {
+                        window.addEventListener('focus', () => {
+                            if (authToken) checkSessionValidity();
+                        });
+                    }
+                }
+            });
+        }
     }
 }
 
