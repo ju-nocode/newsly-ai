@@ -155,8 +155,23 @@ export default async function handler(req, res) {
 
                 // Extraire les informations du contexte
                 const context = log.context || {};
-                const ip = context.ip || log.user_agent || 'Non disponible';
-                const device = context.device || log.device_type || 'Appareil inconnu';
+
+                // Essayer de récupérer l'IP depuis différentes sources
+                let ip = 'Non disponible';
+                if (context.ip) {
+                    ip = context.ip;
+                } else if (context.userAgent) {
+                    // Pas d'IP stockée, on affiche juste "Non disponible"
+                    ip = 'Non disponible';
+                } else {
+                    ip = 'Non disponible';
+                }
+
+                // Device type
+                const device = log.device_type || context.device || 'desktop';
+
+                // Platform info
+                const platform = context.platform || '';
 
                 return {
                     id: log.id,
@@ -167,6 +182,7 @@ export default async function handler(req, res) {
                     timestamp: log.created_at,
                     ip,
                     device,
+                    platform,
                     activityType: log.activity_type,
                     context
                 };

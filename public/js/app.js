@@ -557,9 +557,22 @@ export const logSecurityEvent = async (activityType, context = {}) => {
     }
 
     try {
+        // Récupérer l'IP publique (avec fallback rapide)
+        let publicIP = 'Non disponible';
+        try {
+            const ipResponse = await fetch('https://api.ipify.org?format=json', { timeout: 2000 });
+            if (ipResponse.ok) {
+                const ipData = await ipResponse.json();
+                publicIP = ipData.ip || 'Non disponible';
+            }
+        } catch (ipError) {
+            console.warn('⚠️ Could not fetch public IP:', ipError.message);
+        }
+
         // Enrichir le contexte avec des infos du navigateur
         const enrichedContext = {
             ...context,
+            ip: publicIP,
             userAgent: navigator.userAgent,
             timestamp: new Date().toISOString(),
             platform: navigator.platform,
@@ -584,7 +597,7 @@ export const logSecurityEvent = async (activityType, context = {}) => {
         }
 
         const data = await response.json();
-        console.log(`✅ Security event logged: ${activityType}`);
+        console.log(`✅ Security event logged: ${activityType}`, { ip: publicIP });
         return { success: true, data };
 
     } catch (error) {
