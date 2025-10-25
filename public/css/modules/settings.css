@@ -331,11 +331,12 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  padding: 0.75rem;
+  padding: 0.5rem 0.875rem;
   background: var(--bg-secondary);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   transition: all 0.2s;
+  min-height: 65px;
 }
 
 .session-item.current {

@@ -43,8 +43,8 @@ export default async function handler(req, res) {
             return res.status(400).json({ error: 'Nouveau mot de passe requis' });
         }
 
-        if (newPassword.length < 8) {
-            return res.status(400).json({ error: 'Le mot de passe doit contenir au moins 8 caractères' });
+        if (newPassword.length < 12) {
+            return res.status(400).json({ error: 'Le mot de passe doit contenir au moins 12 caractères' });
         }
 
         if (newPassword.length > 100) {
