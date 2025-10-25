@@ -170,7 +170,7 @@
         import { showLoader, hideLoader, showSkeletons, hideSkeletons, addButtonLoader, removeButtonLoader } from './public/js/loader.js';
         import { fadeIn, shake, stagger, ripple } from './public/js/animations.js';
         import { showPageLoader, hidePageLoader, navigateWithLoader } from './public/js/page-loader.js';
-        import { showShimmerLoader, hideShimmerLoader, showShimmerError, showShimmerTimeoutError } from './public/js/shimmer-loader.js';
+        import { showShimmerLoader, hideShimmerLoader, showShimmerError } from './public/js/shimmer-loader.js';
 
         // Détecter Chrome iOS (problèmes de performance avec modules lourds)
         const isChromeIOS = /CriOS/i.test(navigator.userAgent);
@@ -286,24 +286,44 @@
             // Démarrer le page loader
             showPageLoader();
 
-            // Afficher le shimmer loader avec callback timeout
-            showShimmerLoader(newsContainer, 6, 10000, () => {
-                // Callback après 10s timeout
-                console.warn('⏱️ Timeout atteint - arrêt page loader en rouge');
-                hidePageLoader(true); // true = error state (rouge)
-                showShimmerTimeoutError(newsContainer, 'Le chargement prend trop de temps...');
-            });
+            // Afficher le shimmer loader (sans timeout automatique)
+            showShimmerLoader(newsContainer, 6);
 
             try {
-                // Charger les news pour tous les pays sélectionnés
+                // Charger les news pour tous les pays sélectionnés (timeout 10s intégré dans fetchNews)
                 const promises = selectedCountries.map(country =>
-                    fetchNews(category, country, 1)
+                    fetchNews(category, country, 1, 10000) // 10s timeout
                 );
 
                 const results = await Promise.all(promises);
 
                 // Debug: afficher les résultats
                 console.log('📰 loadNews results:', results);
+
+                // Vérifier si toutes les requêtes ont timeout
+                const allTimeout = results.every(r => r.timeout === true);
+
+                // Vérifier si toutes les requêtes ont échoué
+                const allFailed = results.every(r => !r.success);
+
+                // Arrêter les shimmers
+                hideShimmerLoader(newsContainer);
+
+                if (allTimeout || allFailed) {
+                    // Timeout ou échec → page loader rouge
+                    console.warn('⚠️ Timeout ou échec API - page loader rouge');
+                    hidePageLoader(true); // Rouge
+
+                    newsContainer.innerHTML = `
+                        <div class="news-empty">
+                            <p>⚠️ Impossible de charger les actualités</p>
+                            <p class="error-details" style="color: var(--text-secondary);">
+                                ${allTimeout ? 'Le serveur ne répond pas (timeout 10s)' : 'API non configurée ou erreur serveur'}
+                            </p>
+                        </div>
+                    `;
+                    return;
+                }
 
                 // Combiner tous les articles
                 let allArticles = [];
@@ -321,20 +341,7 @@
 
                 console.log(`✅ Total articles chargés: ${allArticles.length}`);
 
-                // Vérifier si toutes les requêtes ont échoué (API non configurée)
-                const allFailed = results.every(r => !r.success);
-
-                if (allFailed) {
-                    // API non configurée ou problème serveur → garder le shimmer
-                    console.warn('⚠️ API News non configurée - shimmer reste affiché');
-                    // Le timeout de 10s va gérer le page loader et le message d'erreur
-                    return;
-                }
-
-                // Masquer le shimmer seulement si on a une vraie réponse
-                hideShimmerLoader(newsContainer);
-
-                // Arrêter le page loader en succès (vert)
+                // Arrêter le page loader en succès (bleu/vert)
                 hidePageLoader(false);
 
                 // Mélanger les articles pour plus de diversité

@@ -224,13 +224,20 @@ export const logout = async () => {
 // ================================================
 
 // RÃ©cupÃ©rer les actualitÃ©s
-export const fetchNews = async (category = 'general', country = 'us', page = 1) => {
+export const fetchNews = async (category = 'general', country = 'us', page = 1, timeout = 10000) => {
     try {
         const url = `${API_BASE_URL}/api/news?category=${encodeURIComponent(category)}&country=${encodeURIComponent(country)}&page=${encodeURIComponent(page)}`;
 
+        // Créer un AbortController pour le timeout de 10s
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), timeout);
+
         const response = await fetch(url, {
-            headers: authToken ? { 'Authorization': `Bearer ${authToken}` } : {}
+            headers: authToken ? { 'Authorization': `Bearer ${authToken}` } : {},
+            signal: controller.signal
         });
+
+        clearTimeout(timeoutId);
 
         const data = await response.json();
 
@@ -241,6 +248,10 @@ export const fetchNews = async (category = 'general', country = 'us', page = 1) 
         return { success: true, articles: data.articles };
 
     } catch (error) {
+        if (error.name === 'AbortError') {
+            console.warn('⏱️ News fetch timeout après 10s');
+            return { success: false, error: 'Timeout', timeout: true, articles: [] };
+        }
         console.error('News fetch error:', error);
         return { success: false, error: error.message, articles: [] };
     }
