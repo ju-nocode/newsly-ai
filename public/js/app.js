@@ -549,12 +549,18 @@ export const checkSessionValidity = async () => {
 
         if (response.ok) {
             const data = await response.json();
-            if (data.shouldLogout) {
+            // Déconnecter seulement si shouldLogout est explicitement true
+            // ET que c'est à cause d'un global logout (pas juste un token invalide)
+            if (data.shouldLogout && data.reason === 'global_logout') {
                 console.warn('Session invalidee:', data.reason);
-                alert(data.message || 'Votre session a ete revoquee. Veuillez vous reconnecter.');
+                alert(data.message || 'Vous avez été déconnecté de tous les appareils');
                 clearSession();
                 window.location.href = 'index.html';
             }
+        } else if (response.status === 401) {
+            // 401 = token invalide, mais on ne force pas le logout ici
+            // car ça pourrait être un token expiré normalement
+            console.warn('Token non valide ou expiré (401)');
         }
     } catch (error) {
         // En cas d'erreur réseau, on laisse l'utilisateur connecté
@@ -568,38 +574,47 @@ if (typeof window !== 'undefined') {
     const currentPage = window.location.pathname.split('/').pop();
 
     if (protectedPages.includes(currentPage)) {
-        // Vérification initiale
-        setTimeout(() => checkSessionValidity(), 1000);
+        // Charger la session d'abord
+        loadSession();
 
-        // 1. Vérification périodique toutes les 2 secondes (au lieu de 30s)
-        setInterval(() => checkSessionValidity(), 2000);
+        // Ne lancer les vérifications que si on a un token
+        if (authToken) {
+            // Vérification initiale
+            setTimeout(() => checkSessionValidity(), 1000);
 
-        // 2. Vérification immédiate quand l'onglet redevient visible
-        document.addEventListener('visibilitychange', () => {
-            if (!document.hidden) {
-                checkSessionValidity();
-            }
-        });
+            // 1. Vérification périodique toutes les 2 secondes (au lieu de 30s)
+            setInterval(() => checkSessionValidity(), 2000);
 
-        // 3. Vérification immédiate au focus de la fenêtre
-        window.addEventListener('focus', () => {
-            checkSessionValidity();
-        });
+            // 2. Vérification immédiate quand l'onglet redevient visible
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden && authToken) {
+                    checkSessionValidity();
+                }
+            });
 
-        // 4. Vérification immédiate sur toute interaction utilisateur (clic, touche)
-        let lastCheckTime = Date.now();
-        const checkOnInteraction = () => {
-            // Éviter de checker trop souvent (max 1x par seconde)
-            const now = Date.now();
-            if (now - lastCheckTime > 1000) {
-                lastCheckTime = now;
-                checkSessionValidity();
-            }
-        };
+            // 3. Vérification immédiate au focus de la fenêtre
+            window.addEventListener('focus', () => {
+                if (authToken) {
+                    checkSessionValidity();
+                }
+            });
 
-        document.addEventListener('click', checkOnInteraction, { passive: true });
-        document.addEventListener('keydown', checkOnInteraction, { passive: true });
-        document.addEventListener('touchstart', checkOnInteraction, { passive: true });
+            // 4. Vérification immédiate sur toute interaction utilisateur (clic, touche)
+            let lastCheckTime = Date.now();
+            const checkOnInteraction = () => {
+                if (!authToken) return;
+                // Éviter de checker trop souvent (max 1x par seconde)
+                const now = Date.now();
+                if (now - lastCheckTime > 1000) {
+                    lastCheckTime = now;
+                    checkSessionValidity();
+                }
+            };
+
+            document.addEventListener('click', checkOnInteraction, { passive: true });
+            document.addEventListener('keydown', checkOnInteraction, { passive: true });
+            document.addEventListener('touchstart', checkOnInteraction, { passive: true });
+        }
     }
 }
 
