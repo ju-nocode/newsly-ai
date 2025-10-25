@@ -1583,11 +1583,29 @@
                     const timestamp = new Date(event.timestamp);
                     const formattedDate = timestamp.toLocaleDateString('fr-FR', {
                         day: '2-digit',
-                        month: 'long',
-                        year: 'numeric',
+                        month: 'short',
                         hour: '2-digit',
                         minute: '2-digit'
                     });
+
+                    // Extraire les détails du contexte
+                    const context = event.context || {};
+                    const ip = context.ip || event.ip || 'Non disponible';
+                    const device = event.device || context.device || 'Desktop';
+                    const platform = context.platform || '';
+                    const success = context.success !== undefined ? context.success : true;
+
+                    // Créer une description enrichie
+                    let enrichedDescription = event.description;
+                    if (event.activityType === 'login' && context.email) {
+                        enrichedDescription += ` (${context.email})`;
+                    }
+                    if (event.activityType === 'profile_update' && context.fields_updated) {
+                        const fields = Array.isArray(context.fields_updated)
+                            ? context.fields_updated.join(', ')
+                            : 'profil';
+                        enrichedDescription += ` - ${fields}`;
+                    }
 
                     auditHTML += `
                         <div class="audit-item">
@@ -1596,14 +1614,16 @@
                             </div>
                             <div class="audit-content">
                                 <div class="audit-title">${escapeHtml(event.title)}</div>
-                                <div class="audit-description">${escapeHtml(event.description)}</div>
+                                <div class="audit-description">${escapeHtml(enrichedDescription)}</div>
                                 <div class="audit-meta">
                                     <span>📅 ${formattedDate}</span>
-                                    <span>🌐 ${escapeHtml(event.ip)}</span>
-                                    <span>💻 ${escapeHtml(event.device)}</span>
+                                    <span>🌐 ${escapeHtml(ip)}</span>
+                                    <span>💻 ${escapeHtml(device)}</span>
+                                    ${platform ? `<span>🖥️ ${escapeHtml(platform)}</span>` : ''}
+                                    ${!success ? '<span style="color: var(--error);">⚠️ Échec</span>' : ''}
                                 </div>
                             </div>
-                            <span class="audit-badge ${event.type}">${event.type}</span>
+                            <span class="audit-badge ${event.type}">${escapeHtml(event.type)}</span>
                         </div>
                     `;
                 });
