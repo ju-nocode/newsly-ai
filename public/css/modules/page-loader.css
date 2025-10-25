@@ -42,7 +42,7 @@
     animation: loader-pulse 1.5s ease-in-out infinite;
 }
 
-/* Effet de brillance */
+/* Effet de brillance - blanc semi-transparent fonctionne sur dark & light */
 .page-loader-progress::after {
     content: '';
     position: absolute;
@@ -52,9 +52,9 @@
     height: 100%;
     background: linear-gradient(
         90deg,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.3) 50%,
-        rgba(255, 255, 255, 0) 100%
+        transparent 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        transparent 100%
     );
     animation: loader-shine 1.5s ease-in-out infinite;
 }
