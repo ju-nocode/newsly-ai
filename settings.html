@@ -1581,13 +1581,16 @@
                     // Créer une description enrichie
                     let enrichedDescription = event.description;
                     if (event.activityType === 'login' && context.email) {
-                        enrichedDescription += ` (${context.email})`;
+                        enrichedDescription = `Connexion avec ${context.email}`;
                     }
                     if (event.activityType === 'profile_update' && context.fields_updated) {
-                        const fields = Array.isArray(context.fields_updated)
+                        const fields = Array.isArray(context.fields_updated) && context.fields_updated.length > 0
                             ? context.fields_updated.join(', ')
                             : 'profil';
-                        enrichedDescription += ` - ${fields}`;
+                        enrichedDescription = `Mise à jour : ${fields}`;
+                    }
+                    if (event.activityType === 'password_change') {
+                        enrichedDescription = 'Mot de passe modifié avec succès';
                     }
 
                     auditHTML += `

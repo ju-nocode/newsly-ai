@@ -67,6 +67,10 @@ export default async function handler(req, res) {
 
         // Log security event
         try {
+            // Récupérer l'IP depuis les headers
+            const ipHeader = req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || req.socket?.remoteAddress || req.connection?.remoteAddress;
+            const clientIP = ipHeader ? ipHeader.split(',')[0].trim() : 'Non disponible';
+
             await supabaseAdmin
                 .from('user_activity_log')
                 .insert({
@@ -74,6 +78,7 @@ export default async function handler(req, res) {
                     activity_type: 'password_change',
                     context: {
                         success: true,
+                        ip: clientIP,
                         timestamp: new Date().toISOString()
                     },
                     device_type: /Mobile|Android|iPhone/i.test(req.headers['user-agent']) ? 'mobile' : 'desktop',

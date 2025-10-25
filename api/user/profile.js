@@ -120,33 +120,41 @@ export default async function handler(req, res) {
             }
 
             const updateData = {};
+            const changedFields = []; // Track vraiment ce qui a changé
 
             if (username !== undefined) {
                 updateData.username = username.trim();
+                changedFields.push('username');
             }
 
             if (full_name !== undefined) {
                 updateData.full_name = full_name.trim();
+                changedFields.push('nom complet');
             }
 
             if (phone !== undefined) {
                 updateData.phone = phone.trim();
+                changedFields.push('téléphone');
             }
 
             if (bio !== undefined) {
                 updateData.bio = bio.trim();
+                changedFields.push('bio');
             }
 
             if (avatar_url !== undefined) {
                 updateData.avatar_url = avatar_url === null ? null : avatar_url.trim();
+                changedFields.push('avatar');
             }
 
             if (country !== undefined) {
                 updateData.country = country.trim();
+                changedFields.push('pays');
             }
 
             if (city !== undefined) {
                 updateData.city = city.trim();
+                changedFields.push('ville');
             }
 
             // Mettre à jour updated_at
@@ -246,7 +254,10 @@ export default async function handler(req, res) {
 
             // Log security event
             try {
-                const fieldsUpdated = Object.keys(updateData).filter(key => key !== 'updated_at');
+                // Récupérer l'IP depuis les headers
+                const ipHeader = req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || req.socket?.remoteAddress || req.connection?.remoteAddress;
+                const clientIP = ipHeader ? ipHeader.split(',')[0].trim() : 'Non disponible';
+
                 await supabaseAdmin
                     .from('user_activity_log')
                     .insert({
@@ -254,7 +265,8 @@ export default async function handler(req, res) {
                         activity_type: 'profile_update',
                         context: {
                             success: true,
-                            fields_updated: fieldsUpdated,
+                            fields_updated: changedFields, // Utiliser changedFields au lieu de Object.keys
+                            ip: clientIP,
                             timestamp: new Date().toISOString()
                         },
                         device_type: /Mobile|Android|iPhone/i.test(req.headers['user-agent']) ? 'mobile' : 'desktop',
