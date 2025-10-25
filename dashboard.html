@@ -313,11 +313,21 @@
 
                 console.log(`✅ Total articles chargés: ${allArticles.length}`);
 
+                // Vérifier si toutes les requêtes ont échoué (API non configurée)
+                const allFailed = results.every(r => !r.success);
+
+                if (allFailed) {
+                    // API non configurée ou problème serveur → garder le shimmer
+                    console.warn('⚠️ API News non configurée - shimmer reste affiché');
+                    // Le timeout de 10s va masquer le shimmer automatiquement
+                    return;
+                }
+
+                // Masquer le shimmer seulement si on a une vraie réponse
+                hideShimmerLoader(newsContainer);
+
                 // Mélanger les articles pour plus de diversité
                 allArticles.sort(() => Math.random() - 0.5);
-
-                // Masquer le shimmer
-                hideShimmerLoader(newsContainer);
 
                 if (allArticles.length === 0) {
                     newsContainer.innerHTML = `
@@ -336,7 +346,8 @@
                 }
 
             } catch (error) {
-                // Afficher l'erreur avec le module shimmer
+                console.error('❌ Erreur loadNews:', error);
+                // En cas d'erreur critique, afficher le shimmer error
                 showShimmerError(newsContainer, error.message || 'Erreur lors du chargement des actualités');
                 notifyError('Échec du chargement des actualités', { duration: 6000 });
             } finally {
