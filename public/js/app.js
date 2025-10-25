@@ -82,7 +82,7 @@ const saveSession = (user, token) => {
     currentUser = user;
     authToken = token;
     localStorage.setItem('session', JSON.stringify({ user, access_token: token }));
-    console.log('ðŸ'¾ Session sauvegardÃ©e:', {
+    console.log('Session saved:', {
         userId: user?.id,
         email: user?.email,
         tokenPresent: !!token,
