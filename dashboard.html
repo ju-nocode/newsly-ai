@@ -170,6 +170,7 @@
         import { showLoader, hideLoader, showSkeletons, hideSkeletons, addButtonLoader, removeButtonLoader } from './public/js/loader.js';
         import { fadeIn, shake, stagger, ripple } from './public/js/animations.js';
         import { showPageLoader, hidePageLoader, navigateWithLoader } from './public/js/page-loader.js';
+        import { showShimmerLoader, hideShimmerLoader, showShimmerError } from './public/js/shimmer-loader.js';
 
         // Détecter Chrome iOS (problèmes de performance avec modules lourds)
         const isChromeIOS = /CriOS/i.test(navigator.userAgent);
@@ -279,9 +280,11 @@
             const loadingIndicator = document.getElementById('loadingIndicator');
             const newsContainer = document.getElementById('newsContainer');
 
-            // Show skeleton screens instead of old loading indicator
+            // Masquer l'ancien indicateur
             loadingIndicator.style.display = 'none';
-            showSkeletons(newsContainer, 6, 'news-card');
+
+            // Afficher le shimmer loader (avec timeout de sécurité 10s)
+            showShimmerLoader(newsContainer, 6, 10000);
 
             try {
                 // Charger les news pour tous les pays sélectionnés
@@ -307,8 +310,8 @@
                 // Mélanger les articles pour plus de diversité
                 allArticles.sort(() => Math.random() - 0.5);
 
-                // Hide skeletons
-                hideSkeletons(newsContainer);
+                // Masquer le shimmer
+                hideShimmerLoader(newsContainer);
 
                 if (allArticles.length === 0) {
                     newsContainer.innerHTML = `
@@ -327,14 +330,8 @@
                 }
 
             } catch (error) {
-                hideSkeletons(newsContainer);
-                newsContainer.innerHTML = `
-                    <div class="news-empty">
-                        <p>❌ Erreur lors du chargement des actualités</p>
-                        <p class="error-details">${escapeHtml(error.message)}</p>
-                        <button onclick="location.reload()" class="btn-primary">Réessayer</button>
-                    </div>
-                `;
+                // Afficher l'erreur avec le module shimmer
+                showShimmerError(newsContainer, error.message || 'Erreur lors du chargement des actualités');
                 notifyError('Échec du chargement des actualités', { duration: 6000 });
             } finally {
                 loadingIndicator.style.display = 'none';

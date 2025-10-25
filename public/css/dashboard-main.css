@@ -46,8 +46,11 @@
 /* 13. Page Loader */
 @import url('modules/page-loader.css');
 
-/* 14. Utilities */
+/* 14. Shimmer Loader */
+@import url('modules/shimmer-loader.css');
+
+/* 15. Utilities */
 @import url('modules/utilities.css');
 
-/* 15. Responsive - Media queries (doit être en dernier) */
+/* 16. Responsive - Media queries (doit être en dernier) */
 @import url('modules/responsive.css');
