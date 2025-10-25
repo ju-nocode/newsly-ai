@@ -971,14 +971,8 @@
                     document.getElementById('burgerAvatarImage').src = currentAvatarUrl;
                 }
 
-                // ✅ Track profile update in user_activity_log
-                if (userIntelligence) {
-                    userIntelligence.logActivity('profile_update', {
-                        fields_updated: Object.keys(profileData),
-                        has_avatar: !!currentAvatarUrl,
-                        timestamp: new Date().toISOString()
-                    }).catch(err => console.error('Error logging profile update:', err));
-                }
+                // Recharger l'audit de sécurité pour afficher le nouvel événement
+                setTimeout(() => loadSecurityAudit(), 500);
             } else {
                 showError(result.error || 'Erreur lors de la mise à jour');
             }
@@ -1020,24 +1014,10 @@
                 document.getElementById('newPassword').value = '';
                 document.getElementById('confirmPassword').value = '';
 
-                // ✅ Track password change in user_activity_log (SECURITY EVENT)
-                if (userIntelligence) {
-                    userIntelligence.logActivity('password_change', {
-                        success: true,
-                        timestamp: new Date().toISOString()
-                    }).catch(err => console.error('Error logging password change:', err));
-                }
+                // Recharger l'audit de sécurité pour afficher le nouvel événement
+                setTimeout(() => loadSecurityAudit(), 500);
             } else {
                 showError(result.error || 'Erreur lors du changement de mot de passe');
-
-                // ✅ Track failed password change attempt
-                if (userIntelligence) {
-                    userIntelligence.logActivity('password_change_failed', {
-                        success: false,
-                        error: result.error,
-                        timestamp: new Date().toISOString()
-                    }).catch(err => console.error('Error logging failed password change:', err));
-                }
             }
         });
 
@@ -1578,7 +1558,24 @@
                     const context = event.context || {};
                     const ip = context.ip || event.ip || 'Non disponible';
                     const device = event.device || context.device || 'Desktop';
-                    const platform = context.platform || '';
+
+                    // Convertir platform en label lisible
+                    let platform = context.platform || event.platform || '';
+                    if (platform) {
+                        // Détection OS depuis platform
+                        if (platform.includes('Win')) {
+                            platform = 'Windows';
+                        } else if (platform.includes('Mac')) {
+                            platform = 'macOS';
+                        } else if (platform.includes('Linux')) {
+                            platform = 'Linux';
+                        } else if (platform.includes('Android')) {
+                            platform = 'Android';
+                        } else if (platform.includes('iPhone') || platform.includes('iPad')) {
+                            platform = 'iOS';
+                        }
+                    }
+
                     const success = context.success !== undefined ? context.success : true;
 
                     // Créer une description enrichie

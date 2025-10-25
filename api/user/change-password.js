@@ -65,6 +65,26 @@ export default async function handler(req, res) {
             return res.status(400).json({ error: error.message });
         }
 
+        // Log security event
+        try {
+            await supabaseAdmin
+                .from('user_activity_log')
+                .insert({
+                    user_id: user.id,
+                    activity_type: 'password_change',
+                    context: {
+                        success: true,
+                        timestamp: new Date().toISOString()
+                    },
+                    device_type: /Mobile|Android|iPhone/i.test(req.headers['user-agent']) ? 'mobile' : 'desktop',
+                    user_agent: req.headers['user-agent'] || null,
+                    created_at: new Date().toISOString()
+                });
+        } catch (logError) {
+            console.error('Error logging password change:', logError);
+            // Continue même si le log échoue
+        }
+
         return res.status(200).json({
             message: 'Mot de passe mis à jour avec succès',
             user: data.user

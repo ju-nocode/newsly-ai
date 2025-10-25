@@ -244,6 +244,28 @@ export default async function handler(req, res) {
                 );
             }
 
+            // Log security event
+            try {
+                const fieldsUpdated = Object.keys(updateData).filter(key => key !== 'updated_at');
+                await supabaseAdmin
+                    .from('user_activity_log')
+                    .insert({
+                        user_id: user.id,
+                        activity_type: 'profile_update',
+                        context: {
+                            success: true,
+                            fields_updated: fieldsUpdated,
+                            timestamp: new Date().toISOString()
+                        },
+                        device_type: /Mobile|Android|iPhone/i.test(req.headers['user-agent']) ? 'mobile' : 'desktop',
+                        user_agent: req.headers['user-agent'] || null,
+                        created_at: new Date().toISOString()
+                    });
+            } catch (logError) {
+                console.error('Error logging profile update:', logError);
+                // Continue même si le log échoue
+            }
+
             return res.status(200).json({
                 message: 'Profil mis à jour',
                 profile: data
