@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { getIPGeolocation } from '../utils/geolocation.js';
 
 export default async function handler(req, res) {
     // CORS headers
@@ -71,6 +72,9 @@ export default async function handler(req, res) {
             const ipHeader = req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || req.socket?.remoteAddress || req.connection?.remoteAddress;
             const clientIP = ipHeader ? ipHeader.split(',')[0].trim() : 'Non disponible';
 
+            // Géolocaliser l'IP
+            const location = await getIPGeolocation(clientIP);
+
             await supabaseAdmin
                 .from('user_activity_log')
                 .insert({
@@ -79,6 +83,7 @@ export default async function handler(req, res) {
                     context: {
                         success: true,
                         ip: clientIP,
+                        location: location,
                         timestamp: new Date().toISOString()
                     },
                     device_type: /Mobile|Android|iPhone/i.test(req.headers['user-agent']) ? 'mobile' : 'desktop',

@@ -342,6 +342,17 @@
                             <p style="text-align: center; color: var(--text-muted);" data-i18n="settings.loadingAudit">Chargement de l'audit...</p>
                         </div>
                     </div>
+
+                    <!-- Active Sessions Card -->
+                    <div class="settings-card">
+                        <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-primary);">Sessions actives</h3>
+                        <p class="settings-description">
+                            Gérez les appareils connectés à votre compte
+                        </p>
+                        <div id="activeSessionsContainer">
+                            <p style="text-align: center; color: var(--text-muted);">Chargement des sessions...</p>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -1559,6 +1570,20 @@
                     const ip = context.ip || event.ip || 'Non disponible';
                     const device = event.device || context.device || 'Desktop';
 
+                    // Géolocalisation : afficher ville, pays au lieu de l'IP
+                    let locationDisplay = ip;
+                    if (context.location && (context.location.city || context.location.country)) {
+                        const parts = [];
+                        if (context.location.city) parts.push(context.location.city);
+                        if (context.location.country) parts.push(context.location.country);
+                        locationDisplay = parts.join(', ');
+                    } else if (event.location && (event.location.city || event.location.country)) {
+                        const parts = [];
+                        if (event.location.city) parts.push(event.location.city);
+                        if (event.location.country) parts.push(event.location.country);
+                        locationDisplay = parts.join(', ');
+                    }
+
                     // Convertir platform en label lisible
                     let platform = context.platform || event.platform || '';
                     if (platform) {
@@ -1603,7 +1628,7 @@
                                 <div class="audit-description">${escapeHtml(enrichedDescription)}</div>
                                 <div class="audit-meta">
                                     <span>📅 ${formattedDate}</span>
-                                    <span>🌐 ${escapeHtml(ip)}</span>
+                                    <span>📍 ${escapeHtml(locationDisplay)}</span>
                                     <span>💻 ${escapeHtml(device)}</span>
                                     ${platform ? `<span>🖥️ ${escapeHtml(platform)}</span>` : ''}
                                     ${!success ? '<span style="color: var(--error);">⚠️ Échec</span>' : ''}
@@ -1893,12 +1918,134 @@
             }
         });
 
+        // ================================================
+        // ACTIVE SESSIONS
+        // ================================================
+
+        const loadActiveSessions = async () => {
+            const sessionsContainer = document.getElementById('activeSessionsContainer');
+
+            sessionsContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Chargement des sessions...</p>';
+
+            try {
+                const session = JSON.parse(localStorage.getItem('session'));
+                if (!session?.access_token) {
+                    sessionsContainer.innerHTML = '<p style="text-align: center; color: var(--error);">Session expirée</p>';
+                    return;
+                }
+
+                const response = await fetch('/api/user/active-sessions', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${session.access_token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const data = await response.json();
+                const sessions = data.sessions || [];
+
+                if (sessions.length === 0) {
+                    sessionsContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Aucune session active</p>';
+                    return;
+                }
+
+                let sessionsHTML = '<div class="sessions-list">';
+
+                sessions.forEach(s => {
+                    const lastActivity = new Date(s.lastActivity);
+                    const formattedTime = lastActivity.toLocaleDateString('fr-FR', {
+                        day: '2-digit',
+                        month: 'short',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+
+                    let locationDisplay = s.ip;
+                    if (s.location && (s.location.city || s.location.country)) {
+                        const parts = [];
+                        if (s.location.city) parts.push(s.location.city);
+                        if (s.location.country) parts.push(s.location.country);
+                        locationDisplay = parts.join(', ');
+                    }
+
+                    const deviceIcon = s.device === 'mobile' ? '📱' : '💻';
+                    const currentBadge = s.isCurrentSession ? '<span style="color: var(--success); font-size: 0.75rem; font-weight: 500;">● Session actuelle</span>' : '';
+
+                    sessionsHTML += `
+                        <div class="session-item ${s.isCurrentSession ? 'current' : ''}">
+                            <div class="session-info">
+                                <div class="session-device">
+                                    ${deviceIcon} ${escapeHtml(s.device)} ${currentBadge}
+                                </div>
+                                <div class="session-location">📍 ${escapeHtml(locationDisplay)}</div>
+                                <div class="session-time">Dernière activité: ${formattedTime}</div>
+                            </div>
+                            ${!s.isCurrentSession ? `
+                                <div class="session-actions">
+                                    <button class="btn-danger" onclick="revokeSession('${s.id}')">Révoquer</button>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                });
+
+                sessionsHTML += '</div>';
+                sessionsContainer.innerHTML = sessionsHTML;
+
+            } catch (error) {
+                console.error('Erreur lors du chargement des sessions:', error);
+                sessionsContainer.innerHTML = `
+                    <div style="text-align: center; padding: 2rem;">
+                        <p style="color: var(--error); margin-bottom: 0.5rem;">❌ Erreur lors du chargement</p>
+                        <button onclick="loadActiveSessions()" class="btn-primary" style="margin-top: 1rem;">
+                            🔄 Réessayer
+                        </button>
+                    </div>
+                `;
+            }
+        };
+
+        // Revoquer une session
+        window.revokeSession = async (sessionId) => {
+            if (!confirm('Voulez-vous vraiment révoquer cette session ?')) {
+                return;
+            }
+
+            try {
+                const session = JSON.parse(localStorage.getItem('session'));
+                const response = await fetch('/api/user/active-sessions', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${session.access_token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ sessionId })
+                });
+
+                if (response.ok) {
+                    showSuccess('Session révoquée avec succès');
+                    await loadActiveSessions();
+                } else {
+                    showError('Erreur lors de la révocation');
+                }
+            } catch (error) {
+                console.error('Erreur révocation:', error);
+                showError('Erreur lors de la révocation');
+            }
+        };
+
         // Initialiser
         (async () => {
             await translatePage();
             await loadProfile();
             await loadUserName();
             await loadSecurityAudit();
+            await loadActiveSessions();
             await loadParticlesSettings();
 
             console.log('✅ Settings page fully loaded');

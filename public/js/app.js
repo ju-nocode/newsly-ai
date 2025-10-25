@@ -555,22 +555,34 @@ export const logSecurityEvent = async (activityType, context = {}) => {
     }
 
     try {
-        // Récupérer l'IP publique (avec fallback rapide)
+        // Récupérer l'IP publique + géolocalisation (avec fallback rapide)
         let publicIP = 'Non disponible';
+        let location = null;
         try {
-            const ipResponse = await fetch('https://api.ipify.org?format=json', { timeout: 2000 });
-            if (ipResponse.ok) {
-                const ipData = await ipResponse.json();
-                publicIP = ipData.ip || 'Non disponible';
+            // ip-api.com fournit IP + géolocalisation en une seule requête
+            const geoResponse = await fetch('http://ip-api.com/json/?fields=status,message,country,regionName,city,zip,lat,lon,query', { timeout: 3000 });
+            if (geoResponse.ok) {
+                const geoData = await geoResponse.json();
+                if (geoData.status === 'success') {
+                    publicIP = geoData.query || 'Non disponible';
+                    location = {
+                        city: geoData.city || null,
+                        region: geoData.regionName || null,
+                        country: geoData.country || null,
+                        latitude: geoData.lat || null,
+                        longitude: geoData.lon || null
+                    };
+                }
             }
-        } catch (ipError) {
-            console.warn('⚠️ Could not fetch public IP:', ipError.message);
+        } catch (geoError) {
+            console.warn('⚠️ Could not fetch geolocation:', geoError.message);
         }
 
         // Enrichir le contexte avec des infos du navigateur
         const enrichedContext = {
             ...context,
             ip: publicIP,
+            location: location,
             userAgent: navigator.userAgent,
             timestamp: new Date().toISOString(),
             platform: navigator.platform,

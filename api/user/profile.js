@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { getIPGeolocation } from '../utils/geolocation.js';
 
 export default async function handler(req, res) {
     // CORS headers
@@ -120,41 +121,33 @@ export default async function handler(req, res) {
             }
 
             const updateData = {};
-            const changedFields = []; // Track vraiment ce qui a changé
 
             if (username !== undefined) {
                 updateData.username = username.trim();
-                changedFields.push('username');
             }
 
             if (full_name !== undefined) {
                 updateData.full_name = full_name.trim();
-                changedFields.push('nom complet');
             }
 
             if (phone !== undefined) {
                 updateData.phone = phone.trim();
-                changedFields.push('téléphone');
             }
 
             if (bio !== undefined) {
                 updateData.bio = bio.trim();
-                changedFields.push('bio');
             }
 
             if (avatar_url !== undefined) {
                 updateData.avatar_url = avatar_url === null ? null : avatar_url.trim();
-                changedFields.push('avatar');
             }
 
             if (country !== undefined) {
                 updateData.country = country.trim();
-                changedFields.push('pays');
             }
 
             if (city !== undefined) {
                 updateData.city = city.trim();
-                changedFields.push('ville');
             }
 
             // Mettre à jour updated_at
@@ -252,27 +245,52 @@ export default async function handler(req, res) {
                 );
             }
 
-            // Log security event
+            // Log security event - Comparer avec existingProfile pour détecter les vrais changements
             try {
-                // Récupérer l'IP depuis les headers
-                const ipHeader = req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || req.socket?.remoteAddress || req.connection?.remoteAddress;
-                const clientIP = ipHeader ? ipHeader.split(',')[0].trim() : 'Non disponible';
+                const changedFields = [];
+                const fieldLabels = {
+                    username: 'username',
+                    full_name: 'nom complet',
+                    phone: 'téléphone',
+                    bio: 'bio',
+                    avatar_url: 'avatar',
+                    country: 'pays',
+                    city: 'ville'
+                };
 
-                await supabaseAdmin
-                    .from('user_activity_log')
-                    .insert({
-                        user_id: user.id,
-                        activity_type: 'profile_update',
-                        context: {
-                            success: true,
-                            fields_updated: changedFields, // Utiliser changedFields au lieu de Object.keys
-                            ip: clientIP,
-                            timestamp: new Date().toISOString()
-                        },
-                        device_type: /Mobile|Android|iPhone/i.test(req.headers['user-agent']) ? 'mobile' : 'desktop',
-                        user_agent: req.headers['user-agent'] || null,
-                        created_at: new Date().toISOString()
-                    });
+                // Comparer chaque champ avec l'existant
+                for (const [key, label] of Object.entries(fieldLabels)) {
+                    if (updateData[key] !== undefined && updateData[key] !== existingProfile?.[key]) {
+                        changedFields.push(label);
+                    }
+                }
+
+                // Logger seulement si des champs ont vraiment changé
+                if (changedFields.length > 0) {
+                    // Récupérer l'IP depuis les headers
+                    const ipHeader = req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || req.socket?.remoteAddress || req.connection?.remoteAddress;
+                    const clientIP = ipHeader ? ipHeader.split(',')[0].trim() : 'Non disponible';
+
+                    // Géolocaliser l'IP
+                    const location = await getIPGeolocation(clientIP);
+
+                    await supabaseAdmin
+                        .from('user_activity_log')
+                        .insert({
+                            user_id: user.id,
+                            activity_type: 'profile_update',
+                            context: {
+                                success: true,
+                                fields_updated: changedFields,
+                                ip: clientIP,
+                                location: location,
+                                timestamp: new Date().toISOString()
+                            },
+                            device_type: /Mobile|Android|iPhone/i.test(req.headers['user-agent']) ? 'mobile' : 'desktop',
+                            user_agent: req.headers['user-agent'] || null,
+                            created_at: new Date().toISOString()
+                        });
+                }
             } catch (logError) {
                 console.error('Error logging profile update:', logError);
                 // Continue même si le log échoue
