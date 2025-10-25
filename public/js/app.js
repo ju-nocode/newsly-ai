@@ -574,51 +574,58 @@ if (typeof window !== 'undefined') {
     const currentPage = window.location.pathname.split('/').pop();
 
     if (protectedPages.includes(currentPage)) {
-        // Charger la session d'abord
-        loadSession();
+        // Attendre que le DOM soit chargé avant d'initialiser
+        document.addEventListener('DOMContentLoaded', () => {
+            // Charger la session d'abord
+            const hasSession = loadSession();
 
-        // Ne lancer les vérifications que si on a un token
-        if (authToken) {
-            // Vérification initiale
-            setTimeout(() => checkSessionValidity(), 1000);
+            // Ne lancer les vérifications que si on a un token
+            if (hasSession && authToken) {
+                console.log('🔒 Initialisation des vérifications de session');
 
-            // 1. Vérification périodique toutes les 2 secondes (au lieu de 30s)
-            setInterval(() => checkSessionValidity(), 2000);
+                // Vérification initiale
+                setTimeout(() => checkSessionValidity(), 2000);
 
-            // 2. Vérification immédiate quand l'onglet redevient visible
-            document.addEventListener('visibilitychange', () => {
-                if (!document.hidden && authToken) {
-                    checkSessionValidity();
-                }
-            });
+                // 1. Vérification périodique toutes les 3 secondes
+                setInterval(() => {
+                    if (authToken) checkSessionValidity();
+                }, 3000);
 
-            // 3. Vérification immédiate au focus de la fenêtre
-            window.addEventListener('focus', () => {
-                if (authToken) {
-                    checkSessionValidity();
-                }
-            });
+                // 2. Vérification immédiate quand l'onglet redevient visible
+                document.addEventListener('visibilitychange', () => {
+                    if (!document.hidden && authToken) {
+                        checkSessionValidity();
+                    }
+                });
 
-            // 4. Vérification immédiate sur toute interaction utilisateur (clic, touche)
-            let lastCheckTime = Date.now();
-            const checkOnInteraction = () => {
-                if (!authToken) return;
-                // Éviter de checker trop souvent (max 1x par seconde)
-                const now = Date.now();
-                if (now - lastCheckTime > 1000) {
-                    lastCheckTime = now;
-                    checkSessionValidity();
-                }
-            };
+                // 3. Vérification immédiate au focus de la fenêtre
+                window.addEventListener('focus', () => {
+                    if (authToken) {
+                        checkSessionValidity();
+                    }
+                });
 
-            document.addEventListener('click', checkOnInteraction, { passive: true });
-            document.addEventListener('keydown', checkOnInteraction, { passive: true });
-            document.addEventListener('touchstart', checkOnInteraction, { passive: true });
-        }
+                // 4. Vérification immédiate sur toute interaction utilisateur (clic, touche)
+                let lastCheckTime = Date.now();
+                const checkOnInteraction = () => {
+                    if (!authToken) return;
+                    // Éviter de checker trop souvent (max 1x par seconde)
+                    const now = Date.now();
+                    if (now - lastCheckTime > 1000) {
+                        lastCheckTime = now;
+                        checkSessionValidity();
+                    }
+                };
+
+                document.addEventListener('click', checkOnInteraction, { passive: true });
+                document.addEventListener('keydown', checkOnInteraction, { passive: true });
+                document.addEventListener('touchstart', checkOnInteraction, { passive: true });
+            }
+        });
     }
 }
 
-export { currentUser, authToken, loadSession, safeLocalStorage, checkSessionValidity };
+export { currentUser, authToken, loadSession, safeLocalStorage };
 
 // ================================================
 // SECURITY AUDIT HELPER
