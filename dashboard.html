@@ -13,10 +13,6 @@
     <script src="public/js/icons-theme.js"></script>
 </head>
 <body class="dashboard-body">
-    <!-- Particles.js Background -->
-    <!-- DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
-    <div id="particles-js"></div>
-    -->
 
     <!-- Overlay pour menu mobile -->
     <div class="mobile-overlay" id="mobileOverlay"></div>
@@ -162,10 +158,6 @@
         </main>
     </div>
 
-    <!-- Particles.js Library -->
-    <!-- DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    -->
 
     <script type="module">
         import { checkAuth, logout, getUserProfile, fetchNews, deleteAccount, currentUser } from './public/js/app.js';
@@ -240,13 +232,6 @@
             });
         }
 
-        // Initialize particles (async to load from DB)
-        // DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
-        /*
-        (async () => {
-            await initParticles('particles-js');
-        })();
-        */
 
         let currentCategory = 'general';
         let selectedCountries = ['us']; // Par défaut : États-Unis

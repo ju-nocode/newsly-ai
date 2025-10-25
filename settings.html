@@ -13,10 +13,6 @@
     <script src="public/js/icons-theme.js"></script>
 </head>
 <body class="dashboard-body">
-    <!-- Particles.js Background -->
-    <!-- DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
-    <div id="particles-js"></div>
-    -->
 
     <!-- Overlay pour menu mobile -->
     <div class="mobile-overlay" id="mobileOverlay"></div>
@@ -362,87 +358,6 @@
                 </div>
             </section>
 
-            <!-- Particles Section -->
-            <section id="section-particles" class="settings-section">
-                <h2 class="settings-section-title" data-i18n="settings.particles">Particules d'arrière-plan</h2>
-                <p class="settings-section-desc" data-i18n="settings.customizeParticles">Personnalisez l'effet de particules animées</p>
-
-                <div class="settings-card">
-                    <div class="settings-grid-2">
-                        <div class="form-group">
-                            <label for="particlesNumber" class="form-label" data-i18n="settings.particlesNumber">Nombre de particules</label>
-                            <input type="range" id="particlesNumber" class="form-range" min="10" max="100" value="100">
-                            <span id="particlesNumberValue" class="form-hint">100</span>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="particlesColor" class="form-label" data-i18n="settings.particlesColor">Couleur des particules</label>
-                            <input type="color" id="particlesColor" class="form-input" value="#fffe7a">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="particlesSpeed" class="form-label" data-i18n="settings.particlesSpeed">Vitesse de déplacement</label>
-                            <input type="range" id="particlesSpeed" class="form-range" min="0" max="10" step="0.1" value="0.5">
-                            <span id="particlesSpeedValue" class="form-hint">0.5</span>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="particlesOpacity" class="form-label" data-i18n="settings.particlesOpacity">Opacité</label>
-                            <input type="range" id="particlesOpacity" class="form-range" min="0" max="1" step="0.01" value="0.28">
-                            <span id="particlesOpacityValue" class="form-hint">0.28</span>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="lineDistance" class="form-label" data-i18n="settings.lineDistance">Distance des lignes</label>
-                            <input type="range" id="lineDistance" class="form-range" min="0" max="150" value="60">
-                            <span id="lineDistanceValue" class="form-hint">60</span>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="lineColor" class="form-label" data-i18n="settings.lineColor">Couleur des lignes</label>
-                            <input type="color" id="lineColor" class="form-input" value="#7c9149">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="lineOpacity" class="form-label" data-i18n="settings.lineOpacity">Opacité des lignes</label>
-                            <input type="range" id="lineOpacity" class="form-range" min="0" max="1" step="0.01" value="0.39">
-                            <span id="lineOpacityValue" class="form-hint">0.39</span>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" data-i18n="settings.hoverInteraction">Interaction au survol</label>
-                            <div class="toggle-group">
-                                <label class="toggle-switch">
-                                    <input type="checkbox" id="hoverEnabled" checked>
-                                    <span class="toggle-slider"></span>
-                                </label>
-                                <span id="hoverEnabledText" class="form-hint" data-i18n="settings.enabled">Activé</span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="repulseDistance" class="form-label" data-i18n="settings.repulseDistance">Distance de répulsion</label>
-                            <input type="range" id="repulseDistance" class="form-range" min="50" max="300" value="100">
-                            <span id="repulseDistanceValue" class="form-hint">100</span>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="particlesBlur" class="form-label" data-i18n="settings.particlesBlur">Flou des particules</label>
-                            <input type="range" id="particlesBlur" class="form-range" min="0" max="20" step="0.5" value="0">
-                            <span id="particlesBlurValue" class="form-hint">0 px</span>
-                        </div>
-                    </div>
-
-                    <div class="button-group" style="margin-top: 1rem;">
-                        <button id="saveParticlesBtn" class="btn-primary" data-i18n="settings.saveSettings">
-                            📝 Enregistrer
-                        </button>
-                        <button id="resetParticlesBtn" class="btn-primary" data-i18n="settings.default">
-                            🔄 Défaut
-                        </button>
-                    </div>
-                </div>
-            </section>
         </div>
     </div>
 
@@ -484,17 +399,11 @@
         </div>
     </div>
 
-    <!-- Particles.js Library -->
-    <!-- DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    -->
 
     <script type="module">
         import { checkAuth, getUserProfile, updateUserProfile, changePassword, deleteAccount, logout } from './public/js/app.js';
         import { escapeHtml, showSuccess, showError } from './public/js/dashboard-utils.js';
         import { translatePage, changeLanguage } from './public/js/translation-service.js';
-        // DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
-        // import { initParticles } from './public/js/particles-config.js';
         import { countries } from './public/js/countries.js';
         import { attachPhoneFormatter } from './public/js/phone-formatter.js';
         import { initNavbar } from './public/js/navbar-component.js';
@@ -563,13 +472,6 @@
             });
         }
 
-        // Initialize particles (async to load from DB)
-        // DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
-        /*
-        (async () => {
-            await initParticles('particles-js');
-        })();
-        */
 
         // Vérifier l'authentification
         const isAuth = checkAuth();
@@ -1734,267 +1636,6 @@
                 }
         };
 
-        // ================================================
-        // PARTICLES SETTINGS
-        // ================================================
-        import { loadParticlesConfig, saveParticlesConfig, defaultParticlesConfig, adjustColorsForTheme } from './public/js/particles-config.js';
-        import { getParticlesConfig as getDBConfig, saveParticlesConfigToDB } from './public/js/app.js';
-
-        const loadParticlesSettings = async () => {
-            // Load ONLY from database or use default
-            const dbResult = await getDBConfig();
-            let config;
-
-            if (dbResult.success && dbResult.config) {
-                config = dbResult.config;
-            } else {
-                config = defaultParticlesConfig;
-            }
-
-            // Load values into form
-            document.getElementById('particlesNumber').value = config.particles.number.value;
-            document.getElementById('particlesNumberValue').textContent = config.particles.number.value;
-
-            document.getElementById('particlesColor').value = config.particles.color.value;
-
-            document.getElementById('particlesSpeed').value = config.particles.move.speed;
-            document.getElementById('particlesSpeedValue').textContent = config.particles.move.speed;
-
-            document.getElementById('particlesOpacity').value = config.particles.opacity.value;
-            document.getElementById('particlesOpacityValue').textContent = config.particles.opacity.value.toFixed(2);
-
-            document.getElementById('lineDistance').value = config.particles.line_linked.distance;
-            document.getElementById('lineDistanceValue').textContent = config.particles.line_linked.distance;
-
-            document.getElementById('lineColor').value = config.particles.line_linked.color;
-
-            document.getElementById('lineOpacity').value = config.particles.line_linked.opacity;
-            document.getElementById('lineOpacityValue').textContent = config.particles.line_linked.opacity.toFixed(2);
-
-            document.getElementById('hoverEnabled').checked = config.interactivity.events.onhover.enable;
-            document.getElementById('hoverEnabledText').textContent = config.interactivity.events.onhover.enable ? 'Activé' : 'Désactivé';
-
-            document.getElementById('repulseDistance').value = config.interactivity.modes.repulse.distance;
-            document.getElementById('repulseDistanceValue').textContent = config.interactivity.modes.repulse.distance;
-
-            // Load custom blur if exists
-            if (config.customBlur !== undefined) {
-                document.getElementById('particlesBlur').value = config.customBlur;
-                document.getElementById('particlesBlurValue').textContent = config.customBlur + ' px';
-                document.getElementById('particles-js').style.filter = `blur(${config.customBlur}px)`;
-            }
-        };
-
-        const getParticlesConfig = () => {
-            const config = JSON.parse(JSON.stringify(defaultParticlesConfig));
-
-            config.particles.number.value = parseInt(document.getElementById('particlesNumber').value);
-            config.particles.color.value = document.getElementById('particlesColor').value;
-            config.particles.move.speed = parseFloat(document.getElementById('particlesSpeed').value);
-            config.particles.opacity.value = parseFloat(document.getElementById('particlesOpacity').value);
-            config.particles.line_linked.distance = parseInt(document.getElementById('lineDistance').value);
-            config.particles.line_linked.color = document.getElementById('lineColor').value;
-            config.particles.line_linked.opacity = parseFloat(document.getElementById('lineOpacity').value);
-            config.interactivity.events.onhover.enable = document.getElementById('hoverEnabled').checked;
-            config.interactivity.modes.repulse.distance = parseInt(document.getElementById('repulseDistance').value);
-
-            // Add custom blur property (not part of particles.js standard config)
-            config.customBlur = parseFloat(document.getElementById('particlesBlur').value);
-
-            return config;
-        };
-
-        // Live preview function
-        const applyLivePreview = () => {
-            let config = getParticlesConfig();
-            // Adjust colors for current theme
-            config = adjustColorsForTheme(config);
-
-            try {
-                const particlesContainer = document.getElementById('particles-js');
-
-                // Destruction sécurisée avec optional chaining
-                if (window.pJSDom && window.pJSDom.length > 0) {
-                    try {
-                        if (window.pJSDom[0]?.pJS?.fn?.vendors?.destroypJS) {
-                            window.pJSDom[0].pJS.fn.vendors.destroypJS();
-                        }
-                        window.pJSDom = [];
-                    } catch (e) {
-                        console.warn('Error destroying particles:', e);
-                    }
-                }
-
-                particlesContainer.innerHTML = '';
-                setTimeout(() => {
-                    if (window.particlesJS) {
-                        window.particlesJS('particles-js', config);
-                    }
-                }, 20);
-            } catch (error) {
-                console.error('Live preview error:', error);
-            }
-        };
-
-        // Range value updates with live preview
-        document.getElementById('particlesNumber').addEventListener('input', (e) => {
-            document.getElementById('particlesNumberValue').textContent = e.target.value;
-            applyLivePreview();
-        });
-        document.getElementById('particlesColor').addEventListener('input', () => {
-            applyLivePreview();
-        });
-        document.getElementById('particlesSpeed').addEventListener('input', (e) => {
-            document.getElementById('particlesSpeedValue').textContent = e.target.value;
-            applyLivePreview();
-        });
-        document.getElementById('particlesOpacity').addEventListener('input', (e) => {
-            document.getElementById('particlesOpacityValue').textContent = parseFloat(e.target.value).toFixed(2);
-            applyLivePreview();
-        });
-        document.getElementById('lineDistance').addEventListener('input', (e) => {
-            document.getElementById('lineDistanceValue').textContent = e.target.value;
-            applyLivePreview();
-        });
-        document.getElementById('lineColor').addEventListener('input', () => {
-            applyLivePreview();
-        });
-        document.getElementById('lineOpacity').addEventListener('input', (e) => {
-            document.getElementById('lineOpacityValue').textContent = parseFloat(e.target.value).toFixed(2);
-            applyLivePreview();
-        });
-        document.getElementById('repulseDistance').addEventListener('input', (e) => {
-            document.getElementById('repulseDistanceValue').textContent = e.target.value;
-            applyLivePreview();
-        });
-        document.getElementById('particlesBlur').addEventListener('input', (e) => {
-            document.getElementById('particlesBlurValue').textContent = e.target.value + ' px';
-            const particlesContainer = document.getElementById('particles-js');
-            particlesContainer.style.filter = `blur(${e.target.value}px)`;
-        });
-        document.getElementById('hoverEnabled').addEventListener('change', (e) => {
-            document.getElementById('hoverEnabledText').textContent = e.target.checked ? 'Activé' : 'Désactivé';
-            applyLivePreview();
-        });
-
-        // Save button
-        document.getElementById('saveParticlesBtn').addEventListener('click', async () => {
-            const config = getParticlesConfig();
-
-            // Save to database only (not localStorage)
-            const dbResult = await saveParticlesConfigToDB(config);
-
-            if (dbResult.success) {
-                showSuccess('Paramètres des particules enregistrés !');
-            } else {
-                console.error('DB save error:', dbResult.error);
-                showError('Erreur lors de la sauvegarde : ' + dbResult.error);
-            }
-
-            // Reload particles
-            try {
-                const particlesContainer = document.getElementById('particles-js');
-
-                // Destruction sécurisée avec optional chaining
-                if (window.pJSDom && window.pJSDom.length > 0) {
-                    try {
-                        if (window.pJSDom[0]?.pJS?.fn?.vendors?.destroypJS) {
-                            window.pJSDom[0].pJS.fn.vendors.destroypJS();
-                        }
-                        window.pJSDom = [];
-                    } catch (e) {
-                        console.warn('Error destroying particles:', e);
-                    }
-                }
-
-                // Clear the container
-                particlesContainer.innerHTML = '';
-
-                // Reinitialize with theme-adjusted colors
-                setTimeout(() => {
-                    if (window.particlesJS) {
-                        const adjustedConfig = adjustColorsForTheme(config);
-                        window.particlesJS('particles-js', adjustedConfig);
-
-                        // Apply blur if set
-                        if (config.customBlur && config.customBlur > 0) {
-                            particlesContainer.style.filter = `blur(${config.customBlur}px)`;
-                        }
-                    }
-                }, 50);
-            } catch (error) {
-                console.error('Particles reload error:', error);
-                showError('Erreur lors du rechargement. Rechargement de la page...');
-                setTimeout(() => location.reload(), 1000);
-            }
-        });
-
-        // Default button - restore default settings
-        document.getElementById('resetParticlesBtn').addEventListener('click', async () => {
-            // Load default config values into form (moves the sliders)
-            document.getElementById('particlesNumber').value = defaultParticlesConfig.particles.number.value;
-            document.getElementById('particlesNumberValue').textContent = defaultParticlesConfig.particles.number.value;
-
-            document.getElementById('particlesColor').value = defaultParticlesConfig.particles.color.value;
-
-            document.getElementById('particlesSpeed').value = defaultParticlesConfig.particles.move.speed;
-            document.getElementById('particlesSpeedValue').textContent = defaultParticlesConfig.particles.move.speed;
-
-            document.getElementById('particlesOpacity').value = defaultParticlesConfig.particles.opacity.value;
-            document.getElementById('particlesOpacityValue').textContent = defaultParticlesConfig.particles.opacity.value.toFixed(2);
-
-            document.getElementById('lineDistance').value = defaultParticlesConfig.particles.line_linked.distance;
-            document.getElementById('lineDistanceValue').textContent = defaultParticlesConfig.particles.line_linked.distance;
-
-            document.getElementById('lineColor').value = defaultParticlesConfig.particles.line_linked.color;
-
-            document.getElementById('lineOpacity').value = defaultParticlesConfig.particles.line_linked.opacity;
-            document.getElementById('lineOpacityValue').textContent = defaultParticlesConfig.particles.line_linked.opacity.toFixed(2);
-
-            document.getElementById('hoverEnabled').checked = defaultParticlesConfig.interactivity.events.onhover.enable;
-            document.getElementById('hoverEnabledText').textContent = defaultParticlesConfig.interactivity.events.onhover.enable ? 'Activé' : 'Désactivé';
-
-            document.getElementById('repulseDistance').value = defaultParticlesConfig.interactivity.modes.repulse.distance;
-            document.getElementById('repulseDistanceValue').textContent = defaultParticlesConfig.interactivity.modes.repulse.distance;
-
-            // Reset blur to default (0)
-            document.getElementById('particlesBlur').value = 0;
-            document.getElementById('particlesBlurValue').textContent = '0 px';
-            document.getElementById('particles-js').style.filter = 'blur(0px)';
-
-            showSuccess('Paramètres par défaut appliqués (non enregistrés)');
-
-            try {
-                const particlesContainer = document.getElementById('particles-js');
-
-                // Destruction sécurisée avec optional chaining
-                if (window.pJSDom && window.pJSDom.length > 0) {
-                    try {
-                        if (window.pJSDom[0]?.pJS?.fn?.vendors?.destroypJS) {
-                            window.pJSDom[0].pJS.fn.vendors.destroypJS();
-                        }
-                        window.pJSDom = [];
-                    } catch (e) {
-                        console.warn('Error destroying particles:', e);
-                    }
-                }
-
-                // Clear the container
-                particlesContainer.innerHTML = '';
-
-                // Reinitialize with default config (theme-adjusted)
-                setTimeout(() => {
-                    if (window.particlesJS) {
-                        const adjustedDefault = adjustColorsForTheme(defaultParticlesConfig);
-                        window.particlesJS('particles-js', adjustedDefault);
-                    }
-                }, 50);
-            } catch (error) {
-                console.error('Reset error:', error);
-                showError('Erreur lors de la réinitialisation. Rechargement...');
-                setTimeout(() => location.reload(), 1000);
-            }
-        });
 
         // ================================================
         // ACTIVE SESSIONS
@@ -2162,7 +1803,6 @@
                 await loadUserName();
                 await loadSecurityAudit();
                 await loadActiveSessions();
-                await loadParticlesSettings();
 
                 console.log('✅ Settings page fully loaded');
             } finally {

@@ -1,7 +1,5 @@
 import { checkAuth, login, signup } from './app.js';
 import { translatePage, changeLanguage } from './translation-service.js';
-// DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
-// import { defaultParticlesConfig } from './particles-config.js';
 import { countries } from './countries.js';
 import { attachPhoneFormatter } from './phone-formatter.js';
 // DÉSACTIVÉ - Import CDN bloque Chrome iOS et n'est pas utilisé
@@ -831,15 +829,6 @@ langToggle.addEventListener('change', async () => {
     applyIndexTranslations(newLang);
 });
 
-// Initialize particles with default config
-// DÉSACTIVÉ - Conflit avec Aurora et Dark/Light Mode
-/*
-window.addEventListener('DOMContentLoaded', () => {
-    window.particlesJS('particles-js', defaultParticlesConfig);
-    // Update burger menu with user info
-    updateBurgerMenuUserInfo();
-});
-*/
 
 // Update burger menu with user info on load
 window.addEventListener('DOMContentLoaded', () => {
