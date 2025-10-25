@@ -2068,8 +2068,10 @@
                 if (response.ok) {
                     showSuccess('Historique d\'audit effacé');
                     // Recharger l'audit après un petit délai
-                    setTimeout(() => loadSecurityAudit(), 500);
-                    setTimeout(() => loadActiveSessions(), 500);
+                    setTimeout(() => {
+                        loadSecurityAudit();
+                        loadActiveSessions();
+                    }, 1000);
                 } else {
                     showError(data.error || 'Erreur lors de la suppression');
                 }

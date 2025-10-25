@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { getIPGeolocation } from '../../utils/geolocation.js';
 
 export default async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Credentials', true);
@@ -40,6 +41,32 @@ export default async function handler(req, res) {
             console.error('Activity log delete error:', error);
             return res.status(500).json({ error: 'Erreur lors de la suppression des logs' });
         }
+
+        // Créer un nouveau login event pour la session actuelle
+        const clientIP = req.headers['x-forwarded-for']?.split(',')[0].trim()
+                      || req.headers['x-real-ip']
+                      || req.socket?.remoteAddress
+                      || 'Non disponible';
+
+        const location = await getIPGeolocation(clientIP);
+
+        await supabaseAdmin
+            .from('user_activity_log')
+            .insert({
+                user_id: user.id,
+                activity_type: 'login',
+                context: {
+                    ip: clientIP,
+                    location: location,
+                    userAgent: req.headers['user-agent'] || null,
+                    platform: 'web',
+                    language: req.headers['accept-language']?.split(',')[0] || 'fr',
+                    recreatedAfterClear: true
+                },
+                device_type: req.headers['user-agent']?.includes('Mobile') ? 'mobile' : 'desktop',
+                user_agent: req.headers['user-agent'] || null,
+                created_at: new Date().toISOString()
+            });
 
         return res.status(200).json({
             message: 'Historique d\'audit effacé avec succès',
