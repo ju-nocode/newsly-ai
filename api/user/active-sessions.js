@@ -57,6 +57,14 @@ export default async function handler(req, res) {
                 return res.status(500).json({ error: 'Erreur lors de la récupération des connexions' });
             }
 
+            // Récupérer tous les logouts récents
+            const { data: logouts } = await supabaseAdmin
+                .from('user_activity_log')
+                .select('*')
+                .eq('user_id', user.id)
+                .eq('activity_type', 'logout')
+                .gte('created_at', sevenDaysAgo.toISOString());
+
             // Récupérer le dernier global logout pour filtrer les sessions invalides
             const { data: globalLogouts } = await supabaseAdmin
                 .from('user_global_logout')
@@ -83,6 +91,25 @@ export default async function handler(req, res) {
 
                 const context = login.context || {};
                 const sessionKey = `${context.ip || 'unknown'}_${login.device_type || 'desktop'}`;
+
+                // Vérifier s'il y a un logout pour cette session (même IP/Device) APRÈS le login
+                const hasLogout = logouts && logouts.some(logout => {
+                    const logoutDate = new Date(logout.created_at);
+                    const logoutContext = logout.context || {};
+                    const logoutIP = logoutContext.ip || logout.ip;
+                    const loginIP = context.ip;
+
+                    // Un logout correspond si :
+                    // - Il est postérieur au login
+                    // - ET il vient de la même IP (ou IP similaire)
+                    return logoutDate > loginDate &&
+                           (logoutIP === loginIP || logoutIP === context.ip);
+                });
+
+                // Si un logout existe pour cette session, ne pas l'afficher
+                if (hasLogout) {
+                    continue;
+                }
 
                 if (!seenSessions.has(sessionKey)) {
                     seenSessions.add(sessionKey);
