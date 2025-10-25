@@ -119,10 +119,12 @@ export const login = async (email, password) => {
         saveSession(data.user, data.session.access_token);
 
         // Log security event
-        await logSecurityEvent('login', {
+        console.log('🔍 Logging login security event...');
+        const logResult = await logSecurityEvent('login', {
             success: true,
             email: data.user.email
         });
+        console.log('🔍 Login event logged:', logResult);
 
         return { success: true, user: data.user };
 
