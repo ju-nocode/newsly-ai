@@ -536,10 +536,13 @@ if (typeof window !== 'undefined') {
 
 // Afficher une popup de sécurité
 const showSecurityAlert = (message, callback) => {
+    console.log('🔔 showSecurityAlert called:', message);
+
     // Créer l'overlay si il n'existe pas déjà
     let overlay = document.getElementById('security-alert-overlay');
 
     if (!overlay) {
+        console.log('📦 Creating security alert overlay');
         overlay = document.createElement('div');
         overlay.id = 'security-alert-overlay';
         overlay.className = 'security-alert-overlay';
@@ -558,15 +561,20 @@ const showSecurityAlert = (message, callback) => {
             </div>
         `;
         document.body.appendChild(overlay);
+        console.log('✅ Overlay added to body');
 
         // Event listener sur le bouton
         const btn = overlay.querySelector('.security-alert-btn');
         btn.addEventListener('click', () => {
+            console.log('🖱️ Button clicked, closing popup');
             overlay.classList.remove('show');
             setTimeout(() => {
                 if (overlay.dataset.callback === 'true') {
                     const callbackFn = overlay.callbackFn;
-                    if (callbackFn) callbackFn();
+                    if (callbackFn) {
+                        console.log('🔄 Executing callback');
+                        callbackFn();
+                    }
                 }
             }, 300);
         });
@@ -585,7 +593,11 @@ const showSecurityAlert = (message, callback) => {
     }
 
     // Afficher
-    setTimeout(() => overlay.classList.add('show'), 10);
+    console.log('👁️ Showing popup');
+    setTimeout(() => {
+        overlay.classList.add('show');
+        console.log('✅ Popup should now be visible');
+    }, 10);
 };
 
 // Vérifier la validité de la session (global logout check)
