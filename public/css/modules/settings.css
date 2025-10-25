@@ -580,12 +580,8 @@
   flex-direction: column;
 }
 
-#section-security .security-grid .settings-card > div:first-child {
-  flex: 0 1 auto;
-}
-
-#section-security .security-grid .settings-card > button {
-  margin-top: auto;
+#section-security .security-grid .settings-card button {
+  margin-top: auto !important;
 }
 
 /* ================================================
