@@ -14,3 +14,4 @@ Les fichiers suivants contiennent l'architecture complète du projet et doivent 
 
 ## Database Schema
 - `.claude/database-schema.sql` → Schéma complet Supabase (contexte uniquement, ne pas exécuter)
+- `.claude/database-policies.sql` → Policies de la database (contexte uniquement, ne pas exécuter)
