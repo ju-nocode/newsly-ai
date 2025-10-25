@@ -2,11 +2,10 @@
    SHIMMER LOADER - Skeleton loading avec effet shimmer
    ================================================ */
 
-/* Container avec skeletons */
-.shimmer-loading {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1.5rem;
+/* Container avec skeletons - hérite du grid parent */
+.news-grid.shimmer-loading {
+    /* Garde le display: grid de .news-grid */
+    /* Pas de redéfinition du grid */
 }
 
 /* Card skeleton */
