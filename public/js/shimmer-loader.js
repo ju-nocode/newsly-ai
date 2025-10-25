@@ -2,6 +2,8 @@
 // SHIMMER LOADER - Loading skeleton avec effet shimmer
 // ================================================
 
+import { initRippleButtons } from './micro-interactions.js';
+
 /**
  * Affiche des skeletons avec effet shimmer dans un container
  * @param {string|HTMLElement} container - Sélecteur ou élément DOM
@@ -106,6 +108,9 @@ export const showShimmerError = (container, message = 'Impossible de charger les
             </button>
         </div>
     `;
+
+    // Initialiser le ripple sur le bouton nouvellement créé
+    initRippleButtons();
 };
 
 /**
