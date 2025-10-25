@@ -723,13 +723,18 @@ export const logSecurityEvent = async (activityType, context = {}) => {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 3000);
 
+            console.log('Fetching geolocation...');
             const geoResponse = await fetch('http://ip-api.com/json/?fields=status,message,country,regionName,city,zip,lat,lon,query', {
                 signal: controller.signal
             });
             clearTimeout(timeoutId);
 
+            console.log('Geolocation response status:', geoResponse.status);
+
             if (geoResponse.ok) {
                 const geoData = await geoResponse.json();
+                console.log('Geolocation data:', geoData);
+
                 if (geoData.status === 'success') {
                     publicIP = geoData.query || 'Non disponible';
                     location = {
@@ -739,7 +744,12 @@ export const logSecurityEvent = async (activityType, context = {}) => {
                         latitude: geoData.lat || null,
                         longitude: geoData.lon || null
                     };
+                    console.log('Location set to:', location);
+                } else {
+                    console.warn('Geolocation status not success:', geoData);
                 }
+            } else {
+                console.warn('Geolocation response not OK:', geoResponse.status);
             }
         } catch (geoError) {
             console.warn('Could not fetch geolocation:', geoError.message);
@@ -755,6 +765,8 @@ export const logSecurityEvent = async (activityType, context = {}) => {
             platform: navigator.platform,
             language: navigator.language
         };
+
+        console.log('Enriched context being sent:', enrichedContext);
 
         const response = await fetch(`${API_BASE_URL}/api/user/activity-log`, {
             method: 'POST',
