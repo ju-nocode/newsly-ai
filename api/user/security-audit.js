@@ -91,7 +91,7 @@ export default async function handler(req, res) {
                         description = 'Vous vous êtes déconnecté de votre compte';
                         break;
 
-                    case 'password_change':
+                    case 'password_change': {
                         // Vérifier si c'est un succès ou un échec
                         const passwordSuccess = context.success !== false;
                         type = passwordSuccess ? 'success' : 'warning';
@@ -103,6 +103,7 @@ export default async function handler(req, res) {
                                 ? 'Tentative avec le même mot de passe'
                                 : 'Échec du changement de mot de passe');
                         break;
+                    }
 
                     case 'password_reset_request':
                         type = 'warning';
