@@ -1034,6 +1034,9 @@
                 }, 2000);
             } else {
                 showError(result.error || 'Erreur lors du changement de mot de passe');
+
+                // Recharger l'audit pour afficher l'événement d'échec (même password, etc.)
+                setTimeout(() => loadSecurityAudit(), 500);
             }
         });
 
@@ -1522,11 +1525,19 @@
         // SECURITY AUDIT
         // ================================================
 
-        const loadSecurityAudit = async () => {
+        let currentAuditOffset = 0;
+        let allAuditEvents = [];
+        const AUDIT_PAGE_SIZE = 20;
+
+        const loadSecurityAudit = async (append = false) => {
             const auditContainer = document.getElementById('securityAuditContainer');
 
-            // Afficher un loader pendant le chargement
-            auditContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Chargement de l\'audit de sécurité...</p>';
+            if (!append) {
+                // Réinitialiser si on ne fait pas append
+                currentAuditOffset = 0;
+                allAuditEvents = [];
+                auditContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Chargement de l\'audit de sécurité...</p>';
+            }
 
             try {
                 // Récupérer le token de session
@@ -1536,8 +1547,8 @@
                     return;
                 }
 
-                // Appeler l'API security-audit
-                const response = await fetch('/api/user/security-audit', {
+                // Appeler l'API security-audit avec limit élevée (on va paginer côté frontend)
+                const response = await fetch('/api/user/security-audit?limit=200', {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${session.access_token}`,
@@ -1550,18 +1561,44 @@
                 }
 
                 const data = await response.json();
-                const auditEvents = data.events || [];
+                allAuditEvents = data.events || [];
 
                 // Si aucun événement
-                if (auditEvents.length === 0) {
+                if (allAuditEvents.length === 0) {
                     auditContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Aucune activité de sécurité récente</p>';
                     return;
                 }
 
-                // Construire le HTML
-                let auditHTML = '<div class="audit-list">';
+                // Afficher seulement les premiers AUDIT_PAGE_SIZE
+                renderAuditEvents();
 
-                auditEvents.forEach(event => {
+            } catch (error) {
+                console.error('Erreur lors du chargement de l\'audit de sécurité:', error);
+                auditContainer.innerHTML = `
+                    <div style="text-align: center; padding: 2rem;">
+                        <p style="color: var(--error); margin-bottom: 0.5rem;">❌ Erreur lors du chargement</p>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">${escapeHtml(error.message)}</p>
+                        <button onclick="loadSecurityAudit()" class="btn-primary" style="margin-top: 1rem;">
+                            🔄 Réessayer
+                        </button>
+                    </div>
+                `;
+            }
+        };
+
+        const renderAuditEvents = () => {
+            const auditContainer = document.getElementById('securityAuditContainer');
+            const eventsToShow = allAuditEvents.slice(0, currentAuditOffset + AUDIT_PAGE_SIZE);
+
+            if (eventsToShow.length === 0) {
+                auditContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Aucune activité de sécurité récente</p>';
+                return;
+            }
+
+            // Construire le HTML
+            let auditHTML = '<div class="audit-list">';
+
+            eventsToShow.forEach(event => {
                     const timestamp = new Date(event.timestamp);
                     const formattedDate = timestamp.toLocaleDateString('fr-FR', {
                         day: '2-digit',
@@ -1647,20 +1684,27 @@
                 });
 
                 auditHTML += '</div>';
+
+                // Ajouter bouton "Charger +" si il reste des événements
+                if (eventsToShow.length < allAuditEvents.length) {
+                    auditHTML += `
+                        <div style="text-align: center; margin-top: 1rem;">
+                            <button id="loadMoreAuditBtn" class="btn-secondary" style="padding: 0.5rem 1.5rem;">
+                                Charger + (${Math.min(AUDIT_PAGE_SIZE, allAuditEvents.length - eventsToShow.length)} de plus)
+                            </button>
+                        </div>
+                    `;
+                }
+
                 auditContainer.innerHTML = auditHTML;
 
-            } catch (error) {
-                console.error('Erreur lors du chargement de l\'audit de sécurité:', error);
-                auditContainer.innerHTML = `
-                    <div style="text-align: center; padding: 2rem;">
-                        <p style="color: var(--error); margin-bottom: 0.5rem;">❌ Erreur lors du chargement</p>
-                        <p style="color: var(--text-muted); font-size: 0.875rem;">${escapeHtml(error.message)}</p>
-                        <button onclick="loadSecurityAudit()" class="btn-primary" style="margin-top: 1rem;">
-                            🔄 Réessayer
-                        </button>
-                    </div>
-                `;
-            }
+                // Attacher l'événement au bouton "Charger +"
+                if (eventsToShow.length < allAuditEvents.length) {
+                    document.getElementById('loadMoreAuditBtn').addEventListener('click', () => {
+                        currentAuditOffset += AUDIT_PAGE_SIZE;
+                        renderAuditEvents();
+                    });
+                }
         };
 
         // ================================================

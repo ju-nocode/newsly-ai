@@ -41,17 +41,13 @@ export default async function handler(req, res) {
         if (req.method === 'GET') {
             const { limit = 50 } = req.query;
 
-            // Types d'activités liées à la sécurité
+            // Types d'activités liées à la sécurité (login/logout exclus, ils vont dans "Dernières connexions")
             const securityActivityTypes = [
-                'login',
-                'logout',
                 'password_change',
                 'password_reset_request',
                 'email_change',
                 'profile_update',
                 'account_deleted',
-                'session_created',
-                'session_expired',
                 'failed_login',
                 'suspicious_activity'
             ];
@@ -96,10 +92,16 @@ export default async function handler(req, res) {
                         break;
 
                     case 'password_change':
-                        type = 'warning';
-                        icon = '🔒';
-                        title = 'Changement de mot de passe';
-                        description = 'Votre mot de passe a été modifié avec succès';
+                        // Vérifier si c'est un succès ou un échec
+                        const passwordSuccess = context.success !== false;
+                        type = passwordSuccess ? 'success' : 'warning';
+                        icon = passwordSuccess ? '✅' : '⚠️';
+                        title = passwordSuccess ? 'Changement de mot de passe' : 'Tentative de changement';
+                        description = passwordSuccess
+                            ? 'Votre mot de passe a été modifié avec succès'
+                            : (context.reason === 'same_password'
+                                ? 'Tentative avec le même mot de passe'
+                                : 'Échec du changement de mot de passe');
                         break;
 
                     case 'password_reset_request':
