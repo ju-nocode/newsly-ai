@@ -715,31 +715,9 @@ export const logSecurityEvent = async (activityType, context = {}) => {
     }
 
     try {
-        // Récupérer l'IP publique + géolocalisation via ipapi.co (simple et fiable)
-        let publicIP = 'Non disponible';
-        let location = null;
-        try {
-            const geoResponse = await fetch('https://ipapi.co/json/');
-            if (geoResponse.ok) {
-                const geoData = await geoResponse.json();
-                publicIP = geoData.ip || 'Non disponible';
-                location = {
-                    city: geoData.city || null,
-                    region: geoData.region || null,
-                    country: geoData.country_name || null,
-                    latitude: geoData.latitude || null,
-                    longitude: geoData.longitude || null
-                };
-            }
-        } catch (geoError) {
-            console.warn('Could not fetch geolocation:', geoError.message);
-        }
-
-        // Enrichir le contexte avec des infos du navigateur
+        // Enrichir le contexte avec des infos du navigateur (pas de géoloc ici, c'est le serveur qui s'en charge)
         const enrichedContext = {
             ...context,
-            ip: publicIP,
-            location: location,
             userAgent: navigator.userAgent,
             timestamp: new Date().toISOString(),
             platform: navigator.platform,

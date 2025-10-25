@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { getIPGeolocation } from '../utils/geolocation.js';
 
 export default async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Credentials', true);
@@ -65,10 +66,23 @@ export default async function handler(req, res) {
                 return res.status(400).json({ error: 'activity_type requis' });
             }
 
+            // Récupérer l'IP du client
+            const clientIP = req.headers['x-forwarded-for']?.split(',')[0].trim()
+                          || req.headers['x-real-ip']
+                          || req.socket?.remoteAddress
+                          || 'Non disponible';
+
+            // Géolocaliser l'IP
+            const location = await getIPGeolocation(clientIP);
+
             const logData = {
                 user_id: user.id,
                 activity_type,
-                context: context || {},
+                context: {
+                    ...(context || {}),
+                    ip: clientIP,
+                    location: location
+                },
                 session_id: session_id || null,
                 device_type: device_type || null,
                 user_agent: user_agent || req.headers['user-agent'] || null,
