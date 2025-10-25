@@ -99,21 +99,19 @@ export default async function handler(req, res) {
             const { logoutAll } = req.body;
 
             if (logoutAll) {
-                // Invalider toutes les sessions en changeant le secret de l'utilisateur
-                // Cela force Supabase à invalider tous les tokens JWT existants
                 try {
-                    await supabaseAdmin.auth.admin.updateUserById(
-                        user.id,
-                        {
-                            // Mise à jour d'un champ pour trigger un refresh des tokens
-                            user_metadata: {
-                                ...user.user_metadata,
-                                last_security_reset: new Date().toISOString()
-                            }
-                        }
-                    );
+                    const logoutTimestamp = new Date().toISOString();
 
-                    // Logger l'action
+                    // Créer un enregistrement de global logout
+                    await supabaseAdmin
+                        .from('user_global_logout')
+                        .insert({
+                            user_id: user.id,
+                            logout_timestamp: logoutTimestamp,
+                            reason: 'Déconnexion volontaire de tous les appareils'
+                        });
+
+                    // Logger l'action dans activity log
                     await supabaseAdmin
                         .from('user_activity_log')
                         .insert({
@@ -121,16 +119,18 @@ export default async function handler(req, res) {
                             activity_type: 'logout',
                             context: {
                                 forced: true,
+                                global: true,
                                 reason: 'Déconnexion de tous les appareils',
-                                timestamp: new Date().toISOString()
+                                timestamp: logoutTimestamp
                             },
                             device_type: 'desktop',
-                            created_at: new Date().toISOString()
+                            created_at: logoutTimestamp
                         });
 
                     return res.status(200).json({
-                        message: 'Tous les appareils ont été déconnectés. Veuillez vous reconnecter.',
-                        requiresRelogin: true
+                        message: 'Tous les appareils seront déconnectés.',
+                        requiresRelogin: true,
+                        logoutTimestamp
                     });
                 } catch (error) {
                     console.error('Error logging out all devices:', error);

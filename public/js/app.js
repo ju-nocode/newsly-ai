@@ -534,7 +534,49 @@ if (typeof window !== 'undefined') {
     window.getParticlesConfigFromDB = getParticlesConfig;
 }
 
-export { currentUser, authToken, loadSession, safeLocalStorage };
+// Vérifier la validité de la session (global logout check)
+export const checkSessionValidity = async () => {
+    if (!authToken) return;
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/user/check-session`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${authToken}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            if (data.shouldLogout) {
+                console.warn('Session invalidee:', data.reason);
+                alert(data.message || 'Votre session a ete revoquee. Veuillez vous reconnecter.');
+                clearSession();
+                window.location.href = 'index.html';
+            }
+        }
+    } catch (error) {
+        // En cas d'erreur réseau, on laisse l'utilisateur connecté
+        console.warn('Impossible de verifier la session:', error.message);
+    }
+};
+
+// Vérifier la session toutes les 30 secondes sur les pages protégées
+if (typeof window !== 'undefined') {
+    const protectedPages = ['dashboard.html', 'settings.html'];
+    const currentPage = window.location.pathname.split('/').pop();
+
+    if (protectedPages.includes(currentPage)) {
+        // Vérification initiale
+        setTimeout(() => checkSessionValidity(), 1000);
+
+        // Vérification périodique toutes les 30 secondes
+        setInterval(() => checkSessionValidity(), 30000);
+    }
+}
+
+export { currentUser, authToken, loadSession, safeLocalStorage, checkSessionValidity };
 
 // ================================================
 // SECURITY AUDIT HELPER
