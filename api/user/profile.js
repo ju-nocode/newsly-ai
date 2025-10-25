@@ -113,9 +113,9 @@ export default async function handler(req, res) {
                 if (!isValidUrl) {
                     // Si ce n'est pas une URL valide, mettre à null au lieu de rejeter
                     avatar_url = null;
-                } else if (trimmedUrl.length > 50000) {
-                    // Limite stricte à 50KB pour éviter les tokens trop gros
-                    return res.status(400).json({ error: 'Avatar trop volumineux (max 50KB en base64 ou URL)' });
+                } else if (trimmedUrl.length > 300000) {
+                    // Limite stricte à 300KB pour avatars haute qualité (accepte photos jusqu'à 10MB compressées)
+                    return res.status(400).json({ error: 'Avatar trop volumineux après compression (max 300KB)' });
                 }
             }
 

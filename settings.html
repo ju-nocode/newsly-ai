@@ -834,15 +834,15 @@
             }
         });
 
-        // Fonction pour compresser l'image (haute qualité pour avatar)
+        // Fonction pour compresser l'image (accepte photos lourdes, compresse intelligemment)
         const compressImage = (file) => {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     const img = new Image();
                     img.onload = () => {
-                        // Redimensionner à max 800x800 pour haute qualité
-                        const MAX_SIZE = 800;
+                        // Taille cible : 600x600 pour un bon compromis qualité/poids
+                        const MAX_SIZE = 600;
                         let width = img.width;
                         let height = img.height;
 
@@ -872,8 +872,16 @@
                         // Dessiner l'image
                         ctx.drawImage(img, 0, 0, width, height);
 
-                        // Convertir en base64 avec haute qualité (0.92 pour avatar)
-                        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.92);
+                        // Compression progressive : essayer différentes qualités pour viser ~200 KB max
+                        let quality = 0.90;
+                        let compressedBase64 = canvas.toDataURL('image/jpeg', quality);
+
+                        // Si trop gros, réduire la qualité progressivement
+                        while (compressedBase64.length > 250000 && quality > 0.70) {
+                            quality -= 0.05;
+                            compressedBase64 = canvas.toDataURL('image/jpeg', quality);
+                        }
+
                         resolve(compressedBase64);
                     };
                     img.onerror = reject;
