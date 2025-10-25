@@ -92,18 +92,20 @@ export default async function handler(req, res) {
                 const context = login.context || {};
                 const sessionKey = `${context.ip || 'unknown'}_${login.device_type || 'desktop'}`;
 
-                // Vérifier s'il y a un logout pour cette session (même IP/Device) APRÈS le login
+                // Vérifier s'il y a un logout pour cette session (même session_id) APRÈS le login
+                const loginSessionId = context.session_id;
                 const hasLogout = logouts && logouts.some(logout => {
                     const logoutDate = new Date(logout.created_at);
                     const logoutContext = logout.context || {};
-                    const logoutIP = logoutContext.ip || logout.ip;
-                    const loginIP = context.ip;
+                    const logoutSessionId = logoutContext.session_id;
 
                     // Un logout correspond si :
-                    // - Il est postérieur au login
-                    // - ET il vient de la même IP (ou IP similaire)
-                    return logoutDate > loginDate &&
-                           (logoutIP === loginIP || logoutIP === context.ip);
+                    // - Il a le même session_id
+                    // - ET il est postérieur au login
+                    if (loginSessionId && logoutSessionId) {
+                        return loginSessionId === logoutSessionId && logoutDate > loginDate;
+                    }
+                    return false;
                 });
 
                 // Si un logout existe pour cette session, ne pas l'afficher
