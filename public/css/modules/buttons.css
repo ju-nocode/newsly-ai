@@ -27,8 +27,9 @@
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  overflow: visible;
+  overflow: hidden; /* Pour le ripple effect */
   vertical-align: middle;
+  position: relative; /* Pour le ripple effect */
 }
 
 .btn-primary:hover,
@@ -78,8 +79,9 @@
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  overflow: visible;
+  overflow: hidden; /* Pour le ripple effect */
   vertical-align: middle;
+  position: relative; /* Pour le ripple effect */
 }
 
 .btn-danger:hover {
@@ -128,8 +130,9 @@
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  overflow: visible;
+  overflow: hidden; /* Pour le ripple effect */
   vertical-align: middle;
+  position: relative; /* Pour le ripple effect */
 }
 
 .btn-success:hover {
@@ -253,8 +256,9 @@
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  overflow: visible;
+  overflow: hidden; /* Pour le ripple effect */
   vertical-align: middle;
+  position: relative; /* Pour le ripple effect */
 }
 
 .btn-secondary:hover {
@@ -303,8 +307,9 @@
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  overflow: visible;
+  overflow: hidden; /* Pour le ripple effect */
   vertical-align: middle;
+  position: relative; /* Pour le ripple effect */
 }
 
 .btn-secondary-danger:hover {
@@ -335,4 +340,43 @@
   gap: 1rem;
   margin-top: 1.5rem;
   flex-wrap: wrap;
+}
+
+/* ================================================
+   RIPPLE EFFECT
+================================================ */
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: scale(0);
+  animation: ripple-animation 0.6s ease-out;
+  pointer-events: none;
+}
+
+@keyframes ripple-animation {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Ripple plus visible sur boutons sombres */
+.btn-primary .ripple,
+.btn-success .ripple,
+.btn-danger .ripple {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* Ripple adapté pour boutons clairs */
+.btn-secondary .ripple,
+.btn-secondary-danger .ripple {
+  background: rgba(59, 130, 246, 0.3);
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .btn-secondary .ripple,
+[data-theme="dark"] .btn-secondary-danger .ripple {
+  background: rgba(255, 255, 255, 0.2);
 }

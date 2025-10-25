@@ -410,6 +410,7 @@
         import { initThemeSystem, setTheme } from './public/js/theme-manager.js';
         import { initWeatherWidget, refreshWeatherLocation } from './public/js/weather.js';
         import { showPageLoader, hidePageLoader, navigateWithLoader } from './public/js/page-loader.js';
+        import { initRippleButtons } from './public/js/micro-interactions.js';
 
         // Détecter Chrome iOS (problèmes de performance avec modules lourds)
         const isChromeIOS = /CriOS/i.test(navigator.userAgent);
@@ -1809,6 +1810,9 @@
                 // Masquer le loader une fois tout chargé
                 hidePageLoader();
             }
+
+            // Initialiser les micro-interactions (ripple effect)
+            initRippleButtons();
         })();
     </script>
 </body>

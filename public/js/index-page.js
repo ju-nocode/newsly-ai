@@ -7,6 +7,7 @@ import { attachPhoneFormatter } from './phone-formatter.js';
 import { initThemeSystem } from './theme-manager.js';
 import { initWeatherWidget } from './weather.js';
 import { navigateWithLoader } from './page-loader.js';
+import { initRippleButtons } from './micro-interactions.js';
 
 // Détection de confirmation email - Écoute localStorage + BroadcastChannel + Polling
 let emailConfirmationInterval = null;
@@ -837,4 +838,6 @@ window.addEventListener('DOMContentLoaded', () => {
     initThemeSystem();
     // Initialize weather widget for index page
     initWeatherWidget('weatherWidgetIndex');
+    // Initialize ripple effect on buttons
+    initRippleButtons();
 });
