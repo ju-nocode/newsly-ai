@@ -1,4 +1,4 @@
-﻿// ================================================
+// ================================================
 // SAFE LOCALSTORAGE WRAPPER
 // ================================================
 const safeLocalStorage = {
@@ -631,7 +631,7 @@ export const checkSessionValidity = async () => {
     }
 };
 
-// Vérifier la session de manière quasi-instantanée sur les pages protégées
+// Vérifier la session de manière optimisée (compatible Chrome iOS)
 if (typeof window !== 'undefined') {
     const protectedPages = ['dashboard.html', 'settings.html'];
     const currentPage = window.location.pathname.split('/').pop();
@@ -646,43 +646,33 @@ if (typeof window !== 'undefined') {
             if (hasSession && authToken) {
                 console.log('🔒 Initialisation des vérifications de session');
 
-                // Vérification initiale
+                // Détecter si on est sur mobile (Chrome iOS, Safari iOS, etc.)
+                const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+                // Vérification initiale différée
                 setTimeout(() => checkSessionValidity(), 2000);
 
-                // 1. Vérification périodique toutes les 3 secondes
+                // 1. Vérification périodique adaptée selon l'appareil
+                const checkInterval = isMobile ? 30000 : 10000; // 30s mobile, 10s desktop
                 setInterval(() => {
                     if (authToken) checkSessionValidity();
-                }, 3000);
+                }, checkInterval);
 
-                // 2. Vérification immédiate quand l'onglet redevient visible
+                // 2. Vérification quand l'onglet redevient visible
                 document.addEventListener('visibilitychange', () => {
                     if (!document.hidden && authToken) {
                         checkSessionValidity();
                     }
                 });
 
-                // 3. Vérification immédiate au focus de la fenêtre
-                window.addEventListener('focus', () => {
-                    if (authToken) {
-                        checkSessionValidity();
-                    }
-                });
+                // 3. Vérification au focus de la fenêtre (desktop uniquement)
+                if (!isMobile) {
+                    window.addEventListener('focus', () => {
+                        if (authToken) checkSessionValidity();
+                    });
+                }
 
-                // 4. Vérification immédiate sur toute interaction utilisateur (clic, touche)
-                let lastCheckTime = Date.now();
-                const checkOnInteraction = () => {
-                    if (!authToken) return;
-                    // Éviter de checker trop souvent (max 1x par seconde)
-                    const now = Date.now();
-                    if (now - lastCheckTime > 1000) {
-                        lastCheckTime = now;
-                        checkSessionValidity();
-                    }
-                };
-
-                document.addEventListener('click', checkOnInteraction, { passive: true });
-                document.addEventListener('keydown', checkOnInteraction, { passive: true });
-                document.addEventListener('touchstart', checkOnInteraction, { passive: true });
+                // Note: Les listeners click/touch ont été retirés car ils saturaient Chrome iOS
             }
         });
     }

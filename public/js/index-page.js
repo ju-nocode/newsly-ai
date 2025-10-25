@@ -29,16 +29,18 @@ const checkEmailConfirmed = () => {
 };
 
 const startEmailConfirmationPolling = () => {
-    // 1. BroadcastChannel (instantané)
+    // 1. BroadcastChannel (instantané) - avec fallback Chrome iOS
     try {
-        broadcastChannel = new BroadcastChannel('email_confirmation');
-        broadcastChannel.onmessage = (event) => {
-            if (event.data.type === 'CONFIRMED') {
-                checkEmailConfirmed();
-            }
-        };
+        if ('BroadcastChannel' in window) {
+            broadcastChannel = new BroadcastChannel('email_confirmation');
+            broadcastChannel.onmessage = (event) => {
+                if (event.data.type === 'CONFIRMED') {
+                    checkEmailConfirmed();
+                }
+            };
+        }
     } catch (e) {
-        // BroadcastChannel non supporté
+        console.warn('BroadcastChannel non supporté:', e);
     }
 
     // 2. Storage Event (détecte changements depuis autre onglet)
@@ -48,10 +50,10 @@ const startEmailConfirmationPolling = () => {
         }
     });
 
-    // 3. Polling localStorage (backup, toutes les secondes)
+    // 3. Polling localStorage (backup, toutes les 2 secondes pour éviter surcharge Chrome iOS)
     emailConfirmationInterval = setInterval(() => {
         checkEmailConfirmed();
-    }, 1000);
+    }, 2000);
 };
 
 const stopEmailConfirmationPolling = () => {
