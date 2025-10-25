@@ -70,7 +70,15 @@ export default async function handler(req, res) {
 
         if (error) {
             // Message générique pour la sécurité (ne pas révéler si l'email existe)
-            console.error('Signup error:', error.message);
+            console.error('Signup error:', error.message, error);
+
+            // Si l'utilisateur existe déjà, renvoyer un message spécifique
+            if (error.message.includes('already registered') || error.message.includes('already been registered')) {
+                return res.status(400).json({
+                    error: 'Un compte existe déjà avec cet email.'
+                });
+            }
+
             return res.status(400).json({
                 error: 'Impossible de créer le compte. Veuillez réessayer plus tard.'
             });
@@ -105,14 +113,20 @@ export default async function handler(req, res) {
             const { error: profileError } = await supabaseAdmin
                 .from('profiles')
                 .upsert(profileData, {
-                    onConflict: 'id'
+                    onConflict: 'id',
+                    ignoreDuplicates: false
                 });
 
             if (profileError) {
-                console.error('Profile creation error:', profileError.message);
-                return res.status(400).json({
-                    error: 'Impossible de créer le compte. Veuillez réessayer plus tard.'
-                });
+                console.error('Profile creation error:', profileError.message, profileError);
+
+                // Si c'est juste un conflit d'email (trigger a déjà créé), on ignore
+                if (!profileError.message.includes('duplicate') && !profileError.message.includes('unique')) {
+                    return res.status(400).json({
+                        error: 'Impossible de créer le compte. Veuillez réessayer plus tard.'
+                    });
+                }
+                // Sinon on continue (le profile existe déjà via trigger)
             }
         }
 
