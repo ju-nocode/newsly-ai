@@ -737,7 +737,7 @@
             if (result.success) {
                 const profile = result.profile;
                 console.log('📂 Profil chargé depuis la base:', profile);
-                const userName = profile.username || profile.email.split('@')[0];
+                const displayName = profile.display_name || `${profile.first_name} ${profile.last_name}`.trim() || profile.email.split('@')[0];
                 const userRole = profile.role || 'user';
 
                 // Navbar role badge
@@ -748,7 +748,7 @@
                         navUserRole.textContent = 'Connecté en tant qu\'admin';
                         navUserRole.className = 'user-role-badge admin';
                     } else {
-                        navUserRole.textContent = `Connecté en tant que ${escapeHtml(userName)}`;
+                        navUserRole.textContent = `Connecté en tant que ${escapeHtml(displayName)}`;
                         navUserRole.className = 'user-role-badge user';
                     }
                 }

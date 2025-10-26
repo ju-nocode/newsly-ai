@@ -140,11 +140,11 @@ export const signup = async (email, password, metadata) => {
     try {
         // Si metadata est une string (ancien format), convertir en objet
         const userMetadata = typeof metadata === 'string'
-            ? { username: metadata, full_name: metadata, display_name: metadata }
+            ? { first_name: metadata, last_name: '', display_name: metadata }
             : {
-                username: metadata.username || email.split('@')[0],
-                full_name: metadata.full_name || metadata.username || email.split('@')[0],
-                display_name: metadata.username || email.split('@')[0],
+                first_name: metadata.first_name || email.split('@')[0],
+                last_name: metadata.last_name || '',
+                display_name: metadata.display_name || `${metadata.first_name || email.split('@')[0]} ${metadata.last_name || ''}`.trim(),
                 phone: metadata.phone || '',
                 bio: metadata.bio || '',
                 avatar_url: metadata.avatar_url || '',
@@ -159,8 +159,8 @@ export const signup = async (email, password, metadata) => {
                 email,
                 password,
                 metadata: userMetadata,
-                username: metadata.username,
-                full_name: metadata.full_name,
+                first_name: metadata.first_name,
+                last_name: metadata.last_name,
                 country: metadata.country,
                 city: metadata.city,
                 phone: metadata.phone
