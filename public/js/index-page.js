@@ -583,8 +583,8 @@ if (signupStep2Form) {
     signupStep2Form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const username = document.getElementById('signupUsername').value.trim();
-        const fullName = document.getElementById('signupFullName').value.trim();
+        const firstName = document.getElementById('signupFirstName').value.trim();
+        const lastName = document.getElementById('signupLastName').value.trim();
         const country = document.getElementById('signupCountry').value;
         const city = document.getElementById('signupCity').value.trim();
         const phoneCode = document.getElementById('signupPhoneCode').value;
@@ -592,14 +592,14 @@ if (signupStep2Form) {
         const errorDiv = document.getElementById('signupStep2Error');
 
         // Validation
-        if (!username) {
-            errorDiv.textContent = 'Le nom d\'utilisateur est obligatoire';
+        if (!firstName) {
+            errorDiv.textContent = 'Le prénom est obligatoire';
             errorDiv.style.display = 'block';
             return;
         }
 
-        if (!fullName) {
-            errorDiv.textContent = 'Le nom complet est obligatoire';
+        if (!lastName) {
+            errorDiv.textContent = 'Le nom est obligatoire';
             errorDiv.style.display = 'block';
             return;
         }
@@ -639,8 +639,8 @@ if (signupStep2Form) {
 
             // Créer le compte avec toutes les données
             const result = await signup(step1Email, step1Password, {
-                username,
-                full_name: fullName,
+                first_name: firstName,
+                last_name: lastName,
                 country,
                 city,
                 phone
@@ -682,13 +682,13 @@ if (signupStep2Form) {
 
 // Validation en temps réel pour griser le bouton Step 2
 const validateSignupStep2 = () => {
-    const username = document.getElementById('signupUsername').value.trim();
-    const fullName = document.getElementById('signupFullName').value.trim();
+    const firstName = document.getElementById('signupFirstName').value.trim();
+    const lastName = document.getElementById('signupLastName').value.trim();
     const country = document.getElementById('signupCountry').value;
     const city = document.getElementById('signupCity').value.trim();
     const submitBtn = signupStep2Form.querySelector('button[type="submit"]');
 
-    const isValid = username && fullName && country && city;
+    const isValid = firstName && lastName && country && city;
 
     if (submitBtn) {
         submitBtn.disabled = !isValid;
@@ -697,7 +697,7 @@ const validateSignupStep2 = () => {
 };
 
 // Ajouter les listeners pour la validation en temps réel
-['signupUsername', 'signupFullName', 'signupCountry', 'signupCity'].forEach(id => {
+['signupFirstName', 'signupLastName', 'signupCountry', 'signupCity'].forEach(id => {
     const element = document.getElementById(id);
     if (element) {
         element.addEventListener('input', validateSignupStep2);
