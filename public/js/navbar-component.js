@@ -33,7 +33,7 @@ export function createNavbar(config = {}) {
                 </button>
                 ` : ''}
                 <a href="dashboard.html" class="logo">
-                    <img src="https://img.icons8.com/ios/24/news.png" alt="News" class="logo-icon icon-white">
+                    <img src="https://img.icons8.com/ios/24/news.png" alt="News" class="logo-icon icon-primary">
                     <span class="logo-text">Newsly AI</span>
                 </a>
             </div>
