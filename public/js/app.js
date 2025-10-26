@@ -159,11 +159,11 @@ export const signup = async (email, password, metadata) => {
                 email,
                 password,
                 metadata: userMetadata,
-                first_name: metadata.first_name,
-                last_name: metadata.last_name,
-                country: metadata.country,
-                city: metadata.city,
-                phone: metadata.phone
+                first_name: userMetadata.first_name,
+                last_name: userMetadata.last_name,
+                country: userMetadata.country,
+                city: userMetadata.city,
+                phone: userMetadata.phone
             })
         });
 
