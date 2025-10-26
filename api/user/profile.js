@@ -44,7 +44,7 @@ export default async function handler(req, res) {
             // Récupérer les données de la table profiles avec explicitement les colonnes
             const { data: profile, error: profileError } = await supabaseAdmin
                 .from('profiles')
-                .select('id, email, username, full_name, phone, bio, avatar_url, country, city, is_admin, created_at, updated_at')
+                .select('id, email, first_name, last_name, display_name, phone, bio, avatar_url, country, city, is_admin, created_at, updated_at')
                 .eq('id', user.id)
                 .single();
 
@@ -55,8 +55,9 @@ export default async function handler(req, res) {
             return res.status(200).json({
                 id: user.id,
                 email: user.email,
-                username: profile?.username || user.user_metadata?.username || user.email.split('@')[0],
-                full_name: profile?.full_name || user.user_metadata?.full_name || '',
+                first_name: profile?.first_name || user.user_metadata?.first_name || user.email.split('@')[0],
+                last_name: profile?.last_name || user.user_metadata?.last_name || '',
+                display_name: profile?.display_name || `${profile?.first_name} ${profile?.last_name}`.trim() || user.email.split('@')[0],
                 phone: profile?.phone || '',
                 bio: profile?.bio || '',
                 avatar_url: profile?.avatar_url || '',
@@ -64,24 +65,31 @@ export default async function handler(req, res) {
                 city: profile?.city || '',
                 role: profile?.is_admin ? 'admin' : 'user',
                 is_admin: profile?.is_admin || false,
-                created_at: user.created_at
+                created_at: profile?.created_at || user.created_at,
+                updated_at: profile?.updated_at || user.created_at
             });
         }
 
         // PUT - Mettre à jour le profil
         if (req.method === 'PUT') {
-            const { username, full_name, phone, bio, avatar_url, country, city } = req.body;
+            const { first_name, last_name, display_name, phone, bio, avatar_url, country, city } = req.body;
 
             // Validation des données
-            if (username !== undefined) {
-                if (typeof username !== 'string' || username.trim().length < 1 || username.trim().length > 50) {
-                    return res.status(400).json({ error: 'Username invalide (1-50 caractères)' });
+            if (first_name !== undefined) {
+                if (typeof first_name !== 'string' || first_name.trim().length < 1 || first_name.trim().length > 50) {
+                    return res.status(400).json({ error: 'Prénom invalide (1-50 caractères)' });
                 }
             }
 
-            if (full_name !== undefined) {
-                if (typeof full_name !== 'string' || full_name.length > 100) {
-                    return res.status(400).json({ error: 'Nom complet invalide (max 100 caractères)' });
+            if (last_name !== undefined) {
+                if (typeof last_name !== 'string' || last_name.trim().length < 1 || last_name.trim().length > 50) {
+                    return res.status(400).json({ error: 'Nom invalide (1-50 caractères)' });
+                }
+            }
+
+            if (display_name !== undefined && display_name !== null && display_name.trim() !== '') {
+                if (typeof display_name !== 'string' || display_name.trim().length > 50) {
+                    return res.status(400).json({ error: 'Nom d\'affichage invalide (max 50 caractères)' });
                 }
             }
 
@@ -122,12 +130,16 @@ export default async function handler(req, res) {
 
             const updateData = {};
 
-            if (username !== undefined) {
-                updateData.username = username.trim();
+            if (first_name !== undefined) {
+                updateData.first_name = first_name.trim();
             }
 
-            if (full_name !== undefined) {
-                updateData.full_name = full_name.trim();
+            if (last_name !== undefined) {
+                updateData.last_name = last_name.trim();
+            }
+
+            if (display_name !== undefined && display_name !== null && display_name.trim() !== '') {
+                updateData.display_name = display_name.trim();
             }
 
             if (phone !== undefined) {
@@ -190,11 +202,16 @@ export default async function handler(req, res) {
             }
 
             // Préparer les données finales en fusionnant avec l'existant
+            const firstName = updateData.first_name || existingProfile?.first_name || user.email.split('@')[0];
+            const lastName = updateData.last_name || existingProfile?.last_name || '';
+            const autoDisplayName = `${firstName} ${lastName}`.trim() || firstName;
+
             const finalData = {
                 id: user.id,
                 email: user.email,
-                username: updateData.username || existingProfile?.username || null,
-                full_name: updateData.full_name || existingProfile?.full_name || user.email.split('@')[0],
+                first_name: firstName,
+                last_name: lastName,
+                display_name: updateData.display_name || existingProfile?.display_name || autoDisplayName,
                 phone: updateData.phone !== undefined ? updateData.phone : (existingProfile?.phone || null),
                 bio: updateData.bio !== undefined ? updateData.bio : (existingProfile?.bio || null),
                 avatar_url: updateData.avatar_url !== undefined ? updateData.avatar_url : (existingProfile?.avatar_url || null),
@@ -233,13 +250,14 @@ export default async function handler(req, res) {
             }
 
             // Aussi mettre à jour user_metadata pour garder la cohérence
-            if (username !== undefined) {
+            if (first_name !== undefined || last_name !== undefined) {
                 await supabaseAdmin.auth.admin.updateUserById(
                     user.id,
                     {
                         user_metadata: {
-                            username: username.trim(),
-                            display_name: username.trim()
+                            first_name: firstName,
+                            last_name: lastName,
+                            display_name: finalData.display_name
                         }
                     }
                 );
@@ -249,8 +267,9 @@ export default async function handler(req, res) {
             try {
                 const changedFields = [];
                 const fieldLabels = {
-                    username: 'username',
-                    full_name: 'nom complet',
+                    first_name: 'prénom',
+                    last_name: 'nom',
+                    display_name: 'nom d\'affichage',
                     phone: 'téléphone',
                     bio: 'bio',
                     avatar_url: 'avatar',

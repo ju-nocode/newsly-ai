@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     }
 
     try {
-        const { email, password, metadata, username, full_name, country, city, phone } = req.body;
+        const { email, password, metadata, first_name, last_name, country, city, phone } = req.body;
 
         if (!email || !password) {
             return res.status(400).json({ error: 'Email et mot de passe requis' });
@@ -44,9 +44,9 @@ export default async function handler(req, res) {
 
         // Préparer les métadonnées utilisateur
         const userMetadata = {
-            username: username || metadata?.username || email.split('@')[0],
-            full_name: full_name || metadata?.full_name || username || email.split('@')[0],
-            display_name: username || metadata?.username || email.split('@')[0],
+            first_name: first_name || metadata?.first_name || email.split('@')[0],
+            last_name: last_name || metadata?.last_name || '',
+            display_name: metadata?.display_name || `${first_name || email.split('@')[0]} ${last_name || ''}`.trim() || email.split('@')[0],
             phone: phone || metadata?.phone || '',
             bio: metadata?.bio || '',
             avatar_url: metadata?.avatar_url || '',
@@ -97,8 +97,9 @@ export default async function handler(req, res) {
             const profileData = {
                 id: data.user.id,
                 email: data.user.email,
-                username: userMetadata.username || userMetadata.full_name || email.split('@')[0],
-                full_name: userMetadata.full_name || userMetadata.username || email.split('@')[0],
+                first_name: userMetadata.first_name || email.split('@')[0],
+                last_name: userMetadata.last_name || '',
+                display_name: userMetadata.display_name || `${userMetadata.first_name} ${userMetadata.last_name}`.trim() || email.split('@')[0],
                 phone: userMetadata.phone || null,
                 bio: userMetadata.bio || null,
                 avatar_url: userMetadata.avatar_url || null,

@@ -125,36 +125,36 @@
                             <p class="form-hint" data-i18n="settings.emailHint">Adresse email de connexion (non modifiable)</p>
                         </div>
 
-                        <!-- Username (Obligatoire) -->
+                        <!-- First Name (Obligatoire) -->
                         <div class="form-group">
-                            <label for="usernameInput" class="form-label">
-                                <span data-i18n="settings.username">Nom d'utilisateur</span>
+                            <label for="firstNameInput" class="form-label">
+                                <span data-i18n="settings.firstName">Prénom</span>
                                 <span style="color: var(--error); margin-left: 0.25rem;">*</span>
                             </label>
                             <input
                                 type="text"
-                                id="usernameInput"
+                                id="firstNameInput"
                                 class="form-input"
-                                placeholder="john_doe"
+                                placeholder="John"
                                 required
                             >
-                            <p class="form-hint" data-i18n="settings.usernameHint">Identifiant unique affiché publiquement</p>
+                            <p class="form-hint" data-i18n="settings.firstNameHint">Votre prénom</p>
                         </div>
 
-                        <!-- Full Name (Obligatoire) -->
+                        <!-- Last Name (Obligatoire) -->
                         <div class="form-group">
-                            <label for="fullNameInput" class="form-label">
-                                <span data-i18n="settings.fullName">Nom complet</span>
+                            <label for="lastNameInput" class="form-label">
+                                <span data-i18n="settings.lastName">Nom</span>
                                 <span style="color: var(--error); margin-left: 0.25rem;">*</span>
                             </label>
                             <input
                                 type="text"
-                                id="fullNameInput"
+                                id="lastNameInput"
                                 class="form-input"
-                                placeholder="John Doe"
+                                placeholder="Doe"
                                 required
                             >
-                            <p class="form-hint" data-i18n="settings.fullNameHint">Nom et prénom complets</p>
+                            <p class="form-hint" data-i18n="settings.lastNameHint">Votre nom de famille</p>
                         </div>
 
                         <!-- Country (Obligatoire) -->
@@ -754,6 +754,9 @@
                 }
 
                 // Timestamps
+                const accountCreatedEl = document.getElementById('accountCreatedAt');
+                const accountUpdatedEl = document.getElementById('accountUpdatedAt');
+
                 if (profile.created_at) {
                     const createdDate = new Date(profile.created_at);
                     const createdText = createdDate.toLocaleDateString('fr-FR', {
@@ -761,17 +764,23 @@
                         month: 'long',
                         year: 'numeric'
                     });
-                    document.getElementById('accountCreatedAt').textContent = `Compte créé le ${createdText}`;
+                    accountCreatedEl.textContent = `Compte créé le ${createdText}`;
+                } else {
+                    accountCreatedEl.style.display = 'none';
                 }
 
-                if (profile.updated_at) {
+                if (profile.updated_at && profile.updated_at !== profile.created_at) {
                     const updatedDate = new Date(profile.updated_at);
                     const updatedText = updatedDate.toLocaleDateString('fr-FR', {
                         day: '2-digit',
                         month: 'long',
                         year: 'numeric'
                     });
-                    document.getElementById('accountUpdatedAt').textContent = `Mis à jour le ${updatedText}`;
+                    accountUpdatedEl.textContent = `Mis à jour le ${updatedText}`;
+                } else {
+                    // Masquer si pas de updated_at ou identique à created_at
+                    accountUpdatedEl.style.display = 'none';
+                    document.querySelector('.meta-separator')?.remove();
                 }
 
                 // Email (toujours présent)
@@ -783,13 +792,13 @@
                     document.getElementById('avatarImage').src = profile.avatar_url;
                 } else {
                     // Avatar par défaut avec initiales
-                    const name = profile.username || profile.email.split('@')[0];
-                    document.getElementById('avatarImage').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=3ecf8e&color=fff&size=200`;
+                    const displayName = profile.display_name || `${profile.first_name} ${profile.last_name}`.trim() || profile.email.split('@')[0];
+                    document.getElementById('avatarImage').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=3ecf8e&color=fff&size=200`;
                 }
 
                 // Champs obligatoires
-                document.getElementById('usernameInput').value = profile.username || '';
-                document.getElementById('fullNameInput').value = profile.full_name || '';
+                document.getElementById('firstNameInput').value = profile.first_name || '';
+                document.getElementById('lastNameInput').value = profile.last_name || '';
 
                 // Country - s'assurer que la valeur existe dans le select
                 const countryValue = profile.country || 'France';
@@ -876,12 +885,12 @@
         // Validation en temps réel et activation/désactivation du bouton
         const updateProfileBtn = document.getElementById('updateProfileBtn');
         const validateForm = () => {
-            const username = document.getElementById('usernameInput').value.trim();
-            const fullName = document.getElementById('fullNameInput').value.trim();
+            const firstName = document.getElementById('firstNameInput').value.trim();
+            const lastName = document.getElementById('lastNameInput').value.trim();
             const country = document.getElementById('countrySelect').value;
             const city = document.getElementById('cityInput').value.trim();
 
-            const isValid = username && fullName && country && city;
+            const isValid = firstName && lastName && country && city;
 
             if (isValid) {
                 updateProfileBtn.disabled = false;
@@ -895,8 +904,8 @@
         };
 
         // Écouter les changements sur les champs obligatoires
-        document.getElementById('usernameInput').addEventListener('input', validateForm);
-        document.getElementById('fullNameInput').addEventListener('input', validateForm);
+        document.getElementById('firstNameInput').addEventListener('input', validateForm);
+        document.getElementById('lastNameInput').addEventListener('input', validateForm);
         document.getElementById('countrySelect').addEventListener('change', validateForm);
         document.getElementById('cityInput').addEventListener('input', validateForm);
 
@@ -913,8 +922,10 @@
         // Bouton "Supprimer la photo"
         removeAvatarBtn.addEventListener('click', () => {
             currentAvatarUrl = null;
-            const userName = document.getElementById('usernameInput').value || 'User';
-            avatarImage.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=3b82f6&color=fff&size=200`;
+            const firstName = document.getElementById('firstNameInput').value || 'User';
+            const lastName = document.getElementById('lastNameInput').value || '';
+            const displayName = `${firstName} ${lastName}`.trim() || firstName;
+            avatarImage.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=3b82f6&color=fff&size=200`;
             showSuccess('Photo supprimée (cliquez sur "Mettre à jour" pour sauvegarder)');
         });
 
@@ -1114,8 +1125,8 @@
 
         // Mettre à jour le profil
         updateProfileBtn.addEventListener('click', async () => {
-            const username = document.getElementById('usernameInput').value.trim();
-            const fullName = document.getElementById('fullNameInput').value.trim();
+            const firstName = document.getElementById('firstNameInput').value.trim();
+            const lastName = document.getElementById('lastNameInput').value.trim();
             const country = document.getElementById('countrySelect').value;
             const city = document.getElementById('cityInput').value.trim();
             const phoneNumber = document.getElementById('phoneInput').value.trim();
@@ -1125,15 +1136,15 @@
             const bio = bioInput ? bioInput.value.trim() : '';
 
             // Validations (déjà faites par le bouton, mais double-check)
-            if (!username || !fullName || !country || !city) {
-                showError('Veuillez remplir tous les champs obligatoires (Username, Nom complet, Pays, Ville)');
+            if (!firstName || !lastName || !country || !city) {
+                showError('Veuillez remplir tous les champs obligatoires (Prénom, Nom, Pays, Ville)');
                 return;
             }
 
             // Construire l'objet avec seulement les champs nécessaires
             const profileData = {
-                username,
-                full_name: fullName,
+                first_name: firstName,
+                last_name: lastName,
                 country,
                 city
             };
@@ -1596,14 +1607,14 @@
         const loadUserName = async () => {
             const result = await getUserProfile();
             if (result.success) {
-                const userName = result.profile.username || result.profile.email.split('@')[0];
-                document.getElementById('userNameDisplay').textContent = `User: ${escapeHtml(userName)}`;
+                const displayName = result.profile.display_name || `${result.profile.first_name} ${result.profile.last_name}`.trim() || result.profile.email.split('@')[0];
+                document.getElementById('userNameDisplay').textContent = `User: ${escapeHtml(displayName)}`;
 
                 // Charger l'avatar dans le burger
                 if (result.profile.avatar_url) {
                     document.getElementById('burgerAvatarImage').src = result.profile.avatar_url;
                 } else {
-                    document.getElementById('burgerAvatarImage').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=3ecf8e&color=fff&size=72`;
+                    document.getElementById('burgerAvatarImage').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=3ecf8e&color=fff&size=72`;
                 }
             }
         };
