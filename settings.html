@@ -84,12 +84,14 @@
                 <h2 class="settings-section-title" data-i18n="settings.profile">Profil</h2>
                 <p class="settings-section-desc" data-i18n="settings.manageProfile">Gérez vos informations personnelles</p>
 
-                <!-- Profile Grid Layout -->
-                <div class="profile-grid">
-                    <!-- Profile Info Card -->
-                    <div class="settings-card profile-info-section">
-                        <h3 class="settings-card-title" data-i18n="settings.identity">Identité</h3>
-                        <div class="settings-grid-2">
+                <!-- Profile Card - Single unified card -->
+                <div class="settings-card">
+                    <h3 class="settings-card-title" data-i18n="settings.profile">Profil</h3>
+
+                    <div class="profile-layout">
+                        <!-- Left: Form fields -->
+                        <div class="profile-form">
+                            <div class="settings-grid-2">
                             <!-- Email (Read-only) -->
                             <div class="form-group">
                                 <label for="emailDisplay" class="form-label" data-i18n="settings.email">Email</label>
@@ -204,31 +206,26 @@
                                     </span>
                                 </p>
                             </div>
+
+                            <button id="updateProfileBtn" class="btn-primary" data-i18n="settings.updateProfile">
+                                Enregistrer
+                            </button>
                         </div>
 
-                        <button id="updateProfileBtn" class="btn-primary" data-i18n="settings.updateProfile">
-                            Enregistrer
-                        </button>
-                    </div>
+                        <!-- Right: Avatar section -->
+                        <div class="profile-avatar">
+                            <div class="avatar-preview" id="avatarPreview">
+                                <img id="avatarImage" src="https://ui-avatars.com/api/?name=User&background=3b82f6&color=fff&size=200" alt="Avatar">
+                                <div class="avatar-overlay" id="avatarOverlay"></div>
+                            </div>
 
-                    <!-- Avatar Upload Card -->
-                    <div class="avatar-upload-card">
-                        <h3 class="settings-card-title" data-i18n="settings.photo">Photo</h3>
+                            <input type="file" id="avatarInput" accept="image/*" style="display: none;">
 
-                        <div class="avatar-preview" id="avatarPreview">
-                            <img id="avatarImage" src="https://ui-avatars.com/api/?name=User&background=3b82f6&color=fff&size=200" alt="Avatar">
-                            <div class="avatar-overlay" id="avatarOverlay"></div>
-                        </div>
-
-                        <input type="file" id="avatarInput" accept="image/*" style="display: none;">
-
-                        <!-- Boutons collés en bas -->
-                        <div class="avatar-buttons-container">
                             <div class="avatar-actions">
-                                <button type="button" id="uploadAvatarBtn" class="btn-primary">
+                                <button type="button" id="uploadAvatarBtn" class="btn-secondary">
                                     Modifier
                                 </button>
-                                <button type="button" id="removeAvatarBtn" class="btn-danger">
+                                <button type="button" id="removeAvatarBtn" class="btn-secondary-danger">
                                     Supprimer
                                 </button>
                             </div>
