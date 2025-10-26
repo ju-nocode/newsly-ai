@@ -513,22 +513,14 @@
 /* Avatar Upload Card */
 .avatar-upload-card {
   background: var(--bg-primary);
-  border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 1.5rem;
-  box-shadow: 0 2px 4px var(--shadow);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   height: 100%;
-}
-
-.avatar-upload-card:hover {
-  box-shadow: 0 4px 12px var(--shadow-lg);
-  border-color: var(--border);
 }
 
 .avatar-upload-card .settings-card-title {
@@ -612,17 +604,9 @@
 
 .settings-card {
   background: var(--bg-primary);
-  border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 1.5rem;
-  box-shadow: 0 2px 4px var(--shadow);
   width: 100%;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.settings-card:hover {
-  box-shadow: 0 4px 12px var(--shadow-lg);
-  border-color: var(--border);
 }
 
 .settings-card > .btn-primary,
