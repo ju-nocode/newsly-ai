@@ -59,6 +59,8 @@ export default async function handler(req, res) {
             ? 'https://prod-julien.vercel.app/auth/callback'
             : 'http://localhost:3000/auth/callback';
 
+        console.log('🔄 Attempting signup with:', { email, userMetadata });
+
         const { data, error } = await supabase.auth.signUp({
             email,
             password,
@@ -70,7 +72,8 @@ export default async function handler(req, res) {
 
         if (error) {
             // Message générique pour la sécurité (ne pas révéler si l'email existe)
-            console.error('Signup error:', error.message, error);
+            console.error('❌ Signup error:', error.message, error);
+            console.error('Error details:', JSON.stringify(error, null, 2));
 
             // Si l'utilisateur existe déjà, renvoyer un message spécifique
             if (error.message.includes('already registered') || error.message.includes('already been registered')) {
