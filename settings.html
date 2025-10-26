@@ -33,6 +33,12 @@
                         </a>
                     </li>
                     <li class="sidebar-menu-item">
+                        <a class="sidebar-menu-link" href="#" data-section="preferences" data-tooltip="Préférences">
+                            <img src="https://img.icons8.com/ios-filled/18/settings-3.png" alt="" class="sidebar-icon">
+                            <span data-i18n="settings.preferences">Préférences</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-menu-item">
                         <a class="sidebar-menu-link" href="#" data-section="account" data-tooltip="Compte">
                             <img src="https://img.icons8.com/ios-filled/18/user-male-circle.png" alt="" class="sidebar-icon">
                             <span data-i18n="settings.account">Compte</span>
@@ -232,6 +238,85 @@
                             </button>
                         </div>
                     </div>
+                </div>
+            </section>
+
+            <!-- Preferences Section -->
+            <section id="section-preferences" class="settings-section">
+                <h2 class="settings-section-title" data-i18n="settings.preferences">Préférences</h2>
+                <p class="settings-section-desc" data-i18n="settings.managePreferences">Gérez vos catégories et pays favoris</p>
+
+                <!-- Categories Card -->
+                <div class="settings-card">
+                    <h3 class="settings-card-title" data-i18n="settings.favoriteCategories">Catégories favorites</h3>
+                    <p class="settings-description" data-i18n="settings.categoriesDesc">Sélectionnez les catégories d'actualités qui vous intéressent</p>
+
+                    <div class="preferences-grid" id="categoriesGrid">
+                        <button class="preference-item" data-category="general">
+                            <img src="https://img.icons8.com/ios-filled/24/news.png" alt="" class="preference-icon">
+                            <span data-i18n="category.general">Général</span>
+                        </button>
+                        <button class="preference-item" data-category="business">
+                            <img src="https://img.icons8.com/ios-filled/24/briefcase.png" alt="" class="preference-icon">
+                            <span data-i18n="category.business">Business</span>
+                        </button>
+                        <button class="preference-item" data-category="technology">
+                            <img src="https://img.icons8.com/ios-filled/24/laptop.png" alt="" class="preference-icon">
+                            <span data-i18n="category.technology">Technologie</span>
+                        </button>
+                        <button class="preference-item" data-category="science">
+                            <img src="https://img.icons8.com/ios-filled/24/test-tube.png" alt="" class="preference-icon">
+                            <span data-i18n="category.science">Science</span>
+                        </button>
+                        <button class="preference-item" data-category="health">
+                            <img src="https://img.icons8.com/ios-filled/24/heart-with-pulse.png" alt="" class="preference-icon">
+                            <span data-i18n="category.health">Santé</span>
+                        </button>
+                        <button class="preference-item" data-category="sports">
+                            <img src="https://img.icons8.com/ios-filled/24/football.png" alt="" class="preference-icon">
+                            <span data-i18n="category.sports">Sports</span>
+                        </button>
+                        <button class="preference-item" data-category="entertainment">
+                            <img src="https://img.icons8.com/ios-filled/24/clapperboard.png" alt="" class="preference-icon">
+                            <span data-i18n="category.entertainment">Divertissement</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Countries Card -->
+                <div class="settings-card" style="margin-top: 2rem;">
+                    <h3 class="settings-card-title" data-i18n="settings.favoriteCountries">Pays favoris</h3>
+                    <p class="settings-description" data-i18n="settings.countriesDesc">Sélectionnez les pays dont vous souhaitez suivre l'actualité</p>
+
+                    <div class="preferences-grid" id="countriesGrid">
+                        <button class="preference-item" data-country="us">
+                            <img src="https://img.icons8.com/color/24/usa.png" alt="" class="preference-icon">
+                            <span data-i18n="country.us">États-Unis</span>
+                        </button>
+                        <button class="preference-item" data-country="fr">
+                            <img src="https://img.icons8.com/color/24/france.png" alt="" class="preference-icon">
+                            <span data-i18n="country.fr">France</span>
+                        </button>
+                        <button class="preference-item" data-country="gb">
+                            <img src="https://img.icons8.com/color/24/great-britain.png" alt="" class="preference-icon">
+                            <span data-i18n="country.gb">Royaume-Uni</span>
+                        </button>
+                        <button class="preference-item" data-country="ca">
+                            <img src="https://img.icons8.com/color/24/canada.png" alt="" class="preference-icon">
+                            <span data-i18n="country.ca">Canada</span>
+                        </button>
+                        <button class="preference-item" data-country="de">
+                            <img src="https://img.icons8.com/color/24/germany.png" alt="" class="preference-icon">
+                            <span data-i18n="country.de">Allemagne</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Save Button -->
+                <div class="settings-card" style="margin-top: 2rem;">
+                    <button id="savePreferencesBtn" class="btn-primary" data-i18n="settings.savePreferences">
+                        Enregistrer les préférences
+                    </button>
                 </div>
             </section>
 
@@ -485,6 +570,146 @@
 
         // Variable globale pour stocker l'avatar
         let currentAvatarUrl = null;
+
+        // ================================================
+        // PREFERENCES MANAGEMENT
+        // ================================================
+        let userPreferences = {
+            followed_categories: [],
+            preferred_countries: []
+        };
+
+        // Load user feed preferences
+        const loadUserPreferences = async () => {
+            try {
+                const session = JSON.parse(localStorage.getItem('session'));
+                if (!session || !session.access_token) {
+                    console.warn('No session found for preferences');
+                    return;
+                }
+
+                const response = await fetch('/api/user/feed-preferences', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${session.access_token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to load preferences');
+                }
+
+                const data = await response.json();
+                userPreferences.followed_categories = data.followed_categories || [];
+                userPreferences.preferred_countries = data.preferred_countries || [];
+
+                console.log('✅ Preferences loaded:', userPreferences);
+
+                // Update UI
+                updatePreferencesUI();
+
+            } catch (error) {
+                console.error('Error loading preferences:', error);
+            }
+        };
+
+        // Update preferences UI
+        const updatePreferencesUI = () => {
+            // Update category buttons
+            document.querySelectorAll('[data-category]').forEach(btn => {
+                const category = btn.dataset.category;
+                if (userPreferences.followed_categories.includes(category)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Update country buttons
+            document.querySelectorAll('[data-country]').forEach(btn => {
+                const country = btn.dataset.country;
+                if (userPreferences.preferred_countries.includes(country)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        };
+
+        // Toggle category preference
+        const toggleCategoryPreference = (category) => {
+            const index = userPreferences.followed_categories.indexOf(category);
+            if (index > -1) {
+                userPreferences.followed_categories.splice(index, 1);
+            } else {
+                userPreferences.followed_categories.push(category);
+            }
+            updatePreferencesUI();
+        };
+
+        // Toggle country preference
+        const toggleCountryPreference = (country) => {
+            const index = userPreferences.preferred_countries.indexOf(country);
+            if (index > -1) {
+                userPreferences.preferred_countries.splice(index, 1);
+            } else {
+                userPreferences.preferred_countries.push(country);
+            }
+            updatePreferencesUI();
+        };
+
+        // Save preferences
+        const savePreferences = async () => {
+            try {
+                const session = JSON.parse(localStorage.getItem('session'));
+                if (!session || !session.access_token) {
+                    showError('Session expirée. Veuillez vous reconnecter.');
+                    return;
+                }
+
+                const response = await fetch('/api/user/feed-preferences', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${session.access_token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        followed_categories: userPreferences.followed_categories,
+                        preferred_countries: userPreferences.preferred_countries
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to save preferences');
+                }
+
+                showSuccess('Préférences enregistrées avec succès');
+                console.log('✅ Preferences saved');
+
+            } catch (error) {
+                console.error('Error saving preferences:', error);
+                showError('Échec de la sauvegarde des préférences');
+            }
+        };
+
+        // Event listeners for preference items
+        document.querySelectorAll('#categoriesGrid .preference-item').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const category = btn.dataset.category;
+                toggleCategoryPreference(category);
+            });
+        });
+
+        document.querySelectorAll('#countriesGrid .preference-item').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const country = btn.dataset.country;
+                toggleCountryPreference(country);
+            });
+        });
+
+        // Save button
+        document.getElementById('savePreferencesBtn')?.addEventListener('click', savePreferences);
 
         // Populer le select des pays
         const countrySelect = document.getElementById('countrySelect');
@@ -1804,6 +2029,7 @@
             try {
                 await translatePage();
                 await loadProfile();
+                await loadUserPreferences();
                 await loadUserName();
                 await loadSecurityAudit();
                 await loadActiveSessions();

@@ -73,6 +73,14 @@ const fallbackTranslations = {
         'sidebar.countries': 'Pays',
         'sidebar.allCountries': 'Tous',
 
+        'settings.preferences': 'Préférences',
+        'settings.managePreferences': 'Gérez vos catégories et pays favoris',
+        'settings.favoriteCategories': 'Catégories favorites',
+        'settings.categoriesDesc': 'Sélectionnez les catégories d\'actualités qui vous intéressent',
+        'settings.favoriteCountries': 'Pays favoris',
+        'settings.countriesDesc': 'Sélectionnez les pays dont vous souhaitez suivre l\'actualité',
+        'settings.savePreferences': 'Enregistrer les préférences',
+
         // Countries
         'country.all': 'Tous',
         'country.us': 'États-Unis',
@@ -174,6 +182,14 @@ const fallbackTranslations = {
         'sidebar.categories': 'Categories',
         'sidebar.countries': 'Countries',
         'sidebar.allCountries': 'All',
+
+        'settings.preferences': 'Preferences',
+        'settings.managePreferences': 'Manage your favorite categories and countries',
+        'settings.favoriteCategories': 'Favorite Categories',
+        'settings.categoriesDesc': 'Select the news categories you\'re interested in',
+        'settings.favoriteCountries': 'Favorite Countries',
+        'settings.countriesDesc': 'Select the countries you want to follow',
+        'settings.savePreferences': 'Save Preferences',
 
         // Countries
         'country.all': 'All',

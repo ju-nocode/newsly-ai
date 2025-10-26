@@ -539,13 +539,20 @@ export const checkSessionValidity = async () => {
     if (!authToken) return;
 
     try {
+        // Timeout de 10 secondes pour éviter les attentes infinies
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
+
         const response = await fetch(`${API_BASE_URL}/api/user/check-session`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${authToken}`,
                 'Content-Type': 'application/json'
-            }
+            },
+            signal: controller.signal
         });
+
+        clearTimeout(timeoutId);
 
         if (response.ok) {
             const data = await response.json();
@@ -567,8 +574,12 @@ export const checkSessionValidity = async () => {
             console.warn('Token non valide ou expiré (401)');
         }
     } catch (error) {
-        // En cas d'erreur réseau, on laisse l'utilisateur connecté
-        console.warn('Impossible de verifier la session:', error.message);
+        // En cas d'erreur réseau ou timeout, on laisse l'utilisateur connecté
+        if (error.name === 'AbortError') {
+            console.warn('⏱️ Vérification session timeout (10s) - ignoré');
+        } else {
+            console.warn('Impossible de verifier la session:', error.message);
+        }
     }
 };
 
@@ -596,11 +607,11 @@ if (typeof window !== 'undefined') {
 
                     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-                    // Vérification initiale différée
-                    setTimeout(() => checkSessionValidity(), 2000);
+                    // Vérification initiale différée (5s au lieu de 2s pour éviter le rush initial)
+                    setTimeout(() => checkSessionValidity(), 5000);
 
                     // Vérification périodique adaptée
-                    const checkInterval = isMobile ? 30000 : 10000;
+                    const checkInterval = isMobile ? 60000 : 30000;
                     setInterval(() => {
                         if (authToken) checkSessionValidity();
                     }, checkInterval);

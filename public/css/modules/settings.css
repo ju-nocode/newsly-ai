@@ -2,6 +2,105 @@
    SETTINGS PAGE - Modern & Responsive
 ================================================ */
 
+/* ================================================
+   PREFERENCES GRID - Categories & Countries
+================================================ */
+
+.preferences-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.preference-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1.25rem 1rem;
+  background: var(--bg-secondary);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: center;
+  min-height: 100px;
+}
+
+.preference-item:hover {
+  background: rgba(var(--primary-rgb), 0.05);
+  border-color: var(--primary);
+  color: var(--text-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.preference-item.active {
+  background: rgba(var(--primary-rgb), 0.12);
+  border-color: var(--primary);
+  color: var(--primary);
+  font-weight: 600;
+  box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
+}
+
+[data-theme="dark"] .preference-item.active {
+  background: rgba(var(--primary-rgb), 0.15);
+  box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.15);
+}
+
+.preference-icon {
+  width: 32px;
+  height: 32px;
+  filter: var(--icon-filter-secondary);
+  transition: all 0.2s ease;
+}
+
+.preference-item:hover .preference-icon {
+  filter: var(--icon-filter-primary);
+  transform: scale(1.1);
+}
+
+.preference-item.active .preference-icon {
+  filter: brightness(0) saturate(100%) invert(42%) sepia(93%) saturate(1352%) hue-rotate(203deg) brightness(97%) contrast(92%);
+  transform: scale(1.1);
+}
+
+[data-theme="dark"] .preference-item.active .preference-icon {
+  filter: brightness(0) invert(1);
+}
+
+.preference-item span {
+  font-size: 0.8125rem;
+  line-height: 1.3;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .preferences-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .preference-item {
+    padding: 1rem 0.75rem;
+    min-height: 90px;
+  }
+
+  .preference-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .preference-item span {
+    font-size: 0.75rem;
+  }
+}
+
 .settings-layout {
   display: flex;
   flex: 1;
