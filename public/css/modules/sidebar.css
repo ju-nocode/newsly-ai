@@ -272,3 +272,70 @@
   accent-color: var(--primary);
   flex-shrink: 0;
 }
+
+/* ================================================
+   PIN BUTTON - Sidebar Preferences Pin
+================================================ */
+
+.sidebar-menu-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.pin-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  margin-right: 0.5rem;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.sidebar-menu-item:hover .pin-btn {
+  opacity: 0.5;
+}
+
+.pin-btn:hover {
+  opacity: 1 !important;
+  background: rgba(59, 130, 246, 0.1);
+  transform: scale(1.1);
+}
+
+[data-theme="dark"] .pin-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.pin-btn.pinned {
+  opacity: 1;
+}
+
+.pin-btn .pin-icon {
+  width: 14px;
+  height: 14px;
+  filter: var(--icon-filter-secondary);
+  transition: all 0.2s ease;
+}
+
+.pin-btn.pinned .pin-icon {
+  filter: brightness(0) saturate(100%) invert(42%) sepia(93%) saturate(1352%) hue-rotate(203deg) brightness(97%) contrast(92%);
+  transform: rotate(45deg);
+}
+
+[data-theme="dark"] .pin-btn.pinned .pin-icon {
+  filter: brightness(0) invert(1);
+}
+
+/* Hide pin buttons when sidebar is closed */
+.vertical-sidebar.closed .pin-btn {
+  display: none;
+}
