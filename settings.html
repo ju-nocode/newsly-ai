@@ -86,154 +86,155 @@
 
                 <!-- Profile Card - Single unified card -->
                 <div class="settings-card">
-                    <h3 class="settings-card-title" data-i18n="settings.profile">Profil</h3>
-
-                    <div class="profile-layout">
-                        <!-- Left: Form fields -->
-                        <div class="profile-form">
-                            <div class="settings-grid-2">
-                            <!-- Email (Read-only) -->
-                            <div class="form-group">
-                                <label for="emailDisplay" class="form-label" data-i18n="settings.email">Email</label>
-                                <input
-                                    type="email"
-                                    id="emailDisplay"
-                                    class="form-input"
-                                    placeholder="exemple@email.com"
-                                    disabled
-                                    readonly
-                                >
-                                <p class="form-hint" data-i18n="settings.emailHint">L'email ne peut pas être modifié</p>
+                    <div class="profile-header">
+                        <div>
+                            <h3 class="settings-card-title" data-i18n="settings.profile">Profil</h3>
+                            <div class="profile-meta">
+                                <span id="accountCreatedAt">Compte créé le ...</span>
+                                <span class="meta-separator">•</span>
+                                <span id="accountUpdatedAt">Mis à jour le ...</span>
                             </div>
-
-                            <!-- Username (Obligatoire) -->
-                            <div class="form-group">
-                                <label for="usernameInput" class="form-label">
-                                    <span data-i18n="settings.username">Nom d'utilisateur</span>
-                                    <span style="color: var(--error); margin-left: 0.25rem;">*</span>
-                                </label>
-                                <input
-                                    type="text"
-                                    id="usernameInput"
-                                    class="form-input"
-                                    placeholder="Ex: @julien33"
-                                    required
-                                >
-                                <p class="form-hint" data-i18n="settings.usernameHint">Votre identifiant unique</p>
-                            </div>
-
-                            <!-- Full Name (Obligatoire) -->
-                            <div class="form-group">
-                                <label for="fullNameInput" class="form-label">
-                                    <span data-i18n="settings.fullName">Nom complet</span>
-                                    <span style="color: var(--error); margin-left: 0.25rem;">*</span>
-                                </label>
-                                <input
-                                    type="text"
-                                    id="fullNameInput"
-                                    class="form-input"
-                                    placeholder="Ex: Julien RICHARD"
-                                    required
-                                >
-                                <p class="form-hint" data-i18n="settings.fullNameHint">Votre nom et prénom</p>
-                            </div>
-
-                            <!-- Country (Obligatoire) -->
-                            <div class="form-group">
-                                <label for="countrySelect" class="form-label">
-                                    <span data-i18n="settings.country">Pays</span>
-                                    <span style="color: var(--error); margin-left: 0.25rem;">*</span>
-                                </label>
-                                <select
-                                    id="countrySelect"
-                                    class="form-input"
-                                    required
-                                >
-                                    <option value="" data-i18n="settings.selectCountry">-- Sélectionnez un pays --</option>
-                                </select>
-                                <p class="form-hint" data-i18n="settings.countryHint">Votre pays de résidence</p>
-                            </div>
-
-                            <!-- City (Obligatoire) -->
-                            <div class="form-group">
-                                <label for="cityInput" class="form-label">
-                                    <span data-i18n="settings.city">Ville</span>
-                                    <span style="color: var(--error); margin-left: 0.25rem;">*</span>
-                                </label>
-                                <input
-                                    type="text"
-                                    id="cityInput"
-                                    class="form-input"
-                                    placeholder="Ex: Bordeaux"
-                                    required
-                                >
-                                <p class="form-hint" data-i18n="settings.cityHint">Votre ville de résidence</p>
-                            </div>
-
-                            <!-- Phone (Optionnel) -->
-                            <div class="form-group">
-                                <label for="phoneInput" class="form-label" data-i18n="settings.phone">Téléphone</label>
-                                <div style="display: flex; gap: 0.5rem;">
-                                    <select id="phoneCountryCode" class="form-input" style="width: 120px;">
-                                        <!-- Options peuplées dynamiquement depuis countries.js -->
-                                    </select>
-                                    <input
-                                        type="tel"
-                                        id="phoneInput"
-                                        class="form-input"
-                                        placeholder="Ex: 6 12 34 56 78"
-                                        style="flex: 1;"
-                                    >
-                                </div>
-                                <p class="form-hint" data-i18n="settings.phoneHint">Optionnel - Votre numéro de téléphone</p>
-                            </div>
-
-                            <!-- Bio (Optionnel) -->
-                            <div class="form-group" style="grid-column: 1 / -1;">
-                                <label for="bioInput" class="form-label" data-i18n="settings.bio">Biographie</label>
-                                <textarea
-                                    id="bioInput"
-                                    class="form-input"
-                                    placeholder="Parlez-nous de vous..."
-                                    rows="4"
-                                    maxlength="500"
-                                    style="resize: vertical; min-height: 100px;"
-                                ></textarea>
-                                <p class="form-hint">
-                                    <span data-i18n="settings.bioHint">Optionnel - Une courte présentation</span>
-                                    <span style="float: right;">
-                                        <span id="bioCount">0</span>/500
-                                    </span>
-                                </p>
-                            </div>
-
-                            <button id="updateProfileBtn" class="btn-primary" data-i18n="settings.updateProfile">
-                                Enregistrer
-                            </button>
                         </div>
 
-                        <!-- Right: Avatar section -->
-                        <div class="profile-avatar">
+                        <!-- Avatar in header -->
+                        <div class="profile-avatar-header">
                             <div class="avatar-preview" id="avatarPreview">
                                 <img id="avatarImage" src="https://ui-avatars.com/api/?name=User&background=3b82f6&color=fff&size=200" alt="Avatar">
                                 <div class="avatar-overlay" id="avatarOverlay"></div>
                             </div>
-
                             <input type="file" id="avatarInput" accept="image/*" style="display: none;">
-
-                            <div class="avatar-actions">
-                                <button type="button" id="uploadAvatarBtn" class="btn-secondary">
-                                    Modifier
-                                </button>
-                                <button type="button" id="removeAvatarBtn" class="btn-secondary-danger">
-                                    Supprimer
-                                </button>
+                            <div class="avatar-actions-compact">
+                                <button type="button" id="uploadAvatarBtn" class="btn-secondary">Modifier</button>
+                                <button type="button" id="removeAvatarBtn" class="btn-secondary-danger">Supprimer</button>
                             </div>
-
-                            <button type="button" id="generateAvatarBtn" class="btn-success" style="width: 100%;" title="Max 10MB - Optimisé pour photos iPhone">
-                                <span class="btn-text">Générer avatar</span>
-                            </button>
                         </div>
+                    </div>
+
+                    <!-- Form fields -->
+                    <div class="settings-grid-2">
+                        <!-- Email (Read-only) -->
+                        <div class="form-group">
+                            <label for="emailDisplay" class="form-label" data-i18n="settings.email">Email</label>
+                            <input
+                                type="email"
+                                id="emailDisplay"
+                                class="form-input"
+                                disabled
+                                readonly
+                            >
+                            <p class="form-hint" data-i18n="settings.emailHint">Adresse email de connexion (non modifiable)</p>
+                        </div>
+
+                        <!-- Username (Obligatoire) -->
+                        <div class="form-group">
+                            <label for="usernameInput" class="form-label">
+                                <span data-i18n="settings.username">Nom d'utilisateur</span>
+                                <span style="color: var(--error); margin-left: 0.25rem;">*</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="usernameInput"
+                                class="form-input"
+                                placeholder="john_doe"
+                                required
+                            >
+                            <p class="form-hint" data-i18n="settings.usernameHint">Identifiant unique affiché publiquement</p>
+                        </div>
+
+                        <!-- Full Name (Obligatoire) -->
+                        <div class="form-group">
+                            <label for="fullNameInput" class="form-label">
+                                <span data-i18n="settings.fullName">Nom complet</span>
+                                <span style="color: var(--error); margin-left: 0.25rem;">*</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="fullNameInput"
+                                class="form-input"
+                                placeholder="John Doe"
+                                required
+                            >
+                            <p class="form-hint" data-i18n="settings.fullNameHint">Nom et prénom complets</p>
+                        </div>
+
+                        <!-- Country (Obligatoire) -->
+                        <div class="form-group">
+                            <label for="countrySelect" class="form-label">
+                                <span data-i18n="settings.country">Pays</span>
+                                <span style="color: var(--error); margin-left: 0.25rem;">*</span>
+                            </label>
+                            <select
+                                id="countrySelect"
+                                class="form-input"
+                                required
+                            >
+                                <option value="">Sélectionnez un pays</option>
+                            </select>
+                            <p class="form-hint" data-i18n="settings.countryHint">Pays de résidence</p>
+                        </div>
+
+                        <!-- City (Obligatoire) -->
+                        <div class="form-group">
+                            <label for="cityInput" class="form-label">
+                                <span data-i18n="settings.city">Ville</span>
+                                <span style="color: var(--error); margin-left: 0.25rem;">*</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="cityInput"
+                                class="form-input"
+                                placeholder="Paris"
+                                required
+                            >
+                            <p class="form-hint" data-i18n="settings.cityHint">Ville de résidence</p>
+                        </div>
+
+                        <!-- Phone (Optionnel) -->
+                        <div class="form-group">
+                            <label for="phoneInput" class="form-label" data-i18n="settings.phone">Téléphone</label>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <select id="phoneCountryCode" class="form-input" style="width: 120px;">
+                                    <!-- Options peuplées dynamiquement depuis countries.js -->
+                                </select>
+                                <input
+                                    type="tel"
+                                    id="phoneInput"
+                                    class="form-input"
+                                    placeholder="6 12 34 56 78"
+                                    style="flex: 1;"
+                                >
+                            </div>
+                            <p class="form-hint" data-i18n="settings.phoneHint">Numéro de téléphone (optionnel)</p>
+                        </div>
+
+                        <!-- Bio (Optionnel) - Full width -->
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label for="bioInput" class="form-label" data-i18n="settings.bio">Biographie</label>
+                            <textarea
+                                id="bioInput"
+                                class="form-input"
+                                placeholder="Quelques mots sur vous..."
+                                rows="3"
+                                maxlength="500"
+                                style="resize: vertical; min-height: 80px;"
+                            ></textarea>
+                            <p class="form-hint">
+                                <span data-i18n="settings.bioHint">Courte présentation (optionnel)</span>
+                                <span style="float: right;">
+                                    <span id="bioCount">0</span>/500
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="profile-actions">
+                        <button type="button" id="generateAvatarBtn" class="btn-success">
+                            <span class="btn-text">Générer avatar aléatoire</span>
+                        </button>
+                        <button id="updateProfileBtn" class="btn-primary" data-i18n="settings.updateProfile">
+                            Enregistrer les modifications
+                        </button>
                     </div>
                 </div>
             </section>
@@ -750,6 +751,27 @@
                         navUserRole.textContent = `Connecté en tant que ${escapeHtml(userName)}`;
                         navUserRole.className = 'user-role-badge user';
                     }
+                }
+
+                // Timestamps
+                if (profile.created_at) {
+                    const createdDate = new Date(profile.created_at);
+                    const createdText = createdDate.toLocaleDateString('fr-FR', {
+                        day: '2-digit',
+                        month: 'long',
+                        year: 'numeric'
+                    });
+                    document.getElementById('accountCreatedAt').textContent = `Compte créé le ${createdText}`;
+                }
+
+                if (profile.updated_at) {
+                    const updatedDate = new Date(profile.updated_at);
+                    const updatedText = updatedDate.toLocaleDateString('fr-FR', {
+                        day: '2-digit',
+                        month: 'long',
+                        year: 'numeric'
+                    });
+                    document.getElementById('accountUpdatedAt').textContent = `Mis à jour le ${updatedText}`;
                 }
 
                 // Email (toujours présent)
