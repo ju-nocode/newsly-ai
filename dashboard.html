@@ -371,13 +371,27 @@
                 // Unpin
                 userPreferences.followed_categories = userPreferences.followed_categories.filter(c => c !== category);
                 pinBtn.classList.remove('pinned');
-                notifyInfo(`Catégorie "${category}" retirée des favoris`);
+
+                // Get category display name
+                const categoryLink = document.querySelector(`[data-category="${category}"] span`);
+                const categoryName = categoryLink ? categoryLink.textContent : category;
+                showInfo(`Catégorie "${categoryName}" retirée des favoris`);
             } else {
                 // Pin
                 userPreferences.followed_categories.push(category);
                 pinBtn.classList.add('pinned');
-                notifySuccess(`Catégorie "${category}" ajoutée aux favoris`);
+
+                // Get category display name
+                const categoryLink = document.querySelector(`[data-category="${category}"] span`);
+                const categoryName = categoryLink ? categoryLink.textContent : category;
+                notifySuccess(`Catégorie "${categoryName}" ajoutée aux favoris`);
             }
+
+            // Log for debugging
+            console.log('📌 Preferences after toggle:', {
+                followed_categories: userPreferences.followed_categories,
+                preferred_countries: userPreferences.preferred_countries
+            });
 
             await saveUserPreferences();
         };
@@ -389,19 +403,27 @@
 
             const isPinned = userPreferences.preferred_countries.includes(country);
 
+            // Get country display name
+            const countryLink = document.querySelector(`[data-country="${country}"] span`);
+            const countryName = countryLink ? countryLink.textContent : country;
+
             if (isPinned) {
                 // Unpin
                 userPreferences.preferred_countries = userPreferences.preferred_countries.filter(c => c !== country);
                 pinBtn.classList.remove('pinned');
-                const countryName = document.querySelector(`[data-country="${country}"] span`).textContent;
-                notifyInfo(`Pays "${countryName}" retiré des favoris`);
+                showInfo(`Pays "${countryName}" retiré des favoris`);
             } else {
                 // Pin
                 userPreferences.preferred_countries.push(country);
                 pinBtn.classList.add('pinned');
-                const countryName = document.querySelector(`[data-country="${country}"] span`).textContent;
                 notifySuccess(`Pays "${countryName}" ajouté aux favoris`);
             }
+
+            // Log for debugging
+            console.log('📌 Preferences after toggle:', {
+                followed_categories: userPreferences.followed_categories,
+                preferred_countries: userPreferences.preferred_countries
+            });
 
             await saveUserPreferences();
         };
