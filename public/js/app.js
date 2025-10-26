@@ -152,24 +152,30 @@ export const signup = async (email, password, metadata) => {
                 city: metadata.city || 'Paris'
             };
 
+        const requestBody = {
+            email,
+            password,
+            metadata: userMetadata,
+            first_name: userMetadata.first_name,
+            last_name: userMetadata.last_name,
+            country: userMetadata.country,
+            city: userMetadata.city,
+            phone: userMetadata.phone
+        };
+
+        console.log('📤 Signup request body:', requestBody);
+
         const response = await fetch(`${API_BASE_URL}/api/auth/signup`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                email,
-                password,
-                metadata: userMetadata,
-                first_name: userMetadata.first_name,
-                last_name: userMetadata.last_name,
-                country: userMetadata.country,
-                city: userMetadata.city,
-                phone: userMetadata.phone
-            })
+            body: JSON.stringify(requestBody)
         });
 
         const data = await response.json();
+        console.log('📥 Signup response:', { status: response.status, data });
 
         if (!response.ok) {
+            console.error('❌ Signup failed:', data);
             throw new Error(data.error || 'Erreur d\'inscription');
         }
 
