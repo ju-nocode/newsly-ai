@@ -9,7 +9,8 @@
 .preferences-grid-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  gap: 2.5rem;
+  max-width: 1400px;
 }
 
 @media (max-width: 768px) {

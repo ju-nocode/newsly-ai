@@ -311,13 +311,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Save Button -->
-                <div class="settings-card" style="margin-top: 2rem;">
-                    <button id="savePreferencesBtn" class="btn-primary" data-i18n="settings.savePreferences">
-                        Enregistrer les préférences
-                    </button>
-                </div>
             </section>
 
             <!-- Account Section -->
@@ -693,23 +686,22 @@
             }
         };
 
-        // Event listeners for preference items
+        // Event listeners for preference items - Auto-save on click
         document.querySelectorAll('#categoriesGrid .preference-list-item').forEach(btn => {
-            btn.addEventListener('click', () => {
+            btn.addEventListener('click', async () => {
                 const category = btn.dataset.category;
                 toggleCategoryPreference(category);
+                await savePreferences();
             });
         });
 
         document.querySelectorAll('#countriesGrid .preference-list-item').forEach(btn => {
-            btn.addEventListener('click', () => {
+            btn.addEventListener('click', async () => {
                 const country = btn.dataset.country;
                 toggleCountryPreference(country);
+                await savePreferences();
             });
         });
-
-        // Save button
-        document.getElementById('savePreferencesBtn')?.addEventListener('click', savePreferences);
 
         // Populer le select des pays
         const countrySelect = document.getElementById('countrySelect');
