@@ -76,46 +76,34 @@
                 <h3 class="sidebar-section-title" data-i18n="sidebar.countries">Pays</h3>
                 <ul class="sidebar-menu">
                     <li class="sidebar-menu-item">
-                        <label class="sidebar-menu-link" style="cursor: pointer;" data-tooltip="Tous les pays">
-                            <img src="https://img.icons8.com/ios-filled/18/globe.png" alt="" class="sidebar-icon">
-                            <input type="checkbox" value="all" id="countryAll" checked style="margin-right: 0.5rem;">
-                            <span data-i18n="country.all">Tous</span>
-                        </label>
-                    </li>
-                    <li class="sidebar-menu-item">
-                        <label class="sidebar-menu-link" style="cursor: pointer;" data-tooltip="🇺🇸 États-Unis">
+                        <a class="sidebar-menu-link active" href="#" data-country="us" data-tooltip="États-Unis">
                             <img src="https://img.icons8.com/emoji/18/united-states-flag.png" alt="" class="sidebar-icon">
-                            <input type="checkbox" class="country-checkbox" value="us" style="margin-right: 0.5rem;">
-                            <span data-i18n="country.us">🇺🇸 États-Unis</span>
-                        </label>
+                            <span data-i18n="country.us">États-Unis</span>
+                        </a>
                     </li>
                     <li class="sidebar-menu-item">
-                        <label class="sidebar-menu-link" style="cursor: pointer;" data-tooltip="🇫🇷 France">
+                        <a class="sidebar-menu-link" href="#" data-country="fr" data-tooltip="France">
                             <img src="https://img.icons8.com/emoji/18/france-flag.png" alt="" class="sidebar-icon">
-                            <input type="checkbox" class="country-checkbox" value="fr" style="margin-right: 0.5rem;">
-                            <span data-i18n="country.fr">🇫🇷 France</span>
-                        </label>
+                            <span data-i18n="country.fr">France</span>
+                        </a>
                     </li>
                     <li class="sidebar-menu-item">
-                        <label class="sidebar-menu-link" style="cursor: pointer;" data-tooltip="🇬🇧 Royaume-Uni">
+                        <a class="sidebar-menu-link" href="#" data-country="gb" data-tooltip="Royaume-Uni">
                             <img src="https://img.icons8.com/emoji/18/united-kingdom-flag.png" alt="" class="sidebar-icon">
-                            <input type="checkbox" class="country-checkbox" value="gb" style="margin-right: 0.5rem;">
-                            <span data-i18n="country.gb">🇬🇧 Royaume-Uni</span>
-                        </label>
+                            <span data-i18n="country.gb">Royaume-Uni</span>
+                        </a>
                     </li>
                     <li class="sidebar-menu-item">
-                        <label class="sidebar-menu-link" style="cursor: pointer;" data-tooltip="🇨🇦 Canada">
+                        <a class="sidebar-menu-link" href="#" data-country="ca" data-tooltip="Canada">
                             <img src="https://img.icons8.com/emoji/18/canada-flag.png" alt="" class="sidebar-icon">
-                            <input type="checkbox" class="country-checkbox" value="ca" style="margin-right: 0.5rem;">
-                            <span data-i18n="country.ca">🇨🇦 Canada</span>
-                        </label>
+                            <span data-i18n="country.ca">Canada</span>
+                        </a>
                     </li>
                     <li class="sidebar-menu-item">
-                        <label class="sidebar-menu-link" style="cursor: pointer;" data-tooltip="🇩🇪 Allemagne">
+                        <a class="sidebar-menu-link" href="#" data-country="de" data-tooltip="Allemagne">
                             <img src="https://img.icons8.com/emoji/18/germany-flag.png" alt="" class="sidebar-icon">
-                            <input type="checkbox" class="country-checkbox" value="de" style="margin-right: 0.5rem;">
-                            <span data-i18n="country.de">🇩🇪 Allemagne</span>
-                        </label>
+                            <span data-i18n="country.de">Allemagne</span>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -239,7 +227,7 @@
 
 
         let currentCategory = 'general';
-        let selectedCountries = ['us']; // Par défaut : États-Unis
+        let currentCountry = 'us'; // Par défaut : États-Unis
 
         // Vérifier l'authentification
         const isAuth = checkAuth();
@@ -280,7 +268,7 @@
         };
 
         // Charger les actualités
-        const loadNews = async (category = 'general') => {
+        const loadNews = async (category = 'general', country = 'us') => {
             const loadingIndicator = document.getElementById('loadingIndicator');
             const newsContainer = document.getElementById('newsContainer');
 
@@ -294,50 +282,30 @@
             showShimmerLoader(newsContainer, 6);
 
             try {
-                // Charger les news pour tous les pays sélectionnés (timeout 10s intégré dans fetchNews)
-                const promises = selectedCountries.map(country =>
-                    fetchNews(category, country, 1, 10000) // 10s timeout
-                );
-
-                const results = await Promise.all(promises);
+                // Charger les news pour le pays sélectionné (timeout 10s intégré dans fetchNews)
+                const result = await fetchNews(category, country, 1, 10000); // 10s timeout
 
                 // Debug: afficher les résultats
-                console.log('📰 loadNews results:', results);
-
-                // Combiner tous les articles d'abord
-                let allArticles = [];
-                results.forEach((result, index) => {
-                    console.log(`📍 Country ${selectedCountries[index]}:`, result);
-                    if (result.success && result.articles) {
-                        // Ajouter le code pays à chaque article pour l'affichage
-                        const articlesWithCountry = result.articles.map(article => ({
-                            ...article,
-                            countryCode: selectedCountries[index]
-                        }));
-                        allArticles = allArticles.concat(articlesWithCountry);
-                    }
-                });
-
-                console.log(`✅ Total articles chargés: ${allArticles.length}`);
-
-                // Vérifier si toutes les requêtes ont timeout
-                const allTimeout = results.every(r => r.timeout === true);
-
-                // Vérifier si toutes les requêtes ont échoué
-                const allFailed = results.every(r => !r.success);
+                console.log('📰 loadNews result:', result);
+                console.log(`📍 Country ${country}:`, result);
 
                 // Si on a des articles → succès
-                if (allArticles.length > 0) {
+                if (result.success && result.articles && result.articles.length > 0) {
                     // Arrêter les shimmers
                     hideShimmerLoader(newsContainer);
 
                     // Arrêter le page loader en succès (bleu/vert)
                     hidePageLoader(false);
 
-                    // Mélanger les articles pour plus de diversité
-                    allArticles.sort(() => Math.random() - 0.5);
+                    // Ajouter le code pays à chaque article pour l'affichage
+                    const articlesWithCountry = result.articles.map(article => ({
+                        ...article,
+                        countryCode: country
+                    }));
 
-                    displayNews(allArticles, 'newsContainer');
+                    console.log(`✅ Total articles chargés: ${articlesWithCountry.length}`);
+
+                    displayNews(articlesWithCountry, 'newsContainer');
                     // Animate news cards on load
                     setTimeout(() => {
                         stagger('.news-card', fadeIn, 80);
@@ -350,7 +318,7 @@
                     // Le container garde déjà les shimmers affichés
 
                     // Page loader rouge si timeout/échec, bleu sinon
-                    if (allTimeout || allFailed) {
+                    if (result.timeout === true || !result.success) {
                         hidePageLoader(true); // Rouge
                         console.warn('⚠️ Échec API - page loader rouge');
                     } else {
@@ -399,11 +367,45 @@
                 }).catch(err => console.error('Error logging category change:', err));
             }
 
-            loadNews(category);
+            loadNews(category, currentCountry);
 
             // Update URL with query parameter
             const url = new URL(window.location);
             url.searchParams.set('category', category);
+            window.history.pushState({}, '', url);
+        }
+
+        // Function to switch country and update URL
+        function switchToCountry(country) {
+            const previousCountry = currentCountry;
+
+            // Retirer la classe active de tous les boutons de pays
+            document.querySelectorAll('.sidebar-menu-link[data-country]').forEach(b => b.classList.remove('active'));
+
+            // Ajouter la classe active au bouton correspondant
+            const activeBtn = document.querySelector(`.sidebar-menu-link[data-country="${country}"]`);
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+            }
+
+            // Charger les news de ce pays
+            currentCountry = country;
+
+            // ✅ Track country change in user_activity_log
+            if (userIntelligence && previousCountry !== country) {
+                userIntelligence.logActivity('country_filter_change', {
+                    from_countries: [previousCountry],
+                    to_countries: [country],
+                    filter_type: 'single',
+                    timestamp: new Date().toISOString()
+                }).catch(err => console.error('Error logging country change:', err));
+            }
+
+            loadNews(currentCategory, country);
+
+            // Update URL with query parameter
+            const url = new URL(window.location);
+            url.searchParams.set('country', country);
             window.history.pushState({}, '', url);
         }
 
@@ -415,93 +417,29 @@
             });
         });
 
-        // Handle URL parameter on page load
+        document.querySelectorAll('.sidebar-menu-link[data-country]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const country = btn.dataset.country;
+                switchToCountry(country);
+            });
+        });
+
+        // Handle URL parameters on page load
         const urlParams = new URLSearchParams(window.location.search);
         const urlCategory = urlParams.get('category');
+        const urlCountry = urlParams.get('country');
+
+        if (urlCategory) {
+            currentCategory = urlCategory;
+        }
+        if (urlCountry) {
+            currentCountry = urlCountry;
+            switchToCountry(urlCountry);
+        }
         if (urlCategory) {
             switchToCategory(urlCategory);
         }
-
-        // ================================================
-        // COUNTRY FILTER
-        // ================================================
-
-        const countryAll = document.getElementById('countryAll');
-        const countryCheckboxes = document.querySelectorAll('.country-checkbox');
-
-        // Gérer la sélection "Tous"
-        countryAll.addEventListener('change', () => {
-            const previousCountries = [...selectedCountries];
-
-            if (countryAll.checked) {
-                // Si "Tous" est coché, cocher automatiquement tous les pays
-                countryCheckboxes.forEach(cb => cb.checked = true);
-                selectedCountries = Array.from(countryCheckboxes).map(cb => cb.value);
-            } else {
-                // Si "Tous" est décoché, décocher tous les pays
-                countryCheckboxes.forEach(cb => cb.checked = false);
-                selectedCountries = ['us']; // Par défaut : US
-            }
-
-            // ✅ Track country filter change
-            if (userIntelligence && JSON.stringify(previousCountries) !== JSON.stringify(selectedCountries)) {
-                userIntelligence.logActivity('country_filter_change', {
-                    from_countries: previousCountries,
-                    to_countries: selectedCountries,
-                    filter_type: 'all',
-                    timestamp: new Date().toISOString()
-                }).catch(err => console.error('Error logging country change:', err));
-            }
-
-            // Recharger les news
-            loadNews(currentCategory);
-        });
-
-        // Gérer les sélections individuelles
-        countryCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', () => {
-                const previousCountries = [...selectedCountries];
-
-                // Si au moins une checkbox pays est cochée, décocher "Tous"
-                const anyChecked = Array.from(countryCheckboxes).some(cb => cb.checked);
-                const allChecked = Array.from(countryCheckboxes).every(cb => cb.checked);
-
-                if (allChecked) {
-                    // Si tous les pays sont cochés, cocher "Tous" aussi
-                    countryAll.checked = true;
-                } else if (anyChecked) {
-                    // Si au moins un pays est coché mais pas tous, décocher "Tous"
-                    countryAll.checked = false;
-                } else {
-                    // Si plus rien n'est coché, recocher "Tous"
-                    countryAll.checked = true;
-                    countryCheckboxes.forEach(cb => cb.checked = true);
-                }
-
-                // Mettre à jour la liste des pays sélectionnés
-                selectedCountries = Array.from(countryCheckboxes)
-                    .filter(cb => cb.checked)
-                    .map(cb => cb.value);
-
-                if (selectedCountries.length === 0) {
-                    selectedCountries = ['us'];
-                }
-
-                // ✅ Track country filter change
-                if (userIntelligence && JSON.stringify(previousCountries) !== JSON.stringify(selectedCountries)) {
-                    userIntelligence.logActivity('country_filter_change', {
-                        from_countries: previousCountries,
-                        to_countries: selectedCountries,
-                        filter_type: 'individual',
-                        country_changed: checkbox.value,
-                        timestamp: new Date().toISOString()
-                    }).catch(err => console.error('Error logging country change:', err));
-                }
-
-                // Recharger les news avec les pays sélectionnés
-                loadNews(currentCategory);
-            });
-        });
 
         // Gérer le burger menu
         const burgerBtn = document.getElementById('burgerBtn');
@@ -688,8 +626,8 @@
             }, { passive: false });
         }
 
-        // Fermer sidebar après sélection sur mobile (clic sur une catégorie)
-        document.querySelectorAll('.sidebar-menu-link[data-category]').forEach(btn => {
+        // Fermer sidebar après sélection sur mobile (clic sur une catégorie ou pays)
+        document.querySelectorAll('.sidebar-menu-link[data-category], .sidebar-menu-link[data-country]').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (window.innerWidth <= 1024) {
                     setTimeout(closeMobileMenu, 100); // Petit délai pour UX
@@ -719,7 +657,7 @@
                     // Lancer en parallèle mais ignorer les erreurs pour éviter freeze
                     await Promise.all([
                         loadProfile().catch(err => console.warn('Profile load error:', err)),
-                        loadNews('general').catch(err => console.warn('News load error:', err))
+                        loadNews(currentCategory, currentCountry).catch(err => console.warn('News load error:', err))
                     ]).catch(() => {
                         // Si tout échoue, au moins la page ne freeze pas
                         console.error('Failed to load dashboard data');
@@ -727,7 +665,7 @@
                 } else {
                     // Desktop : chargement séquentiel normal
                     await loadProfile();
-                    await loadNews('general');
+                    await loadNews(currentCategory, currentCountry);
                 }
             } finally {
                 // Masquer le loader une fois tout chargé
