@@ -6,6 +6,19 @@
    PREFERENCES LIST - Vertical Layout
 ================================================ */
 
+.preferences-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .preferences-grid-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
 .preferences-list {
   display: flex;
   flex-direction: column;
