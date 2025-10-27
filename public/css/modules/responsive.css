@@ -174,7 +174,6 @@
 
   .btn {
     min-height: 44px;
-    padding: 0.75rem 1.25rem;
   }
 
   .news-card {
@@ -285,7 +284,6 @@
 
   .btn {
     font-size: 0.8125rem;
-    padding: 0.625rem 1rem;
   }
 
   /* Avatar sur mobile: toujours afficher l'overlay */
