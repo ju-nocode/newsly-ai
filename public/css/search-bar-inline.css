@@ -53,12 +53,12 @@
 
 .smart-search-input {
     flex: 1 !important;
-    padding: 0.75rem 3rem 0.75rem 3rem !important;
+    padding: 0.5rem 3rem 0.5rem 3rem !important;
     background: transparent !important;
     border: none !important;
     outline: none !important;
     color: var(--text-primary, #111827) !important;
-    font-size: 0.9375rem !important;
+    font-size: 0.8125rem !important;
     font-family: inherit !important;
     width: 100% !important;
     height: 100% !important;

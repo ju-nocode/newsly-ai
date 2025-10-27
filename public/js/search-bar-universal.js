@@ -32,7 +32,7 @@ const LOCAL_SEARCH_COMMANDS = {
         prefix: '/dashboard',
         aliases: ['/home', '/accueil', '/db'],
         description: 'Aller au tableau de bord',
-        icon: '🏠',
+        icon: '',
         action: () => window.location.href = 'dashboard.html',
         suggestions: []
     },
@@ -40,7 +40,7 @@ const LOCAL_SEARCH_COMMANDS = {
         prefix: '/profile:',
         aliases: ['/profil:', '/user:', '/me:'],
         description: 'Gérer votre profil',
-        icon: '👤',
+        icon: '',
         suggestions: [
             {
                 value: '/profile: info',
@@ -66,7 +66,7 @@ const LOCAL_SEARCH_COMMANDS = {
         prefix: '/feed:',
         aliases: ['/news:', '/actu:', '/articles:', '/cat:'],
         description: 'Rechercher des actualités',
-        icon: '📰',
+        icon: '',
         suggestions: [
             {
                 value: '/feed: general',
@@ -130,7 +130,7 @@ const LOCAL_SEARCH_COMMANDS = {
         prefix: '/settings',
         aliases: ['/config', '/options', '/parametres', '/params'],
         description: 'Accéder aux paramètres',
-        icon: '⚙️',
+        icon: '',
         action: () => window.location.href = 'settings.html',
         suggestions: [
             {
@@ -175,7 +175,7 @@ const LOCAL_SEARCH_COMMANDS = {
         prefix: '/theme:',
         aliases: ['/apparence:', '/mode:'],
         description: 'Changer le thème',
-        icon: '🎨',
+        icon: '',
         suggestions: [
             {
                 value: '/theme: light',
@@ -205,7 +205,7 @@ const LOCAL_SEARCH_COMMANDS = {
         prefix: '/logout',
         aliases: ['/deconnexion', '/signout', '/exit'],
         description: 'Se déconnecter',
-        icon: '🚪',
+        icon: '',
         action: () => logout(),
         suggestions: []
     },
@@ -213,7 +213,7 @@ const LOCAL_SEARCH_COMMANDS = {
         prefix: '/password',
         aliases: ['/reset', '/mdp', '/forgot'],
         description: 'Réinitialiser mot de passe',
-        icon: '🔑',
+        icon: '',
         action: () => window.location.href = 'reset-password.html',
         suggestions: []
     },
@@ -221,7 +221,7 @@ const LOCAL_SEARCH_COMMANDS = {
         prefix: '/help',
         aliases: ['/aide', '/?', '/h'],
         description: 'Aide et documentation',
-        icon: '❓',
+        icon: '',
         suggestions: [
             {
                 value: '/help: commands',
@@ -1480,7 +1480,7 @@ function showFavoritesAndHistory(favorites, history) {
             historyItem.className = 'search-suggestion-item';
             historyItem.dataset.index = itemIndex;
 
-            const icon = item.type === 'command' ? '⚡' : '🔍';
+            const icon = '';
             const timeAgo = getTimeAgo(item.timestamp);
 
             historyItem.innerHTML = `

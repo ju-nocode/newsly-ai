@@ -44,7 +44,7 @@ export async function loadSearchCommandsFromDB() {
                 prefix: cmd.prefix,
                 aliases: cmd.aliases || [],
                 description: cmd.description,
-                icon: cmd.icon || '🔍',
+                icon: cmd.icon || '',
                 action: createActionFromDB(cmd.action_type, cmd.action_value),
                 suggestions: cmd.suggestions
                     ? cmd.suggestions
