@@ -42,11 +42,16 @@ export default async function handler(req, res) {
             process.env.SUPABASE_ANON_KEY
         );
 
-        // Préparer les métadonnées utilisateur
+        // Préparer les métadonnées utilisateur - MINIMAL pour éviter erreurs trigger
         const userMetadata = {
             first_name: first_name || metadata?.first_name || email.split('@')[0],
             last_name: last_name || metadata?.last_name || '',
-            display_name: metadata?.display_name || `${first_name || email.split('@')[0]} ${last_name || ''}`.trim() || email.split('@')[0],
+            display_name: metadata?.display_name || `${first_name || email.split('@')[0]} ${last_name || ''}`.trim() || email.split('@')[0]
+        };
+
+        // Données complètes pour profiles (insérées APRÈS signup)
+        const fullMetadata = {
+            ...userMetadata,
             phone: phone || metadata?.phone || '',
             bio: metadata?.bio || '',
             avatar_url: metadata?.avatar_url || '',
@@ -65,7 +70,7 @@ export default async function handler(req, res) {
             email,
             password,
             options: {
-                data: userMetadata,
+                data: userMetadata,  // Uniquement first_name, last_name, display_name
                 emailRedirectTo: redirectUrl
             }
         });
@@ -100,14 +105,14 @@ export default async function handler(req, res) {
             const profileData = {
                 id: data.user.id,
                 email: data.user.email,
-                first_name: userMetadata.first_name || email.split('@')[0],
-                last_name: userMetadata.last_name || '',
-                display_name: userMetadata.display_name || `${userMetadata.first_name} ${userMetadata.last_name}`.trim() || email.split('@')[0],
-                phone: userMetadata.phone || null,
-                bio: userMetadata.bio || null,
-                avatar_url: userMetadata.avatar_url || null,
-                country: userMetadata.country || 'France',
-                city: userMetadata.city || 'Paris',
+                first_name: fullMetadata.first_name || email.split('@')[0],
+                last_name: fullMetadata.last_name || '',
+                display_name: fullMetadata.display_name || `${fullMetadata.first_name} ${fullMetadata.last_name}`.trim() || email.split('@')[0],
+                phone: fullMetadata.phone || null,
+                bio: fullMetadata.bio || null,
+                avatar_url: fullMetadata.avatar_url || null,
+                country: fullMetadata.country || 'France',
+                city: fullMetadata.city || 'Paris',
                 is_admin: false,
                 created_at: new Date().toISOString(),
                 updated_at: new Date().toISOString()
