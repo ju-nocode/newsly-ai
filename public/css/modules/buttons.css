@@ -380,3 +380,39 @@
 [data-theme="dark"] .btn-secondary-danger .ripple {
   background: rgba(255, 255, 255, 0.2);
 }
+
+/* ================================================
+   UTILITY CLASSES - Button sizing and spacing
+================================================ */
+
+/* Full width button */
+.btn-full-width {
+  width: 100%;
+}
+
+/* Half width button (for flex layouts) */
+.btn-half {
+  flex: 1;
+}
+
+/* Two-thirds width button (for asymmetric layouts) */
+.btn-two-thirds {
+  flex: 2;
+}
+
+/* Button spacing utilities */
+.btn-mt-1 {
+  margin-top: 1rem;
+}
+
+.btn-mt-2 {
+  margin-top: 2rem;
+}
+
+.btn-mb-1 {
+  margin-bottom: 1rem;
+}
+
+.btn-mb-2 {
+  margin-bottom: 2rem;
+}

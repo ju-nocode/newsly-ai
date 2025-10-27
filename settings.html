@@ -413,7 +413,7 @@
                         <div id="securityAuditContainer" style="margin-bottom: 1rem;">
                             <p style="text-align: center; color: var(--text-muted);" data-i18n="settings.loadingAudit">Chargement de l'audit...</p>
                         </div>
-                        <button id="clearAuditLogsBtn" class="btn-danger" style="width: 100%;">
+                        <button id="clearAuditLogsBtn" class="btn-danger btn-full-width">
                             Effacer l'historique
                         </button>
                     </div>
@@ -427,7 +427,7 @@
                         <div id="activeSessionsContainer">
                             <p style="text-align: center; color: var(--text-muted);">Chargement des connexions...</p>
                         </div>
-                        <button id="logoutAllDevicesBtn" class="btn-danger" style="width: 100%; margin-top: 1rem;">
+                        <button id="logoutAllDevicesBtn" class="btn-danger btn-full-width btn-mt-1">
                             Déconnecter tous les appareils
                         </button>
                     </div>
@@ -463,11 +463,11 @@
 
                 <div id="deleteAccountError" class="error-message" style="display: none;"></div>
 
-                <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
-                    <button type="button" class="btn-secondary" id="cancelDeleteBtn" style="flex: 1;">
+                <div class="button-group">
+                    <button type="button" class="btn-secondary btn-half" id="cancelDeleteBtn">
                         Annuler
                     </button>
-                    <button type="button" class="btn-danger" id="confirmDeleteBtn" style="flex: 1;">
+                    <button type="button" class="btn-danger btn-half" id="confirmDeleteBtn">
                         Supprimer définitivement
                     </button>
                 </div>
@@ -1758,7 +1758,7 @@
                     <div style="text-align: center; padding: 2rem;">
                         <p style="color: var(--error); margin-bottom: 0.5rem;">❌ Erreur lors du chargement</p>
                         <p style="color: var(--text-muted); font-size: 0.875rem;">${escapeHtml(error.message)}</p>
-                        <button id="retryAuditBtn" class="btn-primary" style="margin-top: 1rem;">
+                        <button id="retryAuditBtn" class="btn-primary btn-mt-1">
                             🔄 Réessayer
                         </button>
                     </div>
@@ -1975,7 +1975,7 @@
                 sessionsContainer.innerHTML = `
                     <div style="text-align: center; padding: 2rem;">
                         <p style="color: var(--error); margin-bottom: 0.5rem;">❌ Erreur lors du chargement</p>
-                        <button id="retrySessionsBtn" class="btn-primary" style="margin-top: 1rem;">
+                        <button id="retrySessionsBtn" class="btn-primary btn-mt-1">
                             🔄 Réessayer
                         </button>
                     </div>
