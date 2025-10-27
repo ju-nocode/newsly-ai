@@ -119,23 +119,28 @@ export default async function handler(req, res) {
             };
 
             // Upsert dans profiles (insert ou update si existe déjà)
+            // Utiliser email comme conflit key car il a une contrainte unique
             const { error: profileError } = await supabaseAdmin
                 .from('profiles')
                 .upsert(profileData, {
-                    onConflict: 'id',
+                    onConflict: 'email',
                     ignoreDuplicates: false
                 });
 
             if (profileError) {
                 console.error('Profile creation error:', profileError.message, profileError);
 
-                // Si c'est juste un conflit d'email (trigger a déjà créé), on ignore
-                if (!profileError.message.includes('duplicate') && !profileError.message.includes('unique')) {
+                // Si c'est une erreur de duplicate key, on ignore (profile déjà créé par trigger)
+                if (profileError.code === '23505' ||
+                    profileError.message.includes('duplicate') ||
+                    profileError.message.includes('unique')) {
+                    console.log('✅ Profile already exists via trigger, continuing...');
+                } else {
+                    // Autre erreur critique
                     return res.status(400).json({
                         error: 'Impossible de créer le compte. Veuillez réessayer plus tard.'
                     });
                 }
-                // Sinon on continue (le profile existe déjà via trigger)
             }
         }
 
