@@ -50,19 +50,50 @@ export default async function handler(req, res) {
                 return res.status(500).json({ error: 'Erreur lors de la récupération des préférences' });
             }
 
-            // Si pas de préférences, retourner les valeurs par défaut
+            // Si pas de préférences, les créer automatiquement (fallback si trigger échoue)
             if (!preferences) {
-                return res.status(200).json({
+                console.log('⚠️ No feed preferences found for user, creating default ones...');
+
+                const defaultPreferences = {
+                    user_id: user.id,
                     followed_categories: ['general'],
                     followed_sources: [],
                     blocked_sources: [],
                     interest_keywords: [],
                     blocked_keywords: [],
-                    preferred_countries: [],
+                    preferred_countries: ['us'],
                     excluded_countries: [],
                     default_sort: 'relevance',
-                    max_article_age_hours: 48
-                });
+                    max_article_age_hours: 48,
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString()
+                };
+
+                // Créer les préférences
+                const { data: newPrefs, error: insertError } = await supabaseAdmin
+                    .from('user_feed_preferences')
+                    .insert(defaultPreferences)
+                    .select()
+                    .single();
+
+                if (insertError) {
+                    console.error('Failed to create default preferences:', insertError);
+                    // Retourner les valeurs par défaut même si l'insert échoue
+                    return res.status(200).json({
+                        followed_categories: ['general'],
+                        followed_sources: [],
+                        blocked_sources: [],
+                        interest_keywords: [],
+                        blocked_keywords: [],
+                        preferred_countries: ['us'],
+                        excluded_countries: [],
+                        default_sort: 'relevance',
+                        max_article_age_hours: 48
+                    });
+                }
+
+                console.log('✅ Default preferences created for user:', user.id);
+                return res.status(200).json(newPrefs);
             }
 
             return res.status(200).json(preferences);
