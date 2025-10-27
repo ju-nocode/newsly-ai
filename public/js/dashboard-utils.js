@@ -103,34 +103,118 @@ export const displayNews = (articles, containerId) => {
 
 // Afficher un message d'erreur
 export const showError = (message, duration = 5000) => {
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'toast toast-error';
-    errorDiv.textContent = escapeHtml(message);
-    document.body.appendChild(errorDiv);
+    // Supprimer toutes les notifications existantes de type erreur pour éviter l'empilement
+    const existingNotifications = document.querySelectorAll('.notification-error');
+    existingNotifications.forEach(notif => {
+        notif.classList.remove('notification-show');
+        notif.classList.add('notification-hide');
+        setTimeout(() => notif.remove(), 300);
+    });
 
-    setTimeout(() => {
-        errorDiv.classList.add('show');
-    }, 10);
+    // Créer le container s'il n'existe pas
+    let container = document.getElementById('notification-container-bottom-right');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'notification-container-bottom-right';
+        container.className = 'notification-container notification-bottom-right';
+        document.body.appendChild(container);
+    }
 
+    // Créer la notification
+    const notification = document.createElement('div');
+    notification.className = 'notification notification-error';
+    notification.innerHTML = `
+        <div class="notification-icon">✕</div>
+        <div class="notification-content">
+            <div class="notification-message">${escapeHtml(message)}</div>
+        </div>
+        <div class="notification-progress">
+            <div class="notification-progress-bar"></div>
+        </div>
+    `;
+
+    container.appendChild(notification);
+
+    // Animation d'entrée
+    requestAnimationFrame(() => {
+        notification.classList.add('notification-show');
+        const progressBar = notification.querySelector('.notification-progress-bar');
+        if (progressBar) {
+            progressBar.style.transition = `width ${duration}ms linear`;
+            requestAnimationFrame(() => {
+                progressBar.style.width = '0%';
+            });
+        }
+    });
+
+    // Auto-dismiss
     setTimeout(() => {
-        errorDiv.classList.remove('show');
-        setTimeout(() => errorDiv.remove(), 300);
+        notification.classList.remove('notification-show');
+        notification.classList.add('notification-hide');
+        setTimeout(() => {
+            notification.remove();
+            if (container && container.children.length === 0) {
+                container.remove();
+            }
+        }, 300);
     }, duration);
 };
 
 // Afficher un message de succès
 export const showSuccess = (message, duration = 3000) => {
-    const successDiv = document.createElement('div');
-    successDiv.className = 'toast toast-success';
-    successDiv.textContent = escapeHtml(message);
-    document.body.appendChild(successDiv);
+    // Supprimer toutes les notifications existantes de type succès pour éviter l'empilement
+    const existingNotifications = document.querySelectorAll('.notification-success');
+    existingNotifications.forEach(notif => {
+        notif.classList.remove('notification-show');
+        notif.classList.add('notification-hide');
+        setTimeout(() => notif.remove(), 300);
+    });
 
-    setTimeout(() => {
-        successDiv.classList.add('show');
-    }, 10);
+    // Créer le container s'il n'existe pas
+    let container = document.getElementById('notification-container-bottom-right');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'notification-container-bottom-right';
+        container.className = 'notification-container notification-bottom-right';
+        document.body.appendChild(container);
+    }
 
+    // Créer la notification
+    const notification = document.createElement('div');
+    notification.className = 'notification notification-success';
+    notification.innerHTML = `
+        <div class="notification-icon">✓</div>
+        <div class="notification-content">
+            <div class="notification-message">${escapeHtml(message)}</div>
+        </div>
+        <div class="notification-progress">
+            <div class="notification-progress-bar"></div>
+        </div>
+    `;
+
+    container.appendChild(notification);
+
+    // Animation d'entrée
+    requestAnimationFrame(() => {
+        notification.classList.add('notification-show');
+        const progressBar = notification.querySelector('.notification-progress-bar');
+        if (progressBar) {
+            progressBar.style.transition = `width ${duration}ms linear`;
+            requestAnimationFrame(() => {
+                progressBar.style.width = '0%';
+            });
+        }
+    });
+
+    // Auto-dismiss
     setTimeout(() => {
-        successDiv.classList.remove('show');
-        setTimeout(() => successDiv.remove(), 300);
+        notification.classList.remove('notification-show');
+        notification.classList.add('notification-hide');
+        setTimeout(() => {
+            notification.remove();
+            if (container && container.children.length === 0) {
+                container.remove();
+            }
+        }, 300);
     }, duration);
 };

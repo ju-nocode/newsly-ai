@@ -34,8 +34,8 @@
 /* 8. Settings Page */
 @import url('modules/settings.css');
 
-/* 9. Toast Notifications */
-@import url('modules/toast.css');
+/* 9. Notifications System */
+@import url('modules/notifications.css');
 
 /* 10. Weather Widget */
 @import url('modules/weather.css');
