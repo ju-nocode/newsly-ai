@@ -66,7 +66,7 @@ input:focus + .slider {
 
 /* Translate slider */
 input:checked + .slider:before {
-  transform: translateX(2em);
+  transform: translateX(1.9em);
 }
 
 /* Disabled state */
@@ -273,7 +273,7 @@ input:disabled + .slider:before {
 }
 
 .toggle-switch input:checked + .toggle-slider:before {
-  transform: translateX(2em);
+  transform: translateX(1.9em);
 }
 
 .toggle-switch input:disabled + .toggle-slider {
