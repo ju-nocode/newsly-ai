@@ -250,34 +250,55 @@
                         <h3 class="settings-card-title" data-i18n="settings.favoriteCategories">Catégories</h3>
 
                         <div class="preferences-list" id="categoriesGrid">
-                            <button class="preference-list-item" data-category="general">
-                                <span class="preference-list-label" data-i18n="category.general">Général</span>
-                                <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="preference-pin-icon">
-                            </button>
-                            <button class="preference-list-item" data-category="business">
-                                <span class="preference-list-label" data-i18n="category.business">Business</span>
-                                <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="preference-pin-icon">
-                            </button>
-                            <button class="preference-list-item" data-category="technology">
-                                <span class="preference-list-label" data-i18n="category.technology">Technologie</span>
-                                <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="preference-pin-icon">
-                            </button>
-                            <button class="preference-list-item" data-category="science">
-                                <span class="preference-list-label" data-i18n="category.science">Science</span>
-                                <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="preference-pin-icon">
-                            </button>
-                            <button class="preference-list-item" data-category="health">
-                                <span class="preference-list-label" data-i18n="category.health">Santé</span>
-                                <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="preference-pin-icon">
-                            </button>
-                            <button class="preference-list-item" data-category="sports">
-                                <span class="preference-list-label" data-i18n="category.sports">Sports</span>
-                                <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="preference-pin-icon">
-                            </button>
-                            <button class="preference-list-item" data-category="entertainment">
-                                <span class="preference-list-label" data-i18n="category.entertainment">Divertissement</span>
-                                <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="preference-pin-icon">
-                            </button>
+                            <div class="switch-item" data-category="general">
+                                <span class="switch-item-label" data-i18n="category.general">Général</span>
+                                <label class="switch switch-sm">
+                                    <input type="checkbox" data-category-switch="general">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="switch-item" data-category="business">
+                                <span class="switch-item-label" data-i18n="category.business">Business</span>
+                                <label class="switch switch-sm">
+                                    <input type="checkbox" data-category-switch="business">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="switch-item" data-category="technology">
+                                <span class="switch-item-label" data-i18n="category.technology">Technologie</span>
+                                <label class="switch switch-sm">
+                                    <input type="checkbox" data-category-switch="technology">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="switch-item" data-category="science">
+                                <span class="switch-item-label" data-i18n="category.science">Science</span>
+                                <label class="switch switch-sm">
+                                    <input type="checkbox" data-category-switch="science">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="switch-item" data-category="health">
+                                <span class="switch-item-label" data-i18n="category.health">Santé</span>
+                                <label class="switch switch-sm">
+                                    <input type="checkbox" data-category-switch="health">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="switch-item" data-category="sports">
+                                <span class="switch-item-label" data-i18n="category.sports">Sports</span>
+                                <label class="switch switch-sm">
+                                    <input type="checkbox" data-category-switch="sports">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="switch-item" data-category="entertainment">
+                                <span class="switch-item-label" data-i18n="category.entertainment">Divertissement</span>
+                                <label class="switch switch-sm">
+                                    <input type="checkbox" data-category-switch="entertainment">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
                         </div>
                     </div>
 
@@ -286,26 +307,41 @@
                         <h3 class="settings-card-title" data-i18n="settings.favoriteCountries">Pays</h3>
 
                         <div class="preferences-list" id="countriesGrid">
-                            <button class="preference-list-item" data-country="us">
-                                <span class="preference-list-label" data-i18n="country.us">États-Unis</span>
-                                <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="preference-pin-icon">
-                            </button>
-                            <button class="preference-list-item" data-country="fr">
-                                <span class="preference-list-label" data-i18n="country.fr">France</span>
-                                <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="preference-pin-icon">
-                            </button>
-                            <button class="preference-list-item" data-country="gb">
-                                <span class="preference-list-label" data-i18n="country.gb">Royaume-Uni</span>
-                                <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="preference-pin-icon">
-                            </button>
-                            <button class="preference-list-item" data-country="ca">
-                                <span class="preference-list-label" data-i18n="country.ca">Canada</span>
-                                <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="preference-pin-icon">
-                            </button>
-                            <button class="preference-list-item" data-country="de">
-                                <span class="preference-list-label" data-i18n="country.de">Allemagne</span>
-                                <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="preference-pin-icon">
-                            </button>
+                            <div class="switch-item" data-country="us">
+                                <span class="switch-item-label" data-i18n="country.us">États-Unis</span>
+                                <label class="switch switch-sm">
+                                    <input type="checkbox" data-country-switch="us">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="switch-item" data-country="fr">
+                                <span class="switch-item-label" data-i18n="country.fr">France</span>
+                                <label class="switch switch-sm">
+                                    <input type="checkbox" data-country-switch="fr">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="switch-item" data-country="gb">
+                                <span class="switch-item-label" data-i18n="country.gb">Royaume-Uni</span>
+                                <label class="switch switch-sm">
+                                    <input type="checkbox" data-country-switch="gb">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="switch-item" data-country="ca">
+                                <span class="switch-item-label" data-i18n="country.ca">Canada</span>
+                                <label class="switch switch-sm">
+                                    <input type="checkbox" data-country-switch="ca">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="switch-item" data-country="de">
+                                <span class="switch-item-label" data-i18n="country.de">Allemagne</span>
+                                <label class="switch switch-sm">
+                                    <input type="checkbox" data-country-switch="de">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -607,24 +643,16 @@
 
         // Update preferences UI
         const updatePreferencesUI = () => {
-            // Update category buttons
-            document.querySelectorAll('[data-category]').forEach(btn => {
-                const category = btn.dataset.category;
-                if (userPreferences.followed_categories.includes(category)) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
+            // Update category switches
+            document.querySelectorAll('[data-category-switch]').forEach(switchInput => {
+                const category = switchInput.dataset.categorySwitch;
+                switchInput.checked = userPreferences.followed_categories.includes(category);
             });
 
-            // Update country buttons
-            document.querySelectorAll('[data-country]').forEach(btn => {
-                const country = btn.dataset.country;
-                if (userPreferences.preferred_countries.includes(country)) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
+            // Update country switches
+            document.querySelectorAll('[data-country-switch]').forEach(switchInput => {
+                const country = switchInput.dataset.countrySwitch;
+                switchInput.checked = userPreferences.preferred_countries.includes(country);
             });
         };
 
@@ -684,18 +712,18 @@
             }
         };
 
-        // Event listeners for preference items - Auto-save on click
-        document.querySelectorAll('#categoriesGrid .preference-list-item').forEach(btn => {
-            btn.addEventListener('click', async () => {
-                const category = btn.dataset.category;
+        // Event listeners for preference switches - Auto-save on toggle
+        document.querySelectorAll('[data-category-switch]').forEach(switchInput => {
+            switchInput.addEventListener('change', async () => {
+                const category = switchInput.dataset.categorySwitch;
                 toggleCategoryPreference(category);
                 await savePreferences();
             });
         });
 
-        document.querySelectorAll('#countriesGrid .preference-list-item').forEach(btn => {
-            btn.addEventListener('click', async () => {
-                const country = btn.dataset.country;
+        document.querySelectorAll('[data-country-switch]').forEach(switchInput => {
+            switchInput.addEventListener('change', async () => {
+                const country = switchInput.dataset.countrySwitch;
                 toggleCountryPreference(country);
                 await savePreferences();
             });

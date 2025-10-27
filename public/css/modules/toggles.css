@@ -1,25 +1,255 @@
 /* ================================================
-   TOGGLE SWITCHES (Apple Style)
-   Module dédié pour les boutons toggle/switch
+   TOGGLE SWITCHES - Modern Design (Uiverse.io inspired)
+   Adapted with Newsly AI color variables
 ================================================ */
 
 /* ================================================
    BASE TOGGLE SWITCH
 ================================================ */
 
-.toggle-switch {
+.switch {
+  font-size: 17px;
   position: relative;
   display: inline-block;
-  width: 44px;
-  height: 24px;
+  width: 3.7em;
+  height: 1.8em;
+  flex-shrink: 0;
+}
+
+.switch input {
+  display: none;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  transition: all 0.2s ease;
+  border-radius: 30px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 1.4em;
+  width: 1.4em;
+  border-radius: 20px;
+  left: 0.2em;
+  bottom: 0.2em;
+  background-color: var(--text-muted);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Checked state - Use site primary color */
+input:checked + .slider::before {
+  background-color: var(--primary);
+}
+
+input:checked + .slider {
+  background-color: rgba(var(--primary-rgb), 0.15);
+  border-color: var(--primary);
+}
+
+/* Focus state */
+input:focus + .slider {
+  box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.2);
+}
+
+/* Translate slider */
+input:checked + .slider:before {
+  transform: translateX(1.9em);
+}
+
+/* Disabled state */
+input:disabled + .slider {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+input:disabled + .slider:before {
+  opacity: 0.5;
+}
+
+/* Hover effect */
+.slider:hover:not(:has(input:disabled)) {
+  border-color: var(--primary);
+}
+
+/* ================================================
+   SIZE VARIANTS
+================================================ */
+
+/* Small switch */
+.switch-sm {
+  font-size: 14px;
+}
+
+/* Medium switch (default) */
+.switch-md {
+  font-size: 17px;
+}
+
+/* Large switch */
+.switch-lg {
+  font-size: 20px;
+}
+
+/* ================================================
+   COLOR VARIANTS
+================================================ */
+
+/* Success variant (green) */
+.switch-success input:checked + .slider::before {
+  background-color: var(--success);
+}
+
+.switch-success input:checked + .slider {
+  background-color: rgba(var(--success-rgb), 0.15);
+  border-color: var(--success);
+}
+
+.switch-success input:focus + .slider {
+  box-shadow: 0 0 0 3px rgba(var(--success-rgb), 0.2);
+}
+
+.switch-success .slider:hover:not(:has(input:disabled)) {
+  border-color: var(--success);
+}
+
+/* Danger variant (red) */
+.switch-danger input:checked + .slider::before {
+  background-color: var(--error);
+}
+
+.switch-danger input:checked + .slider {
+  background-color: rgba(var(--error-rgb), 0.15);
+  border-color: var(--error);
+}
+
+.switch-danger input:focus + .slider {
+  box-shadow: 0 0 0 3px rgba(var(--error-rgb), 0.2);
+}
+
+.switch-danger .slider:hover:not(:has(input:disabled)) {
+  border-color: var(--error);
+}
+
+/* Warning variant (orange) */
+.switch-warning input:checked + .slider::before {
+  background-color: var(--warning);
+}
+
+.switch-warning input:checked + .slider {
+  background-color: rgba(var(--warning-rgb), 0.15);
+  border-color: var(--warning);
+}
+
+.switch-warning input:focus + .slider {
+  box-shadow: 0 0 0 3px rgba(var(--warning-rgb), 0.2);
+}
+
+.switch-warning .slider:hover:not(:has(input:disabled)) {
+  border-color: var(--warning);
+}
+
+/* ================================================
+   DARK MODE ADJUSTMENTS
+================================================ */
+
+[data-theme="dark"] .slider {
+  background-color: #313033;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .slider:before {
+  background-color: #aeaaae;
+}
+
+[data-theme="dark"] input:checked + .slider {
+  background-color: rgba(var(--primary-rgb), 0.25);
+}
+
+[data-theme="dark"] input:checked + .slider::before {
+  background-color: var(--primary);
+}
+
+/* ================================================
+   SWITCH ITEM (for lists with labels)
+================================================ */
+
+.switch-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+  transition: background-color 0.2s;
+}
+
+.switch-item:last-child {
+  border-bottom: none;
+}
+
+.switch-item:hover {
+  background-color: rgba(var(--primary-rgb), 0.02);
+}
+
+.switch-item-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  cursor: pointer;
+  user-select: none;
+}
+
+.switch-item-label img {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+
+.switch-item-label span {
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.switch-item-description {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+/* ================================================
+   LEGACY COMPATIBILITY (old toggle-switch classes)
+   Kept for backward compatibility
+================================================ */
+
+.toggle-switch {
+  font-size: 17px;
+  position: relative;
+  display: inline-block;
+  width: 3.7em;
+  height: 1.8em;
   flex-shrink: 0;
 }
 
 .toggle-switch input {
+  display: none;
   opacity: 0;
   width: 0;
   height: 0;
-  position: absolute;
 }
 
 .toggle-slider {
@@ -29,285 +259,111 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--text-muted);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 24px;
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  transition: all 0.2s ease;
+  border-radius: 30px;
 }
 
 .toggle-slider:before {
   position: absolute;
   content: "";
-  height: 18px;
-  width: 18px;
-  left: 3px;
-  bottom: 3px;
-  background: white;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  height: 1.4em;
+  width: 1.4em;
+  border-radius: 20px;
+  left: 0.2em;
+  bottom: 0.2em;
+  background-color: var(--text-muted);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Checked state */
+.toggle-switch input:checked + .toggle-slider::before {
+  background-color: var(--primary);
+}
+
 .toggle-switch input:checked + .toggle-slider {
-  background: var(--primary);
+  background-color: rgba(var(--primary-rgb), 0.15);
+  border-color: var(--primary);
 }
 
-.toggle-switch input:checked + .toggle-slider:before {
-  transform: translateX(20px);
-}
-
-/* Focus state (accessibility) */
 .toggle-switch input:focus + .toggle-slider {
   box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.2);
 }
 
-/* Disabled state */
+.toggle-switch input:checked + .toggle-slider:before {
+  transform: translateX(1.9em);
+}
+
 .toggle-switch input:disabled + .toggle-slider {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-/* ================================================
-   SIZE VARIANTS
-================================================ */
-
-/* Small toggle (36px × 20px) */
-.toggle-switch-sm {
-  width: 36px;
-  height: 20px;
+.toggle-slider:hover:not(:has(input:disabled)) {
+  border-color: var(--primary);
 }
-
-.toggle-switch-sm .toggle-slider:before {
-  height: 14px;
-  width: 14px;
-  left: 3px;
-  bottom: 3px;
-}
-
-.toggle-switch-sm input:checked + .toggle-slider:before {
-  transform: translateX(16px);
-}
-
-/* Medium toggle (44px × 24px) - DEFAULT */
-.toggle-switch-md {
-  width: 44px;
-  height: 24px;
-}
-
-.toggle-switch-md .toggle-slider:before {
-  height: 18px;
-  width: 18px;
-  left: 3px;
-  bottom: 3px;
-}
-
-.toggle-switch-md input:checked + .toggle-slider:before {
-  transform: translateX(20px);
-}
-
-/* Large toggle (52px × 28px) */
-.toggle-switch-lg {
-  width: 52px;
-  height: 28px;
-}
-
-.toggle-switch-lg .toggle-slider {
-  border-radius: 28px;
-}
-
-.toggle-switch-lg .toggle-slider:before {
-  height: 22px;
-  width: 22px;
-  left: 3px;
-  bottom: 3px;
-}
-
-.toggle-switch-lg input:checked + .toggle-slider:before {
-  transform: translateX(24px);
-}
-
-/* ================================================
-   COLOR VARIANTS
-================================================ */
-
-/* Success toggle (green when checked) */
-.toggle-switch-success input:checked + .toggle-slider {
-  background: var(--success);
-}
-
-.toggle-switch-success input:focus + .toggle-slider {
-  box-shadow: 0 0 0 3px rgba(var(--success-rgb), 0.2);
-}
-
-/* Danger toggle (red when checked) */
-.toggle-switch-danger input:checked + .toggle-slider {
-  background: var(--error);
-}
-
-.toggle-switch-danger input:focus + .toggle-slider {
-  box-shadow: 0 0 0 3px rgba(var(--error-rgb), 0.2);
-}
-
-/* Warning toggle (orange when checked) */
-.toggle-switch-warning input:checked + .toggle-slider {
-  background: var(--warning, #f59e0b);
-}
-
-.toggle-switch-warning input:focus + .toggle-slider {
-  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
-}
-
-/* ================================================
-   TOGGLE GROUP (pour aligner plusieurs toggles)
-================================================ */
-
-.toggle-group {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.toggle-group label {
-  margin: 0;
-}
-
-/* ================================================
-   TOGGLE WITH LABEL (structure recommandée)
-================================================ */
-
-.toggle-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.75rem 0;
-}
-
-.toggle-item-label {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  flex: 1;
-  cursor: pointer;
-  user-select: none;
-}
-
-.toggle-item-label img {
-  width: 1.25rem;
-  height: 1.25rem;
-  flex-shrink: 0;
-}
-
-.toggle-item-label span {
-  font-size: 0.9375rem;
-  color: var(--text-primary);
-  font-weight: 500;
-}
-
-.toggle-item-description {
-  font-size: 0.8125rem;
-  color: var(--text-muted);
-  margin-top: 0.25rem;
-}
-
-/* ================================================
-   DARK MODE ADJUSTMENTS
-================================================ */
 
 [data-theme="dark"] .toggle-slider {
-  background: rgba(255, 255, 255, 0.2);
+  background-color: #313033;
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 [data-theme="dark"] .toggle-slider:before {
-  background: var(--bg-secondary);
+  background-color: #aeaaae;
 }
 
-[data-theme="dark"] .toggle-switch input:checked + .toggle-slider:before {
-  background: white;
+[data-theme="dark"] .toggle-switch input:checked + .toggle-slider {
+  background-color: rgba(var(--primary-rgb), 0.25);
 }
 
-/* ================================================
-   ANIMATIONS & INTERACTIONS
-================================================ */
-
-/* Hover effect on slider */
-.toggle-slider:hover {
-  opacity: 0.9;
-}
-
-/* Active/click effect */
-.toggle-switch input:active:not(:disabled) + .toggle-slider:before {
-  width: 22px;
-}
-
-.toggle-switch-sm input:active:not(:disabled) + .toggle-slider:before {
-  width: 18px;
-}
-
-.toggle-switch-lg input:active:not(:disabled) + .toggle-slider:before {
-  width: 26px;
-}
-
-/* Smooth transition on theme change */
-.toggle-slider,
-.toggle-slider:before {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+[data-theme="dark"] .toggle-switch input:checked + .toggle-slider::before {
+  background-color: var(--primary);
 }
 
 /* ================================================
-   USAGE EXAMPLES (commentaires)
+   USAGE EXAMPLES
 ================================================ */
 
 /*
-=== EXEMPLE 1 : Toggle simple ===
+=== EXEMPLE 1 : Switch simple (nouveau design) ===
+
+<label class="switch">
+  <input type="checkbox" id="mySwitch">
+  <span class="slider"></span>
+</label>
+
+=== EXEMPLE 2 : Switch avec taille ===
+
+<label class="switch switch-sm">
+  <input type="checkbox">
+  <span class="slider"></span>
+</label>
+
+=== EXEMPLE 3 : Switch avec couleur ===
+
+<label class="switch switch-success">
+  <input type="checkbox">
+  <span class="slider"></span>
+</label>
+
+=== EXEMPLE 4 : Switch item avec label ===
+
+<div class="switch-item">
+  <div class="switch-item-label">
+    <img src="icon.png" alt="">
+    <span>Notifications</span>
+  </div>
+  <label class="switch">
+    <input type="checkbox" id="notifs">
+    <span class="slider"></span>
+  </label>
+</div>
+
+=== EXEMPLE 5 : Toggle legacy (rétrocompatibilité) ===
 
 <label class="toggle-switch">
-  <input type="checkbox" id="myToggle">
+  <input type="checkbox">
   <span class="toggle-slider"></span>
 </label>
-
-=== EXEMPLE 2 : Toggle avec taille ===
-
-<label class="toggle-switch toggle-switch-sm">
-  <input type="checkbox" id="smallToggle">
-  <span class="toggle-slider"></span>
-</label>
-
-=== EXEMPLE 3 : Toggle avec couleur ===
-
-<label class="toggle-switch toggle-switch-success">
-  <input type="checkbox" id="successToggle">
-  <span class="toggle-slider"></span>
-</label>
-
-=== EXEMPLE 4 : Toggle item complet (avec label) ===
-
-<div class="toggle-item">
-  <div class="toggle-item-label">
-    <img src="icon.png" alt="">
-    <div>
-      <div>Notifications</div>
-      <div class="toggle-item-description">Recevoir des alertes</div>
-    </div>
-  </div>
-  <label class="toggle-switch">
-    <input type="checkbox" id="notifications">
-    <span class="toggle-slider"></span>
-  </label>
-</div>
-
-=== EXEMPLE 5 : Groupe de toggles ===
-
-<div class="toggle-group">
-  <span>Option 1</span>
-  <label class="toggle-switch toggle-switch-sm">
-    <input type="checkbox">
-    <span class="toggle-slider"></span>
-  </label>
-  <span>Option 2</span>
-  <label class="toggle-switch toggle-switch-sm">
-    <input type="checkbox">
-    <span class="toggle-slider"></span>
-  </label>
-</div>
 */
