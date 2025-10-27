@@ -65,7 +65,7 @@
 }
 
 .burger-dropdown.show {
-  opacity: 0.85 !important;
+  opacity: 100 !important;
   visibility: visible !important;
   transform: translateY(0) !important;
   display: block !important;
