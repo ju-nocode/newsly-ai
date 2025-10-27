@@ -8,12 +8,12 @@
   background: var(--primary);
   color: white;
   padding: var(--btn-padding);
-  border-radius: var(--btn-border-radius);
-  font-weight: var(--btn-font-weight);
-  font-size: var(--btn-font-size);
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.875rem;
   border: 1px solid var(--primary);
   cursor: pointer;
-  transition: var(--btn-transition);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -23,18 +23,20 @@
   text-decoration: none;
   text-align: center;
   box-sizing: border-box;
-  box-shadow: var(--bg-primary) 4px 4px 0 0, var(--primary) 4px 4px 0 1px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  overflow: hidden; /* Pour le ripple effect */
+  overflow: hidden;
   vertical-align: middle;
-  position: relative; /* Pour le ripple effect */
+  position: relative;
 }
 
 .btn-primary:hover,
 .btn-submit:hover {
   background: var(--primary-dark);
+  box-shadow: 0 4px 8px rgba(var(--primary-rgb), 0.3);
+  transform: translateY(-1px);
   text-decoration: none;
 }
 
@@ -42,18 +44,21 @@
 .btn-submit:focus {
   text-decoration: none;
   outline: 0;
+  box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.2);
 }
 
 .btn-primary:active,
 .btn-submit:active {
-  box-shadow: rgba(0, 0, 0, 0.125) 0 3px 5px inset;
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   outline: 0;
 }
 
-.btn-primary:not([disabled]):active,
-.btn-submit:not([disabled]):active {
-  box-shadow: var(--bg-primary) 2px 2px 0 0, var(--primary) 2px 2px 0 1px;
-  transform: translate(2px, 2px);
+.btn-primary:disabled,
+.btn-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .btn-danger {
@@ -62,11 +67,11 @@
   color: white;
   border: 1px solid var(--error);
   padding: var(--btn-padding);
-  border-radius: var(--btn-border-radius);
-  font-size: var(--btn-font-size);
-  font-weight: var(--btn-font-weight);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: var(--btn-transition);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -75,18 +80,20 @@
   white-space: nowrap;
   text-align: center;
   box-sizing: border-box;
-  box-shadow: var(--bg-primary) 4px 4px 0 0, var(--error) 4px 4px 0 1px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  overflow: hidden; /* Pour le ripple effect */
+  overflow: hidden;
   vertical-align: middle;
-  position: relative; /* Pour le ripple effect */
+  position: relative;
 }
 
 .btn-danger:hover {
   background: var(--error-hover, #dc2626);
   border-color: var(--error-hover, #dc2626);
+  box-shadow: 0 4px 8px rgba(var(--error-rgb), 0.3);
+  transform: translateY(-1px);
   color: white;
   text-decoration: none;
 }
@@ -94,16 +101,19 @@
 .btn-danger:focus {
   text-decoration: none;
   outline: 0;
+  box-shadow: 0 0 0 3px rgba(var(--error-rgb), 0.2);
 }
 
 .btn-danger:active {
-  box-shadow: rgba(0, 0, 0, 0.125) 0 3px 5px inset;
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   outline: 0;
 }
 
-.btn-danger:not([disabled]):active {
-  box-shadow: var(--bg-primary) 2px 2px 0 0, var(--error) 2px 2px 0 1px;
-  transform: translate(2px, 2px);
+.btn-danger:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
 
 /* Success button (green) */
@@ -113,11 +123,11 @@
   color: white;
   border: 1px solid var(--success);
   padding: var(--btn-padding);
-  border-radius: var(--btn-border-radius);
-  font-size: var(--btn-font-size);
-  font-weight: var(--btn-font-weight);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: var(--btn-transition);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -126,18 +136,20 @@
   white-space: nowrap;
   text-align: center;
   box-sizing: border-box;
-  box-shadow: var(--bg-primary) 4px 4px 0 0, var(--success) 4px 4px 0 1px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  overflow: hidden; /* Pour le ripple effect */
+  overflow: hidden;
   vertical-align: middle;
-  position: relative; /* Pour le ripple effect */
+  position: relative;
 }
 
 .btn-success:hover {
   background: var(--success-hover, #059669);
   border-color: var(--success-hover, #059669);
+  box-shadow: 0 4px 8px rgba(var(--success-rgb), 0.3);
+  transform: translateY(-1px);
   color: white;
   text-decoration: none;
 }
@@ -145,21 +157,19 @@
 .btn-success:focus {
   text-decoration: none;
   outline: 0;
+  box-shadow: 0 0 0 3px rgba(var(--success-rgb), 0.2);
 }
 
 .btn-success:active {
-  box-shadow: rgba(0, 0, 0, 0.125) 0 3px 5px inset;
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   outline: 0;
-}
-
-.btn-success:not([disabled]):active {
-  box-shadow: var(--bg-primary) 2px 2px 0 0, var(--success) 2px 2px 0 1px;
-  transform: translate(2px, 2px);
 }
 
 .btn-success:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  transform: none;
 }
 
 /* Button spinner loader */
@@ -235,15 +245,15 @@
 /* Secondary button (outline style) */
 .btn-secondary {
   appearance: button;
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
   padding: var(--btn-padding);
-  border-radius: var(--btn-border-radius);
-  font-size: var(--btn-font-size);
-  font-weight: var(--btn-font-weight);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: var(--btn-transition);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -252,49 +262,52 @@
   white-space: nowrap;
   text-align: center;
   box-sizing: border-box;
-  box-shadow: var(--bg-tertiary) 4px 4px 0 0, var(--border) 4px 4px 0 1px;
+  box-shadow: none;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  overflow: hidden; /* Pour le ripple effect */
+  overflow: hidden;
   vertical-align: middle;
-  position: relative; /* Pour le ripple effect */
+  position: relative;
 }
 
 .btn-secondary:hover {
-  background: var(--bg-tertiary);
+  background: rgba(var(--primary-rgb), 0.08);
   border-color: var(--primary);
   color: var(--primary);
+  box-shadow: 0 2px 4px rgba(var(--primary-rgb), 0.15);
   text-decoration: none;
 }
 
 .btn-secondary:focus {
   text-decoration: none;
   outline: 0;
+  box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.2);
 }
 
 .btn-secondary:active {
-  box-shadow: rgba(0, 0, 0, 0.125) 0 3px 5px inset;
+  background: rgba(var(--primary-rgb), 0.12);
+  box-shadow: none;
   outline: 0;
 }
 
-.btn-secondary:not([disabled]):active {
-  box-shadow: var(--bg-tertiary) 2px 2px 0 0, var(--border) 2px 2px 0 1px;
-  transform: translate(2px, 2px);
+.btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 /* Secondary danger button (outline red) */
 .btn-secondary-danger {
   appearance: button;
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--error);
+  border: 1px solid var(--error);
   padding: var(--btn-padding);
-  border-radius: var(--btn-border-radius);
-  font-size: var(--btn-font-size);
-  font-weight: var(--btn-font-weight);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: var(--btn-transition);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -303,35 +316,38 @@
   white-space: nowrap;
   text-align: center;
   box-sizing: border-box;
-  box-shadow: var(--bg-tertiary) 4px 4px 0 0, var(--border) 4px 4px 0 1px;
+  box-shadow: none;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  overflow: hidden; /* Pour le ripple effect */
+  overflow: hidden;
   vertical-align: middle;
-  position: relative; /* Pour le ripple effect */
+  position: relative;
 }
 
 .btn-secondary-danger:hover {
-  background: rgba(239, 68, 68, 0.1);
+  background: rgba(var(--error-rgb), 0.08);
   border-color: var(--error);
   color: var(--error);
+  box-shadow: 0 2px 4px rgba(var(--error-rgb), 0.15);
   text-decoration: none;
 }
 
 .btn-secondary-danger:focus {
   text-decoration: none;
   outline: 0;
+  box-shadow: 0 0 0 3px rgba(var(--error-rgb), 0.2);
 }
 
 .btn-secondary-danger:active {
-  box-shadow: rgba(0, 0, 0, 0.125) 0 3px 5px inset;
+  background: rgba(var(--error-rgb), 0.12);
+  box-shadow: none;
   outline: 0;
 }
 
-.btn-secondary-danger:not([disabled]):active {
-  box-shadow: var(--bg-tertiary) 2px 2px 0 0, var(--border) 2px 2px 0 1px;
-  transform: translate(2px, 2px);
+.btn-secondary-danger:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 /* Button group */
