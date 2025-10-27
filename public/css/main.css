@@ -14,8 +14,8 @@
 /* 3. Navigation */
 @import url('modules/navbar.css');
 
-/* 3.1 Search Bar Inline (Force Styles) */
-@import url('search-bar-inline.css');
+/* 3.1 Search Bar */
+@import url('modules/search-bar.css');
 
 /* 4. Icons - Filters & utilities */
 @import url('modules/icons.css');
@@ -73,9 +73,6 @@
 
 /* 22. Animations System */
 @import url('modules/animations.css');
-
-/* 23. Smart Search Bar */
-@import url('modules/search-bar.css');
 
 /* 24. Page Loader */
 @import url('modules/page-loader.css');
