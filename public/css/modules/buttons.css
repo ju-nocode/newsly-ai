@@ -5,7 +5,6 @@
 /* Base button class - shared properties */
 .btn {
   appearance: button;
-  padding: var(--btn-padding);
   border-radius: 8px;
   font-weight: 500;
   cursor: pointer;
