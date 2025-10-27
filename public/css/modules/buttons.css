@@ -187,78 +187,6 @@
 }
 
 /* ================================================
-   SECONDARY BUTTON (outline blue)
-================================================ */
-
-.btn-secondary {
-  background: transparent;
-  color: var(--primary);
-  border: 1px solid var(--primary);
-  box-shadow: none;
-}
-
-.btn-secondary:hover:not(:disabled) {
-  background: rgba(var(--primary-rgb), 0.08);
-  border-color: var(--primary);
-  color: var(--primary);
-  box-shadow: 0 2px 4px rgba(var(--primary-rgb), 0.15);
-  text-decoration: none;
-}
-
-.btn-secondary:focus {
-  box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.2);
-}
-
-.btn-secondary:active {
-  background: rgba(var(--primary-rgb), 0.12);
-  box-shadow: none;
-}
-
-.btn-secondary:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  background: transparent;
-  border-color: var(--primary);
-  transform: none;
-}
-
-/* ================================================
-   SECONDARY DANGER BUTTON (outline red)
-================================================ */
-
-.btn-secondary-danger {
-  background: transparent;
-  color: var(--error);
-  border: 1px solid var(--error);
-  box-shadow: none;
-}
-
-.btn-secondary-danger:hover:not(:disabled) {
-  background: rgba(var(--error-rgb), 0.08);
-  border-color: var(--error);
-  color: var(--error);
-  box-shadow: 0 2px 4px rgba(var(--error-rgb), 0.15);
-  text-decoration: none;
-}
-
-.btn-secondary-danger:focus {
-  box-shadow: 0 0 0 3px rgba(var(--error-rgb), 0.2);
-}
-
-.btn-secondary-danger:active {
-  background: rgba(var(--error-rgb), 0.12);
-  box-shadow: none;
-}
-
-.btn-secondary-danger:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  background: transparent;
-  border-color: var(--error);
-  transform: none;
-}
-
-/* ================================================
    BUTTON SPINNER LOADER
 ================================================ */
 
@@ -317,23 +245,11 @@
   }
 }
 
-/* Ripple plus visible sur boutons sombres */
+/* Ripple sur boutons pleins */
 .btn-primary .ripple,
 .btn-success .ripple,
 .btn-danger .ripple {
   background: rgba(255, 255, 255, 0.6);
-}
-
-/* Ripple adapté pour boutons clairs */
-.btn-secondary .ripple,
-.btn-secondary-danger .ripple {
-  background: rgba(59, 130, 246, 0.3);
-}
-
-/* Dark mode adjustments */
-[data-theme="dark"] .btn-secondary .ripple,
-[data-theme="dark"] .btn-secondary-danger .ripple {
-  background: rgba(255, 255, 255, 0.2);
 }
 
 /* ================================================

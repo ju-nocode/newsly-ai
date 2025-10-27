@@ -30,7 +30,7 @@ export const addRipple = (element, event) => {
  * Initialise l'effet ripple sur tous les boutons
  */
 export const initRippleButtons = () => {
-    const buttons = document.querySelectorAll('.btn-primary, .btn-success, .btn-danger, .btn-secondary, .btn-secondary-danger, .btn-submit');
+    const buttons = document.querySelectorAll('.btn-primary, .btn-success, .btn-danger, .btn-submit');
 
     buttons.forEach(button => {
         // Éviter les double listeners

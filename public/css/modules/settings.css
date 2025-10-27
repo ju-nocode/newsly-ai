@@ -594,8 +594,7 @@
   width: 100%;
 }
 
-.settings-card > .btn-primary,
-.settings-card > .btn-danger {
+.settings-card > .btn {
   margin-top: 0.5rem;
 }
 

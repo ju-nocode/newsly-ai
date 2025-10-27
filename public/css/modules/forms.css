@@ -250,7 +250,6 @@ input[type="color"]::-moz-color-swatch {
   width: 100%;
 }
 
-.settings-card .btn-primary,
-.settings-card .btn-danger {
+.settings-card .btn {
   align-self: flex-start;
 }
