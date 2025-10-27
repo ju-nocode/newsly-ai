@@ -8,7 +8,7 @@
 ================================================ */
 
 .switch {
-  font-size: 17px;
+  font-size: 12px;
   position: relative;
   display: inline-block;
   width: 3.7em;
@@ -32,7 +32,7 @@
   bottom: 0;
   background-color: var(--bg-tertiary);
   border: 1px solid var(--border);
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
   border-radius: 30px;
 }
 
@@ -45,7 +45,7 @@
   left: 0.2em;
   bottom: 0.2em;
   background-color: var(--text-muted);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -82,25 +82,6 @@ input:disabled + .slider:before {
 /* Hover effect */
 .slider:hover:not(:has(input:disabled)) {
   border-color: var(--primary);
-}
-
-/* ================================================
-   SIZE VARIANTS
-================================================ */
-
-/* Small switch */
-.switch-sm {
-  font-size: 14px;
-}
-
-/* Medium switch (default) */
-.switch-md {
-  font-size: 17px;
-}
-
-/* Large switch */
-.switch-lg {
-  font-size: 20px;
 }
 
 /* ================================================
@@ -237,7 +218,7 @@ input:disabled + .slider:before {
 ================================================ */
 
 .toggle-switch {
-  font-size: 17px;
+  font-size: 12px;
   position: relative;
   display: inline-block;
   width: 3.7em;
@@ -261,7 +242,7 @@ input:disabled + .slider:before {
   bottom: 0;
   background-color: var(--bg-tertiary);
   border: 1px solid var(--border);
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
   border-radius: 30px;
 }
 
@@ -274,7 +255,7 @@ input:disabled + .slider:before {
   left: 0.2em;
   bottom: 0.2em;
   background-color: var(--text-muted);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -326,28 +307,21 @@ input:disabled + .slider:before {
 ================================================ */
 
 /*
-=== EXEMPLE 1 : Switch simple (nouveau design) ===
+=== EXEMPLE 1 : Switch simple ===
 
 <label class="switch">
   <input type="checkbox" id="mySwitch">
   <span class="slider"></span>
 </label>
 
-=== EXEMPLE 2 : Switch avec taille ===
-
-<label class="switch switch-sm">
-  <input type="checkbox">
-  <span class="slider"></span>
-</label>
-
-=== EXEMPLE 3 : Switch avec couleur ===
+=== EXEMPLE 2 : Switch avec couleur ===
 
 <label class="switch switch-success">
   <input type="checkbox">
   <span class="slider"></span>
 </label>
 
-=== EXEMPLE 4 : Switch item avec label ===
+=== EXEMPLE 3 : Switch item avec label ===
 
 <div class="switch-item">
   <div class="switch-item-label">
@@ -360,7 +334,7 @@ input:disabled + .slider:before {
   </label>
 </div>
 
-=== EXEMPLE 5 : Toggle legacy (rétrocompatibilité) ===
+=== EXEMPLE 4 : Toggle legacy (rétrocompatibilité) ===
 
 <label class="toggle-switch">
   <input type="checkbox">
