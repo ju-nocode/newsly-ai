@@ -26,6 +26,9 @@
 /* 6. Forms */
 @import url('modules/forms.css');
 
+/* 6.1 Toggles - Switch buttons */
+@import url('modules/toggles.css');
+
 /* 7. Sidebar */
 @import url('modules/sidebar.css');
 
