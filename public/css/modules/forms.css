@@ -251,7 +251,6 @@ input[type="color"]::-moz-color-swatch {
 }
 
 .settings-card .btn-primary,
-.settings-card .btn-primary,
 .settings-card .btn-danger {
   align-self: flex-start;
 }

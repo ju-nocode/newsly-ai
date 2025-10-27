@@ -94,7 +94,7 @@ const showEmailConfirmedModal = () => {
         <p class="success-subtitle">
             Votre compte est maintenant actif !
         </p>
-        <button id="goToLoginBtn" class="btn-success-primary">
+        <button id="goToLoginBtn" class="btn btn-success-primary">
             Se connecter maintenant →
         </button>
     `;

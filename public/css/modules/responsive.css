@@ -172,8 +172,7 @@
 
   /* Removed duplicate settings rules - now in settings.css */
 
-  .btn-primary,
-  .btn-danger {
+  .btn {
     min-height: 44px;
     padding: 0.75rem 1.25rem;
   }
@@ -284,8 +283,7 @@
     font-size: 1rem; /* Prevent zoom on iOS */
   }
 
-  .btn-primary,
-  .btn-danger {
+  .btn {
     font-size: 0.8125rem;
     padding: 0.625rem 1rem;
   }
@@ -342,9 +340,7 @@
 
 @media (hover: none) and (pointer: coarse) {
   button,
-  .btn-primary,
-  .btn-primary,
-  .btn-danger,
+  .btn,
   .settings-nav-item {
     -webkit-tap-highlight-color: rgba(59, 130, 246, 0.1);
   }

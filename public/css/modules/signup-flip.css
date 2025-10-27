@@ -354,19 +354,15 @@
   animation: slideInUp 0.5s 0.3s cubic-bezier(0.4, 0.0, 0.2, 1) backwards;
 }
 
-/* Success Button */
+/* Success Button - Custom gradient variant (inherits from .btn) */
 .btn-success-primary {
   width: 100%;
   padding: 0.875rem 1.5rem;
   font-size: 1rem;
   font-weight: 600;
-  font-family: 'Inter', sans-serif;
   background: linear-gradient(135deg, var(--primary), #2563eb);
   color: white;
   border: none;
-  border-radius: var(--radius-lg);
-  cursor: pointer;
-  transition: all 0.3s ease;
   box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
   animation: slideInUp 0.5s 0.4s cubic-bezier(0.4, 0.0, 0.2, 1) backwards;
 }
