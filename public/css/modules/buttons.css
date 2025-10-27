@@ -70,6 +70,14 @@
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: var(--primary);
+  transform: none;
+  box-shadow: none;
+}
+
 /* ================================================
    SUBMIT BUTTON (same as primary + full width)
 ================================================ */
@@ -97,6 +105,14 @@
 
 .btn-submit:active {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.btn-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: var(--primary);
+  transform: none;
+  box-shadow: none;
 }
 
 /* ================================================
@@ -127,6 +143,14 @@
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
+.btn-danger:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: var(--error);
+  transform: none;
+  box-shadow: none;
+}
+
 /* ================================================
    SUCCESS BUTTON (green)
 ================================================ */
@@ -153,6 +177,14 @@
 
 .btn-success:active {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.btn-success:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: var(--success);
+  transform: none;
+  box-shadow: none;
 }
 
 /* ================================================
@@ -183,6 +215,14 @@
   box-shadow: none;
 }
 
+.btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: transparent;
+  border-color: var(--primary);
+  transform: none;
+}
+
 /* ================================================
    SECONDARY DANGER BUTTON (outline red)
 ================================================ */
@@ -209,6 +249,14 @@
 .btn-secondary-danger:active {
   background: rgba(var(--error-rgb), 0.12);
   box-shadow: none;
+}
+
+.btn-secondary-danger:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: transparent;
+  border-color: var(--error);
+  transform: none;
 }
 
 /* ================================================
