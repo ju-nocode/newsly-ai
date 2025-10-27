@@ -452,7 +452,7 @@
                         navUserRole.textContent = 'Connecté en tant qu\'admin';
                         navUserRole.className = 'user-role-badge admin';
                     } else {
-                        navUserRole.textContent = `Connecté en tant que ${escapeHtml(userName)}`;
+                        navUserRole.textContent = `Connecté en tant que ${escapeHtml(displayName)}`;
                         navUserRole.className = 'user-role-badge user';
                     }
                 }
@@ -461,7 +461,7 @@
                 if (result.profile.avatar_url) {
                     document.getElementById('burgerAvatarImage').src = result.profile.avatar_url;
                 } else {
-                    document.getElementById('burgerAvatarImage').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=3ecf8e&color=fff&size=72`;
+                    document.getElementById('burgerAvatarImage').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=3ecf8e&color=fff&size=72`;
                 }
             }
         };
