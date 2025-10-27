@@ -41,12 +41,12 @@
 /* Search input */
 .smart-search-input {
     flex: 1;
-    padding: 0.5rem 3rem 0.5rem 3rem;
+    padding: 0.5rem 3rem 0.5rem 3rem !important;
     background: transparent;
     border: none;
     outline: none;
     color: var(--text-primary);
-    font-size: 0.8125rem;
+    font-size: 0.8125rem !important;
     font-family: inherit;
     width: 100%;
 }
@@ -288,8 +288,8 @@
     }
 
     .smart-search-input {
-        padding: 0.625rem 2.5rem 0.625rem 2.5rem;
-        font-size: 0.875rem;
+        padding: 0.5rem 2.5rem 0.5rem 2.5rem !important;
+        font-size: 0.75rem !important;
     }
 
     .search-kbd-hint {
@@ -318,8 +318,8 @@
     }
 
     .smart-search-input {
-        padding: 0.5rem 2rem 0.5rem 2.5rem;
-        font-size: 0.8125rem;
+        padding: 0.4rem 2rem 0.4rem 2.5rem !important;
+        font-size: 0.6875rem !important;
     }
 
     .smart-search-icon {

@@ -58,7 +58,7 @@
     border: none !important;
     outline: none !important;
     color: var(--text-primary, #111827) !important;
-    font-size: 0.8125rem !important;
+    font-size: 0.75rem !important;
     font-family: inherit !important;
     width: 100% !important;
     height: 100% !important;
@@ -168,8 +168,8 @@
     }
 
     .smart-search-input {
-        padding: 0.625rem 2.5rem 0.625rem 2.5rem !important;
-        font-size: 0.875rem !important;
+        padding: 0.5rem 2.5rem 0.5rem 2.5rem !important;
+        font-size: 0.75rem !important;
     }
 }
 
@@ -181,8 +181,8 @@
     }
 
     .smart-search-input {
-        padding: 0.5rem 2rem 0.5rem 2.5rem !important;
-        font-size: 0.8125rem !important;
+        padding: 0.4rem 2rem 0.4rem 2.5rem !important;
+        font-size: 0.6875rem !important;
     }
 
     .smart-search-icon {
