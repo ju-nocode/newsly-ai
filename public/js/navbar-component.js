@@ -5,7 +5,8 @@
 export function createNavbar(config = {}) {
     const {
         showMobileSidebarBtn = false,
-        showSettingsNav = false
+        showSettingsNav = false,
+        publicMode = false
     } = config;
 
     return `
@@ -86,13 +87,15 @@ export function createNavbar(config = {}) {
 
                 <!-- Burger Dropdown Menu -->
                 <div class="burger-dropdown" id="burgerMenu">
-                    <!-- User Info -->
+                    <!-- User Info (hidden in public mode) -->
+                    ${!publicMode ? `
                     <div class="burger-user-info">
                         <img id="burgerAvatarImage" class="burger-user-avatar" src="https://ui-avatars.com/api/?name=User&background=3ecf8e&color=fff&size=72" alt="Avatar">
                         <span id="userNameDisplay" class="burger-user-name">User: User</span>
                     </div>
 
                     <div class="burger-divider"></div>
+                    ` : ''}
 
                     <!-- Theme Toggle avec Switch -->
                     <div class="burger-item">
@@ -118,6 +121,7 @@ export function createNavbar(config = {}) {
                         </label>
                     </div>
 
+                    ${!publicMode ? `
                     <div class="burger-divider"></div>
 
                     <!-- Weather Location Refresh Button -->
@@ -144,6 +148,7 @@ export function createNavbar(config = {}) {
                         <img src="https://img.icons8.com/ios/20/exit.png" alt="Logout" class="icon-secondary">
                         <span data-i18n="nav.logout">Déconnexion</span>
                     </button>
+                    ` : ''}
                 </div>
                 </div>
             </div>

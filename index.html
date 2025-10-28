@@ -8,292 +8,181 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="public/css/main.css">
+    <link rel="stylesheet" href="public/css/dashboard-main.css">
     <script src="public/js/browser-detect.js"></script>
     <script src="public/js/icons-theme.js"></script>
 </head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-landing">
-        <div class="nav-container">
-            <a href="index.html" class="logo">
-                <img src="https://img.icons8.com/ios-filled/50/000000/news.png" alt="Newsly AI" class="logo-icon icon-white" style="width: 1.75rem; height: 1.75rem;">
-                <span class="logo-text aurora-text">Newsly AI</span>
-            </a>
+<body class="dashboard-body">
 
-            <!-- Right Section: Weather + Burger -->
-            <div class="nav-right">
-                <!-- Weather Widget -->
-                <div class="weather-widget" id="weatherWidgetIndex">
-                    <div class="weather-loading">
-                        <span>🌤️</span>
-                    </div>
-                </div>
+    <!-- Overlay pour menu mobile -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
 
-                <div class="nav-links">
-                    <!-- Burger Menu -->
-                    <button class="burger-menu" id="burgerBtnIndex">
-                        <span class="burger-line"></span>
-                        <span class="burger-line"></span>
-                        <span class="burger-line"></span>
-                    </button>
+    <!-- Public Banner (only shown for non-authenticated users) -->
+    <div class="public-banner" id="publicBanner" style="display: none;">
+        <div class="public-banner-text">
+            Connectez-vous pour personnaliser vos actualités et sauvegarder vos préférences
+        </div>
+        <div class="public-banner-buttons">
+            <button class="public-banner-btn" id="publicLoginBtn">Connexion</button>
+            <button class="public-banner-btn secondary" id="publicSignupBtn">Créer un compte</button>
+        </div>
+    </div>
 
-                    <!-- Burger Dropdown Menu -->
-                    <div class="burger-dropdown" id="burgerMenuIndex">
-                    <!-- User Info (hidden si non connecté) -->
-                    <div class="burger-user-info" id="burgerUserInfoIndex" style="display: none;">
-                        <img id="burgerAvatarImageIndex" class="burger-user-avatar" src="https://ui-avatars.com/api/?name=User&background=3ecf8e&color=fff&size=72" alt="Avatar">
-                        <span id="userNameDisplayIndex" class="burger-user-name">User: User</span>
-                    </div>
+    <!-- Navbar will be injected here by navbar-component.js -->
 
-                    <!-- Auth Buttons (cachés si connecté) -->
-                    <div id="burgerAuthButtons">
-                        <button class="burger-link" id="openLoginBtn">
-                            <img src="https://img.icons8.com/ios-filled/50/000000/lock-2.png" alt="Login" class="icon-secondary" style="width: 1.5rem; height: 1.5rem;">
-                            <span data-i18n="auth.login">Connexion</span>
+    <!-- Vertical Sidebar - With locked overlay for public mode -->
+    <aside class="vertical-sidebar" id="verticalSidebar">
+        <!-- Locked overlay for public users -->
+        <div class="sidebar-locked-overlay" id="sidebarLockedOverlay" style="display: none;">
+            <div class="sidebar-locked-message">
+                <p>Connectez-vous pour accéder aux filtres</p>
+                <button class="public-banner-btn" id="sidebarLoginBtn">Connexion</button>
+            </div>
+        </div>
+
+        <div class="sidebar-content">
+            <!-- Catégories -->
+            <div class="sidebar-section">
+                <h3 class="sidebar-section-title" data-i18n="sidebar.categories">Catégories</h3>
+                <ul class="sidebar-menu">
+                    <li class="sidebar-menu-item">
+                        <a class="sidebar-menu-link active" href="#" data-category="general" data-tooltip="Général">
+                            <img src="https://img.icons8.com/ios-filled/18/news.png" alt="" class="sidebar-icon">
+                            <span data-i18n="category.general">Général</span>
+                        </a>
+                        <button class="pin-btn" data-pin-category="general" aria-label="Pin category">
+                            <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="pin-icon">
                         </button>
-
-                        <button class="burger-link" id="openSignupBtn">
-                            <img src="https://img.icons8.com/ios-filled/50/000000/star--v1.png" alt="Signup" class="icon-secondary" style="width: 1.5rem; height: 1.5rem;">
-                            <span data-i18n="auth.signup">Créer un compte</span>
+                    </li>
+                    <li class="sidebar-menu-item">
+                        <a class="sidebar-menu-link" href="#" data-category="business" data-tooltip="Business">
+                            <img src="https://img.icons8.com/ios-filled/18/briefcase.png" alt="" class="sidebar-icon">
+                            <span data-i18n="category.business">Business</span>
+                        </a>
+                        <button class="pin-btn" data-pin-category="business" aria-label="Pin category">
+                            <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="pin-icon">
                         </button>
-                    </div>
+                    </li>
+                    <li class="sidebar-menu-item">
+                        <a class="sidebar-menu-link" href="#" data-category="technology" data-tooltip="Technologie">
+                            <img src="https://img.icons8.com/ios-filled/18/laptop.png" alt="" class="sidebar-icon">
+                            <span data-i18n="category.technology">Technologie</span>
+                        </a>
+                        <button class="pin-btn" data-pin-category="technology" aria-label="Pin category">
+                            <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="pin-icon">
+                        </button>
+                    </li>
+                    <li class="sidebar-menu-item">
+                        <a class="sidebar-menu-link" href="#" data-category="science" data-tooltip="Science">
+                            <img src="https://img.icons8.com/ios-filled/18/test-tube.png" alt="" class="sidebar-icon">
+                            <span data-i18n="category.science">Science</span>
+                        </a>
+                        <button class="pin-btn" data-pin-category="science" aria-label="Pin category">
+                            <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="pin-icon">
+                        </button>
+                    </li>
+                    <li class="sidebar-menu-item">
+                        <a class="sidebar-menu-link" href="#" data-category="health" data-tooltip="Santé">
+                            <img src="https://img.icons8.com/ios-filled/18/heart-with-pulse.png" alt="" class="sidebar-icon">
+                            <span data-i18n="category.health">Santé</span>
+                        </a>
+                        <button class="pin-btn" data-pin-category="health" aria-label="Pin category">
+                            <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="pin-icon">
+                        </button>
+                    </li>
+                    <li class="sidebar-menu-item">
+                        <a class="sidebar-menu-link" href="#" data-category="sports" data-tooltip="Sports">
+                            <img src="https://img.icons8.com/ios-filled/18/football.png" alt="" class="sidebar-icon">
+                            <span data-i18n="category.sports">Sports</span>
+                        </a>
+                        <button class="pin-btn" data-pin-category="sports" aria-label="Pin category">
+                            <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="pin-icon">
+                        </button>
+                    </li>
+                    <li class="sidebar-menu-item">
+                        <a class="sidebar-menu-link" href="#" data-category="entertainment" data-tooltip="Divertissement">
+                            <img src="https://img.icons8.com/ios-filled/18/clapperboard.png" alt="" class="sidebar-icon">
+                            <span data-i18n="category.entertainment">Divertissement</span>
+                        </a>
+                        <button class="pin-btn" data-pin-category="entertainment" aria-label="Pin category">
+                            <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="pin-icon">
+                        </button>
+                    </li>
+                </ul>
+            </div>
 
-                    <div class="burger-divider"></div>
-
-                    <!-- Theme Toggle avec Switch -->
-                    <div class="burger-item">
-                        <div class="burger-item-label">
-                            <img src="https://img.icons8.com/ios-filled/50/000000/sun--v1.png" alt="Theme" class="icon-secondary" style="width: 1.5rem; height: 1.5rem;" data-theme-icon>
-                            <span id="themeText" data-i18n="nav.darkMode">Mode sombre</span>
-                        </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="themeToggle">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-
-                    <!-- Language Toggle avec Switch -->
-                    <div class="burger-item">
-                        <div class="burger-item-label">
-                            <img src="https://img.icons8.com/ios-filled/50/000000/globe.png" alt="Language" class="icon-secondary" style="width: 1.5rem; height: 1.5rem;">
-                            <span id="langLabel">Français / English</span>
-                        </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="langToggleIndex">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-
-                    <!-- Dashboard link (affiché si connecté) -->
-                    <button class="burger-link" id="dashboardLinkIndex" style="display: none;">
-                        <img src="https://img.icons8.com/ios-filled/50/000000/dashboard.png" alt="Dashboard" class="icon-secondary" style="width: 1.5rem; height: 1.5rem;">
-                        <span data-i18n="nav.dashboard">Dashboard</span>
-                    </button>
-                </div>
-                </div>
+            <!-- Pays -->
+            <div class="sidebar-section">
+                <h3 class="sidebar-section-title" data-i18n="sidebar.countries">Pays</h3>
+                <ul class="sidebar-menu">
+                    <li class="sidebar-menu-item">
+                        <a class="sidebar-menu-link active" href="#" data-country="us" data-tooltip="États-Unis">
+                            <img src="https://img.icons8.com/color/18/usa.png" alt="" class="sidebar-icon">
+                            <span data-i18n="country.us">États-Unis</span>
+                        </a>
+                        <button class="pin-btn" data-pin-country="us" aria-label="Pin country">
+                            <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="pin-icon">
+                        </button>
+                    </li>
+                    <li class="sidebar-menu-item">
+                        <a class="sidebar-menu-link" href="#" data-country="fr" data-tooltip="France">
+                            <img src="https://img.icons8.com/color/18/france.png" alt="" class="sidebar-icon">
+                            <span data-i18n="country.fr">France</span>
+                        </a>
+                        <button class="pin-btn" data-pin-country="fr" aria-label="Pin country">
+                            <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="pin-icon">
+                        </button>
+                    </li>
+                    <li class="sidebar-menu-item">
+                        <a class="sidebar-menu-link" href="#" data-country="gb" data-tooltip="Royaume-Uni">
+                            <img src="https://img.icons8.com/color/18/great-britain.png" alt="" class="sidebar-icon">
+                            <span data-i18n="country.gb">Royaume-Uni</span>
+                        </a>
+                        <button class="pin-btn" data-pin-country="gb" aria-label="Pin country">
+                            <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="pin-icon">
+                        </button>
+                    </li>
+                    <li class="sidebar-menu-item">
+                        <a class="sidebar-menu-link" href="#" data-country="ca" data-tooltip="Canada">
+                            <img src="https://img.icons8.com/color/18/canada.png" alt="" class="sidebar-icon">
+                            <span data-i18n="country.ca">Canada</span>
+                        </a>
+                        <button class="pin-btn" data-pin-country="ca" aria-label="Pin country">
+                            <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="pin-icon">
+                        </button>
+                    </li>
+                    <li class="sidebar-menu-item">
+                        <a class="sidebar-menu-link" href="#" data-country="de" data-tooltip="Allemagne">
+                            <img src="https://img.icons8.com/color/18/germany.png" alt="" class="sidebar-icon">
+                            <span data-i18n="country.de">Allemagne</span>
+                        </a>
+                        <button class="pin-btn" data-pin-country="de" aria-label="Pin country">
+                            <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="pin-icon">
+                        </button>
+                    </li>
+                </ul>
             </div>
         </div>
-    </nav>
+    </aside>
 
-    <!-- Auth Buttons Section -->
-    <section class="auth-section">
-        <div class="auth-container">
-            <h1 class="hero-title-aurora">Newsly AI</h1>
-            <p class="auth-subtitle">Votre NewsWall Personnalisé Alimenté par l'IA</p>
-            <div class="auth-buttons">
-                <button class="btn btn-primary" id="heroSignupBtn">Créer un compte</button>
-                <button class="btn btn-primary" id="heroLoginBtn">Se Connecter</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <div class="features-container">
-            <h2 class="section-title">Pourquoi choisir Newsly AI ?</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon"><img src="https://img.icons8.com/ios-filled/100/000000/bot.png" alt="AI" class="icon-muted" style="width: 3.5rem; height: 3.5rem;"></div>
-                    <h3 class="feature-title">Filtrage Intelligent par IA</h3>
-                    <p class="feature-description">
-                        Notre IA analyse et filtre les actualités pour ne vous présenter que l'essentiel,
-                        adapté à vos préférences.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon"><img src="https://img.icons8.com/ios-filled/100/000000/bullseye.png" alt="Target" class="icon-muted" style="width: 3.5rem; height: 3.5rem;"></div>
-                    <h3 class="feature-title">Personnalisation Avancée</h3>
-                    <p class="feature-description">
-                        Choisissez vos catégories favorites : technologie, business, science, sports et bien plus.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon"><img src="https://img.icons8.com/ios-filled/100/000000/lightning-bolt.png" alt="Real-time" class="icon-muted" style="width: 3.5rem; height: 3.5rem;"></div>
-                    <h3 class="feature-title">Mises à jour en Temps Réel</h3>
-                    <p class="feature-description">
-                        Restez toujours à jour avec les dernières actualités rafraîchies en temps réel.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon"><img src="https://img.icons8.com/ios-filled/100/000000/pin.png" alt="Pin" class="icon-muted" style="width: 3.5rem; height: 3.5rem;"></div>
-                    <h3 class="feature-title">Sauvegardez vos Favoris</h3>
-                    <p class="feature-description">
-                        Gardez une trace des articles importants et accédez-y à tout moment.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon"><img src="https://img.icons8.com/ios-filled/100/000000/globe.png" alt="Globe" class="icon-muted" style="width: 3.5rem; height: 3.5rem;"></div>
-                    <h3 class="feature-title">Sources Multiples</h3>
-                    <p class="feature-description">
-                        Accédez à des milliers de sources d'information du monde entier, toutes au même endroit.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon"><img src="https://img.icons8.com/ios-filled/100/000000/lock-2.png" alt="Security" class="icon-muted" style="width: 3.5rem; height: 3.5rem;"></div>
-                    <h3 class="feature-title">100% Sécurisé</h3>
-                    <p class="feature-description">
-                        Vos données sont protégées avec les dernières technologies de sécurité.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works Section -->
-    <section id="how-it-works" class="how-it-works">
-        <div class="how-it-works-container">
-            <h2 class="section-title">Comment ça marche ?</h2>
-            <p class="section-subtitle">Trois étapes simples pour rester informé</p>
-
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <div class="step-icon"><img src="https://img.icons8.com/ios-filled/100/000000/user.png" alt="User" class="icon-muted" style="width: 3rem; height: 3rem;"></div>
-                    <h3 class="step-title">Créez votre compte</h3>
-                    <p class="step-description">
-                        Inscrivez-vous gratuitement en quelques secondes. Aucune carte bancaire requise.
-                    </p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <div class="step-icon"><img src="https://img.icons8.com/ios-filled/100/000000/settings.png" alt="Settings" class="icon-muted" style="width: 3rem; height: 3rem;"></div>
-                    <h3 class="step-title">Personnalisez vos préférences</h3>
-                    <p class="step-description">
-                        Choisissez vos catégories favorites et les pays qui vous intéressent.
-                    </p>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <div class="step-icon"><img src="https://img.icons8.com/ios-filled/100/000000/news.png" alt="News" class="icon-muted" style="width: 3rem; height: 3rem;"></div>
-                    <h3 class="step-title">Profitez de l'actualité</h3>
-                    <p class="step-description">
-                        Recevez un flux personnalisé d'actualités pertinentes, mises à jour en temps réel.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Categories Preview -->
-    <section class="categories-preview">
-        <div class="categories-container">
-            <h2 class="section-title category-section-title">Explorez nos Catégories</h2>
-            <div class="categories-grid">
-                <div class="category-preview">
-                    <div class="category-preview-icon"><img src="https://img.icons8.com/ios-filled/100/000000/briefcase.png" alt="Business" class="icon-muted" style="width: 3rem; height: 3rem;"></div>
-                    <h3 class="category-name">Business</h3>
-                    <p class="category-desc">Économie et finance</p>
-                </div>
-                <div class="category-preview">
-                    <div class="category-preview-icon"><img src="https://img.icons8.com/ios-filled/100/000000/laptop.png" alt="Technology" class="icon-muted" style="width: 3rem; height: 3rem;"></div>
-                    <h3 class="category-name">Technologie</h3>
-                    <p class="category-desc">Innovation et tech</p>
-                </div>
-                <div class="category-preview">
-                    <div class="category-preview-icon"><img src="https://img.icons8.com/ios-filled/100/000000/test-tube.png" alt="Science" class="icon-muted" style="width: 3rem; height: 3rem;"></div>
-                    <h3 class="category-name">Science</h3>
-                    <p class="category-desc">Découvertes scientifiques</p>
-                </div>
-                <div class="category-preview">
-                    <div class="category-preview-icon"><img src="https://img.icons8.com/ios-filled/100/000000/heart-with-pulse.png" alt="Health" class="icon-muted" style="width: 3rem; height: 3rem;"></div>
-                    <h3 class="category-name">Santé</h3>
-                    <p class="category-desc">Bien-être et médecine</p>
-                </div>
-                <div class="category-preview">
-                    <div class="category-preview-icon"><img src="https://img.icons8.com/ios-filled/100/000000/football2.png" alt="Sports" class="icon-muted" style="width: 3rem; height: 3rem;"></div>
-                    <h3 class="category-name">Sports</h3>
-                    <p class="category-desc">Résultats et actualités sportives</p>
-                </div>
-                <div class="category-preview">
-                    <div class="category-preview-icon"><img src="https://img.icons8.com/ios-filled/100/000000/retro-tv.png" alt="Entertainment" class="icon-muted" style="width: 3rem; height: 3rem;"></div>
-                    <h3 class="category-name">Divertissement</h3>
-                    <p class="category-desc">Cinéma, musique, culture</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-brand">
-                        <img src="https://img.icons8.com/ios-filled/50/000000/news.png" alt="News" class="footer-logo-icon icon-muted" style="width: 1.5rem; height: 1.5rem;">
-                        <span>Newsly AI</span>
-                    </div>
-                    <p class="footer-text">
-                        Votre NewsWall personnalisé alimenté par l'intelligence artificielle
-                    </p>
-                </div>
-
-                <div class="footer-section">
-                    <h3 class="footer-title">Produit</h3>
-                    <ul class="footer-links">
-                        <li><a href="index.html">Accueil</a></li>
-                        <li><a href="#features">Fonctionnalités</a></li>
-                        <li><a href="#how-it-works">Comment ça marche</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section" id="appLinksSection" style="display: none;">
-                    <h3 class="footer-title">Application</h3>
-                    <ul class="footer-links">
-                        <li><a href="dashboard.html">Dashboard</a></li>
-                        <li><a href="settings.html">Paramètres</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h3 class="footer-title">Ressources</h3>
-                    <ul class="footer-links">
-                        <li><a href="https://newsapi.org" target="_blank" rel="noopener">NewsAPI</a></li>
-                        <li><a href="https://icons8.com" target="_blank" rel="noopener">Icons8</a></li>
-                        <li><a href="https://supabase.com" target="_blank" rel="noopener">Supabase</a></li>
-                    </ul>
+    <!-- Main Content -->
+    <div class="dashboard-container">
+        <main class="dashboard-main">
+            <div class="news-header">
+                <h1 id="categoryTitle">Actualités Générales</h1>
+                <div id="loadingIndicator" class="loading-indicator" style="display: none;">
+                    Chargement...
                 </div>
             </div>
 
-            <div class="footer-bottom">
-                <p>&copy; 2025 Newsly AI. Développé avec ❤️ par <a href="https://www.linkedin.com/in/fr-richard-julien/" target="_blank" rel="noopener" style="color: var(--primary); text-decoration: none;">Julien Richard</a></p>
-                <div class="footer-social">
-                    <a href="https://github.com/ju-nocode/newsly-ai" target="_blank" rel="noopener" aria-label="GitHub"><img src="https://img.icons8.com/ios-filled/50/000000/github.png" alt="GitHub" class="icon-muted" style="width: 1.5rem; height: 1.5rem;"></a>
-                    <a href="https://www.linkedin.com/in/fr-richard-julien/" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="https://img.icons8.com/ios-filled/50/000000/linkedin.png" alt="LinkedIn" class="icon-muted" style="width: 1.5rem; height: 1.5rem;"></a>
-                </div>
+            <div id="newsContainer" class="news-grid">
+                <!-- Les actualités seront chargées ici -->
             </div>
-        </div>
-    </footer>
+        </main>
+    </div>
 
-    <!-- Auth Modal -->
-    <div class="modal-overlay" id="authModal">
+    <!-- Auth Modal (simple login/signup) -->
+    <div class="modal-overlay" id="authModal" style="display: none;">
         <div class="modal-container">
             <button class="modal-close" id="closeModal">&times;</button>
 
@@ -315,171 +204,194 @@
                     <button type="submit" class="btn btn-submit" data-i18n="auth.loginBtn">Se connecter</button>
                 </form>
 
-                <div style="text-align: center; margin: 1rem 0;">
-                    <a href="#" id="forgotPasswordLink" style="color: var(--primary); text-decoration: none; font-size: 0.875rem; font-weight: 500;">
-                        Mot de passe oublié ?
-                    </a>
-                </div>
-
                 <p class="modal-footer">
                     <span data-i18n="auth.noAccount">Pas de compte ?</span> <a href="#" id="switchToSignup" data-i18n="auth.createAccount">Créer un compte</a>
                 </p>
             </div>
 
-            <!-- Forgot Password Form -->
-            <div class="modal-content" id="forgotPasswordForm" style="display: none;">
-                <h2 class="modal-title">Mot de passe oublié</h2>
-                <p class="modal-subtitle">Entrez votre email pour recevoir un lien de réinitialisation</p>
+            <!-- Signup Form -->
+            <div class="modal-content" id="signupForm" style="display: none;">
+                <h2 class="modal-title">Créer un compte</h2>
+                <p class="modal-subtitle">Rejoignez Newsly AI</p>
 
-                <form class="auth-form" id="forgotPasswordFormElement">
+                <form class="auth-form" id="signupFormElement">
                     <div class="form-group">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-input" id="forgotPasswordEmail" required placeholder="votre@email.com">
+                        <input type="email" class="form-input" id="signupEmail" required>
                     </div>
-                    <div id="forgotPasswordError" class="error-message" style="display: none;"></div>
-                    <div id="forgotPasswordSuccess" class="success-message" style="display: none;"></div>
-                    <button type="submit" class="btn btn-submit">Envoyer le lien</button>
+                    <div class="form-group">
+                        <label class="form-label">Mot de passe</label>
+                        <input type="password" class="form-input" id="signupPassword" required>
+                    </div>
+                    <div id="signupError" class="error-message" style="display: none;"></div>
+                    <button type="submit" class="btn btn-submit">Créer mon compte</button>
                 </form>
 
                 <p class="modal-footer">
-                    <a href="#" id="backToLogin">← Retour à la connexion</a>
+                    <span>Déjà un compte ?</span> <a href="#" id="switchToLogin">Se connecter</a>
                 </p>
-            </div>
-
-            <!-- Signup Form (Flip Card) -->
-            <div class="modal-content" id="signupForm" style="display: none;">
-                <div class="signup-flip-container">
-                    <div class="signup-flip-card" id="signupFlipCard">
-
-                        <!-- FACE AVANT - Étape 1: Email & Password -->
-                        <div class="signup-flip-face signup-flip-front">
-                            <h2 class="modal-title">Créer un compte</h2>
-                            <p class="modal-subtitle">Étape 1/2 - Informations de connexion</p>
-
-                            <form class="auth-form" id="signupStep1Form">
-                                <div class="form-group">
-                                    <label class="form-label">Email <span style="color: var(--error);">*</span></label>
-                                    <input type="email" class="form-input" id="signupEmail" required placeholder="exemple@email.com">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Mot de passe <span style="color: var(--error);">*</span></label>
-                                    <input type="password" class="form-input" id="signupPassword" required placeholder="Min. 8 caractères">
-                                    <p class="form-hint">Le mot de passe doit contenir au moins 8 caractères</p>
-                                </div>
-                                <div id="signupStep1Error" class="error-message" style="display: none;"></div>
-                                <button type="submit" class="btn btn-submit">Suivant →</button>
-                            </form>
-
-                            <p class="modal-footer">
-                                <span>Déjà un compte ?</span> <a href="#" id="switchToLogin">Se connecter</a>
-                            </p>
-                        </div>
-
-                        <!-- FACE ARRIÈRE - Étape 2: Profil complet -->
-                        <div class="signup-flip-face signup-flip-back">
-                            <h2 class="modal-title">Compléter votre profil</h2>
-                            <p class="modal-subtitle">Étape 2/2 - Informations personnelles</p>
-
-                            <form class="auth-form" id="signupStep2Form">
-                                <div class="form-group">
-                                    <label class="form-label">Prénom <span style="color: var(--error);">*</span></label>
-                                    <input type="text" class="form-input" id="signupFirstName" required placeholder="John">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Nom <span style="color: var(--error);">*</span></label>
-                                    <input type="text" class="form-input" id="signupLastName" required placeholder="Doe">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Pays <span style="color: var(--error);">*</span></label>
-                                    <select class="form-input" id="signupCountry" required>
-                                        <option value="">-- Sélectionnez --</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Ville <span style="color: var(--error);">*</span></label>
-                                    <input type="text" class="form-input" id="signupCity" required placeholder="Bordeaux">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Téléphone (optionnel)</label>
-                                    <div style="display: flex; gap: 0.5rem;">
-                                        <select id="signupPhoneCode" class="form-input" style="width: 120px;">
-                                            <!-- Options peuplées dynamiquement depuis countries.js -->
-                                        </select>
-                                        <input type="tel" class="form-input" id="signupPhone" placeholder="6 12 34 56 78" style="flex: 1;">
-                                    </div>
-                                </div>
-                                <div id="signupStep2Error" class="error-message" style="display: none;"></div>
-                                <div class="button-group">
-                                    <button type="button" class="btn btn-primary btn-half" id="signupBackBtn">← Retour</button>
-                                    <button type="submit" class="btn btn-primary btn-two-thirds" id="signupFinalBtn">Créer mon compte</button>
-                                </div>
-                            </form>
-                        </div>
-
-                    </div>
-
-                    <!-- LOADER - Chargement -->
-                    <div class="signup-loader" id="signupLoader">
-                        <!-- Animated Icon Container -->
-                        <div class="loader-icon-container">
-                            <div class="spinner"></div>
-                            <div class="email-icon-animated">📧</div>
-                        </div>
-
-                        <h3 class="loader-title">Création de votre compte...</h3>
-                        <p class="loader-subtitle">Veuillez patienter</p>
-
-                        <!-- Simplified Email Notification -->
-                        <div id="emailSentNotification" class="email-notification-simple" style="display: none;">
-                            <div class="email-notification-icon">
-                                <span class="email-icon-pulse">📧</span>
-                            </div>
-                            <h4 class="email-notification-title">Email de confirmation envoyé !</h4>
-                            <p class="email-notification-text">Consultez votre boîte mail et cliquez sur le lien de confirmation</p>
-                            <p class="email-notification-hint">📬 Vérifiez aussi vos spams</p>
-                        </div>
-                    </div>
-
-                    <!-- SUCCESS - Compte créé -->
-                    <div class="signup-success" id="signupSuccess">
-                        <div class="success-checkmark"></div>
-                        <div id="confettiContainer" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden;"></div>
-                        <h2 class="modal-title" style="color: var(--success);">Compte créé avec succès !</h2>
-                        <p class="modal-subtitle" style="margin-bottom: 2rem;">
-                            Un email de confirmation a été envoyé à votre adresse.
-                        </p>
-                        <div style="background: var(--card-bg); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border-left: 4px solid var(--success);">
-                            <p style="margin: 0; color: var(--text-secondary); line-height: 1.6;">
-                                <strong>Prochaine étape :</strong><br>
-                                Vérifie ta boîte mail et clique sur le lien de confirmation pour activer ton compte.
-                            </p>
-                        </div>
-                        <button type="button" class="btn btn-submit" id="closeModalAfterSignup">
-                            Fermer
-                        </button>
-                    </div>
-
-                    <!-- ERROR - Erreur générique -->
-                    <div class="signup-error-box" id="signupError">
-                        <div class="error-icon"></div>
-                        <h2 class="modal-title" style="color: var(--error);">Une erreur est survenue</h2>
-                        <p class="modal-subtitle" style="margin-bottom: 2rem;">
-                            Impossible de créer ton compte pour le moment.
-                        </p>
-                        <p style="color: var(--text-secondary); margin-bottom: 2rem;">
-                            Réessaie plus tard ou contacte le support si le problème persiste.
-                        </p>
-                        <button type="button" class="btn btn-submit" id="closeModalAfterError">
-                            Fermer
-                        </button>
-                    </div>
-
-                </div>
             </div>
         </div>
     </div>
 
+    <script type="module">
+        import { checkAuth, login, logout } from './public/js/app.js';
+        import { displayNews, escapeHtml, showError, showSuccess } from './public/js/dashboard-utils.js';
+        import { translatePage } from './public/js/translation-service.js';
+        import { initNavbar } from './public/js/navbar-component.js';
+        import { initThemeSystem } from './public/js/theme-manager.js';
+        import { showPageLoader, hidePageLoader } from './public/js/page-loader.js';
+        import { showShimmerLoader, hideShimmerLoader } from './public/js/shimmer-loader.js';
 
-    <script type="module" src="./public/js/index-page.js"></script>
+        const publicBanner = document.getElementById('publicBanner');
+        const newsContainer = document.getElementById('newsContainer');
+        const authModal = document.getElementById('authModal');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const sidebarLockedOverlay = document.getElementById('sidebarLockedOverlay');
+
+        // Smart redirect and public mode initialization
+        (async () => {
+            showPageLoader();
+
+            try {
+                // Check authentication status
+                const isAuthenticated = checkAuth();
+
+                if (isAuthenticated) {
+                    // ✅ AUTHENTICATED → Redirect to full dashboard
+                    console.log('✅ User authenticated → Redirecting to dashboard.html');
+                    window.location.href = 'dashboard.html';
+                    return;
+                }
+
+                // ❌ NOT AUTHENTICATED → Public mode
+                console.log('📖 Public mode enabled');
+
+                // Initialize navbar in public mode (no settings, no user profile)
+                initNavbar('div.mobile-overlay', {
+                    showMobileSidebarBtn: false,
+                    showSettingsNav: false,
+                    publicMode: true
+                });
+
+                // Initialize theme system
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        initThemeSystem();
+                    });
+                });
+
+                // Show public banner
+                publicBanner.style.display = 'flex';
+
+                // Show locked overlay on sidebar
+                sidebarLockedOverlay.style.display = 'flex';
+
+                // Translate page
+                await translatePage();
+
+                // Load public news (general category, US country)
+                showShimmerLoader(newsContainer, 6);
+
+                const response = await fetch('/api/news/public?category=general&country=us&page=1');
+                if (!response.ok) throw new Error('Failed to load public news');
+
+                const data = await response.json();
+
+                hideShimmerLoader(newsContainer);
+
+                if (data.success && data.articles && data.articles.length > 0) {
+                    displayNews(data.articles, 'newsContainer');
+                    hidePageLoader(false);
+                } else {
+                    newsContainer.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 2rem;">Aucune actualité disponible</p>';
+                    hidePageLoader(true);
+                }
+
+            } catch (error) {
+                console.error('❌ Error loading public dashboard:', error);
+                hideShimmerLoader(newsContainer);
+                hidePageLoader(true);
+                showError('Erreur lors du chargement des actualités');
+            }
+        })();
+
+        // Public banner buttons
+        document.getElementById('publicLoginBtn').addEventListener('click', () => {
+            authModal.style.display = 'flex';
+            loginForm.style.display = 'block';
+            signupForm.style.display = 'none';
+        });
+
+        document.getElementById('publicSignupBtn').addEventListener('click', () => {
+            authModal.style.display = 'flex';
+            loginForm.style.display = 'none';
+            signupForm.style.display = 'block';
+        });
+
+        document.getElementById('sidebarLoginBtn').addEventListener('click', () => {
+            authModal.style.display = 'flex';
+            loginForm.style.display = 'block';
+            signupForm.style.display = 'none';
+        });
+
+        // Modal close button
+        document.getElementById('closeModal').addEventListener('click', () => {
+            authModal.style.display = 'none';
+        });
+
+        // Switch between login and signup
+        document.getElementById('switchToSignup').addEventListener('click', (e) => {
+            e.preventDefault();
+            loginForm.style.display = 'none';
+            signupForm.style.display = 'block';
+        });
+
+        document.getElementById('switchToLogin').addEventListener('click', (e) => {
+            e.preventDefault();
+            signupForm.style.display = 'none';
+            loginForm.style.display = 'block';
+        });
+
+        // Login form submission
+        document.getElementById('loginFormElement').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            const loginError = document.getElementById('loginError');
+            loginError.style.display = 'none';
+
+            try {
+                const result = await login(email, password);
+                if (result.success) {
+                    showSuccess('Connexion réussie !');
+                    window.location.href = 'dashboard.html';
+                } else {
+                    loginError.textContent = result.error || 'Erreur de connexion';
+                    loginError.style.display = 'block';
+                }
+            } catch (error) {
+                loginError.textContent = 'Une erreur est survenue';
+                loginError.style.display = 'block';
+            }
+        });
+
+        // Signup form submission - For now, disable and show message
+        document.getElementById('signupFormElement').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const signupError = document.getElementById('signupError');
+            signupError.textContent = 'Veuillez vous connecter avec un compte existant. L\'inscription sera bientôt disponible.';
+            signupError.style.display = 'block';
+        });
+
+        // Close modal on outside click
+        authModal.addEventListener('click', (e) => {
+            if (e.target === authModal) {
+                authModal.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>

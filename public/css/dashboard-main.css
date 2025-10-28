@@ -46,6 +46,9 @@
 /* 12. Modal */
 @import url('modules/modal.css');
 
+/* 12b. Public Banner */
+@import url('modules/public-banner.css');
+
 /* 13. Page Loader */
 @import url('modules/page-loader.css');
 

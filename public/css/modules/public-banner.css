@@ -1,0 +1,115 @@
+/* ================================================
+   PUBLIC BANNER - Landing Page Mode
+================================================ */
+
+/* Public banner sticky */
+.public-banner {
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    background: var(--primary);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.public-banner-text {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.public-banner-buttons {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.public-banner-btn {
+    padding: 0.4rem 1rem;
+    background: white;
+    color: var(--primary);
+    border: none;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.public-banner-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.public-banner-btn.secondary {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.public-banner-btn.secondary:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* ================================================
+   LOCKED SIDEBAR OVERLAY
+================================================ */
+
+.sidebar-locked-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: not-allowed;
+}
+
+.sidebar-locked-message {
+    background: var(--bg-primary);
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 200px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar-locked-message p {
+    margin: 0 0 1rem 0;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+}
+
+/* ================================================
+   RESPONSIVE
+================================================ */
+
+@media (max-width: 768px) {
+    .public-banner {
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+    }
+
+    .public-banner-text {
+        font-size: 0.8rem;
+        text-align: center;
+    }
+
+    .public-banner-buttons {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .public-banner-btn {
+        font-size: 0.75rem;
+        padding: 0.35rem 0.75rem;
+    }
+}
