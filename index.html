@@ -176,10 +176,50 @@
     </div>
 
     <script type="module">
-        import { checkAuth, login, signup } from './public/js/app.js';
-        import { displayNews, showSuccess, showError } from './public/js/dashboard-utils.js';
-        import { initNavbar } from './public/js/navbar-component.js';
-        import { initThemeSystem } from './public/js/theme-manager.js';
+        // Global error handler for debugging
+        window.addEventListener('error', (e) => {
+            console.error('❌ Global error caught:', e.error || e.message);
+        });
+
+        console.log('📄 Index.html script starting...');
+
+        let checkAuth, login, signup, displayNews, showSuccess, showError, initNavbar, initThemeSystem;
+
+        try {
+            console.log('📦 Loading modules...');
+
+            const appModule = await import('./public/js/app.js');
+            checkAuth = appModule.checkAuth;
+            login = appModule.login;
+            signup = appModule.signup;
+            console.log('✅ app.js loaded');
+
+            const utilsModule = await import('./public/js/dashboard-utils.js');
+            displayNews = utilsModule.displayNews;
+            showSuccess = utilsModule.showSuccess;
+            showError = utilsModule.showError;
+            console.log('✅ dashboard-utils.js loaded');
+
+            const navbarModule = await import('./public/js/navbar-component.js');
+            initNavbar = navbarModule.initNavbar;
+            console.log('✅ navbar-component.js loaded');
+
+            const themeModule = await import('./public/js/theme-manager.js');
+            initThemeSystem = themeModule.initThemeSystem;
+            console.log('✅ theme-manager.js loaded');
+
+        } catch (error) {
+            console.error('❌ FATAL: Module loading failed:', error);
+            document.body.innerHTML = `
+                <div style="padding: 2rem; text-align: center; color: red;">
+                    <h1>Erreur de chargement</h1>
+                    <p>Impossible de charger les modules JavaScript.</p>
+                    <p>Erreur: ${error.message}</p>
+                    <button onclick="location.reload()">Recharger la page</button>
+                </div>
+            `;
+            throw error;
+        }
 
         const newsContainer = document.getElementById('newsContainer');
         const categoryTitle = document.getElementById('categoryTitle');
@@ -194,10 +234,12 @@
 
         // Smart redirect
         (async () => {
-            console.log('🚀 Index.html loading...');
+            try {
+                console.log('🚀 Index.html loading...');
 
-            // Check if authenticated → redirect to dashboard
-            const isAuthenticated = checkAuth();
+                // Check if authenticated → redirect to dashboard
+                const isAuthenticated = checkAuth();
+                console.log('🔐 Auth check result:', isAuthenticated);
 
             if (isAuthenticated) {
                 console.log('✅ Connecté → Redirection vers dashboard.html');
@@ -208,20 +250,34 @@
             console.log('📖 Mode public');
 
             // Initialize navbar in public mode
+            console.log('🎨 Initializing navbar...');
             initNavbar('#navbar', {
                 showMobileSidebarBtn: true,
                 showSettingsNav: false,
                 publicMode: true
             });
+            console.log('✅ Navbar initialized');
 
             // Initialize theme
-            setTimeout(() => initThemeSystem(), 100);
+            console.log('🎨 Initializing theme...');
+            setTimeout(() => {
+                initThemeSystem();
+                console.log('✅ Theme initialized');
+            }, 100);
 
             // Load initial news
+            console.log('📰 Loading news...');
             loadNews(currentCategory, currentCountry);
 
             // Setup modal events
+            console.log('🔑 Setting up auth modal...');
             setupAuthModal();
+            console.log('✅ Auth modal ready');
+
+            } catch (error) {
+                console.error('❌ Initialization error:', error);
+                console.error('Stack trace:', error.stack);
+            }
         })();
 
         // Create shimmer cards
