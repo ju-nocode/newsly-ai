@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="public/css/main.css">
+    <link rel="stylesheet" href="public/css/index-visitor.css">
 </head>
 <body class="dashboard-body">
 
@@ -19,10 +19,13 @@
     <nav class="navbar navbar-landing">
         <div class="nav-container">
             <div class="nav-left">
-                <button class="burger-menu" id="burgerBtnIndex" aria-label="Menu">
-                    <span class="burger-line"></span>
-                    <span class="burger-line"></span>
-                    <span class="burger-line"></span>
+                <!-- Sidebar Toggle Button (mobile) -->
+                <button class="mobile-sidebar-toggle" id="mobileSidebarToggle" aria-label="Toggle sidebar" style="display: none;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
                 </button>
                 <div class="logo">
                     <span class="logo-icon">📰</span>
@@ -33,6 +36,12 @@
             <div class="nav-right">
                 <!-- Weather Widget -->
                 <div id="weatherWidgetIndex" class="weather-widget"></div>
+                <!-- Burger Menu Button -->
+                <button class="burger-menu" id="burgerBtnIndex" aria-label="Menu">
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
+                </button>
             </div>
         </div>
 

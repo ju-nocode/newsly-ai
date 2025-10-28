@@ -465,9 +465,11 @@ function openMobileSidebar() {
     document.body.style.overflow = 'hidden';
 }
 
-// Burger btn (toggle sidebar on mobile)
-if (burgerBtnIndex) {
-    burgerBtnIndex.addEventListener('dblclick', () => {
+// Mobile sidebar toggle button
+const mobileSidebarToggle = document.getElementById('mobileSidebarToggle');
+if (mobileSidebarToggle) {
+    mobileSidebarToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
         if (verticalSidebar.classList.contains('mobile-open')) {
             closeMobileSidebar();
         } else {
