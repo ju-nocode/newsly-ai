@@ -259,26 +259,47 @@
             console.log('✅ Navbar initialized');
 
             // Wait for navbar to be in DOM before attaching event listeners
+            console.log('⏰ Setting timeout for event listeners...');
             setTimeout(() => {
-                // Initialize theme
-                console.log('🎨 Initializing theme...');
-                initThemeSystem();
-                console.log('✅ Theme initialized');
+                console.log('⏰ Timeout fired! Attaching event listeners...');
 
-                // Setup modal events
-                console.log('🔑 Setting up auth modal...');
-                setupAuthModal();
-                console.log('✅ Auth modal ready');
+                try {
+                    // Initialize theme
+                    console.log('🎨 Initializing theme...');
+                    initThemeSystem();
+                    console.log('✅ Theme initialized');
+                } catch (error) {
+                    console.error('❌ Theme init error:', error);
+                }
 
-                // Setup burger menu
-                console.log('🍔 Setting up burger menu...');
-                setupBurgerMenu();
-                console.log('✅ Burger menu ready');
+                try {
+                    // Setup modal events
+                    console.log('🔑 About to call setupAuthModal()...');
+                    setupAuthModal();
+                    console.log('✅ Auth modal ready');
+                } catch (error) {
+                    console.error('❌ Auth modal setup error:', error);
+                }
 
-                // Setup searchbar
-                console.log('🔍 Setting up searchbar...');
-                setupSearchBar();
-                console.log('✅ Searchbar ready');
+                try {
+                    // Setup burger menu
+                    console.log('🍔 About to call setupBurgerMenu()...');
+                    setupBurgerMenu();
+                    console.log('✅ Burger menu ready');
+                } catch (error) {
+                    console.error('❌ Burger menu setup error:', error);
+                }
+
+                try {
+                    // Setup searchbar
+                    console.log('🔍 About to call setupSearchBar()...');
+                    setupSearchBar();
+                    console.log('✅ Searchbar ready');
+                } catch (error) {
+                    console.error('❌ Searchbar setup error:', error);
+                }
+
+                console.log('✅ All event listeners attached!');
             }, 100);
 
             // Load initial news
