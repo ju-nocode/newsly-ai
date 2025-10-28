@@ -274,6 +274,11 @@
             setupAuthModal();
             console.log('✅ Auth modal ready');
 
+            // Setup burger menu
+            console.log('🍔 Setting up burger menu...');
+            setupBurgerMenu();
+            console.log('✅ Burger menu ready');
+
             } catch (error) {
                 console.error('❌ Initialization error:', error);
                 console.error('Stack trace:', error.stack);
@@ -340,14 +345,55 @@
             console.log('📡 Attente configuration API...');
         }
 
+        // Burger menu setup
+        function setupBurgerMenu() {
+            const burgerBtn = document.getElementById('burgerBtn');
+            const burgerMenu = document.getElementById('burgerMenu');
+
+            if (!burgerBtn || !burgerMenu) {
+                console.warn('⚠️ Burger button or menu not found');
+                return;
+            }
+
+            // Toggle burger menu on click
+            burgerBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                burgerBtn.classList.toggle('active');
+                burgerMenu.classList.toggle('show');
+                console.log('🍔 Burger menu toggled');
+            });
+
+            // Close menu if clicking outside
+            document.addEventListener('click', () => {
+                burgerBtn.classList.remove('active');
+                burgerMenu.classList.remove('show');
+            });
+
+            // Prevent closing when clicking inside menu
+            burgerMenu.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+
+            console.log('✅ Burger menu event listeners attached');
+        }
+
         // Auth modal setup
         function setupAuthModal() {
-            // Open modal on login button click (from navbar)
+            // Open modal on login button click (from navbar burger)
             document.addEventListener('click', (e) => {
                 if (e.target.id === 'loginBtn' || e.target.closest('#loginBtn')) {
                     authModal.style.display = 'flex';
                     loginForm.style.display = 'block';
                     signupForm.style.display = 'none';
+                    console.log('🔑 Login modal opened');
+                }
+
+                // Open signup modal on signup button click
+                if (e.target.id === 'signupBtn' || e.target.closest('#signupBtn')) {
+                    authModal.style.display = 'flex';
+                    loginForm.style.display = 'none';
+                    signupForm.style.display = 'block';
+                    console.log('📝 Signup modal opened');
                 }
             });
 
