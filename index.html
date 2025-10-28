@@ -223,25 +223,24 @@
                 throw error;
             }
 
-        const newsContainer = document.getElementById('newsContainer');
-        const categoryTitle = document.getElementById('categoryTitle');
-        const mobileOverlay = document.getElementById('mobileOverlay');
-        const verticalSidebar = document.getElementById('verticalSidebar');
-        const authModal = document.getElementById('authModal');
-        const loginForm = document.getElementById('loginForm');
-        const signupForm = document.getElementById('signupForm');
+            // DOM elements (MUST be inside IIFE to be accessible by functions)
+            const newsContainer = document.getElementById('newsContainer');
+            const categoryTitle = document.getElementById('categoryTitle');
+            const mobileOverlay = document.getElementById('mobileOverlay');
+            const verticalSidebar = document.getElementById('verticalSidebar');
+            const authModal = document.getElementById('authModal');
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
 
-        let currentCategory = 'general';
-        let currentCountry = 'us';
+            let currentCategory = 'general';
+            let currentCountry = 'us';
 
-        // Smart redirect
-        (async () => {
-            try {
-                console.log('🚀 Index.html loading...');
+            // Smart redirect
+            console.log('🚀 Index.html loading...');
 
-                // Check if authenticated → redirect to dashboard
-                const isAuthenticated = checkAuth();
-                console.log('🔐 Auth check result:', isAuthenticated);
+            // Check if authenticated → redirect to dashboard
+            const isAuthenticated = checkAuth();
+            console.log('🔐 Auth check result:', isAuthenticated);
 
             if (isAuthenticated) {
                 console.log('✅ Connecté → Redirection vers dashboard.html');
@@ -307,12 +306,6 @@
             // Load initial news
             console.log('📰 Loading news...');
             loadNews(currentCategory, currentCountry);
-
-            } catch (error) {
-                console.error('❌ Initialization error:', error);
-                console.error('Stack trace:', error.stack);
-            }
-        })();
 
         // Create shimmer cards
         function showShimmer() {
