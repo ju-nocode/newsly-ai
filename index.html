@@ -252,7 +252,7 @@
 
         // Smart redirect and public mode initialization
         (async () => {
-            showPageLoader();
+            console.log('🚀 Index.html loading...');
 
             try {
                 // Check authentication status
@@ -267,20 +267,22 @@
 
                 // ❌ NOT AUTHENTICATED → Public mode
                 console.log('📖 Public mode enabled');
+                showPageLoader();
 
                 // Initialize navbar in public mode (no settings, no user profile)
-                initNavbar('div.mobile-overlay', {
-                    showMobileSidebarBtn: false,
-                    showSettingsNav: false,
-                    publicMode: true
-                });
-
-                // Initialize theme system
-                requestAnimationFrame(() => {
-                    requestAnimationFrame(() => {
-                        initThemeSystem();
+                const mobileOverlay = document.querySelector('.mobile-overlay');
+                if (mobileOverlay) {
+                    initNavbar('.mobile-overlay', {
+                        showMobileSidebarBtn: false,
+                        showSettingsNav: false,
+                        publicMode: true
                     });
-                });
+                }
+
+                // Initialize theme system after navbar
+                setTimeout(() => {
+                    initThemeSystem();
+                }, 100);
 
                 // Show public banner
                 publicBanner.style.display = 'flex';
@@ -294,104 +296,158 @@
                 // Load public news (general category, US country)
                 showShimmerLoader(newsContainer, 6);
 
-                const response = await fetch('/api/news/public?category=general&country=us&page=1');
-                if (!response.ok) throw new Error('Failed to load public news');
+                // Try public API first with timeout, fallback to showing message
+                let data = null;
+                try {
+                    const controller = new AbortController();
+                    const timeout = setTimeout(() => controller.abort(), 5000); // 5s timeout
 
-                const data = await response.json();
+                    const response = await fetch('/api/news/public?category=general&country=us&page=1', {
+                        signal: controller.signal
+                    });
+
+                    clearTimeout(timeout);
+
+                    if (response.ok) {
+                        data = await response.json();
+                        console.log('📰 Public news data:', data);
+                    } else {
+                        console.warn('Public API not available (status:', response.status, ')');
+                    }
+                } catch (apiError) {
+                    if (apiError.name === 'AbortError') {
+                        console.warn('Public API timeout (5s)');
+                    } else {
+                        console.warn('Public API error:', apiError);
+                    }
+                }
 
                 hideShimmerLoader(newsContainer);
 
-                if (data.success && data.articles && data.articles.length > 0) {
+                if (data && data.success && data.articles && data.articles.length > 0) {
                     displayNews(data.articles, 'newsContainer');
                     hidePageLoader(false);
                 } else {
-                    newsContainer.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 2rem;">Aucune actualité disponible</p>';
-                    hidePageLoader(true);
+                    // Show fallback message if API not available
+                    newsContainer.innerHTML = `
+                        <div style="text-align: center; padding: 3rem 1rem;">
+                            <h3 style="color: var(--text-primary); margin-bottom: 1rem;">Bienvenue sur Newsly AI</h3>
+                            <p style="color: var(--text-secondary); margin-bottom: 2rem;">
+                                Connectez-vous pour accéder aux actualités personnalisées
+                            </p>
+                            <button class="btn btn-primary" style="padding: 0.6rem 1.5rem;" onclick="document.getElementById('publicLoginBtn').click()">
+                                Se connecter
+                            </button>
+                        </div>
+                    `;
+                    hidePageLoader(false);
                 }
 
             } catch (error) {
                 console.error('❌ Error loading public dashboard:', error);
                 hideShimmerLoader(newsContainer);
                 hidePageLoader(true);
-                showError('Erreur lors du chargement des actualités');
+                newsContainer.innerHTML = '<p style="text-align: center; color: var(--error); padding: 2rem;">Erreur de chargement</p>';
             }
         })();
 
-        // Public banner buttons
-        document.getElementById('publicLoginBtn').addEventListener('click', () => {
-            authModal.style.display = 'flex';
-            loginForm.style.display = 'block';
-            signupForm.style.display = 'none';
-        });
+        // Public banner buttons - Use event delegation for safety
+        const publicLoginBtn = document.getElementById('publicLoginBtn');
+        const publicSignupBtn = document.getElementById('publicSignupBtn');
+        const sidebarLoginBtn = document.getElementById('sidebarLoginBtn');
+        const closeModal = document.getElementById('closeModal');
+        const switchToSignup = document.getElementById('switchToSignup');
+        const switchToLogin = document.getElementById('switchToLogin');
+        const loginFormElement = document.getElementById('loginFormElement');
+        const signupFormElement = document.getElementById('signupFormElement');
 
-        document.getElementById('publicSignupBtn').addEventListener('click', () => {
-            authModal.style.display = 'flex';
-            loginForm.style.display = 'none';
-            signupForm.style.display = 'block';
-        });
+        if (publicLoginBtn) {
+            publicLoginBtn.addEventListener('click', () => {
+                authModal.style.display = 'flex';
+                loginForm.style.display = 'block';
+                signupForm.style.display = 'none';
+            });
+        }
 
-        document.getElementById('sidebarLoginBtn').addEventListener('click', () => {
-            authModal.style.display = 'flex';
-            loginForm.style.display = 'block';
-            signupForm.style.display = 'none';
-        });
+        if (publicSignupBtn) {
+            publicSignupBtn.addEventListener('click', () => {
+                authModal.style.display = 'flex';
+                loginForm.style.display = 'none';
+                signupForm.style.display = 'block';
+            });
+        }
 
-        // Modal close button
-        document.getElementById('closeModal').addEventListener('click', () => {
-            authModal.style.display = 'none';
-        });
+        if (sidebarLoginBtn) {
+            sidebarLoginBtn.addEventListener('click', () => {
+                authModal.style.display = 'flex';
+                loginForm.style.display = 'block';
+                signupForm.style.display = 'none';
+            });
+        }
 
-        // Switch between login and signup
-        document.getElementById('switchToSignup').addEventListener('click', (e) => {
-            e.preventDefault();
-            loginForm.style.display = 'none';
-            signupForm.style.display = 'block';
-        });
+        if (closeModal) {
+            closeModal.addEventListener('click', () => {
+                authModal.style.display = 'none';
+            });
+        }
 
-        document.getElementById('switchToLogin').addEventListener('click', (e) => {
-            e.preventDefault();
-            signupForm.style.display = 'none';
-            loginForm.style.display = 'block';
-        });
+        if (switchToSignup) {
+            switchToSignup.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginForm.style.display = 'none';
+                signupForm.style.display = 'block';
+            });
+        }
 
-        // Login form submission
-        document.getElementById('loginFormElement').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('loginEmail').value.trim();
-            const password = document.getElementById('loginPassword').value;
+        if (switchToLogin) {
+            switchToLogin.addEventListener('click', (e) => {
+                e.preventDefault();
+                signupForm.style.display = 'none';
+                loginForm.style.display = 'block';
+            });
+        }
 
-            const loginError = document.getElementById('loginError');
-            loginError.style.display = 'none';
+        if (loginFormElement) {
+            loginFormElement.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value.trim();
+                const password = document.getElementById('loginPassword').value;
 
-            try {
-                const result = await login(email, password);
-                if (result.success) {
-                    showSuccess('Connexion réussie !');
-                    window.location.href = 'dashboard.html';
-                } else {
-                    loginError.textContent = result.error || 'Erreur de connexion';
+                const loginError = document.getElementById('loginError');
+                loginError.style.display = 'none';
+
+                try {
+                    const result = await login(email, password);
+                    if (result.success) {
+                        showSuccess('Connexion réussie !');
+                        window.location.href = 'dashboard.html';
+                    } else {
+                        loginError.textContent = result.error || 'Erreur de connexion';
+                        loginError.style.display = 'block';
+                    }
+                } catch (error) {
+                    loginError.textContent = 'Une erreur est survenue';
                     loginError.style.display = 'block';
                 }
-            } catch (error) {
-                loginError.textContent = 'Une erreur est survenue';
-                loginError.style.display = 'block';
-            }
-        });
+            });
+        }
 
-        // Signup form submission - For now, disable and show message
-        document.getElementById('signupFormElement').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const signupError = document.getElementById('signupError');
-            signupError.textContent = 'Veuillez vous connecter avec un compte existant. L\'inscription sera bientôt disponible.';
-            signupError.style.display = 'block';
-        });
+        if (signupFormElement) {
+            signupFormElement.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const signupError = document.getElementById('signupError');
+                signupError.textContent = 'Veuillez vous connecter avec un compte existant. L\'inscription sera bientôt disponible.';
+                signupError.style.display = 'block';
+            });
+        }
 
-        // Close modal on outside click
-        authModal.addEventListener('click', (e) => {
-            if (e.target === authModal) {
-                authModal.style.display = 'none';
-            }
-        });
+        if (authModal) {
+            authModal.addEventListener('click', (e) => {
+                if (e.target === authModal) {
+                    authModal.style.display = 'none';
+                }
+            });
+        }
     </script>
 </body>
 </html>
