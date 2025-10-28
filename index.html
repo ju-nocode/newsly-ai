@@ -183,43 +183,45 @@
 
         console.log('📄 Index.html script starting...');
 
-        let checkAuth, login, signup, displayNews, showSuccess, showError, initNavbar, initThemeSystem;
+        // Wrap everything in async IIFE
+        (async () => {
+            let checkAuth, login, signup, displayNews, showSuccess, showError, initNavbar, initThemeSystem;
 
-        try {
-            console.log('📦 Loading modules...');
+            try {
+                console.log('📦 Loading modules...');
 
-            const appModule = await import('./public/js/app.js');
-            checkAuth = appModule.checkAuth;
-            login = appModule.login;
-            signup = appModule.signup;
-            console.log('✅ app.js loaded');
+                const appModule = await import('./public/js/app.js');
+                checkAuth = appModule.checkAuth;
+                login = appModule.login;
+                signup = appModule.signup;
+                console.log('✅ app.js loaded');
 
-            const utilsModule = await import('./public/js/dashboard-utils.js');
-            displayNews = utilsModule.displayNews;
-            showSuccess = utilsModule.showSuccess;
-            showError = utilsModule.showError;
-            console.log('✅ dashboard-utils.js loaded');
+                const utilsModule = await import('./public/js/dashboard-utils.js');
+                displayNews = utilsModule.displayNews;
+                showSuccess = utilsModule.showSuccess;
+                showError = utilsModule.showError;
+                console.log('✅ dashboard-utils.js loaded');
 
-            const navbarModule = await import('./public/js/navbar-component.js');
-            initNavbar = navbarModule.initNavbar;
-            console.log('✅ navbar-component.js loaded');
+                const navbarModule = await import('./public/js/navbar-component.js');
+                initNavbar = navbarModule.initNavbar;
+                console.log('✅ navbar-component.js loaded');
 
-            const themeModule = await import('./public/js/theme-manager.js');
-            initThemeSystem = themeModule.initThemeSystem;
-            console.log('✅ theme-manager.js loaded');
+                const themeModule = await import('./public/js/theme-manager.js');
+                initThemeSystem = themeModule.initThemeSystem;
+                console.log('✅ theme-manager.js loaded');
 
-        } catch (error) {
-            console.error('❌ FATAL: Module loading failed:', error);
-            document.body.innerHTML = `
-                <div style="padding: 2rem; text-align: center; color: red;">
-                    <h1>Erreur de chargement</h1>
-                    <p>Impossible de charger les modules JavaScript.</p>
-                    <p>Erreur: ${error.message}</p>
-                    <button onclick="location.reload()">Recharger la page</button>
-                </div>
-            `;
-            throw error;
-        }
+            } catch (error) {
+                console.error('❌ FATAL: Module loading failed:', error);
+                document.body.innerHTML = `
+                    <div style="padding: 2rem; text-align: center; color: red;">
+                        <h1>Erreur de chargement</h1>
+                        <p>Impossible de charger les modules JavaScript.</p>
+                        <p>Erreur: ${error.message}</p>
+                        <button onclick="location.reload()">Recharger la page</button>
+                    </div>
+                `;
+                throw error;
+            }
 
         const newsContainer = document.getElementById('newsContainer');
         const categoryTitle = document.getElementById('categoryTitle');
@@ -664,6 +666,8 @@
                 }
             }
         });
+
+        })(); // End of async IIFE
     </script>
 </body>
 </html>
