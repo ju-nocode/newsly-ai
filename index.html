@@ -3,25 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Newsly AI - Actualités</title>
+    <title>Newsly AI - Actualités en temps réel</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📰</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="public/css/main.css">
 </head>
-<body>
+<body class="dashboard-body">
+
     <!-- Overlay pour menu mobile -->
     <div class="mobile-overlay" id="mobileOverlay"></div>
 
-    <!-- Navbar Public Mode -->
-    <nav class="navbar">
-        <div class="navbar-container">
-            <div class="navbar-left">
-                <button class="burger-btn" id="burgerBtnIndex" aria-label="Menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+    <!-- Navbar Mode Visiteur -->
+    <nav class="navbar navbar-landing">
+        <div class="nav-container">
+            <div class="nav-left">
+                <button class="burger-menu" id="burgerBtnIndex" aria-label="Menu">
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
                 </button>
                 <div class="logo">
                     <span class="logo-icon">📰</span>
@@ -29,58 +30,58 @@
                 </div>
             </div>
 
-            <div class="navbar-right">
+            <div class="nav-right">
                 <!-- Weather Widget -->
                 <div id="weatherWidgetIndex" class="weather-widget"></div>
             </div>
         </div>
 
-        <!-- Burger Menu -->
-        <div class="burger-menu" id="burgerMenuIndex">
-            <div class="burger-menu-header">
-                <h3>Menu</h3>
-            </div>
-
-            <div class="burger-menu-content">
-                <!-- Theme Toggle -->
-                <div class="burger-menu-item">
+        <!-- Burger Dropdown -->
+        <div class="burger-dropdown" id="burgerMenuIndex">
+            <!-- Theme Toggle -->
+            <div class="burger-item">
+                <div class="burger-item-label">
                     <span>Thème</span>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="themeToggleIndex">
-                        <span class="toggle-slider"></span>
-                    </label>
                 </div>
-
-                <!-- Language Toggle -->
-                <div class="burger-menu-item">
-                    <span id="langLabel">Langue: Français</span>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="langToggleIndex">
-                        <span class="toggle-slider"></span>
-                    </label>
-                </div>
-
-                <!-- Auth Buttons (visible uniquement si non connecté) -->
-                <div id="burgerAuthButtons" class="burger-auth-section">
-                    <button class="btn btn-primary" id="loginBtnBurger" style="padding: 0.6rem 1rem; width: 100%; margin-bottom: 0.5rem;">Se connecter</button>
-                    <button class="btn btn-success" id="signupBtnBurger" style="padding: 0.6rem 1rem; width: 100%;">Créer un compte</button>
-                </div>
-
-                <!-- User Info (visible uniquement si connecté) -->
-                <div id="burgerUserInfoIndex" class="burger-user-info" style="display: none;">
-                    <div class="burger-user-avatar">
-                        <img id="burgerAvatarImageIndex" src="" alt="Avatar" style="width: 48px; height: 48px; border-radius: 50%;">
-                    </div>
-                    <div class="burger-user-details">
-                        <p id="userNameDisplayIndex" style="font-weight: 600; margin: 0;"></p>
-                        <button id="dashboardLinkIndex" class="btn btn-secondary" style="padding: 0.4rem 0.8rem; margin-top: 0.5rem;">Aller au Dashboard</button>
-                    </div>
-                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="themeToggleIndex">
+                    <span class="toggle-slider"></span>
+                </label>
             </div>
+
+            <!-- Language Toggle -->
+            <div class="burger-item">
+                <div class="burger-item-label">
+                    <span id="langLabel">Français</span>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="langToggleIndex">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="burger-divider"></div>
+
+            <!-- Auth Buttons (visible si non connecté) -->
+            <div id="burgerAuthButtons">
+                <button class="btn btn-primary" id="loginBtnBurger" style="padding: 0.6rem 1rem; width: 100%; margin-bottom: 0.5rem;">Se connecter</button>
+                <button class="btn btn-success" id="signupBtnBurger" style="padding: 0.6rem 1rem; width: 100%;">Créer un compte</button>
+            </div>
+
+            <!-- User Info (visible si connecté) -->
+            <div id="burgerUserInfoIndex" class="burger-user-info" style="display: none;">
+                <img id="burgerAvatarImageIndex" src="" alt="Avatar" class="burger-user-avatar">
+                <span id="userNameDisplayIndex" class="burger-user-name"></span>
+            </div>
+
+            <!-- Dashboard Link (visible si connecté) -->
+            <button id="dashboardLinkIndex" class="burger-link" style="display: none;">
+                Aller au Dashboard →
+            </button>
         </div>
     </nav>
 
-    <!-- Sidebar (catégories et pays) -->
+    <!-- Vertical Sidebar -->
     <aside class="vertical-sidebar" id="verticalSidebar">
         <div class="sidebar-content">
             <!-- Catégories -->
@@ -176,23 +177,23 @@
         <main class="dashboard-main">
             <div class="news-header">
                 <h1 id="categoryTitle">Actualités Générales</h1>
-                <p class="news-subtitle">Mode visiteur - Créez un compte pour un accès illimité</p>
+                <p class="news-subtitle">Mode visiteur • Créez un compte pour accéder à toutes les fonctionnalités</p>
             </div>
 
             <div id="newsContainer" class="news-grid">
-                <!-- Les shimmer seront ajoutés par JS -->
+                <!-- Shimmer cards injectées par JS -->
             </div>
         </main>
     </div>
 
-    <!-- Modal Login/Signup avec Flip Animation -->
+    <!-- Modal Auth -->
     <div class="modal-overlay" id="authModal">
         <div class="modal-container">
             <button class="modal-close" id="closeModal">&times;</button>
 
-            <!-- Flip Card Container -->
+            <!-- Signup Flip Card -->
             <div class="signup-flip-card" id="signupFlipCard">
-                <!-- FACE 1: Login Form -->
+                <!-- FRONT: Login -->
                 <div class="signup-flip-front" id="loginForm">
                     <h2 class="modal-title">Connexion</h2>
                     <p class="modal-subtitle">Connectez-vous à votre compte</p>
@@ -212,13 +213,14 @@
 
                     <p class="modal-footer" style="text-align: center; margin-top: 1rem; color: var(--text-secondary);">
                         <span>Pas de compte ?</span> <a href="#" id="switchToSignup" style="color: var(--primary);">Créer un compte</a><br>
-                        <a href="#" id="forgotPasswordLink" style="color: var(--text-secondary); font-size: 0.85rem;">Mot de passe oublié ?</a>
+                        <a href="#" id="forgotPasswordLink" style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.5rem; display: inline-block;">Mot de passe oublié ?</a>
                     </p>
                 </div>
 
-                <!-- FACE 2: Signup Step 1 (Email + Password) -->
+                <!-- BACK: Signup -->
                 <div class="signup-flip-back" id="signupForm">
-                    <div class="signup-step" id="signupStep1">
+                    <!-- Step 1 -->
+                    <div id="signupStep1">
                         <h2 class="modal-title">Créer un compte</h2>
                         <p class="modal-subtitle">Étape 1/2 - Identifiants</p>
 
@@ -228,7 +230,7 @@
                                 <input type="email" class="form-input" id="signupEmail" required>
                             </div>
                             <div class="form-group">
-                                <label class="form-label">Mot de passe (min 8 caractères)</label>
+                                <label class="form-label">Mot de passe</label>
                                 <input type="password" class="form-input" id="signupPassword" required minlength="8">
                             </div>
                             <div id="signupStep1Error" class="error-message" style="display: none;"></div>
@@ -240,8 +242,8 @@
                         </p>
                     </div>
 
-                    <!-- Signup Step 2 (Profil) - Visible après flip -->
-                    <div class="signup-step" id="signupStep2" style="display: none;">
+                    <!-- Step 2 -->
+                    <div id="signupStep2" style="display: none;">
                         <button class="btn btn-secondary" id="signupBackBtn" style="padding: 0.4rem 0.8rem; margin-bottom: 1rem;">← Retour</button>
                         <h2 class="modal-title">Votre Profil</h2>
                         <p class="modal-subtitle">Étape 2/2 - Informations</p>
@@ -272,12 +274,10 @@
                             <div class="form-row">
                                 <div class="form-group" style="width: 30%;">
                                     <label class="form-label">Code</label>
-                                    <select class="form-input" id="signupPhoneCode">
-                                        <option value="+33">🇫🇷 +33</option>
-                                    </select>
+                                    <select class="form-input" id="signupPhoneCode"></select>
                                 </div>
                                 <div class="form-group" style="width: 70%;">
-                                    <label class="form-label">Téléphone (optionnel)</label>
+                                    <label class="form-label">Téléphone</label>
                                     <input type="tel" class="form-input" id="signupPhone">
                                 </div>
                             </div>
@@ -287,11 +287,11 @@
                     </div>
                 </div>
 
-                <!-- FACE 3: Forgot Password Form -->
+                <!-- Forgot Password -->
                 <div class="signup-flip-forgot" id="forgotPasswordForm" style="display: none;">
                     <button class="btn btn-secondary" id="backToLogin" style="padding: 0.4rem 0.8rem; margin-bottom: 1rem;">← Retour</button>
                     <h2 class="modal-title">Mot de passe oublié</h2>
-                    <p class="modal-subtitle">Recevez un lien de réinitialisation par email</p>
+                    <p class="modal-subtitle">Recevez un lien de réinitialisation</p>
 
                     <form class="auth-form" id="forgotPasswordFormElement">
                         <div class="form-group">
@@ -305,16 +305,16 @@
                 </div>
             </div>
 
-            <!-- Signup Loader (affiché pendant la création du compte) -->
+            <!-- Signup Loader -->
             <div class="signup-loader" id="signupLoader">
                 <div class="loader-spinner"></div>
                 <h3>Création de votre compte...</h3>
                 <p>Veuillez patienter</p>
             </div>
 
-            <!-- Email Sent Notification -->
+            <!-- Email Notification -->
             <div class="email-notification" id="emailSentNotification" style="display: none;">
-                <p>📧 Un email de confirmation a été envoyé</p>
+                <p>📧 Email de confirmation envoyé</p>
             </div>
 
             <!-- Signup Success -->
@@ -323,8 +323,8 @@
                     <div class="success-checkmark"></div>
                     <div class="success-glow"></div>
                 </div>
-                <h2 class="success-title">Compte créé avec succès !</h2>
-                <p class="success-subtitle">Vérifiez votre email pour confirmer votre compte</p>
+                <h2 class="success-title">Compte créé !</h2>
+                <p class="success-subtitle">Vérifiez votre email pour confirmer</p>
                 <button id="closeModalAfterSignup" class="btn btn-success-primary">Compris</button>
             </div>
 
@@ -332,13 +332,13 @@
             <div class="signup-error" id="signupError">
                 <div class="error-icon">❌</div>
                 <h2 class="error-title">Erreur</h2>
-                <p class="error-subtitle">Une erreur est survenue lors de la création du compte</p>
+                <p class="error-subtitle">Une erreur est survenue</p>
                 <button id="closeModalAfterError" class="btn btn-danger">Réessayer</button>
             </div>
         </div>
     </div>
 
-    <!-- Import du module JS -->
+    <!-- JS Module -->
     <script type="module" src="./public/js/index-visitor.js"></script>
 </body>
 </html>
