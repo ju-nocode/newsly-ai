@@ -689,7 +689,7 @@ export const logSecurityEvent = async (activityType, context = {}) => {
         }
 
         const data = await response.json();
-        console.log(`✅ Security event logged: ${activityType}`, { ip: publicIP });
+        console.log(`✅ Security event logged: ${activityType}`);
         return { success: true, data };
 
     } catch (error) {

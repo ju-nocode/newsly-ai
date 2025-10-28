@@ -314,25 +314,9 @@ translatePage();
 const authModal = document.getElementById('authModal');
 const loginFormDiv = document.getElementById('loginForm');
 const signupFormDiv = document.getElementById('signupForm');
-const openLoginBtn = document.getElementById('openLoginBtn');
-const openSignupBtn = document.getElementById('openSignupBtn');
 const closeModal = document.getElementById('closeModal');
 const switchToSignup = document.getElementById('switchToSignup');
 const switchToLogin = document.getElementById('switchToLogin');
-
-// Ouvrir login
-openLoginBtn.addEventListener('click', () => {
-    authModal.classList.add('show');
-    loginFormDiv.style.display = 'block';
-    signupFormDiv.style.display = 'none';
-});
-
-// Ouvrir signup
-openSignupBtn.addEventListener('click', () => {
-    authModal.classList.add('show');
-    loginFormDiv.style.display = 'none';
-    signupFormDiv.style.display = 'block';
-});
 
 // Fermer modal
 closeModal.addEventListener('click', () => {
@@ -345,25 +329,25 @@ authModal.addEventListener('click', (e) => {
     }
 });
 
+// Forgot Password - Elements (DOIT ÊTRE DÉCLARÉ AVANT UTILISATION)
+const forgotPasswordFormDiv = document.getElementById('forgotPasswordForm');
+const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+const backToLogin = document.getElementById('backToLogin');
+
 // Switch entre login et signup
 switchToSignup.addEventListener('click', (e) => {
     e.preventDefault();
     loginFormDiv.style.display = 'none';
     signupFormDiv.style.display = 'block';
-    forgotPasswordFormDiv.style.display = 'none';
+    if (forgotPasswordFormDiv) forgotPasswordFormDiv.style.display = 'none';
 });
 
 switchToLogin.addEventListener('click', (e) => {
     e.preventDefault();
     signupFormDiv.style.display = 'none';
     loginFormDiv.style.display = 'block';
-    forgotPasswordFormDiv.style.display = 'none';
+    if (forgotPasswordFormDiv) forgotPasswordFormDiv.style.display = 'none';
 });
-
-// Forgot Password - Elements
-const forgotPasswordFormDiv = document.getElementById('forgotPasswordForm');
-const forgotPasswordLink = document.getElementById('forgotPasswordLink');
-const backToLogin = document.getElementById('backToLogin');
 
 // Switch to Forgot Password
 forgotPasswordLink.addEventListener('click', (e) => {
@@ -747,20 +731,27 @@ if (closeModalAfterErrorBtn) {
     });
 }
 
-// Hero buttons
-document.getElementById('heroSignupBtn').addEventListener('click', () => {
-    authModal.classList.add('show');
-    loginFormDiv.style.display = 'none';
-    signupFormDiv.style.display = 'block';
-});
+// Hero buttons (avec vérification d'existence)
+const heroSignupBtn = document.getElementById('heroSignupBtn');
+const heroLoginBtn = document.getElementById('heroLoginBtn');
 
-document.getElementById('heroLoginBtn').addEventListener('click', () => {
-    authModal.classList.add('show');
-    loginFormDiv.style.display = 'block';
-    signupFormDiv.style.display = 'none';
-});
+if (heroSignupBtn) {
+    heroSignupBtn.addEventListener('click', () => {
+        authModal.classList.add('show');
+        loginFormDiv.style.display = 'none';
+        signupFormDiv.style.display = 'block';
+    });
+}
 
-// Gérer le burger menu
+if (heroLoginBtn) {
+    heroLoginBtn.addEventListener('click', () => {
+        authModal.classList.add('show');
+        loginFormDiv.style.display = 'block';
+        signupFormDiv.style.display = 'none';
+    });
+}
+
+// Gérer le burger menu (avec vérification d'existence)
 const burgerBtnIndex = document.getElementById('burgerBtnIndex');
 const burgerMenuIndex = document.getElementById('burgerMenuIndex');
 
@@ -792,7 +783,7 @@ async function updateBurgerMenuUserInfo() {
     const userName = document.getElementById('userNameDisplayIndex');
     const avatarImg = document.getElementById('burgerAvatarImageIndex');
 
-    if (user) {
+    if (user && burgerUserInfo && burgerAuthButtons && dashboardLink && userName && avatarImg) {
         // User is logged in - show user info
         burgerUserInfo.style.display = 'flex';
         burgerAuthButtons.style.display = 'none';
@@ -800,7 +791,7 @@ async function updateBurgerMenuUserInfo() {
         const displayName = user.display_name || `${user.first_name} ${user.last_name}`.trim() || 'User';
         userName.textContent = `User: ${displayName}`;
         avatarImg.src = user.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=3ecf8e&color=fff&size=72`;
-    } else {
+    } else if (burgerUserInfo && burgerAuthButtons && dashboardLink) {
         // User not logged in - show auth buttons
         burgerUserInfo.style.display = 'none';
         burgerAuthButtons.style.display = 'block';
@@ -816,29 +807,33 @@ if (dashboardLinkIndex) {
     });
 }
 
-// Language toggle
+// Language toggle (avec vérification d'existence)
 const langToggle = document.getElementById('langToggleIndex');
 const langLabel = document.getElementById('langLabel');
-const savedLang = localStorage.getItem('language') || 'fr';
 
-langToggle.checked = savedLang === 'en';
+if (langToggle) {
+    const savedLang = localStorage.getItem('language') || 'fr';
+    langToggle.checked = savedLang === 'en';
 
-langToggle.addEventListener('change', async () => {
-    const newLang = langToggle.checked ? 'en' : 'fr';
-    // Use centralized language change function
-    await changeLanguage(newLang);
-    // Apply index-specific translations
-    applyIndexTranslations(newLang);
-});
-
+    langToggle.addEventListener('change', async () => {
+        const newLang = langToggle.checked ? 'en' : 'fr';
+        // Use centralized language change function
+        await changeLanguage(newLang);
+        // Apply index-specific translations
+        applyIndexTranslations(newLang);
+    });
+}
 
 // Update burger menu with user info on load
 window.addEventListener('DOMContentLoaded', () => {
     updateBurgerMenuUserInfo();
     // Initialize theme system
     initThemeSystem();
-    // Initialize weather widget for index page
-    initWeatherWidget('weatherWidgetIndex');
+    // Initialize weather widget for index page (avec vérification)
+    const weatherWidget = document.getElementById('weatherWidgetIndex');
+    if (weatherWidget) {
+        initWeatherWidget('weatherWidgetIndex');
+    }
     // Initialize ripple effect on buttons
     initRippleButtons();
 });
