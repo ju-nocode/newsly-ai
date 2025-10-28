@@ -20,10 +20,28 @@ export default async function handler(req, res) {
         const clientIp = req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || 'unknown';
         console.log('📖 Public API request from IP:', clientIp);
 
-        // Forcer les paramètres pour mode public (seulement general + us)
-        const category = 'general';
-        const country = 'us';
-        const page = 1;
+        // Get params from query (with validation)
+        const { category = 'general', country = 'us', page = 1 } = req.query;
+
+        // Validate category
+        const validCategories = ['general', 'business', 'technology', 'science', 'health', 'sports', 'entertainment'];
+        if (!validCategories.includes(category)) {
+            return res.status(400).json({
+                success: false,
+                error: 'Invalid category'
+            });
+        }
+
+        // Validate country
+        const validCountries = ['us', 'fr', 'gb', 'ca', 'de'];
+        if (!validCountries.includes(country)) {
+            return res.status(400).json({
+                success: false,
+                error: 'Invalid country'
+            });
+        }
+
+        console.log(`📰 Fetching ${category} news for ${country}`);
 
         // Vérifier que la clé API existe
         if (!process.env.NEWS_API_KEY) {
@@ -36,31 +54,24 @@ export default async function handler(req, res) {
 
         console.log('✅ NEWS_API_KEY found, fetching news...');
 
-        // Appel à NewsAPI avec la clé sécurisée côté serveur
+        // Appel à NewsAPI avec la clé sécurisée côté serveur + timeout
         const url = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&page=${page}&pageSize=12&apiKey=${process.env.NEWS_API_KEY}`;
 
-        // Use native fetch (Node 18+) or fallback to https module
-        let data;
-        if (typeof fetch !== 'undefined') {
-            const response = await fetch(url);
-            data = await response.json();
-        } else {
-            // Fallback for older Node versions
-            const https = require('https');
-            data = await new Promise((resolve, reject) => {
-                https.get(url, (res) => {
-                    let body = '';
-                    res.on('data', chunk => body += chunk);
-                    res.on('end', () => {
-                        try {
-                            resolve(JSON.parse(body));
-                        } catch (e) {
-                            reject(e);
-                        }
-                    });
-                }).on('error', reject);
-            });
-        }
+        console.log('🔗 Calling NewsAPI...');
+
+        // Timeout controller
+        const controller = new AbortController();
+        const timeout = setTimeout(() => {
+            console.warn('⏱️ NewsAPI timeout (10s)');
+            controller.abort();
+        }, 10000); // 10 secondes
+
+        const response = await fetch(url, { signal: controller.signal });
+        clearTimeout(timeout);
+
+        const data = await response.json();
+
+        console.log('📡 NewsAPI raw response:', JSON.stringify(data).substring(0, 200));
 
         console.log('📰 NewsAPI response status:', data.status);
 
@@ -83,6 +94,15 @@ export default async function handler(req, res) {
 
     } catch (error) {
         console.error('❌ Public News API error:', error.message, error.stack);
+
+        // Handle timeout
+        if (error.name === 'AbortError') {
+            return res.status(504).json({
+                success: false,
+                error: 'Timeout lors de la récupération des actualités'
+            });
+        }
+
         return res.status(500).json({
             success: false,
             error: 'Erreur serveur',

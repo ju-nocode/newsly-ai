@@ -14,20 +14,30 @@
 </head>
 <body class="dashboard-body">
 
-    <!-- Simple public banner -->
-    <div class="public-banner" id="publicBanner" style="display: none;">
+    <!-- Overlay pour menu mobile -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Public banner sticky -->
+    <div class="public-banner">
         <div class="public-banner-text">
-            Connectez-vous pour personnaliser vos actualités
+            Connectez-vous pour personnaliser vos actualités et sauvegarder vos préférences
         </div>
         <div class="public-banner-buttons">
             <a href="dashboard.html" class="public-banner-btn">Connexion</a>
         </div>
     </div>
 
-    <!-- Simple navbar without search -->
+    <!-- Simple navbar -->
     <nav class="navbar dashboard-nav">
         <div class="nav-container">
             <div class="nav-left">
+                <button class="mobile-menu-btn" id="mobileSidebarBtn" aria-label="Ouvrir menu">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
                 <a href="index.html" class="logo">
                     <img src="https://img.icons8.com/ios/24/news.png" alt="News" class="logo-icon icon-primary">
                     <span class="logo-text">Newsly AI</span>
@@ -39,15 +49,122 @@
         </div>
     </nav>
 
+    <!-- Sidebar (sans pins, lecture seule) -->
+    <aside class="vertical-sidebar" id="verticalSidebar">
+        <div class="sidebar-content">
+            <!-- Catégories -->
+            <div class="sidebar-section">
+                <h3 class="sidebar-section-title">Catégories</h3>
+                <ul class="sidebar-menu">
+                    <li class="sidebar-menu-item">
+                        <a class="sidebar-menu-link active" href="#" data-category="general">
+                            <img src="https://img.icons8.com/ios-filled/18/news.png" alt="" class="sidebar-icon">
+                            <span>Général</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-menu-item">
+                        <a class="sidebar-menu-link" href="#" data-category="business">
+                            <img src="https://img.icons8.com/ios-filled/18/briefcase.png" alt="" class="sidebar-icon">
+                            <span>Business</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-menu-item">
+                        <a class="sidebar-menu-link" href="#" data-category="technology">
+                            <img src="https://img.icons8.com/ios-filled/18/laptop.png" alt="" class="sidebar-icon">
+                            <span>Technologie</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-menu-item">
+                        <a class="sidebar-menu-link" href="#" data-category="science">
+                            <img src="https://img.icons8.com/ios-filled/18/test-tube.png" alt="" class="sidebar-icon">
+                            <span>Science</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-menu-item">
+                        <a class="sidebar-menu-link" href="#" data-category="health">
+                            <img src="https://img.icons8.com/ios-filled/18/heart-with-pulse.png" alt="" class="sidebar-icon">
+                            <span>Santé</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-menu-item">
+                        <a class="sidebar-menu-link" href="#" data-category="sports">
+                            <img src="https://img.icons8.com/ios-filled/18/football.png" alt="" class="sidebar-icon">
+                            <span>Sports</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-menu-item">
+                        <a class="sidebar-menu-link" href="#" data-category="entertainment">
+                            <img src="https://img.icons8.com/ios-filled/18/clapperboard.png" alt="" class="sidebar-icon">
+                            <span>Divertissement</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Pays -->
+            <div class="sidebar-section">
+                <h3 class="sidebar-section-title">Pays</h3>
+                <ul class="sidebar-menu">
+                    <li class="sidebar-menu-item">
+                        <a class="sidebar-menu-link active" href="#" data-country="us">
+                            <img src="https://img.icons8.com/color/18/usa.png" alt="" class="sidebar-icon">
+                            <span>États-Unis</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-menu-item">
+                        <a class="sidebar-menu-link" href="#" data-country="fr">
+                            <img src="https://img.icons8.com/color/18/france.png" alt="" class="sidebar-icon">
+                            <span>France</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-menu-item">
+                        <a class="sidebar-menu-link" href="#" data-country="gb">
+                            <img src="https://img.icons8.com/color/18/great-britain.png" alt="" class="sidebar-icon">
+                            <span>Royaume-Uni</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-menu-item">
+                        <a class="sidebar-menu-link" href="#" data-country="ca">
+                            <img src="https://img.icons8.com/color/18/canada.png" alt="" class="sidebar-icon">
+                            <span>Canada</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-menu-item">
+                        <a class="sidebar-menu-link" href="#" data-country="de">
+                            <img src="https://img.icons8.com/color/18/germany.png" alt="" class="sidebar-icon">
+                            <span>Allemagne</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Invitation à créer un compte -->
+            <div class="sidebar-section" style="margin-top: auto; padding: 1rem; text-align: center; border-top: 1px solid var(--border);">
+                <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.75rem;">
+                    Créez un compte pour sauvegarder vos préférences
+                </p>
+                <a href="dashboard.html" class="btn btn-primary" style="padding: 0.5rem 1rem; width: 100%;">
+                    Créer un compte
+                </a>
+            </div>
+        </div>
+    </aside>
+
     <!-- Main Content -->
-    <div class="dashboard-container" style="margin-left: 0;">
+    <div class="dashboard-container">
         <main class="dashboard-main">
             <div class="news-header">
                 <h1 id="categoryTitle">Actualités Générales</h1>
             </div>
 
             <div id="newsContainer" class="news-grid">
-                <!-- Les actualités seront chargées ici -->
+                <!-- Shimmer loader par défaut -->
+                <div class="shimmer-card"></div>
+                <div class="shimmer-card"></div>
+                <div class="shimmer-card"></div>
+                <div class="shimmer-card"></div>
+                <div class="shimmer-card"></div>
+                <div class="shimmer-card"></div>
             </div>
         </main>
     </div>
@@ -56,8 +173,14 @@
         import { checkAuth } from './public/js/app.js';
         import { displayNews } from './public/js/dashboard-utils.js';
 
-        const publicBanner = document.getElementById('publicBanner');
         const newsContainer = document.getElementById('newsContainer');
+        const categoryTitle = document.getElementById('categoryTitle');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+        const mobileSidebarBtn = document.getElementById('mobileSidebarBtn');
+        const verticalSidebar = document.getElementById('verticalSidebar');
+
+        let currentCategory = 'general';
+        let currentCountry = 'us';
 
         // Smart redirect
         (async () => {
@@ -72,11 +195,17 @@
                 return;
             }
 
-            // NOT AUTHENTICATED → Show public mode
             console.log('📖 Public mode');
-            publicBanner.style.display = 'flex';
 
-            // Show loading
+            // Load initial news
+            loadNews(currentCategory, currentCountry);
+        })();
+
+        // Load news function
+        async function loadNews(category, country) {
+            console.log(`📰 Loading ${category} news for ${country}`);
+
+            // Show shimmer
             newsContainer.innerHTML = `
                 <div class="shimmer-card"></div>
                 <div class="shimmer-card"></div>
@@ -87,11 +216,10 @@
             `;
 
             try {
-                // Try to fetch public news
                 const controller = new AbortController();
-                const timeout = setTimeout(() => controller.abort(), 5000);
+                const timeout = setTimeout(() => controller.abort(), 8000);
 
-                const response = await fetch('/api/news/public?category=general&country=us&page=1', {
+                const response = await fetch(`/api/news/public?category=${category}&country=${country}&page=1`, {
                     signal: controller.signal
                 });
 
@@ -99,7 +227,7 @@
 
                 if (response.ok) {
                     const data = await response.json();
-                    console.log('📰 Got news:', data);
+                    console.log('✅ Got news:', data);
 
                     if (data.success && data.articles && data.articles.length > 0) {
                         displayNews(data.articles, 'newsContainer');
@@ -107,22 +235,96 @@
                     }
                 }
             } catch (error) {
-                console.warn('API error:', error.message);
+                console.warn('⚠️ API error:', error.message);
             }
 
-            // Fallback: show welcome message
+            // Fallback
             newsContainer.innerHTML = `
                 <div style="grid-column: 1 / -1; text-align: center; padding: 3rem 1rem;">
-                    <h2 style="color: var(--text-primary); margin-bottom: 1rem;">Bienvenue sur Newsly AI</h2>
+                    <h2 style="color: var(--text-primary); margin-bottom: 1rem;">Service temporairement indisponible</h2>
                     <p style="color: var(--text-secondary); margin-bottom: 2rem;">
-                        Connectez-vous pour accéder aux actualités personnalisées
+                        Les actualités ne peuvent pas être chargées pour le moment.
                     </p>
                     <a href="dashboard.html" class="btn btn-primary" style="padding: 0.6rem 1.5rem;">
-                        Se connecter
+                        Créer un compte
                     </a>
                 </div>
             `;
-        })();
+        }
+
+        // Category click handlers
+        document.querySelectorAll('.sidebar-menu-link[data-category]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const category = link.dataset.category;
+
+                // Update active state
+                document.querySelectorAll('.sidebar-menu-link[data-category]').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+
+                // Update title
+                const categoryName = link.querySelector('span').textContent;
+                categoryTitle.textContent = `Actualités ${categoryName}`;
+
+                // Load news
+                currentCategory = category;
+                loadNews(category, currentCountry);
+
+                // Close mobile sidebar
+                closeMobileSidebar();
+            });
+        });
+
+        // Country click handlers
+        document.querySelectorAll('.sidebar-menu-link[data-country]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const country = link.dataset.country;
+
+                // Update active state
+                document.querySelectorAll('.sidebar-menu-link[data-country]').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+
+                // Load news
+                currentCountry = country;
+                loadNews(currentCategory, country);
+
+                // Close mobile sidebar
+                closeMobileSidebar();
+            });
+        });
+
+        // Mobile sidebar toggle
+        function closeMobileSidebar() {
+            verticalSidebar?.classList.remove('mobile-open');
+            mobileOverlay?.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        function openMobileSidebar() {
+            verticalSidebar?.classList.add('mobile-open');
+            mobileOverlay?.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        mobileSidebarBtn?.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (verticalSidebar?.classList.contains('mobile-open')) {
+                closeMobileSidebar();
+            } else {
+                openMobileSidebar();
+            }
+        });
+
+        mobileOverlay?.addEventListener('click', closeMobileSidebar);
+
+        // Close on escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && verticalSidebar?.classList.contains('mobile-open')) {
+                closeMobileSidebar();
+            }
+        });
     </script>
 </body>
 </html>
