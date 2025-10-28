@@ -9,8 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="public/css/dashboard-main.css">
-    <script src="public/js/browser-detect.js"></script>
-    <script src="public/js/icons-theme.js"></script>
 </head>
 <body class="dashboard-body">
 
@@ -27,27 +25,8 @@
         </div>
     </div>
 
-    <!-- Simple navbar -->
-    <nav class="navbar dashboard-nav">
-        <div class="nav-container">
-            <div class="nav-left">
-                <button class="mobile-menu-btn" id="mobileSidebarBtn" aria-label="Ouvrir menu">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="3" y1="12" x2="21" y2="12"></line>
-                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                        <line x1="3" y1="18" x2="21" y2="18"></line>
-                    </svg>
-                </button>
-                <a href="index.html" class="logo">
-                    <img src="https://img.icons8.com/ios/24/news.png" alt="News" class="logo-icon icon-primary">
-                    <span class="logo-text">Newsly AI</span>
-                </a>
-            </div>
-            <div class="nav-right">
-                <a href="dashboard.html" class="btn btn-primary" style="padding: 0.5rem 1rem;">Connexion</a>
-            </div>
-        </div>
-    </nav>
+    <!-- Navbar -->
+    <div id="navbar"></div>
 
     <!-- Sidebar (sans pins, lecture seule) -->
     <aside class="vertical-sidebar" id="verticalSidebar">
@@ -157,14 +136,8 @@
                 <h1 id="categoryTitle">Actualités Générales</h1>
             </div>
 
-            <div id="newsContainer" class="news-grid">
-                <!-- Shimmer loader par défaut -->
-                <div class="shimmer-card"></div>
-                <div class="shimmer-card"></div>
-                <div class="shimmer-card"></div>
-                <div class="shimmer-card"></div>
-                <div class="shimmer-card"></div>
-                <div class="shimmer-card"></div>
+            <div id="newsContainer" class="news-grid shimmer-loading">
+                <!-- Shimmer loader -->
             </div>
         </main>
     </div>
@@ -172,11 +145,13 @@
     <script type="module">
         import { checkAuth } from './public/js/app.js';
         import { displayNews } from './public/js/dashboard-utils.js';
+        import { initNavbar } from './public/js/navbar-component.js';
+        import { initThemeSystem } from './public/js/theme-manager.js';
+        import { showShimmerLoader, hideShimmerLoader } from './public/js/shimmer-loader.js';
 
         const newsContainer = document.getElementById('newsContainer');
         const categoryTitle = document.getElementById('categoryTitle');
         const mobileOverlay = document.getElementById('mobileOverlay');
-        const mobileSidebarBtn = document.getElementById('mobileSidebarBtn');
         const verticalSidebar = document.getElementById('verticalSidebar');
 
         let currentCategory = 'general';
@@ -197,6 +172,21 @@
 
             console.log('📖 Public mode');
 
+            // Initialize navbar in public mode
+            initNavbar('#navbar', {
+                showMobileSidebarBtn: true,
+                showSettingsNav: false,
+                publicMode: true
+            });
+
+            // Initialize theme system
+            setTimeout(() => {
+                initThemeSystem();
+            }, 100);
+
+            // Show shimmer loader
+            showShimmerLoader(newsContainer, 6);
+
             // Load initial news
             loadNews(currentCategory, currentCountry);
         })();
@@ -206,14 +196,7 @@
             console.log(`📰 Loading ${category} news for ${country}`);
 
             // Show shimmer
-            newsContainer.innerHTML = `
-                <div class="shimmer-card"></div>
-                <div class="shimmer-card"></div>
-                <div class="shimmer-card"></div>
-                <div class="shimmer-card"></div>
-                <div class="shimmer-card"></div>
-                <div class="shimmer-card"></div>
-            `;
+            showShimmerLoader(newsContainer, 6);
 
             try {
                 const controller = new AbortController();
@@ -229,6 +212,8 @@
                     const data = await response.json();
                     console.log('✅ Got news:', data);
 
+                    hideShimmerLoader(newsContainer);
+
                     if (data.success && data.articles && data.articles.length > 0) {
                         displayNews(data.articles, 'newsContainer');
                         return;
@@ -239,6 +224,7 @@
             }
 
             // Fallback
+            hideShimmerLoader(newsContainer);
             newsContainer.innerHTML = `
                 <div style="grid-column: 1 / -1; text-align: center; padding: 3rem 1rem;">
                     <h2 style="color: var(--text-primary); margin-bottom: 1rem;">Service temporairement indisponible</h2>
@@ -307,9 +293,8 @@
             document.body.style.overflow = 'hidden';
         }
 
-        mobileSidebarBtn?.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
+        // Listen to sidebar toggle events from navbar
+        document.addEventListener('toggleMobileSidebar', () => {
             if (verticalSidebar?.classList.contains('mobile-open')) {
                 closeMobileSidebar();
             } else {
