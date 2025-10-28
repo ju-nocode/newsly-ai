@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Newsly AI - Votre NewsWall Personnalisé Alimenté par IA</title>
+    <title>Newsly AI - Actualités</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📰</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,165 +14,36 @@
 </head>
 <body class="dashboard-body">
 
-    <!-- Overlay pour menu mobile -->
-    <div class="mobile-overlay" id="mobileOverlay"></div>
-
-    <!-- Public Banner (only shown for non-authenticated users) -->
+    <!-- Simple public banner -->
     <div class="public-banner" id="publicBanner" style="display: none;">
         <div class="public-banner-text">
-            Connectez-vous pour personnaliser vos actualités et sauvegarder vos préférences
+            Connectez-vous pour personnaliser vos actualités
         </div>
         <div class="public-banner-buttons">
-            <button class="public-banner-btn" id="publicLoginBtn">Connexion</button>
-            <button class="public-banner-btn secondary" id="publicSignupBtn">Créer un compte</button>
+            <a href="dashboard.html" class="public-banner-btn">Connexion</a>
         </div>
     </div>
 
-    <!-- Navbar will be injected here by navbar-component.js -->
-
-    <!-- Vertical Sidebar - With locked overlay for public mode -->
-    <aside class="vertical-sidebar" id="verticalSidebar">
-        <!-- Locked overlay for public users -->
-        <div class="sidebar-locked-overlay" id="sidebarLockedOverlay" style="display: none;">
-            <div class="sidebar-locked-message">
-                <p>Connectez-vous pour accéder aux filtres</p>
-                <button class="public-banner-btn" id="sidebarLoginBtn">Connexion</button>
+    <!-- Simple navbar without search -->
+    <nav class="navbar dashboard-nav">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="index.html" class="logo">
+                    <img src="https://img.icons8.com/ios/24/news.png" alt="News" class="logo-icon icon-primary">
+                    <span class="logo-text">Newsly AI</span>
+                </a>
+            </div>
+            <div class="nav-right">
+                <a href="dashboard.html" class="btn btn-primary" style="padding: 0.5rem 1rem;">Connexion</a>
             </div>
         </div>
-
-        <div class="sidebar-content">
-            <!-- Catégories -->
-            <div class="sidebar-section">
-                <h3 class="sidebar-section-title" data-i18n="sidebar.categories">Catégories</h3>
-                <ul class="sidebar-menu">
-                    <li class="sidebar-menu-item">
-                        <a class="sidebar-menu-link active" href="#" data-category="general" data-tooltip="Général">
-                            <img src="https://img.icons8.com/ios-filled/18/news.png" alt="" class="sidebar-icon">
-                            <span data-i18n="category.general">Général</span>
-                        </a>
-                        <button class="pin-btn" data-pin-category="general" aria-label="Pin category">
-                            <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="pin-icon">
-                        </button>
-                    </li>
-                    <li class="sidebar-menu-item">
-                        <a class="sidebar-menu-link" href="#" data-category="business" data-tooltip="Business">
-                            <img src="https://img.icons8.com/ios-filled/18/briefcase.png" alt="" class="sidebar-icon">
-                            <span data-i18n="category.business">Business</span>
-                        </a>
-                        <button class="pin-btn" data-pin-category="business" aria-label="Pin category">
-                            <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="pin-icon">
-                        </button>
-                    </li>
-                    <li class="sidebar-menu-item">
-                        <a class="sidebar-menu-link" href="#" data-category="technology" data-tooltip="Technologie">
-                            <img src="https://img.icons8.com/ios-filled/18/laptop.png" alt="" class="sidebar-icon">
-                            <span data-i18n="category.technology">Technologie</span>
-                        </a>
-                        <button class="pin-btn" data-pin-category="technology" aria-label="Pin category">
-                            <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="pin-icon">
-                        </button>
-                    </li>
-                    <li class="sidebar-menu-item">
-                        <a class="sidebar-menu-link" href="#" data-category="science" data-tooltip="Science">
-                            <img src="https://img.icons8.com/ios-filled/18/test-tube.png" alt="" class="sidebar-icon">
-                            <span data-i18n="category.science">Science</span>
-                        </a>
-                        <button class="pin-btn" data-pin-category="science" aria-label="Pin category">
-                            <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="pin-icon">
-                        </button>
-                    </li>
-                    <li class="sidebar-menu-item">
-                        <a class="sidebar-menu-link" href="#" data-category="health" data-tooltip="Santé">
-                            <img src="https://img.icons8.com/ios-filled/18/heart-with-pulse.png" alt="" class="sidebar-icon">
-                            <span data-i18n="category.health">Santé</span>
-                        </a>
-                        <button class="pin-btn" data-pin-category="health" aria-label="Pin category">
-                            <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="pin-icon">
-                        </button>
-                    </li>
-                    <li class="sidebar-menu-item">
-                        <a class="sidebar-menu-link" href="#" data-category="sports" data-tooltip="Sports">
-                            <img src="https://img.icons8.com/ios-filled/18/football.png" alt="" class="sidebar-icon">
-                            <span data-i18n="category.sports">Sports</span>
-                        </a>
-                        <button class="pin-btn" data-pin-category="sports" aria-label="Pin category">
-                            <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="pin-icon">
-                        </button>
-                    </li>
-                    <li class="sidebar-menu-item">
-                        <a class="sidebar-menu-link" href="#" data-category="entertainment" data-tooltip="Divertissement">
-                            <img src="https://img.icons8.com/ios-filled/18/clapperboard.png" alt="" class="sidebar-icon">
-                            <span data-i18n="category.entertainment">Divertissement</span>
-                        </a>
-                        <button class="pin-btn" data-pin-category="entertainment" aria-label="Pin category">
-                            <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="pin-icon">
-                        </button>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Pays -->
-            <div class="sidebar-section">
-                <h3 class="sidebar-section-title" data-i18n="sidebar.countries">Pays</h3>
-                <ul class="sidebar-menu">
-                    <li class="sidebar-menu-item">
-                        <a class="sidebar-menu-link active" href="#" data-country="us" data-tooltip="États-Unis">
-                            <img src="https://img.icons8.com/color/18/usa.png" alt="" class="sidebar-icon">
-                            <span data-i18n="country.us">États-Unis</span>
-                        </a>
-                        <button class="pin-btn" data-pin-country="us" aria-label="Pin country">
-                            <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="pin-icon">
-                        </button>
-                    </li>
-                    <li class="sidebar-menu-item">
-                        <a class="sidebar-menu-link" href="#" data-country="fr" data-tooltip="France">
-                            <img src="https://img.icons8.com/color/18/france.png" alt="" class="sidebar-icon">
-                            <span data-i18n="country.fr">France</span>
-                        </a>
-                        <button class="pin-btn" data-pin-country="fr" aria-label="Pin country">
-                            <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="pin-icon">
-                        </button>
-                    </li>
-                    <li class="sidebar-menu-item">
-                        <a class="sidebar-menu-link" href="#" data-country="gb" data-tooltip="Royaume-Uni">
-                            <img src="https://img.icons8.com/color/18/great-britain.png" alt="" class="sidebar-icon">
-                            <span data-i18n="country.gb">Royaume-Uni</span>
-                        </a>
-                        <button class="pin-btn" data-pin-country="gb" aria-label="Pin country">
-                            <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="pin-icon">
-                        </button>
-                    </li>
-                    <li class="sidebar-menu-item">
-                        <a class="sidebar-menu-link" href="#" data-country="ca" data-tooltip="Canada">
-                            <img src="https://img.icons8.com/color/18/canada.png" alt="" class="sidebar-icon">
-                            <span data-i18n="country.ca">Canada</span>
-                        </a>
-                        <button class="pin-btn" data-pin-country="ca" aria-label="Pin country">
-                            <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="pin-icon">
-                        </button>
-                    </li>
-                    <li class="sidebar-menu-item">
-                        <a class="sidebar-menu-link" href="#" data-country="de" data-tooltip="Allemagne">
-                            <img src="https://img.icons8.com/color/18/germany.png" alt="" class="sidebar-icon">
-                            <span data-i18n="country.de">Allemagne</span>
-                        </a>
-                        <button class="pin-btn" data-pin-country="de" aria-label="Pin country">
-                            <img src="https://img.icons8.com/ios/16/pin3.png" alt="Pin" class="pin-icon">
-                        </button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </aside>
+    </nav>
 
     <!-- Main Content -->
-    <div class="dashboard-container">
+    <div class="dashboard-container" style="margin-left: 0;">
         <main class="dashboard-main">
             <div class="news-header">
                 <h1 id="categoryTitle">Actualités Générales</h1>
-                <div id="loadingIndicator" class="loading-indicator" style="display: none;">
-                    Chargement...
-                </div>
             </div>
 
             <div id="newsContainer" class="news-grid">
@@ -181,273 +52,77 @@
         </main>
     </div>
 
-    <!-- Auth Modal (simple login/signup) -->
-    <div class="modal-overlay" id="authModal" style="display: none;">
-        <div class="modal-container">
-            <button class="modal-close" id="closeModal">&times;</button>
-
-            <!-- Login Form -->
-            <div class="modal-content" id="loginForm">
-                <h2 class="modal-title" data-i18n="auth.loginTitle">Connexion</h2>
-                <p class="modal-subtitle" data-i18n="auth.loginSubtitle">Connectez-vous à votre compte</p>
-
-                <form class="auth-form" id="loginFormElement">
-                    <div class="form-group">
-                        <label class="form-label" data-i18n="auth.email">Email</label>
-                        <input type="email" class="form-input" id="loginEmail" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" data-i18n="auth.password">Mot de passe</label>
-                        <input type="password" class="form-input" id="loginPassword" required>
-                    </div>
-                    <div id="loginError" class="error-message" style="display: none;"></div>
-                    <button type="submit" class="btn btn-submit" data-i18n="auth.loginBtn">Se connecter</button>
-                </form>
-
-                <p class="modal-footer">
-                    <span data-i18n="auth.noAccount">Pas de compte ?</span> <a href="#" id="switchToSignup" data-i18n="auth.createAccount">Créer un compte</a>
-                </p>
-            </div>
-
-            <!-- Signup Form -->
-            <div class="modal-content" id="signupForm" style="display: none;">
-                <h2 class="modal-title">Créer un compte</h2>
-                <p class="modal-subtitle">Rejoignez Newsly AI</p>
-
-                <form class="auth-form" id="signupFormElement">
-                    <div class="form-group">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-input" id="signupEmail" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Mot de passe</label>
-                        <input type="password" class="form-input" id="signupPassword" required>
-                    </div>
-                    <div id="signupError" class="error-message" style="display: none;"></div>
-                    <button type="submit" class="btn btn-submit">Créer mon compte</button>
-                </form>
-
-                <p class="modal-footer">
-                    <span>Déjà un compte ?</span> <a href="#" id="switchToLogin">Se connecter</a>
-                </p>
-            </div>
-        </div>
-    </div>
-
     <script type="module">
-        import { checkAuth, login, logout } from './public/js/app.js';
-        import { displayNews, escapeHtml, showError, showSuccess } from './public/js/dashboard-utils.js';
-        import { translatePage } from './public/js/translation-service.js';
-        import { initNavbar } from './public/js/navbar-component.js';
-        import { initThemeSystem } from './public/js/theme-manager.js';
-        import { showPageLoader, hidePageLoader } from './public/js/page-loader.js';
-        import { showShimmerLoader, hideShimmerLoader } from './public/js/shimmer-loader.js';
+        import { checkAuth } from './public/js/app.js';
+        import { displayNews } from './public/js/dashboard-utils.js';
 
         const publicBanner = document.getElementById('publicBanner');
         const newsContainer = document.getElementById('newsContainer');
-        const authModal = document.getElementById('authModal');
-        const loginForm = document.getElementById('loginForm');
-        const signupForm = document.getElementById('signupForm');
-        const sidebarLockedOverlay = document.getElementById('sidebarLockedOverlay');
 
-        // Smart redirect and public mode initialization
+        // Smart redirect
         (async () => {
             console.log('🚀 Index.html loading...');
 
-            try {
-                // Check authentication status
-                const isAuthenticated = checkAuth();
+            // Check if authenticated → redirect to dashboard
+            const isAuthenticated = checkAuth();
 
-                if (isAuthenticated) {
-                    // ✅ AUTHENTICATED → Redirect to full dashboard
-                    console.log('✅ User authenticated → Redirecting to dashboard.html');
-                    window.location.href = 'dashboard.html';
-                    return;
-                }
-
-                // ❌ NOT AUTHENTICATED → Public mode
-                console.log('📖 Public mode enabled');
-                showPageLoader();
-
-                // Initialize navbar in public mode (no settings, no user profile)
-                const mobileOverlay = document.querySelector('.mobile-overlay');
-                if (mobileOverlay) {
-                    initNavbar('.mobile-overlay', {
-                        showMobileSidebarBtn: false,
-                        showSettingsNav: false,
-                        publicMode: true
-                    });
-                }
-
-                // Initialize theme system after navbar
-                setTimeout(() => {
-                    initThemeSystem();
-                }, 100);
-
-                // Show public banner
-                publicBanner.style.display = 'flex';
-
-                // Show locked overlay on sidebar
-                sidebarLockedOverlay.style.display = 'flex';
-
-                // Translate page
-                await translatePage();
-
-                // Load public news (general category, US country)
-                showShimmerLoader(newsContainer, 6);
-
-                // Try public API first with timeout, fallback to showing message
-                let data = null;
-                try {
-                    const controller = new AbortController();
-                    const timeout = setTimeout(() => controller.abort(), 5000); // 5s timeout
-
-                    const response = await fetch('/api/news/public?category=general&country=us&page=1', {
-                        signal: controller.signal
-                    });
-
-                    clearTimeout(timeout);
-
-                    if (response.ok) {
-                        data = await response.json();
-                        console.log('📰 Public news data:', data);
-                    } else {
-                        console.warn('Public API not available (status:', response.status, ')');
-                    }
-                } catch (apiError) {
-                    if (apiError.name === 'AbortError') {
-                        console.warn('Public API timeout (5s)');
-                    } else {
-                        console.warn('Public API error:', apiError);
-                    }
-                }
-
-                hideShimmerLoader(newsContainer);
-
-                if (data && data.success && data.articles && data.articles.length > 0) {
-                    displayNews(data.articles, 'newsContainer');
-                    hidePageLoader(false);
-                } else {
-                    // Show fallback message if API not available
-                    newsContainer.innerHTML = `
-                        <div style="text-align: center; padding: 3rem 1rem;">
-                            <h3 style="color: var(--text-primary); margin-bottom: 1rem;">Bienvenue sur Newsly AI</h3>
-                            <p style="color: var(--text-secondary); margin-bottom: 2rem;">
-                                Connectez-vous pour accéder aux actualités personnalisées
-                            </p>
-                            <button class="btn btn-primary" style="padding: 0.6rem 1.5rem;" onclick="document.getElementById('publicLoginBtn').click()">
-                                Se connecter
-                            </button>
-                        </div>
-                    `;
-                    hidePageLoader(false);
-                }
-
-            } catch (error) {
-                console.error('❌ Error loading public dashboard:', error);
-                hideShimmerLoader(newsContainer);
-                hidePageLoader(true);
-                newsContainer.innerHTML = '<p style="text-align: center; color: var(--error); padding: 2rem;">Erreur de chargement</p>';
+            if (isAuthenticated) {
+                console.log('✅ User authenticated → Redirecting to dashboard.html');
+                window.location.href = 'dashboard.html';
+                return;
             }
-        })();
 
-        // Public banner buttons - Use event delegation for safety
-        const publicLoginBtn = document.getElementById('publicLoginBtn');
-        const publicSignupBtn = document.getElementById('publicSignupBtn');
-        const sidebarLoginBtn = document.getElementById('sidebarLoginBtn');
-        const closeModal = document.getElementById('closeModal');
-        const switchToSignup = document.getElementById('switchToSignup');
-        const switchToLogin = document.getElementById('switchToLogin');
-        const loginFormElement = document.getElementById('loginFormElement');
-        const signupFormElement = document.getElementById('signupFormElement');
+            // NOT AUTHENTICATED → Show public mode
+            console.log('📖 Public mode');
+            publicBanner.style.display = 'flex';
 
-        if (publicLoginBtn) {
-            publicLoginBtn.addEventListener('click', () => {
-                authModal.style.display = 'flex';
-                loginForm.style.display = 'block';
-                signupForm.style.display = 'none';
-            });
-        }
+            // Show loading
+            newsContainer.innerHTML = `
+                <div class="shimmer-card"></div>
+                <div class="shimmer-card"></div>
+                <div class="shimmer-card"></div>
+                <div class="shimmer-card"></div>
+                <div class="shimmer-card"></div>
+                <div class="shimmer-card"></div>
+            `;
 
-        if (publicSignupBtn) {
-            publicSignupBtn.addEventListener('click', () => {
-                authModal.style.display = 'flex';
-                loginForm.style.display = 'none';
-                signupForm.style.display = 'block';
-            });
-        }
+            try {
+                // Try to fetch public news
+                const controller = new AbortController();
+                const timeout = setTimeout(() => controller.abort(), 5000);
 
-        if (sidebarLoginBtn) {
-            sidebarLoginBtn.addEventListener('click', () => {
-                authModal.style.display = 'flex';
-                loginForm.style.display = 'block';
-                signupForm.style.display = 'none';
-            });
-        }
+                const response = await fetch('/api/news/public?category=general&country=us&page=1', {
+                    signal: controller.signal
+                });
 
-        if (closeModal) {
-            closeModal.addEventListener('click', () => {
-                authModal.style.display = 'none';
-            });
-        }
+                clearTimeout(timeout);
 
-        if (switchToSignup) {
-            switchToSignup.addEventListener('click', (e) => {
-                e.preventDefault();
-                loginForm.style.display = 'none';
-                signupForm.style.display = 'block';
-            });
-        }
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('📰 Got news:', data);
 
-        if (switchToLogin) {
-            switchToLogin.addEventListener('click', (e) => {
-                e.preventDefault();
-                signupForm.style.display = 'none';
-                loginForm.style.display = 'block';
-            });
-        }
-
-        if (loginFormElement) {
-            loginFormElement.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const email = document.getElementById('loginEmail').value.trim();
-                const password = document.getElementById('loginPassword').value;
-
-                const loginError = document.getElementById('loginError');
-                loginError.style.display = 'none';
-
-                try {
-                    const result = await login(email, password);
-                    if (result.success) {
-                        showSuccess('Connexion réussie !');
-                        window.location.href = 'dashboard.html';
-                    } else {
-                        loginError.textContent = result.error || 'Erreur de connexion';
-                        loginError.style.display = 'block';
+                    if (data.success && data.articles && data.articles.length > 0) {
+                        displayNews(data.articles, 'newsContainer');
+                        return;
                     }
-                } catch (error) {
-                    loginError.textContent = 'Une erreur est survenue';
-                    loginError.style.display = 'block';
                 }
-            });
-        }
+            } catch (error) {
+                console.warn('API error:', error.message);
+            }
 
-        if (signupFormElement) {
-            signupFormElement.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const signupError = document.getElementById('signupError');
-                signupError.textContent = 'Veuillez vous connecter avec un compte existant. L\'inscription sera bientôt disponible.';
-                signupError.style.display = 'block';
-            });
-        }
-
-        if (authModal) {
-            authModal.addEventListener('click', (e) => {
-                if (e.target === authModal) {
-                    authModal.style.display = 'none';
-                }
-            });
-        }
+            // Fallback: show welcome message
+            newsContainer.innerHTML = `
+                <div style="grid-column: 1 / -1; text-align: center; padding: 3rem 1rem;">
+                    <h2 style="color: var(--text-primary); margin-bottom: 1rem;">Bienvenue sur Newsly AI</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 2rem;">
+                        Connectez-vous pour accéder aux actualités personnalisées
+                    </p>
+                    <a href="dashboard.html" class="btn btn-primary" style="padding: 0.6rem 1.5rem;">
+                        Se connecter
+                    </a>
+                </div>
+            `;
+        })();
     </script>
 </body>
 </html>
