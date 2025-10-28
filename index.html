@@ -15,18 +15,27 @@
     <!-- Overlay pour menu mobile -->
     <div class="mobile-overlay" id="mobileOverlay"></div>
 
-    <!-- Public banner sticky -->
-    <div class="public-banner">
-        <div class="public-banner-text">
-            Connectez-vous pour personnaliser vos actualités et sauvegarder vos préférences
+    <!-- Simple navbar sans searchbar ni burger -->
+    <nav class="navbar dashboard-nav">
+        <div class="nav-container">
+            <div class="nav-left">
+                <button class="mobile-menu-btn" id="mobileSidebarBtn" aria-label="Menu">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                <a href="index.html" class="logo">
+                    <img src="https://img.icons8.com/ios/24/news.png" alt="News" class="logo-icon icon-primary">
+                    <span class="logo-text">Newsly AI</span>
+                </a>
+            </div>
+            <div class="nav-right">
+                <a href="dashboard.html" class="btn btn-primary" style="padding: 0.5rem 1rem;">Connexion</a>
+            </div>
         </div>
-        <div class="public-banner-buttons">
-            <a href="dashboard.html" class="public-banner-btn">Connexion</a>
-        </div>
-    </div>
-
-    <!-- Navbar -->
-    <div id="navbar"></div>
+    </nav>
 
     <!-- Sidebar (sans pins, lecture seule) -->
     <aside class="vertical-sidebar" id="verticalSidebar">
@@ -116,16 +125,6 @@
                     </li>
                 </ul>
             </div>
-
-            <!-- Invitation à créer un compte -->
-            <div class="sidebar-section" style="margin-top: auto; padding: 1rem; text-align: center; border-top: 1px solid var(--border);">
-                <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.75rem;">
-                    Créez un compte pour sauvegarder vos préférences
-                </p>
-                <a href="dashboard.html" class="btn btn-primary" style="padding: 0.5rem 1rem; width: 100%;">
-                    Créer un compte
-                </a>
-            </div>
         </div>
     </aside>
 
@@ -136,8 +135,8 @@
                 <h1 id="categoryTitle">Actualités Générales</h1>
             </div>
 
-            <div id="newsContainer" class="news-grid shimmer-loading">
-                <!-- Shimmer loader -->
+            <div id="newsContainer" class="news-grid">
+                <!-- Les shimmer seront ajoutés par JS -->
             </div>
         </main>
     </div>
@@ -145,13 +144,11 @@
     <script type="module">
         import { checkAuth } from './public/js/app.js';
         import { displayNews } from './public/js/dashboard-utils.js';
-        import { initNavbar } from './public/js/navbar-component.js';
-        import { initThemeSystem } from './public/js/theme-manager.js';
-        import { showShimmerLoader, hideShimmerLoader } from './public/js/shimmer-loader.js';
 
         const newsContainer = document.getElementById('newsContainer');
         const categoryTitle = document.getElementById('categoryTitle');
         const mobileOverlay = document.getElementById('mobileOverlay');
+        const mobileSidebarBtn = document.getElementById('mobileSidebarBtn');
         const verticalSidebar = document.getElementById('verticalSidebar');
 
         let currentCategory = 'general';
@@ -165,42 +162,50 @@
             const isAuthenticated = checkAuth();
 
             if (isAuthenticated) {
-                console.log('✅ User authenticated → Redirecting to dashboard.html');
+                console.log('✅ Connecté → Redirection vers dashboard.html');
                 window.location.href = 'dashboard.html';
                 return;
             }
 
-            console.log('📖 Public mode');
-
-            // Initialize navbar in public mode
-            initNavbar('#navbar', {
-                showMobileSidebarBtn: true,
-                showSettingsNav: false,
-                publicMode: true
-            });
-
-            // Initialize theme system
-            setTimeout(() => {
-                initThemeSystem();
-            }, 100);
-
-            // Show shimmer loader
-            showShimmerLoader(newsContainer, 6);
+            console.log('📖 Mode public');
 
             // Load initial news
             loadNews(currentCategory, currentCountry);
         })();
 
+        // Create shimmer cards
+        function showShimmer() {
+            newsContainer.innerHTML = '';
+            for (let i = 0; i < 6; i++) {
+                const card = document.createElement('div');
+                card.className = 'skeleton-card';
+                card.innerHTML = `
+                    <div class="skeleton-image skeleton"></div>
+                    <div class="skeleton-card-content">
+                        <div class="skeleton skeleton-title"></div>
+                        <div class="skeleton skeleton-text"></div>
+                        <div class="skeleton skeleton-text" style="width: 60%;"></div>
+                    </div>
+                `;
+                newsContainer.appendChild(card);
+            }
+            newsContainer.classList.add('shimmer-loading');
+        }
+
+        function hideShimmer() {
+            newsContainer.classList.remove('shimmer-loading');
+        }
+
         // Load news function
         async function loadNews(category, country) {
-            console.log(`📰 Loading ${category} news for ${country}`);
+            console.log(`📰 Chargement ${category} / ${country}`);
 
             // Show shimmer
-            showShimmerLoader(newsContainer, 6);
+            showShimmer();
 
             try {
                 const controller = new AbortController();
-                const timeout = setTimeout(() => controller.abort(), 8000);
+                const timeout = setTimeout(() => controller.abort(), 10000);
 
                 const response = await fetch(`/api/news/public?category=${category}&country=${country}&page=1`, {
                     signal: controller.signal
@@ -210,32 +215,23 @@
 
                 if (response.ok) {
                     const data = await response.json();
-                    console.log('✅ Got news:', data);
+                    console.log('✅ Données reçues:', data);
 
-                    hideShimmerLoader(newsContainer);
+                    hideShimmer();
 
                     if (data.success && data.articles && data.articles.length > 0) {
                         displayNews(data.articles, 'newsContainer');
                         return;
                     }
                 }
+
+                console.warn('⚠️ API pas OK ou pas de résultats');
             } catch (error) {
-                console.warn('⚠️ API error:', error.message);
+                console.warn('⚠️ Erreur API:', error.message);
             }
 
-            // Fallback
-            hideShimmerLoader(newsContainer);
-            newsContainer.innerHTML = `
-                <div style="grid-column: 1 / -1; text-align: center; padding: 3rem 1rem;">
-                    <h2 style="color: var(--text-primary); margin-bottom: 1rem;">Service temporairement indisponible</h2>
-                    <p style="color: var(--text-secondary); margin-bottom: 2rem;">
-                        Les actualités ne peuvent pas être chargées pour le moment.
-                    </p>
-                    <a href="dashboard.html" class="btn btn-primary" style="padding: 0.6rem 1.5rem;">
-                        Créer un compte
-                    </a>
-                </div>
-            `;
+            // Fallback - garde le shimmer visible
+            console.log('📡 Attente configuration API...');
         }
 
         // Category click handlers
@@ -293,8 +289,9 @@
             document.body.style.overflow = 'hidden';
         }
 
-        // Listen to sidebar toggle events from navbar
-        document.addEventListener('toggleMobileSidebar', () => {
+        mobileSidebarBtn?.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             if (verticalSidebar?.classList.contains('mobile-open')) {
                 closeMobileSidebar();
             } else {
