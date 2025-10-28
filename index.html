@@ -258,26 +258,32 @@
             });
             console.log('✅ Navbar initialized');
 
-            // Initialize theme
-            console.log('🎨 Initializing theme...');
+            // Wait for navbar to be in DOM before attaching event listeners
             setTimeout(() => {
+                // Initialize theme
+                console.log('🎨 Initializing theme...');
                 initThemeSystem();
                 console.log('✅ Theme initialized');
+
+                // Setup modal events
+                console.log('🔑 Setting up auth modal...');
+                setupAuthModal();
+                console.log('✅ Auth modal ready');
+
+                // Setup burger menu
+                console.log('🍔 Setting up burger menu...');
+                setupBurgerMenu();
+                console.log('✅ Burger menu ready');
+
+                // Setup searchbar
+                console.log('🔍 Setting up searchbar...');
+                setupSearchBar();
+                console.log('✅ Searchbar ready');
             }, 100);
 
             // Load initial news
             console.log('📰 Loading news...');
             loadNews(currentCategory, currentCountry);
-
-            // Setup modal events
-            console.log('🔑 Setting up auth modal...');
-            setupAuthModal();
-            console.log('✅ Auth modal ready');
-
-            // Setup burger menu
-            console.log('🍔 Setting up burger menu...');
-            setupBurgerMenu();
-            console.log('✅ Burger menu ready');
 
             } catch (error) {
                 console.error('❌ Initialization error:', error);
@@ -345,6 +351,51 @@
             console.log('📡 Attente configuration API...');
         }
 
+        // Searchbar setup (basic functionality for public mode)
+        function setupSearchBar() {
+            const searchInput = document.getElementById('smartSearchInput');
+            const searchBtn = document.getElementById('smartSearchBtn');
+
+            if (!searchInput || !searchBtn) {
+                console.warn('⚠️ Search input or button not found');
+                return;
+            }
+
+            // Handle search commands (/)
+            searchInput.addEventListener('input', (e) => {
+                const value = e.target.value.trim();
+
+                if (value.startsWith('/')) {
+                    console.log('🔍 Command detected:', value);
+                    // For public mode, just show a message
+                    if (value === '/help') {
+                        alert('Commandes disponibles en mode public:\n\n/help - Afficher l\'aide\n\nConnectez-vous pour plus de fonctionnalités!');
+                        searchInput.value = '';
+                    }
+                }
+            });
+
+            // Handle search button click
+            searchBtn.addEventListener('click', () => {
+                const query = searchInput.value.trim();
+                if (query) {
+                    console.log('🔍 Search query:', query);
+                    // For public mode, show a message
+                    alert('La recherche complète nécessite une connexion.\n\nConnectez-vous pour rechercher dans les actualités!');
+                    searchInput.value = '';
+                }
+            });
+
+            // Handle Enter key
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    searchBtn.click();
+                }
+            });
+
+            console.log('✅ Searchbar event listeners attached');
+        }
+
         // Burger menu setup
         function setupBurgerMenu() {
             const burgerBtn = document.getElementById('burgerBtn');
@@ -373,6 +424,33 @@
             burgerMenu.addEventListener('click', (e) => {
                 e.stopPropagation();
             });
+
+            // Language toggle handler
+            const langToggle = document.getElementById('langToggle');
+            if (langToggle) {
+                langToggle.addEventListener('change', (e) => {
+                    const newLang = e.target.checked ? 'en' : 'fr';
+                    console.log('🌍 Language changed to:', newLang);
+                    localStorage.setItem('language', newLang);
+
+                    // Update label
+                    const langLabel = document.getElementById('langLabel');
+                    if (langLabel) {
+                        langLabel.textContent = newLang === 'en' ? 'English / Français' : 'Français / English';
+                    }
+
+                    // Show notification (if available)
+                    if (typeof showSuccess === 'function') {
+                        showSuccess(`Langue changée: ${newLang === 'fr' ? 'Français' : 'English'}`);
+                    } else {
+                        console.log(`✅ Langue changée: ${newLang === 'fr' ? 'Français' : 'English'}`);
+                    }
+                });
+
+                // Load saved language on init
+                const savedLang = localStorage.getItem('language') || 'fr';
+                langToggle.checked = savedLang === 'en';
+            }
 
             console.log('✅ Burger menu event listeners attached');
         }
