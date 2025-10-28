@@ -457,21 +457,42 @@
 
         // Auth modal setup
         function setupAuthModal() {
+            console.log('🔑 Setting up auth modal...');
+            console.log('authModal:', authModal);
+            console.log('loginForm:', loginForm);
+            console.log('signupForm:', signupForm);
+
             // Open modal on login button click (from navbar burger)
             document.addEventListener('click', (e) => {
-                if (e.target.id === 'loginBtn' || e.target.closest('#loginBtn')) {
+                // Debug: log every click
+                if (e.target.id) {
+                    console.log('Click on element with id:', e.target.id);
+                }
+
+                // Check if click is on login button or its children
+                const loginBtn = e.target.closest('#loginBtn');
+                if (loginBtn) {
+                    console.log('✅ Login button clicked!');
+                    e.preventDefault();
+                    e.stopPropagation();
                     authModal.style.display = 'flex';
                     loginForm.style.display = 'block';
                     signupForm.style.display = 'none';
                     console.log('🔑 Login modal opened');
+                    return;
                 }
 
-                // Open signup modal on signup button click
-                if (e.target.id === 'signupBtn' || e.target.closest('#signupBtn')) {
+                // Check if click is on signup button or its children
+                const signupBtn = e.target.closest('#signupBtn');
+                if (signupBtn) {
+                    console.log('✅ Signup button clicked!');
+                    e.preventDefault();
+                    e.stopPropagation();
                     authModal.style.display = 'flex';
                     loginForm.style.display = 'none';
                     signupForm.style.display = 'block';
                     console.log('📝 Signup modal opened');
+                    return;
                 }
             });
 
