@@ -71,6 +71,9 @@
 /* 21. Loader System */
 @import url('modules/loader.css');
 
+/* 21.1 Shimmer Loader */
+@import url('modules/shimmer-loader.css');
+
 /* 22. Animations System */
 @import url('modules/animations.css');
 

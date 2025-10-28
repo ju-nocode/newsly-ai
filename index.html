@@ -8,17 +8,79 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="public/css/dashboard-main.css">
+    <link rel="stylesheet" href="public/css/main.css">
 </head>
-<body class="dashboard-body">
-
+<body>
     <!-- Overlay pour menu mobile -->
     <div class="mobile-overlay" id="mobileOverlay"></div>
 
-    <!-- Navbar sera injectée ici -->
-    <div id="navbar"></div>
+    <!-- Navbar Public Mode -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-left">
+                <button class="burger-btn" id="burgerBtnIndex" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="logo">
+                    <span class="logo-icon">📰</span>
+                    <span class="logo-text">Newsly AI</span>
+                </div>
+            </div>
 
-    <!-- Sidebar (sans pins, lecture seule) -->
+            <div class="navbar-right">
+                <!-- Weather Widget -->
+                <div id="weatherWidgetIndex" class="weather-widget"></div>
+            </div>
+        </div>
+
+        <!-- Burger Menu -->
+        <div class="burger-menu" id="burgerMenuIndex">
+            <div class="burger-menu-header">
+                <h3>Menu</h3>
+            </div>
+
+            <div class="burger-menu-content">
+                <!-- Theme Toggle -->
+                <div class="burger-menu-item">
+                    <span>Thème</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="themeToggleIndex">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <!-- Language Toggle -->
+                <div class="burger-menu-item">
+                    <span id="langLabel">Langue: Français</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="langToggleIndex">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <!-- Auth Buttons (visible uniquement si non connecté) -->
+                <div id="burgerAuthButtons" class="burger-auth-section">
+                    <button class="btn btn-primary" id="loginBtnBurger" style="padding: 0.6rem 1rem; width: 100%; margin-bottom: 0.5rem;">Se connecter</button>
+                    <button class="btn btn-success" id="signupBtnBurger" style="padding: 0.6rem 1rem; width: 100%;">Créer un compte</button>
+                </div>
+
+                <!-- User Info (visible uniquement si connecté) -->
+                <div id="burgerUserInfoIndex" class="burger-user-info" style="display: none;">
+                    <div class="burger-user-avatar">
+                        <img id="burgerAvatarImageIndex" src="" alt="Avatar" style="width: 48px; height: 48px; border-radius: 50%;">
+                    </div>
+                    <div class="burger-user-details">
+                        <p id="userNameDisplayIndex" style="font-weight: 600; margin: 0;"></p>
+                        <button id="dashboardLinkIndex" class="btn btn-secondary" style="padding: 0.4rem 0.8rem; margin-top: 0.5rem;">Aller au Dashboard</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar (catégories et pays) -->
     <aside class="vertical-sidebar" id="verticalSidebar">
         <div class="sidebar-content">
             <!-- Catégories -->
@@ -114,6 +176,7 @@
         <main class="dashboard-main">
             <div class="news-header">
                 <h1 id="categoryTitle">Actualités Générales</h1>
+                <p class="news-subtitle">Mode visiteur - Créez un compte pour un accès illimité</p>
             </div>
 
             <div id="newsContainer" class="news-grid">
@@ -122,60 +185,160 @@
         </main>
     </div>
 
-    <!-- Modal Login/Signup -->
-    <div class="modal-overlay" id="authModal" style="display: none;">
+    <!-- Modal Login/Signup avec Flip Animation -->
+    <div class="modal-overlay" id="authModal">
         <div class="modal-container">
             <button class="modal-close" id="closeModal">&times;</button>
 
-            <!-- Login Form -->
-            <div class="modal-content" id="loginForm">
-                <h2 class="modal-title">Connexion</h2>
-                <p class="modal-subtitle">Connectez-vous à votre compte</p>
+            <!-- Flip Card Container -->
+            <div class="signup-flip-card" id="signupFlipCard">
+                <!-- FACE 1: Login Form -->
+                <div class="signup-flip-front" id="loginForm">
+                    <h2 class="modal-title">Connexion</h2>
+                    <p class="modal-subtitle">Connectez-vous à votre compte</p>
 
-                <form class="auth-form" id="loginFormElement">
-                    <div class="form-group">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-input" id="loginEmail" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Mot de passe</label>
-                        <input type="password" class="form-input" id="loginPassword" required>
-                    </div>
-                    <div id="loginError" class="error-message" style="display: none;"></div>
-                    <button type="submit" class="btn btn-submit" style="padding: 0.6rem 1rem;">Se connecter</button>
-                </form>
+                    <form class="auth-form" id="loginFormElement">
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-input" id="loginEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Mot de passe</label>
+                            <input type="password" class="form-input" id="loginPassword" required>
+                        </div>
+                        <div id="loginError" class="error-message" style="display: none;"></div>
+                        <button type="submit" class="btn btn-submit" style="padding: 0.6rem 1rem;">Se connecter</button>
+                    </form>
 
-                <p class="modal-footer" style="text-align: center; margin-top: 1rem; color: var(--text-secondary);">
-                    <span>Pas de compte ?</span> <a href="#" id="switchToSignup" style="color: var(--primary);">Créer un compte</a>
-                </p>
+                    <p class="modal-footer" style="text-align: center; margin-top: 1rem; color: var(--text-secondary);">
+                        <span>Pas de compte ?</span> <a href="#" id="switchToSignup" style="color: var(--primary);">Créer un compte</a><br>
+                        <a href="#" id="forgotPasswordLink" style="color: var(--text-secondary); font-size: 0.85rem;">Mot de passe oublié ?</a>
+                    </p>
+                </div>
+
+                <!-- FACE 2: Signup Step 1 (Email + Password) -->
+                <div class="signup-flip-back" id="signupForm">
+                    <div class="signup-step" id="signupStep1">
+                        <h2 class="modal-title">Créer un compte</h2>
+                        <p class="modal-subtitle">Étape 1/2 - Identifiants</p>
+
+                        <form class="auth-form" id="signupStep1Form">
+                            <div class="form-group">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-input" id="signupEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Mot de passe (min 8 caractères)</label>
+                                <input type="password" class="form-input" id="signupPassword" required minlength="8">
+                            </div>
+                            <div id="signupStep1Error" class="error-message" style="display: none;"></div>
+                            <button type="submit" class="btn btn-submit" style="padding: 0.6rem 1rem;">Suivant →</button>
+                        </form>
+
+                        <p class="modal-footer" style="text-align: center; margin-top: 1rem; color: var(--text-secondary);">
+                            <span>Déjà un compte ?</span> <a href="#" id="switchToLogin" style="color: var(--primary);">Se connecter</a>
+                        </p>
+                    </div>
+
+                    <!-- Signup Step 2 (Profil) - Visible après flip -->
+                    <div class="signup-step" id="signupStep2" style="display: none;">
+                        <button class="btn btn-secondary" id="signupBackBtn" style="padding: 0.4rem 0.8rem; margin-bottom: 1rem;">← Retour</button>
+                        <h2 class="modal-title">Votre Profil</h2>
+                        <p class="modal-subtitle">Étape 2/2 - Informations</p>
+
+                        <form class="auth-form" id="signupStep2Form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Prénom *</label>
+                                    <input type="text" class="form-input" id="signupFirstName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Nom *</label>
+                                    <input type="text" class="form-input" id="signupLastName" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Pays *</label>
+                                    <select class="form-input" id="signupCountry" required>
+                                        <option value="">Sélectionnez...</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Ville *</label>
+                                    <input type="text" class="form-input" id="signupCity" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group" style="width: 30%;">
+                                    <label class="form-label">Code</label>
+                                    <select class="form-input" id="signupPhoneCode">
+                                        <option value="+33">🇫🇷 +33</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" style="width: 70%;">
+                                    <label class="form-label">Téléphone (optionnel)</label>
+                                    <input type="tel" class="form-input" id="signupPhone">
+                                </div>
+                            </div>
+                            <div id="signupStep2Error" class="error-message" style="display: none;"></div>
+                            <button type="submit" class="btn btn-submit" style="padding: 0.6rem 1rem;">Créer mon compte</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- FACE 3: Forgot Password Form -->
+                <div class="signup-flip-forgot" id="forgotPasswordForm" style="display: none;">
+                    <button class="btn btn-secondary" id="backToLogin" style="padding: 0.4rem 0.8rem; margin-bottom: 1rem;">← Retour</button>
+                    <h2 class="modal-title">Mot de passe oublié</h2>
+                    <p class="modal-subtitle">Recevez un lien de réinitialisation par email</p>
+
+                    <form class="auth-form" id="forgotPasswordFormElement">
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-input" id="forgotPasswordEmail" required>
+                        </div>
+                        <div id="forgotPasswordError" class="error-message" style="display: none;"></div>
+                        <div id="forgotPasswordSuccess" class="success-message" style="display: none;"></div>
+                        <button type="submit" class="btn btn-submit" style="padding: 0.6rem 1rem;">Envoyer le lien</button>
+                    </form>
+                </div>
             </div>
 
-            <!-- Signup Form -->
-            <div class="modal-content" id="signupForm" style="display: none;">
-                <h2 class="modal-title">Créer un compte</h2>
-                <p class="modal-subtitle">Rejoignez Newsly AI</p>
+            <!-- Signup Loader (affiché pendant la création du compte) -->
+            <div class="signup-loader" id="signupLoader">
+                <div class="loader-spinner"></div>
+                <h3>Création de votre compte...</h3>
+                <p>Veuillez patienter</p>
+            </div>
 
-                <form class="auth-form" id="signupFormElement">
-                    <div class="form-group">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-input" id="signupEmail" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Mot de passe</label>
-                        <input type="password" class="form-input" id="signupPassword" required>
-                    </div>
-                    <div id="signupError" class="error-message" style="display: none;"></div>
-                    <button type="submit" class="btn btn-submit" style="padding: 0.6rem 1rem;">Créer mon compte</button>
-                </form>
+            <!-- Email Sent Notification -->
+            <div class="email-notification" id="emailSentNotification" style="display: none;">
+                <p>📧 Un email de confirmation a été envoyé</p>
+            </div>
 
-                <p class="modal-footer" style="text-align: center; margin-top: 1rem; color: var(--text-secondary);">
-                    <span>Déjà un compte ?</span> <a href="#" id="switchToLogin" style="color: var(--primary);">Se connecter</a>
-                </p>
+            <!-- Signup Success -->
+            <div class="signup-success" id="signupSuccess">
+                <div class="success-animation-container">
+                    <div class="success-checkmark"></div>
+                    <div class="success-glow"></div>
+                </div>
+                <h2 class="success-title">Compte créé avec succès !</h2>
+                <p class="success-subtitle">Vérifiez votre email pour confirmer votre compte</p>
+                <button id="closeModalAfterSignup" class="btn btn-success-primary">Compris</button>
+            </div>
+
+            <!-- Signup Error -->
+            <div class="signup-error" id="signupError">
+                <div class="error-icon">❌</div>
+                <h2 class="error-title">Erreur</h2>
+                <p class="error-subtitle">Une erreur est survenue lors de la création du compte</p>
+                <button id="closeModalAfterError" class="btn btn-danger">Réessayer</button>
             </div>
         </div>
     </div>
 
-    <!-- Import index-page.js module -->
-    <script type="module" src="./public/js/index-page.js"></script>
+    <!-- Import du module JS -->
+    <script type="module" src="./public/js/index-visitor.js"></script>
 </body>
 </html>
