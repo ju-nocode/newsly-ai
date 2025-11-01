@@ -145,13 +145,13 @@
                             <label class="form-label">Mot de passe</label>
                             <input type="password" class="form-input" id="loginPassword" required>
                         </div>
-                        <div id="loginError" class="error-message" style="display: none;"></div>
-                        <button type="submit" class="btn btn-submit" style="padding: 0.6rem 1rem;">Se connecter</button>
+                        <div id="loginError" class="error-message"></div>
+                        <button type="submit" class="btn btn-submit">Se connecter</button>
                     </form>
 
-                    <p class="modal-footer" style="text-align: center; margin-top: 1rem; color: var(--text-secondary);">
-                        <span>Pas de compte ?</span> <a href="#" id="switchToSignup" style="color: var(--primary);">Créer un compte</a><br>
-                        <a href="#" id="forgotPasswordLink" style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.5rem; display: inline-block;">Mot de passe oublié ?</a>
+                    <p class="modal-footer">
+                        <span>Pas de compte ?</span> <a href="#" id="switchToSignup">Créer un compte</a><br>
+                        <a href="#" id="forgotPasswordLink" class="forgot-link">Mot de passe oublié ?</a>
                     </p>
                 </div>
 
@@ -171,18 +171,18 @@
                                 <label class="form-label">Mot de passe</label>
                                 <input type="password" class="form-input" id="signupPassword" required minlength="8">
                             </div>
-                            <div id="signupStep1Error" class="error-message" style="display: none;"></div>
-                            <button type="submit" class="btn btn-submit" style="padding: 0.6rem 1rem;">Suivant →</button>
+                            <div id="signupStep1Error" class="error-message"></div>
+                            <button type="submit" class="btn btn-submit">Suivant →</button>
                         </form>
 
-                        <p class="modal-footer" style="text-align: center; margin-top: 1rem; color: var(--text-secondary);">
-                            <span>Déjà un compte ?</span> <a href="#" id="switchToLogin" style="color: var(--primary);">Se connecter</a>
+                        <p class="modal-footer">
+                            <span>Déjà un compte ?</span> <a href="#" id="switchToLogin">Se connecter</a>
                         </p>
                     </div>
 
                     <!-- Step 2 -->
-                    <div id="signupStep2" style="display: none;">
-                        <button class="btn btn-secondary" id="signupBackBtn" style="padding: 0.4rem 0.8rem; margin-bottom: 1rem;">← Retour</button>
+                    <div id="signupStep2">
+                        <button class="btn btn-secondary btn-back" id="signupBackBtn">← Retour</button>
                         <h2 class="modal-title">Votre Profil</h2>
                         <p class="modal-subtitle">Étape 2/2 - Informations</p>
 
@@ -219,15 +219,15 @@
                                     <input type="tel" class="form-input" id="signupPhone">
                                 </div>
                             </div>
-                            <div id="signupStep2Error" class="error-message" style="display: none;"></div>
-                            <button type="submit" class="btn btn-submit" style="padding: 0.6rem 1rem;">Créer mon compte</button>
+                            <div id="signupStep2Error" class="error-message"></div>
+                            <button type="submit" class="btn btn-submit">Créer mon compte</button>
                         </form>
                     </div>
                 </div>
 
                 <!-- Forgot Password -->
-                <div class="signup-flip-forgot" id="forgotPasswordForm" style="display: none;">
-                    <button class="btn btn-secondary" id="backToLogin" style="padding: 0.4rem 0.8rem; margin-bottom: 1rem;">← Retour</button>
+                <div class="signup-flip-forgot" id="forgotPasswordForm">
+                    <button class="btn btn-secondary btn-back" id="backToLogin">← Retour</button>
                     <h2 class="modal-title">Mot de passe oublié</h2>
                     <p class="modal-subtitle">Recevez un lien de réinitialisation</p>
 
@@ -236,9 +236,9 @@
                             <label class="form-label">Email</label>
                             <input type="email" class="form-input" id="forgotPasswordEmail" required>
                         </div>
-                        <div id="forgotPasswordError" class="error-message" style="display: none;"></div>
-                        <div id="forgotPasswordSuccess" class="success-message" style="display: none;"></div>
-                        <button type="submit" class="btn btn-submit" style="padding: 0.6rem 1rem;">Envoyer le lien</button>
+                        <div id="forgotPasswordError" class="error-message"></div>
+                        <div id="forgotPasswordSuccess" class="success-message"></div>
+                        <button type="submit" class="btn btn-submit">Envoyer le lien</button>
                     </form>
                 </div>
             </div>
@@ -251,7 +251,7 @@
             </div>
 
             <!-- Email Notification -->
-            <div class="email-notification" id="emailSentNotification" style="display: none;">
+            <div class="email-notification" id="emailSentNotification">
                 <p>📧 Email de confirmation envoyé</p>
             </div>
 

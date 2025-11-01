@@ -92,8 +92,10 @@ const signupBtn = document.getElementById('signupBtn');
 if (loginBtn) {
     loginBtn.addEventListener('click', () => {
         authModal.classList.add('show');
-        loginFormDiv.style.display = 'block';
-        signupFormDiv.style.display = 'none';
+        const flipCard = document.getElementById('signupFlipCard');
+        if (flipCard) {
+            flipCard.classList.remove('flipped', 'show-forgot');
+        }
         burgerMenu.classList.remove('show');
         burgerBtn.classList.remove('active');
     });
@@ -103,8 +105,11 @@ if (loginBtn) {
 if (signupBtn) {
     signupBtn.addEventListener('click', () => {
         authModal.classList.add('show');
-        loginFormDiv.style.display = 'none';
-        signupFormDiv.style.display = 'block';
+        const flipCard = document.getElementById('signupFlipCard');
+        if (flipCard) {
+            flipCard.classList.add('flipped');
+            flipCard.classList.remove('show-forgot');
+        }
         burgerMenu.classList.remove('show');
         burgerBtn.classList.remove('active');
     });
@@ -138,35 +143,42 @@ const backToLogin = document.getElementById('backToLogin');
 if (switchToSignup) {
     switchToSignup.addEventListener('click', (e) => {
         e.preventDefault();
-        loginFormDiv.style.display = 'none';
-        signupFormDiv.style.display = 'block';
-        if (forgotPasswordFormDiv) forgotPasswordFormDiv.style.display = 'none';
+        const flipCard = document.getElementById('signupFlipCard');
+        if (flipCard) {
+            flipCard.classList.add('flipped');
+            flipCard.classList.remove('show-forgot');
+        }
     });
 }
 
 if (switchToLogin) {
     switchToLogin.addEventListener('click', (e) => {
         e.preventDefault();
-        signupFormDiv.style.display = 'none';
-        loginFormDiv.style.display = 'block';
-        if (forgotPasswordFormDiv) forgotPasswordFormDiv.style.display = 'none';
+        const flipCard = document.getElementById('signupFlipCard');
+        if (flipCard) {
+            flipCard.classList.remove('flipped', 'show-forgot');
+        }
     });
 }
 
 if (forgotPasswordLink) {
     forgotPasswordLink.addEventListener('click', (e) => {
         e.preventDefault();
-        loginFormDiv.style.display = 'none';
-        signupFormDiv.style.display = 'none';
-        if (forgotPasswordFormDiv) forgotPasswordFormDiv.style.display = 'block';
+        const flipCard = document.getElementById('signupFlipCard');
+        if (flipCard) {
+            flipCard.classList.add('show-forgot');
+            flipCard.classList.remove('flipped');
+        }
     });
 }
 
 if (backToLogin) {
     backToLogin.addEventListener('click', (e) => {
         e.preventDefault();
-        if (forgotPasswordFormDiv) forgotPasswordFormDiv.style.display = 'none';
-        loginFormDiv.style.display = 'block';
+        const flipCard = document.getElementById('signupFlipCard');
+        if (flipCard) {
+            flipCard.classList.remove('show-forgot', 'flipped');
+        }
     });
 }
 
@@ -294,8 +306,10 @@ if (signupStep2Form) {
         errorDiv.style.display = 'none';
 
         // Show loader
-        document.getElementById('signupFlipCard').style.display = 'none';
-        document.getElementById('signupLoader').classList.add('active');
+        const flipCard = document.getElementById('signupFlipCard');
+        const loader = document.getElementById('signupLoader');
+        if (flipCard) flipCard.classList.add('hidden');
+        if (loader) loader.classList.add('active');
 
         // Build phone
         const phone = phoneNumber ? `${phoneCode} ${phoneNumber}` : '';
@@ -310,15 +324,16 @@ if (signupStep2Form) {
         });
 
         // Hide loader
-        document.getElementById('signupLoader').classList.remove('active');
+        if (loader) loader.classList.remove('active');
 
         if (result.success) {
             // Hide form and show success
-            document.getElementById('signupFlipCard').style.display = 'none';
-            document.getElementById('signupSuccess').classList.add('active');
+            if (flipCard) flipCard.classList.add('hidden');
+            const success = document.getElementById('signupSuccess');
+            if (success) success.classList.add('active');
         } else {
             // Hide form and show error
-            document.getElementById('signupFlipCard').style.display = 'none';
+            if (flipCard) flipCard.classList.add('hidden');
             const signupError = document.getElementById('signupError');
             if (signupError) {
                 signupError.classList.add('active');
@@ -336,12 +351,17 @@ const closeModalAfterSignup = document.getElementById('closeModalAfterSignup');
 if (closeModalAfterSignup) {
     closeModalAfterSignup.addEventListener('click', () => {
         authModal.classList.remove('show');
-        document.getElementById('signupSuccess').classList.remove('active');
-        document.getElementById('signupFlipCard').style.display = 'block';
-        document.getElementById('signupStep1').style.display = 'block';
-        document.getElementById('signupStep2').style.display = 'none';
-        signupStep1Form.reset();
-        signupStep2Form.reset();
+        const success = document.getElementById('signupSuccess');
+        const flipCard = document.getElementById('signupFlipCard');
+        const step1 = document.getElementById('signupStep1');
+        const step2 = document.getElementById('signupStep2');
+
+        if (success) success.classList.remove('active');
+        if (flipCard) flipCard.classList.remove('hidden', 'flipped', 'show-forgot');
+        if (step1) step1.style.display = 'block';
+        if (step2) step2.style.display = 'none';
+        if (signupStep1Form) signupStep1Form.reset();
+        if (signupStep2Form) signupStep2Form.reset();
     });
 }
 
@@ -349,8 +369,11 @@ if (closeModalAfterSignup) {
 const closeModalAfterError = document.getElementById('closeModalAfterError');
 if (closeModalAfterError) {
     closeModalAfterError.addEventListener('click', () => {
-        document.getElementById('signupError').classList.remove('active');
-        document.getElementById('signupFlipCard').style.display = 'block';
+        const error = document.getElementById('signupError');
+        const flipCard = document.getElementById('signupFlipCard');
+
+        if (error) error.classList.remove('active');
+        if (flipCard) flipCard.classList.remove('hidden');
     });
 }
 
@@ -388,8 +411,10 @@ if (forgotPasswordFormElement) {
                 forgotPasswordFormElement.reset();
 
                 setTimeout(() => {
-                    forgotPasswordFormDiv.style.display = 'none';
-                    loginFormDiv.style.display = 'block';
+                    const flipCard = document.getElementById('signupFlipCard');
+                    if (flipCard) {
+                        flipCard.classList.remove('show-forgot', 'flipped');
+                    }
                 }, 3000);
             } else {
                 errorDiv.textContent = data.error || 'Erreur lors de l\'envoi de l\'email';

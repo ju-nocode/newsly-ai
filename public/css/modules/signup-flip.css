@@ -6,6 +6,7 @@
   position: relative;
   width: 100%;
   display: block;
+  min-height: 400px;
 }
 
 /* Toutes les faces du flip card */
@@ -14,30 +15,47 @@
 .signup-flip-forgot {
   width: 100%;
   display: none;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 /* Face visible par défaut (Login) */
 .signup-flip-front {
   display: block;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Animations de flip */
 .signup-flip-card.flipped .signup-flip-front {
   display: none;
+  opacity: 0;
+  transform: translateY(-10px);
 }
 
 .signup-flip-card.flipped .signup-flip-back {
   display: block;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Forgot password view */
 .signup-flip-card.show-forgot .signup-flip-front,
 .signup-flip-card.show-forgot .signup-flip-back {
   display: none;
+  opacity: 0;
 }
 
 .signup-flip-card.show-forgot .signup-flip-forgot {
   display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hidden state (when showing loader/success/error) */
+.signup-flip-card.hidden {
+  display: none;
 }
 
 /* ================================================
@@ -530,6 +548,57 @@
   color: var(--success);
   font-size: 0.95rem;
   font-weight: 500;
+}
+
+/* Step management */
+#signupStep2 {
+  display: none;
+}
+
+/* Back button styling */
+.btn-back {
+  padding: 0.4rem 0.8rem;
+  margin-bottom: 1rem;
+}
+
+/* Forgot password link */
+.forgot-link {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  display: inline-block;
+}
+
+.forgot-link:hover {
+  color: var(--primary);
+}
+
+/* Email notification - hidden by default */
+.email-notification {
+  display: none;
+}
+
+/* Forgot password success/error */
+.error-message,
+.success-message {
+  display: none;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.error-message {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid var(--error);
+  color: var(--error);
+}
+
+.success-message {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid var(--success);
+  color: var(--success);
 }
 
 /* Responsive */
