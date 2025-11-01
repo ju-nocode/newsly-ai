@@ -7,6 +7,7 @@ import { countries } from './countries.js';
 import { attachPhoneFormatter } from './phone-formatter.js';
 import { initThemeSystem } from './theme-manager.js';
 import { initWeatherWidget } from './weather.js';
+import { initLanguageSwitcher } from './language-switcher.js';
 import { navigateWithBlur } from './page-loader.js';
 import { displayNews, showSuccess, showError } from './dashboard-utils.js';
 import { initNavbar } from './navbar-component.js';
@@ -54,6 +55,11 @@ initThemeSystem();
 // WEATHER WIDGET
 // ================================================
 initWeatherWidget('weatherWidget');
+
+// ================================================
+// LANGUAGE SWITCHER
+// ================================================
+initLanguageSwitcher();
 
 // ================================================
 // BURGER MENU (IDs from navbar-component)
