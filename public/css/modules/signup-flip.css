@@ -47,40 +47,17 @@
 }
 
 /* ================================================
-   ANIMATIONS DE SOUMISSION
+   LOADER
 ================================================ */
 
-/* Animation de disparition avec flou vers le centre */
-@keyframes shrinkAndBlur {
-  0% {
-    transform: scale(1);
-    filter: blur(0px);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(0);
-    filter: blur(10px);
-    opacity: 0;
-  }
-}
-
-.signup-flip-card.submitting {
-  animation: shrinkAndBlur 0.8s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
-  transform-origin: center center;
-}
-
-/* Spinner de chargement - MASQUÉ PAR DÉFAUT */
 .signup-loader {
   display: none;
   text-align: center;
   padding: 3rem 0;
-  opacity: 0;
-  transition: opacity 0.3s ease;
 }
 
 .signup-loader.active {
   display: block;
-  opacity: 1;
   animation: fadeIn 0.3s ease-in;
 }
 
@@ -89,7 +66,6 @@
   to { opacity: 1; }
 }
 
-/* Loader Spinner */
 .loader-spinner {
   width: 60px;
   height: 60px;
@@ -98,6 +74,11 @@
   border-top: 4px solid var(--primary);
   border-radius: 50%;
   animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .signup-loader h3 {
@@ -112,170 +93,21 @@
   font-size: 0.95rem;
 }
 
-/* Loader Icon Container with overlapping spinner and email */
-.loader-icon-container {
-  position: relative;
-  width: 80px;
-  height: 80px;
-  margin: 0 auto 1rem;
-}
+/* ================================================
+   SUCCESS
+================================================ */
 
-.spinner {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 80px;
-  height: 80px;
-  border: 4px solid var(--border);
-  border-top: 4px solid var(--primary);
-  border-right: 4px solid var(--primary);
-  border-radius: 50%;
-  animation: spin 1.5s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.email-icon-animated {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 2.5rem;
-  animation: emailBounce 2s ease-in-out infinite;
-}
-
-@keyframes emailBounce {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); }
-  50% { transform: translate(-50%, -50%) scale(1.1); }
-}
-
-/* Loader Title and Subtitle */
-.loader-title {
-  color: var(--text-primary);
-  margin-bottom: 0.5rem;
-  margin-top: 1.5rem;
-  font-size: 1.25rem;
-  font-weight: 600;
-  font-family: 'Inter', sans-serif;
-}
-
-.loader-subtitle {
-  color: var(--text-secondary);
-  font-size: 0.9375rem;
-  margin-bottom: 2rem;
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-}
-
-/* Simplified Email Notification */
-.email-notification-simple {
-  margin-top: 2rem;
-  padding: 1.5rem;
-  background: var(--bg-secondary);
-  border-radius: var(--radius-lg);
-  border: 2px solid var(--success);
-  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.12);
-  animation: slideInUp 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
-  text-align: center;
-}
-
-@keyframes slideInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.email-notification-icon {
-  margin-bottom: 1rem;
-}
-
-.email-icon-pulse {
-  font-size: 3rem;
-  display: inline-block;
-  animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-    filter: drop-shadow(0 0 0px rgba(16, 185, 129, 0.5));
-  }
-  50% {
-    transform: scale(1.1);
-    filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.6));
-  }
-}
-
-.email-notification-title {
-  margin: 0 0 0.75rem 0;
-  color: var(--success);
-  font-size: 1.125rem;
-  font-weight: 600;
-  font-family: 'Inter', sans-serif;
-}
-
-.email-notification-text {
-  margin: 0 0 1rem 0;
-  color: var(--text-primary);
-  font-size: 0.9375rem;
-  line-height: 1.6;
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-}
-
-.email-notification-hint {
-  margin: 0;
-  padding-top: 1rem;
-  border-top: 1px dashed var(--border);
-  color: var(--text-muted);
-  font-size: 0.875rem;
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .email-notification-simple {
-    padding: 1.25rem;
-  }
-
-  .email-icon-pulse {
-    font-size: 2.5rem;
-  }
-
-  .email-notification-title {
-    font-size: 1.0625rem;
-  }
-
-  .email-notification-text {
-    font-size: 0.875rem;
-  }
-}
-
-/* Animation de succès - MASQUÉ PAR DÉFAUT */
 .signup-success {
   display: none;
   text-align: center;
   padding: 3rem 1.5rem;
-  opacity: 0;
-  transition: opacity 0.3s ease;
 }
 
 .signup-success.active {
   display: block;
-  opacity: 1;
   animation: fadeIn 0.5s ease-in;
 }
 
-/* Success Animation Container */
 .success-animation-container {
   position: relative;
   width: 120px;
@@ -329,7 +161,6 @@
   }
 }
 
-/* Success Glow Effect */
 .success-glow {
   position: absolute;
   top: 50%;
@@ -354,29 +185,35 @@
   }
 }
 
-/* Success Title */
 .success-title {
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--success);
   margin-bottom: 0.75rem;
   line-height: 1.3;
-  font-family: 'Inter', sans-serif;
   animation: slideInUp 0.5s 0.2s cubic-bezier(0.4, 0.0, 0.2, 1) backwards;
 }
 
-/* Success Subtitle */
 .success-subtitle {
   font-size: 1rem;
   color: var(--text-secondary);
   margin-bottom: 2rem;
   font-weight: 400;
-  font-family: 'Inter', sans-serif;
   line-height: 1.5;
   animation: slideInUp 0.5s 0.3s cubic-bezier(0.4, 0.0, 0.2, 1) backwards;
 }
 
-/* Success Button - Custom gradient variant (inherits from .btn) */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .btn-success-primary {
   width: 100%;
   background: linear-gradient(135deg, var(--primary), #2563eb);
@@ -397,8 +234,123 @@
   box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
 }
 
-/* Responsive Success Page */
+/* ================================================
+   ERROR
+================================================ */
+
+.signup-error {
+  display: none;
+  text-align: center;
+  padding: 3rem 1.5rem;
+}
+
+.signup-error.active {
+  display: block;
+  animation: fadeIn 0.5s ease-in;
+}
+
+.signup-error .error-icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+.signup-error .error-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--error);
+  margin-bottom: 0.75rem;
+}
+
+.signup-error .error-subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+}
+
+/* ================================================
+   NOTIFICATIONS & MESSAGES
+================================================ */
+
+.email-notification {
+  display: none;
+  background: var(--bg-secondary);
+  border: 1px solid var(--success);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  text-align: center;
+  margin-top: 1rem;
+  animation: slideInUp 0.3s ease-out;
+}
+
+.email-notification p {
+  margin: 0;
+  color: var(--success);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.error-message,
+.success-message {
+  display: none;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.error-message {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid var(--error);
+  color: var(--error);
+}
+
+.success-message {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid var(--success);
+  color: var(--success);
+}
+
+/* ================================================
+   FORM ELEMENTS
+================================================ */
+
+#signupStep2 {
+  display: none;
+}
+
+.btn-back {
+  padding: 0.4rem 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.forgot-link {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  display: inline-block;
+}
+
+.forgot-link:hover {
+  color: var(--primary);
+}
+
+/* ================================================
+   RESPONSIVE
+================================================ */
+
 @media (max-width: 768px) {
+  .signup-flip-card {
+    min-height: auto;
+  }
+
   .signup-success {
     padding: 2rem 1rem;
   }
@@ -432,175 +384,5 @@
 
   .btn-success-primary {
     font-size: 0.9375rem;
-  }
-}
-
-/* Confettis */
-.confetti {
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  background: var(--primary);
-  border-radius: 2px;
-  animation: confetti-fall 4s ease-out forwards;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-@keyframes confetti-fall {
-  0% {
-    transform: translateY(0) rotate(0deg) scale(1);
-    opacity: 1;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(100vh) rotate(720deg) scale(0.5);
-    opacity: 0;
-  }
-}
-
-.confetti:nth-child(2n) {
-  background: linear-gradient(135deg, var(--success), #10b981);
-  animation-delay: 0.1s;
-  width: 10px;
-  height: 14px;
-}
-.confetti:nth-child(3n) {
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
-  animation-delay: 0.2s;
-  border-radius: 50%;
-}
-.confetti:nth-child(4n) {
-  background: linear-gradient(135deg, #f472b6, #ec4899);
-  animation-delay: 0.15s;
-  width: 14px;
-  height: 8px;
-}
-.confetti:nth-child(5n) {
-  background: linear-gradient(135deg, #60a5fa, #3b82f6);
-  animation-delay: 0.3s;
-  border-radius: 50%;
-}
-.confetti:nth-child(6n) {
-  background: linear-gradient(135deg, #a78bfa, #8b5cf6);
-  animation-delay: 0.25s;
-  width: 8px;
-  height: 16px;
-}
-
-/* Animation d'erreur - MASQUÉ PAR DÉFAUT */
-.signup-error {
-  display: none;
-  text-align: center;
-  padding: 3rem 1.5rem;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.signup-error.active {
-  display: block;
-  opacity: 1;
-  animation: fadeIn 0.5s ease-in;
-}
-
-.signup-error .error-icon {
-  font-size: 4rem;
-  margin-bottom: 1.5rem;
-  animation: shake 0.5s ease-in-out;
-}
-
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-10px); }
-  75% { transform: translateX(10px); }
-}
-
-.signup-error .error-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--error);
-  margin-bottom: 0.75rem;
-}
-
-.signup-error .error-subtitle {
-  font-size: 1rem;
-  color: var(--text-secondary);
-  margin-bottom: 2rem;
-}
-
-/* Email Notification */
-.email-notification {
-  background: var(--bg-secondary);
-  border: 1px solid var(--success);
-  border-radius: var(--radius-md);
-  padding: 1rem;
-  text-align: center;
-  margin-top: 1rem;
-  animation: slideInUp 0.3s ease-out;
-}
-
-.email-notification p {
-  margin: 0;
-  color: var(--success);
-  font-size: 0.95rem;
-  font-weight: 500;
-}
-
-/* Step management */
-#signupStep2 {
-  display: none;
-}
-
-/* Back button styling */
-.btn-back {
-  padding: 0.4rem 0.8rem;
-  margin-bottom: 1rem;
-}
-
-/* Forgot password link */
-.forgot-link {
-  color: var(--text-secondary);
-  font-size: 0.85rem;
-  margin-top: 0.5rem;
-  display: inline-block;
-}
-
-.forgot-link:hover {
-  color: var(--primary);
-}
-
-/* Email notification - hidden by default */
-.email-notification {
-  display: none;
-}
-
-/* Forgot password success/error */
-.error-message,
-.success-message {
-  display: none;
-  padding: 0.75rem 1rem;
-  border-radius: var(--radius-md);
-  margin-bottom: 1rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-
-.error-message {
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid var(--error);
-  color: var(--error);
-}
-
-.success-message {
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid var(--success);
-  color: var(--success);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .signup-flip-card {
-    min-height: auto;
   }
 }
