@@ -9,8 +9,17 @@ import { initThemeSystem } from './theme-manager.js';
 import { initWeatherWidget } from './weather.js';
 import { navigateWithBlur } from './page-loader.js';
 import { displayNews, showSuccess, showError } from './dashboard-utils.js';
+import { initNavbar } from './navbar-component.js';
 
 console.log('🚀 Index Visitor Mode starting...');
+
+// ================================================
+// INJECT NAVBAR
+// ================================================
+initNavbar('.mobile-overlay', {
+    showMobileSidebarBtn: true,
+    publicMode: true
+});
 
 // Redirection si déjà connecté
 const isAuthenticated = checkAuth();
@@ -26,7 +35,7 @@ let currentCategory = 'general';
 let currentCountry = 'us';
 
 // ================================================
-// DOM ELEMENTS
+// DOM ELEMENTS (wait for navbar injection)
 // ================================================
 const newsContainer = document.getElementById('newsContainer');
 const categoryTitle = document.getElementById('categoryTitle');
@@ -36,59 +45,37 @@ const authModal = document.getElementById('authModal');
 const loginFormDiv = document.getElementById('loginForm');
 const signupFormDiv = document.getElementById('signupForm');
 
-// Burger menu
-const burgerBtnIndex = document.getElementById('burgerBtnIndex');
-const burgerMenuIndex = document.getElementById('burgerMenuIndex');
-const loginBtnBurger = document.getElementById('loginBtnBurger');
-const signupBtnBurger = document.getElementById('signupBtnBurger');
-
-// Theme toggle
-const themeToggleIndex = document.getElementById('themeToggleIndex');
-
 // ================================================
 // THEME MANAGEMENT
 // ================================================
 initThemeSystem();
 
-// Lier le toggle du burger menu au système de thème
-if (themeToggleIndex) {
-    const currentTheme = localStorage.getItem('theme') || 'light';
-    themeToggleIndex.checked = currentTheme === 'dark';
-
-    themeToggleIndex.addEventListener('change', () => {
-        const newTheme = themeToggleIndex.checked ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        console.log('🎨 Theme changed to:', newTheme);
-    });
-}
-
 // ================================================
 // WEATHER WIDGET
 // ================================================
-const weatherWidget = document.getElementById('weatherWidgetIndex');
-if (weatherWidget) {
-    initWeatherWidget('weatherWidgetIndex');
-}
+initWeatherWidget('weatherWidget');
 
 // ================================================
-// BURGER MENU
+// BURGER MENU (IDs from navbar-component)
 // ================================================
-if (burgerBtnIndex && burgerMenuIndex) {
-    burgerBtnIndex.addEventListener('click', (e) => {
+const burgerBtn = document.getElementById('burgerBtn');
+const burgerMenu = document.getElementById('burgerMenu');
+
+if (burgerBtn && burgerMenu) {
+    burgerBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        burgerBtnIndex.classList.toggle('active');
-        burgerMenuIndex.classList.toggle('show');
+        burgerBtn.classList.toggle('active');
+        burgerMenu.classList.toggle('show');
     });
 
     // Fermer si on clique ailleurs
     document.addEventListener('click', () => {
-        burgerBtnIndex.classList.remove('active');
-        burgerMenuIndex.classList.remove('show');
+        burgerBtn.classList.remove('active');
+        burgerMenu.classList.remove('show');
     });
 
     // Empêcher la fermeture si on clique dans le menu
-    burgerMenuIndex.addEventListener('click', (e) => {
+    burgerMenu.addEventListener('click', (e) => {
         e.stopPropagation();
     });
 }
@@ -97,26 +84,28 @@ if (burgerBtnIndex && burgerMenuIndex) {
 // AUTH MODAL - OPEN/CLOSE
 // ================================================
 const closeModal = document.getElementById('closeModal');
+const loginBtn = document.getElementById('loginBtn');
+const signupBtn = document.getElementById('signupBtn');
 
 // Open login from burger
-if (loginBtnBurger) {
-    loginBtnBurger.addEventListener('click', () => {
+if (loginBtn) {
+    loginBtn.addEventListener('click', () => {
         authModal.classList.add('show');
         loginFormDiv.style.display = 'block';
         signupFormDiv.style.display = 'none';
-        burgerMenuIndex.classList.remove('show');
-        burgerBtnIndex.classList.remove('active');
+        burgerMenu.classList.remove('show');
+        burgerBtn.classList.remove('active');
     });
 }
 
 // Open signup from burger
-if (signupBtnBurger) {
-    signupBtnBurger.addEventListener('click', () => {
+if (signupBtn) {
+    signupBtn.addEventListener('click', () => {
         authModal.classList.add('show');
         loginFormDiv.style.display = 'none';
         signupFormDiv.style.display = 'block';
-        burgerMenuIndex.classList.remove('show');
-        burgerBtnIndex.classList.remove('active');
+        burgerMenu.classList.remove('show');
+        burgerBtn.classList.remove('active');
     });
 }
 
@@ -465,10 +454,10 @@ function openMobileSidebar() {
     document.body.style.overflow = 'hidden';
 }
 
-// Mobile sidebar toggle button
-const mobileSidebarToggle = document.getElementById('mobileSidebarToggle');
-if (mobileSidebarToggle) {
-    mobileSidebarToggle.addEventListener('click', (e) => {
+// Mobile sidebar toggle button (ID from navbar-component)
+const mobileSidebarBtn = document.getElementById('mobileSidebarBtn');
+if (mobileSidebarBtn) {
+    mobileSidebarBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         if (verticalSidebar.classList.contains('mobile-open')) {
             closeMobileSidebar();
