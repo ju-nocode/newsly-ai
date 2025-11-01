@@ -237,20 +237,6 @@
             initWeatherWidget();
             initLanguageSwitcher();
 
-            // Setup weather refresh button
-            const refreshWeatherBtn = document.getElementById('refreshWeatherBtn');
-            if (refreshWeatherBtn) {
-                refreshWeatherBtn.addEventListener('click', () => {
-                    refreshWeatherLocation();
-                    // Close burger menu after refresh
-                    const burgerBtn = document.getElementById('burgerBtn');
-                    const burgerMenu = document.getElementById('burgerMenu');
-                    if (burgerBtn && burgerMenu) {
-                        burgerBtn.classList.remove('active');
-                        burgerMenu.classList.remove('show');
-                    }
-                });
-            }
         };
 
         if (isChromeIOS || isMobile) {

@@ -5,10 +5,21 @@
 .weather-widget {
   display: flex;
   align-items: center;
-  padding: 0;
+  padding: 0.25rem 0.5rem;
   position: relative;
   height: 36px;
-  cursor: default;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.weather-widget:hover {
+  background-color: var(--bg-secondary);
+  transform: scale(1.02);
+}
+
+.weather-widget:active {
+  transform: scale(0.98);
 }
 
 .weather-popup {

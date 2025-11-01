@@ -81,7 +81,7 @@ export function createNavbar(config = {}) {
                 <!-- Language Switcher (hidden in public mode) -->
                 ${showLanguageSwitcher ? `
                 <button class="nav-lang-btn" id="langSwitcher" title="Changer la langue" aria-label="Changer la langue">
-                    <img src="https://img.icons8.com/ios-filled/20/translate.png" alt="Language" class="icon-secondary">
+                    <img src="https://img.icons8.com/ios/20/language.png" alt="Language" class="icon-secondary">
                 </button>
                 ` : ''}
 
@@ -122,14 +122,6 @@ export function createNavbar(config = {}) {
 
                     <!-- Authenticated mode: Settings, Weather, Logout -->
                     ${!publicMode ? `
-                    <div class="burger-divider"></div>
-
-                    <!-- Weather Location Refresh Button -->
-                    <button class="burger-link" id="refreshWeatherBtn">
-                        <img src="https://img.icons8.com/ios/20/marker.png" alt="Weather" class="icon-secondary">
-                        <span data-i18n="nav.refreshWeather">Actualiser la météo</span>
-                    </button>
-
                     <div class="burger-divider"></div>
 
                     ${showSettingsNav ? `

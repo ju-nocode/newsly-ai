@@ -150,13 +150,44 @@ export async function loadWeather(widgetId = 'weatherWidget') {
  * @param {string} widgetId - ID of the weather widget element (default: 'weatherWidget')
  */
 export function initWeatherWidget(widgetId = 'weatherWidget') {
+    const weatherWidget = document.getElementById(widgetId);
+
+    if (!weatherWidget) {
+        console.warn(`⚠️ Weather widget element "${widgetId}" not found`);
+        return;
+    }
+
     // Load weather on init
     loadWeather(widgetId);
 
     // Refresh weather every 10 minutes
     setInterval(() => loadWeather(widgetId), 10 * 60 * 1000);
 
-    console.log(`✅ Weather widget "${widgetId}" initialized`);
+    // Make weather widget clickable with refresh effect
+    weatherWidget.style.cursor = 'pointer';
+    weatherWidget.setAttribute('title', 'Cliquer pour actualiser la météo');
+
+    weatherWidget.addEventListener('click', async () => {
+        // Add darkening effect
+        weatherWidget.style.transition = 'opacity 0.3s ease';
+        weatherWidget.style.opacity = '0.4';
+
+        // Clear saved location and reload weather
+        localStorage.removeItem('weatherLat');
+        localStorage.removeItem('weatherLon');
+
+        // Reload weather
+        await loadWeather(widgetId);
+
+        // Remove darkening effect after reload
+        setTimeout(() => {
+            weatherWidget.style.opacity = '1';
+        }, 300);
+
+        console.log('🔄 Weather refreshed by user click');
+    });
+
+    console.log(`✅ Weather widget "${widgetId}" initialized with click-to-refresh`);
 }
 
 /**
