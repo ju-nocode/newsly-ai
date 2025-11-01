@@ -28,15 +28,13 @@ echo
 line
 echo "📦  Commit & push sur 'master'"
 line
-git status -s
-line
-echo
 
 # --- Commit + push ---
 echo
 date=$(date +"%Y-%m-%d_%H-%M")
 git add -A
 git commit -m "Update: ${date}"
+line
 
 echo
 echo "🔄 Push vers origin/master..."
