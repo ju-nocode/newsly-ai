@@ -42,7 +42,8 @@ export function createNavbar(config = {}) {
                 </a>
             </div>
 
-            <!-- Center Section: Smart Search Bar (Floating Centered) -->
+            <!-- Center Section: Smart Search Bar (Floating Centered) - Only for authenticated users -->
+            ${!publicMode ? `
             <div class="smart-search-wrapper">
                 <div class="smart-search-container">
                     <div class="smart-search-icon">
@@ -68,6 +69,7 @@ export function createNavbar(config = {}) {
                     </button>
                 </div>
             </div>
+            ` : ''}
 
             <!-- Right Section: Weather + Language + Burger -->
             <div class="nav-right">
