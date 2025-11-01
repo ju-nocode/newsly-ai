@@ -9,48 +9,36 @@
   min-height: 400px;
 }
 
-/* Toutes les faces du flip card */
+/* Toutes les faces du flip card - cachées par défaut */
 .signup-flip-front,
 .signup-flip-back,
 .signup-flip-forgot {
   width: 100%;
   display: none;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 /* Face visible par défaut (Login) */
 .signup-flip-front {
   display: block;
-  opacity: 1;
-  transform: translateY(0);
 }
 
 /* Animations de flip */
 .signup-flip-card.flipped .signup-flip-front {
   display: none;
-  opacity: 0;
-  transform: translateY(-10px);
 }
 
 .signup-flip-card.flipped .signup-flip-back {
   display: block;
-  opacity: 1;
-  transform: translateY(0);
 }
 
 /* Forgot password view */
 .signup-flip-card.show-forgot .signup-flip-front,
 .signup-flip-card.show-forgot .signup-flip-back {
   display: none;
-  opacity: 0;
 }
 
 .signup-flip-card.show-forgot .signup-flip-forgot {
   display: block;
-  opacity: 1;
-  transform: translateY(0);
 }
 
 /* Hidden state (when showing loader/success/error) */
@@ -83,13 +71,16 @@
 
 /* Spinner de chargement - MASQUÉ PAR DÉFAUT */
 .signup-loader {
-  display: none !important;
+  display: none;
   text-align: center;
   padding: 3rem 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .signup-loader.active {
-  display: block !important;
+  display: block;
+  opacity: 1;
   animation: fadeIn 0.3s ease-in;
 }
 
@@ -271,13 +262,16 @@
 
 /* Animation de succès - MASQUÉ PAR DÉFAUT */
 .signup-success {
-  display: none !important;
+  display: none;
   text-align: center;
   padding: 3rem 1.5rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .signup-success.active {
-  display: block !important;
+  display: block;
+  opacity: 1;
   animation: fadeIn 0.5s ease-in;
 }
 
@@ -497,13 +491,16 @@
 
 /* Animation d'erreur - MASQUÉ PAR DÉFAUT */
 .signup-error {
-  display: none !important;
+  display: none;
   text-align: center;
   padding: 3rem 1.5rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .signup-error.active {
-  display: block !important;
+  display: block;
+  opacity: 1;
   animation: fadeIn 0.5s ease-in;
 }
 
