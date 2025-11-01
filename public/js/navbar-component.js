@@ -77,14 +77,6 @@ export function createNavbar(config = {}) {
                     </div>
                 </div>
 
-                <!-- Theme Toggle in Navbar -->
-                <div class="nav-theme-toggle">
-                    <label class="toggle-switch" title="Mode sombre">
-                        <input type="checkbox" id="themeToggleNav" data-theme-toggle>
-                        <span class="toggle-slider"></span>
-                    </label>
-                </div>
-
                 <div class="nav-links">
                     <!-- Burger Menu -->
                     <button class="burger-menu" id="burgerBtn">
@@ -104,18 +96,6 @@ export function createNavbar(config = {}) {
 
                     <div class="burger-divider"></div>
                     ` : ''}
-
-                    <!-- Theme Toggle avec Switch -->
-                    <div class="burger-item">
-                        <div class="burger-item-label">
-                            <img src="https://img.icons8.com/ios/20/sun--v1.png" alt="Theme" class="icon-secondary" data-theme-icon>
-                            <span id="themeText" data-i18n="nav.darkMode">Mode sombre</span>
-                        </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="themeToggle" data-theme-toggle>
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
 
                     <!-- Language Toggle avec Switch -->
                     <div class="burger-item">
