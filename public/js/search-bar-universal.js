@@ -822,14 +822,29 @@ const searchState = {
 };
 
 /**
+ * Flag pour éviter la double initialisation
+ */
+let isInitialized = false;
+
+/**
  * Initialize universal search bar
  */
 export async function initUniversalSearchBar() {
+    // Empêcher la double initialisation
+    if (isInitialized) {
+        console.log('ℹ️ Search bar already initialized, skipping');
+        return;
+    }
+
     const searchInput = document.getElementById('smartSearchInput');
     if (!searchInput) {
         console.warn('⚠️ Search input not found');
         return;
     }
+
+    // Marquer comme initialisé
+    isInitialized = true;
+    console.log('🚀 Initializing search bar...');
 
     // Nettoyer le vieux cache (qui n'avait pas les actions)
     localStorage.removeItem('newsly-search-commands-cache');
