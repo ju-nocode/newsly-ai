@@ -108,7 +108,7 @@ export function createNavbar(config = {}) {
                     <!-- Public mode: Login button -->
                     ${publicMode ? `
                     <button class="burger-link" id="loginBtn">
-                        <img src="https://img.icons8.com/ios/20/login.png" alt="Login" class="icon-secondary">
+                        <img src="https://img.icons8.com/ios/20/enter-2.png" alt="Login" class="icon-secondary">
                         <span>Connexion</span>
                     </button>
 
