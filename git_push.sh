@@ -24,28 +24,22 @@ if [ -z "$changes" ]; then
 fi
 
 # --- Affiche résumé ---
-echo
 line
 echo "📦  Commit & push sur 'master'"
 line
 
 # --- Commit + push ---
-echo
 date=$(date +"%Y-%m-%d_%H-%M")
 git add -A
 git commit -m "Update: ${date}"
 line
 
-echo
 echo "🔄 Push vers origin/master..."
 if git push origin master; then
-  echo
   line
   echo "🚀 Push réussi ! 🚀"
   line
-  echo
 else
-  echo
   echo "❌ Échec du push. Vérifiez les conflits ou l'accès au dépôt."
   exit 1
 fi
