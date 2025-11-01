@@ -32,22 +32,11 @@ git status -s
 line
 echo
 
-# --- Demande le message de commit ---
-read -p "💬 Message de commit (Entrée = 'update'): " commit_msg
-commit_msg=${commit_msg:-"update"}
-
-# --- Confirmation ---
-echo
-read -p "⚠️  Confirmer le push vers origin/master? (y/N): " confirm
-if [[ ! "$confirm" =~ ^[yY]$ ]]; then
-  echo "❌ Annulé."
-  exit 0
-fi
-
 # --- Commit + push ---
 echo
+date=$(date +"%Y-%m-%d_%H-%M")
 git add -A
-git commit -m "$commit_msg"
+git commit -m "Update: ${date}"
 
 echo
 echo "🔄 Push vers origin/master..."
