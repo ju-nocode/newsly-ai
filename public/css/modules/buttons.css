@@ -187,6 +187,39 @@
 }
 
 /* ================================================
+   SECONDARY BUTTON (outlined)
+================================================ */
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  box-shadow: none;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--bg-secondary);
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+.btn-secondary:focus {
+  box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
+}
+
+.btn-secondary:active {
+  background: var(--bg-tertiary);
+}
+
+.btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ================================================
    BUTTON SPINNER LOADER
 ================================================ */
 

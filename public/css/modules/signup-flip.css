@@ -5,7 +5,7 @@
 .signup-flip-card {
   position: relative;
   width: 100%;
-  min-height: 400px;
+  display: block;
 }
 
 /* Toutes les faces du flip card */
@@ -27,6 +27,16 @@
 }
 
 .signup-flip-card.flipped .signup-flip-back {
+  display: block;
+}
+
+/* Forgot password view */
+.signup-flip-card.show-forgot .signup-flip-front,
+.signup-flip-card.show-forgot .signup-flip-back {
+  display: none;
+}
+
+.signup-flip-card.show-forgot .signup-flip-forgot {
   display: block;
 }
 
@@ -504,12 +514,26 @@
   margin-bottom: 2rem;
 }
 
-/* Responsive flip card */
-@media (max-width: 768px) {
-  .signup-flip-container {
-    min-height: auto;
-  }
+/* Email Notification */
+.email-notification {
+  background: var(--bg-secondary);
+  border: 1px solid var(--success);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  text-align: center;
+  margin-top: 1rem;
+  animation: slideInUp 0.3s ease-out;
+}
 
+.email-notification p {
+  margin: 0;
+  color: var(--success);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
   .signup-flip-card {
     min-height: auto;
   }

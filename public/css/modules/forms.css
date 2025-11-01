@@ -117,8 +117,14 @@ select.form-input {
   gap: 1rem;
 }
 
+/* Phone row - 30/70 split */
+.form-row-phone {
+  grid-template-columns: 30% 1fr;
+}
+
 @media (max-width: 480px) {
-  .form-row {
+  .form-row,
+  .form-row-phone {
     grid-template-columns: 1fr;
   }
 }
