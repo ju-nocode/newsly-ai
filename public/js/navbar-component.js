@@ -77,6 +77,14 @@ export function createNavbar(config = {}) {
                     </div>
                 </div>
 
+                <!-- Theme Toggle in Navbar -->
+                <div class="nav-theme-toggle">
+                    <label class="toggle-switch" title="Mode sombre">
+                        <input type="checkbox" id="themeToggleNav" data-theme-toggle>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
                 <div class="nav-links">
                     <!-- Burger Menu -->
                     <button class="burger-menu" id="burgerBtn">
