@@ -66,7 +66,7 @@ export function createNavbar(config = {}) {
                 </div>
             </div>
 
-            <!-- Right Section: Weather + Theme Toggle + Burger -->
+            <!-- Right Section: Weather + Language + Burger -->
             <div class="nav-right">
                 <div class="nav-user-weather">
                     <!-- Weather Widget -->
@@ -76,6 +76,12 @@ export function createNavbar(config = {}) {
                         </div>
                     </div>
                 </div>
+
+                <!-- Language Switcher -->
+                <button class="nav-lang-btn" id="langSwitcher" title="Changer la langue">
+                    <img src="https://img.icons8.com/ios-filled/20/translate.png" alt="Language" class="icon-secondary">
+                    <span class="nav-lang-text" id="navLangText">FR</span>
+                </button>
 
                 <div class="nav-links">
                     <!-- Burger Menu -->
@@ -96,18 +102,6 @@ export function createNavbar(config = {}) {
 
                     <div class="burger-divider"></div>
                     ` : ''}
-
-                    <!-- Language Toggle avec Switch -->
-                    <div class="burger-item">
-                        <div class="burger-item-label">
-                            <img src="https://img.icons8.com/ios/20/globe.png" alt="Language" class="icon-secondary">
-                            <span id="langLabel">Français / English</span>
-                        </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="langToggle">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
 
                     <!-- Public mode: Login button -->
                     ${publicMode ? `

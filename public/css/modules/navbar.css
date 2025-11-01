@@ -67,12 +67,44 @@
   flex-shrink: 0;
 }
 
-/* Right Section: Weather + Burger */
+/* Right Section: Weather + Language + Burger */
 .nav-right {
   display: flex;
   align-items: center;
   gap: 1.25rem;
   flex-shrink: 0;
+}
+
+/* Language Switcher Button */
+.nav-lang-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.4rem 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.nav-lang-btn:hover {
+  background: var(--bg-secondary);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.nav-lang-text {
+  line-height: 1;
+}
+
+@media (max-width: 768px) {
+  .nav-lang-btn {
+    display: none;
+  }
 }
 
 .logo-icon {
