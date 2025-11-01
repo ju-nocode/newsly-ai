@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Icons8 - Dark/Light Mode</title>
+    <link rel="stylesheet" href="public/css/main.css">
+    <style>
+        body {
+            padding: 2rem;
+            font-family: 'Inter', sans-serif;
+        }
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .test-section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+        }
+        .test-section h2 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        .icons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .icon-test {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: var(--bg-primary);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+        }
+        .icon-test svg {
+            color: var(--text-primary);
+        }
+        .icon-name {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+        .theme-toggle {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            padding: 1rem 2rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .theme-toggle:hover {
+            background: var(--primary-dark);
+        }
+        .img-test {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .img-test img {
+            border: 2px solid var(--border);
+            padding: 0.5rem;
+            border-radius: var(--radius-sm);
+            background: var(--bg-primary);
+        }
+        .status {
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            margin-top: 1rem;
+            display: inline-block;
+        }
+        .status.success {
+            background: var(--success);
+            color: white;
+        }
+        .status.error {
+            background: var(--error);
+            color: white;
+        }
+    </style>
+    <script type="module" src="public/js/icons8-icons.js"></script>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()">🌓 Toggle Theme</button>
+
+    <div class="test-container">
+        <h1 style="color: var(--text-primary); margin-bottom: 2rem;">🧪 Test Icons8 - Dark/Light Mode</h1>
+
+        <!-- Test 1: Icônes via JS (navbar) -->
+        <div class="test-section">
+            <h2>✅ Test 1: Icônes générées par JS (navbar)</h2>
+            <p style="color: var(--text-secondary);">Ces icônes sont générées directement par icons8-icons.js</p>
+            <div class="icons-grid" id="jsIcons"></div>
+        </div>
+
+        <!-- Test 2: Images Icons8 à remplacer -->
+        <div class="test-section">
+            <h2>🔄 Test 2: Images Icons8 (remplacement automatique)</h2>
+            <p style="color: var(--text-secondary);">Ces images devraient être remplacées par des SVG au chargement</p>
+            <div class="img-test">
+                <div>
+                    <img src="https://img.icons8.com/ios-filled/18/news.png" alt="News" class="sidebar-icon">
+                    <p class="icon-name">news.png</p>
+                </div>
+                <div>
+                    <img src="https://img.icons8.com/ios-filled/18/briefcase.png" alt="Business" class="sidebar-icon">
+                    <p class="icon-name">briefcase.png</p>
+                </div>
+                <div>
+                    <img src="https://img.icons8.com/ios-filled/18/laptop.png" alt="Tech" class="sidebar-icon">
+                    <p class="icon-name">laptop.png</p>
+                </div>
+                <div>
+                    <img src="https://img.icons8.com/ios-filled/18/settings.png" alt="Settings" class="sidebar-icon">
+                    <p class="icon-name">settings.png</p>
+                </div>
+                <div>
+                    <img src="https://img.icons8.com/color/18/usa.png" alt="USA" class="sidebar-icon">
+                    <p class="icon-name">usa.png → globe</p>
+                </div>
+            </div>
+            <div id="replacementStatus"></div>
+        </div>
+
+        <!-- Test 3: Vérification adaptation thème -->
+        <div class="test-section">
+            <h2>🎨 Test 3: Adaptation au thème</h2>
+            <p style="color: var(--text-secondary);">Clique sur "Toggle Theme" → Les icônes doivent changer de couleur instantanément</p>
+            <div class="icons-grid">
+                <div class="icon-test">
+                    <div id="themeIcon1"></div>
+                    <p class="icon-name">Large (32px)</p>
+                </div>
+                <div class="icon-test">
+                    <div id="themeIcon2"></div>
+                    <p class="icon-name">Medium (24px)</p>
+                </div>
+                <div class="icon-test">
+                    <div id="themeIcon3"></div>
+                    <p class="icon-name">Small (16px)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructions -->
+        <div class="test-section">
+            <h2>📋 Checklist de test</h2>
+            <ul style="color: var(--text-secondary); line-height: 2;">
+                <li>✅ Les icônes JS s'affichent correctement</li>
+                <li>✅ Les images Icons8 sont remplacées par des SVG (check console)</li>
+                <li>✅ En cliquant sur "Toggle Theme", toutes les icônes changent de couleur</li>
+                <li>✅ En mode light : icônes noires/foncées</li>
+                <li>✅ En mode dark : icônes blanches/claires</li>
+                <li>✅ Pas d'erreurs dans la console</li>
+            </ul>
+        </div>
+    </div>
+
+    <script type="module">
+        import { icons } from './public/js/icons8-icons.js';
+
+        // Test 1: Générer les icônes JS
+        const jsIconsContainer = document.getElementById('jsIcons');
+        const iconNames = ['news', 'dashboard', 'settings', 'user', 'logout', 'search', 'briefcase', 'laptop', 'testTube', 'heartPulse', 'football', 'clapperboard'];
+
+        iconNames.forEach(iconName => {
+            const div = document.createElement('div');
+            div.className = 'icon-test';
+            div.innerHTML = `
+                ${icons[iconName]('24')}
+                <p class="icon-name">${iconName}</p>
+            `;
+            jsIconsContainer.appendChild(div);
+        });
+
+        // Test 3: Icônes pour test de thème
+        document.getElementById('themeIcon1').innerHTML = icons.shield('32');
+        document.getElementById('themeIcon2').innerHTML = icons.bell('24');
+        document.getElementById('themeIcon3').innerHTML = icons.check('16');
+
+        // Vérifier le remplacement après un court délai
+        setTimeout(() => {
+            const images = document.querySelectorAll('img[src*="icons8.com"]');
+            const statusDiv = document.getElementById('replacementStatus');
+
+            if (images.length === 0) {
+                statusDiv.innerHTML = '<div class="status success">✅ Toutes les images ont été remplacées par des SVG !</div>';
+            } else {
+                statusDiv.innerHTML = `<div class="status error">❌ ${images.length} image(s) n'ont pas été remplacées</div>`;
+            }
+        }, 1000);
+    </script>
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+    </script>
+</body>
+</html>

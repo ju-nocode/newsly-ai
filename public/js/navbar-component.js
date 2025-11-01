@@ -2,7 +2,7 @@
 // NAVBAR COMPONENT - Shared Navigation
 // ================================================
 
-import { icons } from './flowbite-icons.js';
+import { icons } from './icons8-icons.js';
 
 export function createNavbar(config = {}) {
     const {
