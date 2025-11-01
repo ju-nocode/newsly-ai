@@ -262,14 +262,42 @@ class SearchPreferencesDB {
     }
 
     get isAuthenticated() {
+        // Fallback si userIntelligence n'est pas disponible
+        if (!this.intelligence) {
+            // Vérifier la session dans localStorage
+            try {
+                const session = localStorage.getItem('session');
+                return !!session;
+            } catch {
+                return false;
+            }
+        }
         return this.intelligence.isAuthenticated;
     }
 
     get currentUser() {
+        if (!this.intelligence) {
+            // Fallback depuis localStorage
+            try {
+                const session = JSON.parse(localStorage.getItem('session'));
+                return session?.user || null;
+            } catch {
+                return null;
+            }
+        }
         return this.intelligence.currentUser;
     }
 
     async checkAuthStatus() {
+        if (!this.intelligence) {
+            // Vérifier manuellement
+            try {
+                const session = localStorage.getItem('session');
+                return !!session;
+            } catch {
+                return false;
+            }
+        }
         return await this.intelligence.checkAuth();
     }
 
@@ -277,6 +305,12 @@ class SearchPreferencesDB {
      * Load user preferences from database or localStorage
      */
     async loadUserPreferences() {
+        // Vérifier si Supabase est disponible
+        if (!this.supabase) {
+            console.log('ℹ️ Supabase client not available, using localStorage');
+            return this.loadFromLocalStorage();
+        }
+
         await this.checkAuthStatus();
 
         console.log('🔐 User authenticated:', this.isAuthenticated);
@@ -321,6 +355,13 @@ class SearchPreferencesDB {
      * Save user preferences to database or localStorage
      */
     async saveUserPreferences(preferences) {
+        // Vérifier si Supabase est disponible
+        if (!this.supabase) {
+            console.log('ℹ️ Supabase client not available, saving to localStorage');
+            this.saveToLocalStorage(preferences);
+            return;
+        }
+
         await this.checkAuthStatus();
 
         console.log('💾 saveUserPreferences called');
@@ -509,6 +550,12 @@ class SearchPreferencesDB {
      * Migrate localStorage data to database (one-time)
      */
     async migrateLocalStorageToDatabase() {
+        // Vérifier si Supabase est disponible
+        if (!this.supabase) {
+            console.log('ℹ️ Supabase client not available, skipping migration');
+            return;
+        }
+
         await this.checkAuthStatus();
 
         if (!this.isAuthenticated) return;
@@ -849,12 +896,6 @@ export async function initUniversalSearchBar() {
 
     // Global keyboard shortcuts
     document.addEventListener('keydown', (e) => {
-        // Ctrl/Cmd + K to focus search
-        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-            e.preventDefault();
-            searchInput.focus();
-        }
-
         // Escape to close
         if (e.key === 'Escape' && searchState.isOpen) {
             closeSearchSuggestions();
@@ -1032,12 +1073,12 @@ function handleSearchKeydown(e) {
 /**
  * Handle search focus
  */
-function handleSearchFocus() {
+async function handleSearchFocus() {
     const searchInput = document.getElementById('smartSearchInput');
     const query = searchInput?.value || '';
 
     if (!query || query.trim().length === 0) {
-        showDefaultSuggestions();
+        await showDefaultSuggestions();
     } else if (query.length >= 1) {
         handleSearchInput({ target: searchInput });
     }
@@ -1463,13 +1504,17 @@ function showFavoritesAndHistory(favorites, history) {
                     action: commandData.action
                 });
 
+                // Capturer l'index actuel dans la closure
+                const currentIndex = itemIndex;
+
                 item.addEventListener('mousedown', (e) => {
                     e.preventDefault();
-                    executeSuggestion(searchState.searchResults[itemIndex]);
+                    e.stopPropagation();
+                    executeSuggestion(searchState.searchResults[currentIndex]);
                 });
 
                 item.addEventListener('mouseenter', () => {
-                    searchState.selectedIndex = itemIndex;
+                    searchState.selectedIndex = currentIndex;
                     updateSelectedSuggestion();
                 });
 
