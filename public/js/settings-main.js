@@ -711,6 +711,9 @@ document.getElementById('changePasswordBtn').addEventListener('click', async () 
     if (result.success) {
         showSuccess('Mot de passe changé avec succès ! Reconnexion requise...');
 
+        // Recharger l'audit de sécurité pour afficher le nouvel événement
+        setTimeout(() => loadSecurityAudit(), 500);
+
         // Déconnecter et rediriger vers la page de login
         setTimeout(() => {
             localStorage.removeItem('session');

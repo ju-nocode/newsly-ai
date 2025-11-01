@@ -9,7 +9,7 @@
 export async function loadSearchCommandsFromDB() {
     try {
         if (!window.supabase) {
-            console.warn('Supabase not initialized, using local commands');
+            console.log('ℹ️ Using local search commands (no client-side Supabase)');
             return null;
         }
 

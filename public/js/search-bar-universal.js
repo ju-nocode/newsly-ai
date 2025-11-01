@@ -1511,11 +1511,13 @@ function showFavoritesAndHistory(favorites, history) {
             });
 
             historyItem.addEventListener('mousedown', (e) => {
+                // Si on clique sur le bouton de suppression, ne rien faire ici
                 if (e.target.classList.contains('search-remove-history')) {
                     return;
                 }
                 e.preventDefault();
-                searchState.searchResults[itemIndex].action();
+                e.stopPropagation();
+                executeSuggestion(searchState.searchResults[itemIndex]);
             });
 
             historyItem.addEventListener('mouseenter', () => {
@@ -1526,13 +1528,20 @@ function showFavoritesAndHistory(favorites, history) {
             // Add remove button handler
             const removeBtn = historyItem.querySelector('.search-remove-history');
             if (removeBtn) {
-                removeBtn.addEventListener('mousedown', async (e) => {
+                removeBtn.addEventListener('click', async (e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     const query = removeBtn.getAttribute('data-query');
+                    console.log('🗑️ Removing from history:', query);
                     await searchState.history.removeFromHistory(query);
+                    console.log('✅ Removed, refreshing display...');
                     // Refresh the display
-                    showDefaultSuggestions();
+                    await showDefaultSuggestions();
+                });
+                // Empêcher le mousedown de déclencher l'action parent
+                removeBtn.addEventListener('mousedown', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
                 });
             }
 
@@ -1628,11 +1637,13 @@ function showSearchHistory(history) {
         });
 
         historyItem.addEventListener('mousedown', (e) => {
+            // Si on clique sur le bouton de suppression, ne rien faire ici
             if (e.target.classList.contains('search-remove-history')) {
                 return;
             }
             e.preventDefault();
-            searchState.searchResults[index].action();
+            e.stopPropagation();
+            executeSuggestion(searchState.searchResults[index]);
         });
 
         historyItem.addEventListener('mouseenter', () => {
@@ -1643,13 +1654,20 @@ function showSearchHistory(history) {
         // Add remove button handler
         const removeBtn = historyItem.querySelector('.search-remove-history');
         if (removeBtn) {
-            removeBtn.addEventListener('mousedown', async (e) => {
+            removeBtn.addEventListener('click', async (e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 const query = removeBtn.getAttribute('data-query');
+                console.log('🗑️ Removing from history:', query);
                 await searchState.history.removeFromHistory(query);
+                console.log('✅ Removed, refreshing display...');
                 // Refresh the display
-                showDefaultSuggestions();
+                await showDefaultSuggestions();
+            });
+            // Empêcher le mousedown de déclencher l'action parent
+            removeBtn.addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
             });
         }
 
@@ -1705,11 +1723,23 @@ function createCommandItem(command, index) {
 
     item.addEventListener('mousedown', (e) => {
         e.preventDefault();
+        e.stopPropagation();
         const searchInput = document.getElementById('smartSearchInput');
         if (searchInput) {
-            searchInput.value = command.prefix + (command.prefix.endsWith(':') ? ' ' : '');
-            searchInput.focus();
-            handleSearchInput({ target: searchInput });
+            // Si la commande a des suggestions, afficher les sous-menus
+            if (command.suggestions && command.suggestions.length > 0) {
+                searchInput.value = command.prefix + (command.prefix.endsWith(':') ? ' ' : '');
+                searchInput.focus();
+                handleSearchInput({ target: searchInput });
+            } else {
+                // Sinon, exécuter l'action directement
+                if (command.action && typeof command.action === 'function') {
+                    searchInput.value = '';
+                    searchInput.blur();
+                    closeSearchSuggestions();
+                    command.action();
+                }
+            }
         }
     });
 
