@@ -10,7 +10,7 @@ import { initWeatherWidget } from './weather.js';
 import { navigateWithBlur } from './page-loader.js';
 import { displayNews, showSuccess, showError } from './dashboard-utils.js';
 import { initNavbar } from './navbar-component.js';
-import { initIconReplacement } from './icon-replacer.js';
+//import { initIconReplacement } from './icon-replacer.js';
 
 console.log('🚀 Index Visitor Mode starting...');
 
