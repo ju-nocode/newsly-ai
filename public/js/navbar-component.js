@@ -107,8 +107,6 @@ export function createNavbar(config = {}) {
 
                     <!-- Public mode: Login button -->
                     ${publicMode ? `
-                    <div class="burger-divider"></div>
-
                     <button class="burger-link" id="loginBtn">
                         <img src="https://img.icons8.com/ios/20/login.png" alt="Login" class="icon-secondary">
                         <span>Connexion</span>
@@ -120,10 +118,8 @@ export function createNavbar(config = {}) {
                     </button>
                     ` : ''}
 
-                    <!-- Authenticated mode: Settings, Weather, Logout -->
+                    <!-- Authenticated mode: Settings, Logout -->
                     ${!publicMode ? `
-                    <div class="burger-divider"></div>
-
                     ${showSettingsNav ? `
                     <button class="burger-link" id="dashboardBtn">
                         <img src="https://img.icons8.com/ios/20/dashboard.png" alt="Dashboard" class="icon-secondary">
