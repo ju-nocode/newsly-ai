@@ -89,12 +89,24 @@
   flex-shrink: 0;
 }
 
-/* Right Section: Weather + Burger */
+/* Right Section: Weather + Theme Toggle + Burger */
 .nav-right {
   display: flex;
   align-items: center;
   gap: 1.25rem;
   flex-shrink: 0;
+}
+
+/* Theme Toggle in Navbar */
+.nav-theme-toggle {
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .nav-theme-toggle {
+    display: none; /* Masquer sur mobile, visible dans burger */
+  }
 }
 
 .logo-icon {

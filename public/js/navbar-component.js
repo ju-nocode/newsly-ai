@@ -66,7 +66,7 @@ export function createNavbar(config = {}) {
                 </div>
             </div>
 
-            <!-- Right Section: Weather + Burger -->
+            <!-- Right Section: Weather + Theme Toggle + Burger -->
             <div class="nav-right">
                 <div class="nav-user-weather">
                     <!-- Weather Widget -->
@@ -75,6 +75,14 @@ export function createNavbar(config = {}) {
                             <span>🌤️</span>
                         </div>
                     </div>
+                </div>
+
+                <!-- Theme Toggle in Navbar -->
+                <div class="nav-theme-toggle">
+                    <label class="toggle-switch" title="Mode sombre">
+                        <input type="checkbox" id="themeToggleNav" data-theme-toggle>
+                        <span class="toggle-slider"></span>
+                    </label>
                 </div>
 
                 <div class="nav-links">
