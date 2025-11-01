@@ -7,6 +7,14 @@
 @import url('main.css');
 
 /* ================================================
+   MAIN CONTENT - Background transparent
+================================================ */
+.dashboard-container {
+  background: transparent !important;
+  border-top-left-radius: 0 !important;
+}
+
+/* ================================================
    RESPONSIVE
 ================================================ */
 @media (max-width: 768px) {
