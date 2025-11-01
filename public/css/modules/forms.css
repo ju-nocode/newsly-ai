@@ -110,6 +110,19 @@ select.form-input {
   max-width: 100%;
 }
 
+/* Form row - Two columns side by side */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 480px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
 .link-primary {
   color: var(--primary);
   text-decoration: none;
