@@ -15,6 +15,14 @@
 }
 
 /* ================================================
+   SHIMMER LOADER - Désactivé sur index
+================================================ */
+.shimmer-loading .skeleton {
+  animation: none !important;
+  background: var(--bg-secondary) !important;
+}
+
+/* ================================================
    RESPONSIVE
 ================================================ */
 @media (max-width: 768px) {
