@@ -32,21 +32,6 @@
   background: var(--bg-primary);
 }
 
-/* Navbar for landing page (index.html) - Full width, centered */
-.navbar-landing {
-  left: 0 !important;
-  width: 100% !important;
-  background: var(--bg-primary) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border-bottom: none !important;
-  box-shadow: none !important;
-}
-
-[data-theme="dark"] .navbar-landing {
-  background: var(--bg-primary) !important;
-}
-
 .navbar.dashboard-nav {
   left: 0;
   width: 100%;
@@ -61,13 +46,6 @@
   align-items: center;
   gap: 1rem;
   padding: 0 1rem;
-}
-
-/* Landing page navbar: Logo left, Weather+Burger right */
-.navbar-landing .nav-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 /* Left Section: Logo + optional mobile button */

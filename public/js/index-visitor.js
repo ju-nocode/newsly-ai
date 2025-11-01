@@ -312,10 +312,12 @@ if (signupStep2Form) {
         document.getElementById('signupLoader').classList.remove('active');
 
         if (result.success) {
-            // Show success
+            // Hide form and show success
+            document.getElementById('signupFlipCard').style.display = 'none';
             document.getElementById('signupSuccess').classList.add('active');
         } else {
-            // Show error
+            // Hide form and show error
+            document.getElementById('signupFlipCard').style.display = 'none';
             const signupError = document.getElementById('signupError');
             if (signupError) {
                 signupError.classList.add('active');
