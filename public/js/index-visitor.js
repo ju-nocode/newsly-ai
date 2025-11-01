@@ -543,15 +543,50 @@ async function loadNews(category, country) {
             if (data.success && data.articles && data.articles.length > 0) {
                 displayNews(data.articles, 'newsContainer');
                 return;
+            } else {
+                // API OK mais aucun article
+                showErrorMessage('Aucune actualité disponible pour cette catégorie.');
+                return;
             }
+        } else {
+            // Erreur HTTP (500, 400, etc.)
+            const errorData = await response.json().catch(() => ({ error: 'Erreur serveur' }));
+            console.error('❌ API error:', errorData);
+            hideShimmer();
+
+            if (response.status === 500 && errorData.error?.includes('indisponible')) {
+                // NEWS_API_KEY non configurée
+                showErrorMessage('⚙️ Configuration en cours : La clé News API n\'est pas encore configurée. Les actualités seront disponibles prochainement.');
+            } else {
+                showErrorMessage(`Erreur lors du chargement des actualités : ${errorData.error || 'Erreur inconnue'}`);
+            }
+            return;
         }
-
-        console.warn('⚠️ API not OK or no results');
     } catch (error) {
-        console.warn('⚠️ API error:', error.message);
-    }
+        console.error('⚠️ API error:', error.message);
+        hideShimmer();
 
-    console.log('📡 Waiting for API configuration...');
+        if (error.name === 'AbortError') {
+            // Timeout
+            showErrorMessage('⏱️ Délai d\'attente dépassé. Vérifiez votre connexion internet et réessayez.');
+        } else {
+            // Autre erreur (réseau, etc.)
+            showErrorMessage('❌ Impossible de charger les actualités. Vérifiez votre connexion internet.');
+        }
+    }
+}
+
+function showErrorMessage(message) {
+    newsContainer.innerHTML = `
+        <div class="news-empty" style="grid-column: 1 / -1;">
+            <p style="font-size: 1.125rem; margin-bottom: 1rem; font-weight: 500; color: var(--text-secondary);">
+                ${message}
+            </p>
+            <button class="btn btn-primary" onclick="location.reload()" style="padding: 0.6rem 1.2rem; margin-top: 1rem;">
+                Réessayer
+            </button>
+        </div>
+    `;
 }
 
 // Load initial news

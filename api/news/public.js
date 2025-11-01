@@ -1,3 +1,21 @@
+/**
+ * PUBLIC NEWS API ENDPOINT
+ *
+ * Route : GET /api/news/public
+ * Params : category, country, page
+ *
+ * ⚠️ CONFIGURATION REQUISE :
+ * - NEWS_API_KEY doit être configurée dans Vercel Environment Variables
+ * - Obtenir une clé gratuite sur https://newsapi.org
+ * - Sans cette clé, l'API retourne une erreur 500
+ *
+ * Pour configurer :
+ * 1. Aller sur https://vercel.com → Settings → Environment Variables
+ * 2. Ajouter NEWS_API_KEY avec la valeur de newsapi.org
+ * 3. Cocher : Production, Preview, Development
+ * 4. Redéployer le projet
+ */
+
 export default async function handler(req, res) {
     // CORS headers - Allow all origins for now
     res.setHeader('Access-Control-Allow-Origin', '*');
