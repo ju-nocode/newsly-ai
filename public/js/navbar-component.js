@@ -57,10 +57,6 @@ export function createNavbar(config = {}) {
                         autocomplete="off"
                         spellcheck="false"
                     >
-                    <div class="search-kbd-hint">
-                        <kbd class="search-kbd">⌘</kbd>
-                        <kbd class="search-kbd">K</kbd>
-                    </div>
                     <button class="smart-search-btn" id="smartSearchBtn" aria-label="Search">
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                             <path d="M6.5 0a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13zm0 11.5a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/>

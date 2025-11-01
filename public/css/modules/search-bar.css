@@ -80,26 +80,6 @@ input[type="text"].smart-search-input::placeholder {
     color: var(--text-primary);
 }
 
-/* Keyboard shortcut hint */
-.search-kbd-hint {
-    position: absolute;
-    right: 3rem;
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    pointer-events: none;
-}
-
-.search-kbd {
-    padding: 0.25rem 0.5rem;
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-    font-family: 'Monaco', 'Courier New', monospace;
-}
-
 /* ================================================
    SUGGESTIONS DROPDOWN
 ================================================ */
@@ -299,10 +279,6 @@ input[type="text"].smart-search-input::placeholder {
     input[type="text"].smart-search-input {
         padding: 0.5rem 2.5rem;
         font-size: 0.75rem;
-    }
-
-    .search-kbd-hint {
-        display: none;
     }
 
     .search-suggestions-container {
