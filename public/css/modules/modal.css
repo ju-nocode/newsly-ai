@@ -44,9 +44,9 @@
   padding: 2rem;
   position: relative;
   transform: scale(0.9);
-  transition: transform 0.3s ease, height 0.3s ease;
+  transition: transform 0.3s ease, max-height 0.4s ease;
   min-height: auto;
-  height: auto;
+  overflow: hidden;
 }
 
 .modal-overlay.show .modal-container {

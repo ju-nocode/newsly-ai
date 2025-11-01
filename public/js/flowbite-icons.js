@@ -184,6 +184,26 @@ export const icons = {
         "0 0 24 24",
         "w-24 h-24"
     ),
+
+    // Security / Shield check
+    securityChecked: () => createIcon(
+        '<path d="M12 2L4 5V11C4 16 7 20.1 12 22C17 20.1 20 16 20 11V5L12 2ZM10 17L6 13L7.41 11.59L10 14.17L16.59 7.58L18 9L10 17Z"/>',
+        "0 0 24 24",
+        "w-5 h-5"
+    ),
+
+    // ================================================
+    // COUNTRY FLAG ICONS (using emoji-style icons)
+    // Note: Pour les drapeaux, on utilise des emojis ou des icônes simplifiées
+    // Les icons8 colorées ne correspondent pas au design monochrome
+    // ================================================
+
+    // Globe icon (generic international)
+    globe: () => createIcon(
+        '<path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM11 19.93C7.05 19.44 4 16.08 4 12C4 11.38 4.08 10.79 4.21 10.21L9 15V16C9 17.1 9.9 18 11 18V19.93ZM17.9 17.39C17.64 16.58 16.9 16 16 16H15V13C15 12.45 14.55 12 14 12H8V10H10C10.55 10 11 9.55 11 9V7H13C14.1 7 15 6.1 15 5V4.59C17.93 5.78 20 8.65 20 12C20 14.08 19.2 15.97 17.9 17.39Z"/>',
+        "0 0 24 24",
+        "w-5 h-5"
+    ),
 };
 
 /**

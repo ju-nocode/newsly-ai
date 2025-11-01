@@ -33,10 +33,19 @@ const iconMapping = {
     'settings-3.png': 'settings',
     'dashboard.png': 'dashboard',
     'exit.png': 'logout',
+    'security-checked.png': 'securityChecked',
 
     // Theme icons
     'sun--v1.png': 'sun',
     'moon-symbol.png': 'moon',
+
+    // Country flags (remplacer par globe monochrome)
+    // Les icônes colorées ne correspondent pas au thème monochrome
+    'usa.png': 'globe',
+    'france.png': 'globe',
+    'great-britain.png': 'globe',
+    'germany.png': 'globe',
+    'canada.png': 'globe',
 };
 
 /**

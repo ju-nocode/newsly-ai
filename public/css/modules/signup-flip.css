@@ -14,36 +14,77 @@
 .signup-flip-back,
 .signup-flip-forgot {
   width: 100%;
-  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  transform: translateX(100%);
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
 }
 
 /* Face visible par défaut (Login) */
 .signup-flip-front {
-  display: block;
+  position: relative;
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
 }
 
-/* Animations de flip */
+/* Animations de flip - Slide to left when going to signup */
 .signup-flip-card.flipped .signup-flip-front {
-  display: none;
+  opacity: 0;
+  transform: translateX(-100%);
+  pointer-events: none;
 }
 
 .signup-flip-card.flipped .signup-flip-back {
-  display: block;
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+  position: relative;
 }
 
-/* Forgot password view */
+/* Forgot password view - Slide from bottom */
 .signup-flip-card.show-forgot .signup-flip-front,
 .signup-flip-card.show-forgot .signup-flip-back {
-  display: none;
+  opacity: 0;
+  transform: translateY(-20px);
+  pointer-events: none;
 }
 
 .signup-flip-card.show-forgot .signup-flip-forgot {
-  display: block;
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+  position: relative;
 }
 
 /* Hidden state (when showing loader/success/error) */
 .signup-flip-card.hidden {
-  display: none;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.signup-flip-card.hidden + .signup-loader.active,
+.signup-flip-card.hidden + * + .signup-success.active,
+.signup-flip-card.hidden + * + * + .signup-error.active {
+  animation: scaleInBounce 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes scaleInBounce {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 /* ================================================
@@ -322,8 +363,32 @@
    FORM ELEMENTS
 ================================================ */
 
+/* Step 1 & 2 transitions */
+#signupStep1,
+#signupStep2 {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#signupStep1 {
+  opacity: 1;
+  transform: translateX(0);
+}
+
 #signupStep2 {
   display: none;
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+#signupStep2.active {
+  display: block;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+#signupStep1.hidden {
+  opacity: 0;
+  transform: translateX(-20px);
 }
 
 .btn-back {

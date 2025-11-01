@@ -10,6 +10,7 @@ import { initWeatherWidget } from './weather.js';
 import { navigateWithBlur } from './page-loader.js';
 import { displayNews, showSuccess, showError } from './dashboard-utils.js';
 import { initNavbar } from './navbar-component.js';
+import { initIconReplacement } from './icon-replacer.js';
 
 console.log('🚀 Index Visitor Mode starting...');
 
@@ -21,6 +22,9 @@ initNavbar('.mobile-overlay', {
     publicMode: true,
     showLanguageSwitcher: false
 });
+
+// Replace icons8 with Flowbite SVG icons
+initIconReplacement();
 
 // Redirection si déjà connecté
 const isAuthenticated = checkAuth();
@@ -268,9 +272,20 @@ if (signupStep1Form) {
         step1Password = password;
         errorDiv.style.display = 'none';
 
-        // Show step 2
-        document.getElementById('signupStep1').style.display = 'none';
-        document.getElementById('signupStep2').style.display = 'block';
+        // Animate transition to step 2
+        const step1 = document.getElementById('signupStep1');
+        const step2 = document.getElementById('signupStep2');
+
+        if (step1 && step2) {
+            step1.classList.add('hidden');
+            setTimeout(() => {
+                step1.style.display = 'none';
+                step2.style.display = 'block';
+                // Trigger reflow to enable CSS transition
+                step2.offsetHeight;
+                step2.classList.add('active');
+            }, 300);
+        }
     });
 }
 
@@ -278,8 +293,17 @@ if (signupStep1Form) {
 const signupBackBtn = document.getElementById('signupBackBtn');
 if (signupBackBtn) {
     signupBackBtn.addEventListener('click', () => {
-        document.getElementById('signupStep2').style.display = 'none';
-        document.getElementById('signupStep1').style.display = 'block';
+        const step1 = document.getElementById('signupStep1');
+        const step2 = document.getElementById('signupStep2');
+
+        if (step1 && step2) {
+            step2.classList.remove('active');
+            setTimeout(() => {
+                step2.style.display = 'none';
+                step1.style.display = 'block';
+                step1.classList.remove('hidden');
+            }, 300);
+        }
     });
 }
 
@@ -358,8 +382,17 @@ if (closeModalAfterSignup) {
 
         if (success) success.classList.remove('active');
         if (flipCard) flipCard.classList.remove('hidden', 'flipped', 'show-forgot');
-        if (step1) step1.style.display = 'block';
-        if (step2) step2.style.display = 'none';
+
+        // Reset steps with proper state
+        if (step1) {
+            step1.style.display = 'block';
+            step1.classList.remove('hidden');
+        }
+        if (step2) {
+            step2.style.display = 'none';
+            step2.classList.remove('active');
+        }
+
         if (signupStep1Form) signupStep1Form.reset();
         if (signupStep2Form) signupStep2Form.reset();
     });
