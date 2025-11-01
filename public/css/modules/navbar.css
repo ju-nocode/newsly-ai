@@ -48,6 +48,13 @@
   padding: 0 1rem;
 }
 
+/* When no search bar (public mode), use 2 columns */
+.nav-container:not(:has(.smart-search-wrapper)),
+.nav-container.nav-public-mode {
+  grid-template-columns: auto auto;
+  justify-content: space-between;
+}
+
 /* Left Section: Logo + optional mobile button */
 .nav-left {
   display: flex;

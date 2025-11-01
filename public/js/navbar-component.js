@@ -157,4 +157,12 @@ export function initNavbar(targetSelector, config = {}) {
     }
 
     target.insertAdjacentHTML('afterend', createNavbar(config));
+
+    // Add class for public mode styling (navbar without searchbar)
+    if (config.publicMode) {
+        const navContainer = document.querySelector('.nav-container');
+        if (navContainer) {
+            navContainer.classList.add('nav-public-mode');
+        }
+    }
 }
