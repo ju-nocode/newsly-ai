@@ -1549,7 +1549,7 @@ function showFavoritesAndHistory(favorites, history) {
                     <div class="search-suggestion-label">${escapeHtml(item.query)}</div>
                     <div class="search-suggestion-desc">${timeAgo}</div>
                 </div>
-                <button class="search-remove-history" data-query="${escapeHtml(item.query)}" style="margin-left: auto; background: transparent; border: none; width: 24px; height: 24px; cursor: pointer; font-size: 1.25rem; opacity: 0.6; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: var(--text-primary);">×</button>
+                <button class="search-remove-history" data-query="${escapeHtml(item.query)}">×</button>
             `;
 
             // Find the real action for this query
@@ -1678,7 +1678,7 @@ function showSearchHistory(history) {
                 <div class="search-suggestion-label">${escapeHtml(item.query)}</div>
                 <div class="search-suggestion-desc">${timeAgo}</div>
             </div>
-            <button class="search-remove-history" data-query="${escapeHtml(item.query)}" style="margin-left: auto; background: transparent; border: none; width: 24px; height: 24px; cursor: pointer; font-size: 1.25rem; opacity: 0.6; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: var(--text-primary);">×</button>
+            <button class="search-remove-history" data-query="${escapeHtml(item.query)}">×</button>
         `;
 
         // Find the real action for this query
