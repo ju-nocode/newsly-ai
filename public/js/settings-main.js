@@ -13,6 +13,7 @@ import { initWeatherWidget, refreshWeatherLocation } from './weather.js';
 import { initLanguageSwitcher } from './language-switcher.js';
 import { showPageLoader, hidePageLoader, navigateWithLoader } from './page-loader.js';
 import { initRippleButtons } from './micro-interactions.js';
+import { initIconReplacement } from './icon-replacer.js';
 
 // Détecter Chrome iOS (problèmes de performance avec modules lourds)
 const isChromeIOS = /CriOS/i.test(navigator.userAgent);
@@ -42,6 +43,9 @@ if (!isChromeIOS) {
 
 // Initialize navbar component
 initNavbar('div.mobile-overlay', { showSettingsNav: true });
+
+// Replace icons8 with Flowbite SVG icons
+initIconReplacement();
 
 // Initialize ripple effect EARLY - avant tous les autres listeners
 initRippleButtons();
