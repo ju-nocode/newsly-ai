@@ -36,7 +36,7 @@ export function createNavbar(config = {}) {
                     </svg>
                 </button>
                 ` : ''}
-                <a href="dashboard.html" class="logo">
+                <a href="${publicMode ? 'index.html' : 'dashboard.html'}" class="logo">
                     ${icons.news()}
                     <span class="logo-text">Newsly AI</span>
                 </a>
