@@ -6,7 +6,8 @@ export function createNavbar(config = {}) {
     const {
         showMobileSidebarBtn = false,
         showSettingsNav = false,
-        publicMode = false
+        publicMode = false,
+        showLanguageSwitcher = true
     } = config;
 
     return `
@@ -77,11 +78,12 @@ export function createNavbar(config = {}) {
                     </div>
                 </div>
 
-                <!-- Language Switcher -->
-                <button class="nav-lang-btn" id="langSwitcher" title="Changer la langue">
+                <!-- Language Switcher (hidden in public mode) -->
+                ${showLanguageSwitcher ? `
+                <button class="nav-lang-btn" id="langSwitcher" title="Changer la langue" aria-label="Changer la langue">
                     <img src="https://img.icons8.com/ios-filled/20/translate.png" alt="Language" class="icon-secondary">
-                    <span class="nav-lang-text" id="navLangText">FR</span>
                 </button>
+                ` : ''}
 
                 <div class="nav-links">
                     <!-- Burger Menu -->

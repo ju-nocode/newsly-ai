@@ -10,16 +10,11 @@ import { changeLanguage } from './translation-service.js';
  */
 export function initLanguageSwitcher() {
     const langSwitcher = document.getElementById('langSwitcher');
-    const langText = document.getElementById('navLangText');
 
-    if (!langSwitcher || !langText) {
-        console.warn('Language switcher elements not found');
+    if (!langSwitcher) {
+        console.warn('Language switcher button not found');
         return;
     }
-
-    // Set initial language
-    const currentLang = localStorage.getItem('language') || 'fr';
-    updateLanguageDisplay(currentLang, langText);
 
     // Handle click
     langSwitcher.addEventListener('click', async () => {
@@ -33,7 +28,7 @@ export function initLanguageSwitcher() {
         try {
             // Change language (includes translation)
             await changeLanguage(newLang);
-            updateLanguageDisplay(newLang, langText);
+            console.log(`✅ Language changed to: ${newLang}`);
         } catch (error) {
             console.error('Error changing language:', error);
         } finally {
@@ -43,11 +38,4 @@ export function initLanguageSwitcher() {
     });
 
     console.log('✅ Language switcher initialized');
-}
-
-/**
- * Update language display text
- */
-function updateLanguageDisplay(lang, element) {
-    element.textContent = lang.toUpperCase();
 }
