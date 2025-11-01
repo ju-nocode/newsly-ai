@@ -1554,5 +1554,3 @@ document.getElementById('clearAuditLogsBtn').addEventListener('click', async () 
         hidePageLoader();
     }
 })();
-    </script>
-</body>
