@@ -12,12 +12,15 @@ export function initLanguageSwitcher() {
     const langSwitcher = document.getElementById('langSwitcher');
 
     if (!langSwitcher) {
-        console.warn('Language switcher button not found');
+        console.warn('⚠️ Language switcher button not found - element #langSwitcher does not exist');
         return;
     }
 
+    console.log('🌐 Language switcher button found, attaching listener...');
+
     // Handle click
     langSwitcher.addEventListener('click', async () => {
+        console.log('🖱️ Language button clicked!');
         const currentLang = localStorage.getItem('language') || 'fr';
         const newLang = currentLang === 'fr' ? 'en' : 'fr';
 
