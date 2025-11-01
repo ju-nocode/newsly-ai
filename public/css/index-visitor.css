@@ -7,34 +7,6 @@
 @import url('main.css');
 
 /* ================================================
-   NAVBAR MODE VISITEUR - Pleine largeur
-================================================ */
-.navbar {
-  left: 0 !important;
-  width: 100% !important;
-}
-
-/* ================================================
-   SIDEBAR - Masquée par défaut sur index.html
-================================================ */
-.vertical-sidebar {
-  transform: translateX(-100%);
-}
-
-/* Sidebar ouverte en mobile */
-.vertical-sidebar.mobile-open {
-  transform: translateX(0);
-}
-
-/* ================================================
-   MAIN CONTENT - Pleine largeur sans sidebar
-================================================ */
-.dashboard-container {
-  margin-left: 0 !important;
-  width: 100% !important;
-}
-
-/* ================================================
    RESPONSIVE
 ================================================ */
 @media (max-width: 768px) {
