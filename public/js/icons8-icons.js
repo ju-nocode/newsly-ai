@@ -20,51 +20,51 @@ function createIcon(content, size = "20", className = "") {
 // ================================================
 
 export const icons = {
-    // Login / Enter icon
+    // Login / Enter icon (iOS style outline)
     login: (size = "20", className = "") => createIcon(
-        `<path fill="currentColor" fill-rule="evenodd" d="M2 4.75A2.75 2.75 0 0 1 4.75 2h4.5a.75.75 0 0 1 0 1.5h-4.5c-.69 0-1.25.56-1.25 1.25v10c0 .69.56 1.25 1.25 1.25h4.5a.75.75 0 0 1 0 1.5h-4.5A2.75 2.75 0 0 1 2 14.75zm11.78 1.97a.75.75 0 0 1 1.06 0l3.5 3.5a.75.75 0 0 1 0 1.06l-3.5 3.5a.75.75 0 1 1-1.06-1.06l2.22-2.22H7.75a.75.75 0 0 1 0-1.5H16l-2.22-2.22a.75.75 0 0 1 0-1.06" clip-rule="evenodd"/>`,
+        `<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/>`,
         size,
         className
     ),
 
-    // Logout / Exit icon
+    // Logout / Exit icon (iOS style outline)
     logout: (size = "20", className = "") => createIcon(
-        `<path fill="currentColor" fill-rule="evenodd" d="M4.75 2A2.75 2.75 0 0 0 2 4.75v10A2.75 2.75 0 0 0 4.75 17.5h4.5a.75.75 0 0 0 0-1.5h-4.5c-.69 0-1.25-.56-1.25-1.25v-10c0-.69.56-1.25 1.25-1.25h4.5a.75.75 0 0 0 0-1.5zM13.78 6.72a.75.75 0 0 1 1.06 0l3.5 3.5a.75.75 0 0 1 0 1.06l-3.5 3.5a.75.75 0 1 1-1.06-1.06l2.22-2.22H7.75a.75.75 0 0 1 0-1.5H16l-2.22-2.22a.75.75 0 0 1 0-1.06" clip-rule="evenodd"/>`,
+        `<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>`,
         size,
         className
     ),
 
-    // User / Profile icon
+    // User / Profile icon (iOS style outline)
     user: (size = "20", className = "") => createIcon(
-        `<g fill="currentColor"><path d="M10 2.5a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7"/><path fill-rule="evenodd" d="M5 12.5A2.5 2.5 0 0 0 2.5 15v1.5a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1V15a2.5 2.5 0 0 0-2.5-2.5z" clip-rule="evenodd"/></g>`,
+        `<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>`,
         size,
         className
     ),
 
-    // Add user / Signup icon
+    // Add user / Signup icon (iOS style outline)
     userPlus: (size = "20", className = "") => createIcon(
-        `<g fill="currentColor"><path d="M9 2.5a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7"/><path fill-rule="evenodd" d="M4 12.5A2.5 2.5 0 0 0 1.5 15v1.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V15a2.5 2.5 0 0 0-2.5-2.5z" clip-rule="evenodd"/><path d="M16.5 5.75a.75.75 0 0 0-1.5 0V7h-1.25a.75.75 0 0 0 0 1.5H15v1.25a.75.75 0 0 0 1.5 0V8.5h1.25a.75.75 0 0 0 0-1.5H16.5z"/></g>`,
+        `<path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/>`,
         size,
         className
     ),
 
-    // Settings / Configuration icon
+    // Settings / Configuration icon (iOS style outline)
     settings: (size = "20", className = "") => createIcon(
-        `<path fill="currentColor" fill-rule="evenodd" d="M7.948 2.75a.75.75 0 0 1 .698.472l.396 1a2.75 2.75 0 0 0 1.627 1.627l1 .396a.75.75 0 0 1 0 1.396l-1 .396a2.75 2.75 0 0 0-1.627 1.627l-.396 1a.75.75 0 0 1-1.396 0l-.396-1A2.75 2.75 0 0 0 5.227 7.04l-1-.396a.75.75 0 0 1 0-1.396l1-.396a2.75 2.75 0 0 0 1.627-1.627l.396-1a.75.75 0 0 1 .698-.471m5.052 6a.75.75 0 0 1 .698.472l.144.364a1.25 1.25 0 0 0 .74.74l.364.144a.75.75 0 0 1 0 1.396l-.364.144a1.25 1.25 0 0 0-.74.74l-.144.364a.75.75 0 0 1-1.396 0l-.144-.364a1.25 1.25 0 0 0-.74-.74l-.364-.144a.75.75 0 0 1 0-1.396l.364-.144a1.25 1.25 0 0 0 .74-.74l.144-.364a.75.75 0 0 1 .698-.472m-7 5a.75.75 0 0 1 .698.472l.144.364a1.25 1.25 0 0 0 .74.74l.364.144a.75.75 0 0 1 0 1.396l-.364.144a1.25 1.25 0 0 0-.74.74l-.144.364a.75.75 0 0 1-1.396 0l-.144-.364a1.25 1.25 0 0 0-.74-.74l-.364-.144a.75.75 0 0 1 0-1.396l.364-.144a1.25 1.25 0 0 0 .74-.74l.144-.364a.75.75 0 0 1 .698-.472" clip-rule="evenodd"/>`,
+        `<circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m7.08 7.08l4.24 4.24M1 12h6m6 0h6M4.22 19.78l4.24-4.24m7.08-7.08l4.24-4.24"/>`,
         size,
         className
     ),
 
-    // Dashboard / Home icon
+    // Dashboard / Home icon (iOS style outline)
     dashboard: (size = "20", className = "") => createIcon(
-        `<g fill="currentColor"><path d="M3.5 2.75a.75.75 0 0 0-.75.75v4a.75.75 0 0 0 .75.75h4a.75.75 0 0 0 .75-.75v-4a.75.75 0 0 0-.75-.75zm0 8.5a.75.75 0 0 0-.75.75v4a.75.75 0 0 0 .75.75h4a.75.75 0 0 0 .75-.75v-4a.75.75 0 0 0-.75-.75zm8.5-8.5a.75.75 0 0 0-.75.75v4a.75.75 0 0 0 .75.75h4a.75.75 0 0 0 .75-.75v-4a.75.75 0 0 0-.75-.75zm-.75 9.25a.75.75 0 0 1 .75-.75h4a.75.75 0 0 1 .75.75v4a.75.75 0 0 1-.75.75h-4a.75.75 0 0 1-.75-.75z"/></g>`,
+        `<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>`,
         size,
         className
     ),
 
-    // Search icon
+    // Search icon (iOS style outline)
     search: (size = "20", className = "") => createIcon(
-        `<path fill="currentColor" fill-rule="evenodd" d="M9 2.5a6.5 6.5 0 1 0 4.001 11.6l3.45 3.45a.75.75 0 1 0 1.06-1.061l-3.45-3.45A6.5 6.5 0 0 0 9 2.5M4 9a5 5 0 1 1 10 0A5 5 0 0 1 4 9" clip-rule="evenodd"/>`,
+        `<circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>`,
         size,
         className
     ),
