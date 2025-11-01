@@ -504,7 +504,7 @@ function showShimmer() {
         card.className = 'skeleton-card';
         card.innerHTML = `
             <div class="skeleton-image skeleton"></div>
-            <div class="skeleton-card-content">
+            <div class="skeleton-content">
                 <div class="skeleton skeleton-title"></div>
                 <div class="skeleton skeleton-text"></div>
                 <div class="skeleton skeleton-text" style="width: 60%;"></div>
