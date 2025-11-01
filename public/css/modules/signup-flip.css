@@ -63,15 +63,15 @@
   transform-origin: center center;
 }
 
-/* Spinner de chargement */
+/* Spinner de chargement - MASQUÉ PAR DÉFAUT */
 .signup-loader {
-  display: none;
+  display: none !important;
   text-align: center;
   padding: 3rem 0;
 }
 
 .signup-loader.active {
-  display: block;
+  display: block !important;
   animation: fadeIn 0.3s ease-in;
 }
 
@@ -251,15 +251,15 @@
   }
 }
 
-/* Animation de succès */
+/* Animation de succès - MASQUÉ PAR DÉFAUT */
 .signup-success {
-  display: none;
+  display: none !important;
   text-align: center;
   padding: 3rem 1.5rem;
 }
 
 .signup-success.active {
-  display: block;
+  display: block !important;
   animation: fadeIn 0.5s ease-in;
 }
 
@@ -477,15 +477,15 @@
   height: 16px;
 }
 
-/* Animation d'erreur */
+/* Animation d'erreur - MASQUÉ PAR DÉFAUT */
 .signup-error {
-  display: none;
+  display: none !important;
   text-align: center;
   padding: 3rem 1.5rem;
 }
 
 .signup-error.active {
-  display: block;
+  display: block !important;
   animation: fadeIn 0.5s ease-in;
 }
 
