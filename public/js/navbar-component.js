@@ -2,6 +2,8 @@
 // NAVBAR COMPONENT - Shared Navigation
 // ================================================
 
+import { icons } from './flowbite-icons.js';
+
 export function createNavbar(config = {}) {
     const {
         showMobileSidebarBtn = false,
@@ -35,7 +37,7 @@ export function createNavbar(config = {}) {
                 </button>
                 ` : ''}
                 <a href="dashboard.html" class="logo">
-                    <img src="https://img.icons8.com/ios/24/news.png" alt="News" class="logo-icon icon-primary">
+                    ${icons.news()}
                     <span class="logo-text">Newsly AI</span>
                 </a>
             </div>
@@ -44,7 +46,7 @@ export function createNavbar(config = {}) {
             <div class="smart-search-wrapper">
                 <div class="smart-search-container">
                     <div class="smart-search-icon">
-                        <img src="https://img.icons8.com/ios/18/search--v1.png" alt="Search" class="icon-secondary">
+                        ${icons.search()}
                     </div>
                     <input
                         type="text"
@@ -81,7 +83,7 @@ export function createNavbar(config = {}) {
                 <!-- Language Switcher (hidden in public mode) -->
                 ${showLanguageSwitcher ? `
                 <button class="nav-lang-btn" id="langSwitcher" title="Changer la langue" aria-label="Changer la langue">
-                    <img src="https://img.icons8.com/ios/20/language.png" alt="Language" class="icon-secondary">
+                    ${icons.language()}
                 </button>
                 ` : ''}
 
@@ -108,12 +110,12 @@ export function createNavbar(config = {}) {
                     <!-- Public mode: Login button -->
                     ${publicMode ? `
                     <button class="burger-link" id="loginBtn">
-                        <img src="https://img.icons8.com/ios/20/enter-2.png" alt="Login" class="icon-secondary">
+                        ${icons.login()}
                         <span>Connexion</span>
                     </button>
 
                     <button class="burger-link" id="signupBtn">
-                        <img src="https://img.icons8.com/ios/20/add-user-male.png" alt="Signup" class="icon-secondary">
+                        ${icons.userPlus()}
                         <span>Créer un compte</span>
                     </button>
                     ` : ''}
@@ -122,18 +124,18 @@ export function createNavbar(config = {}) {
                     ${!publicMode ? `
                     ${showSettingsNav ? `
                     <button class="burger-link" id="dashboardBtn">
-                        <img src="https://img.icons8.com/ios/20/dashboard.png" alt="Dashboard" class="icon-secondary">
+                        ${icons.dashboard()}
                         <span data-i18n="nav.dashboard">Dashboard</span>
                     </button>
                     ` : `
                     <button class="burger-link" id="settingsBtn">
-                        <img src="https://img.icons8.com/ios/20/settings.png" alt="Settings" class="icon-secondary">
+                        ${icons.settings()}
                         <span data-i18n="nav.settings">Paramètres</span>
                     </button>
                     `}
 
                     <button class="burger-link" id="logoutBtn">
-                        <img src="https://img.icons8.com/ios/20/exit.png" alt="Logout" class="icon-secondary">
+                        ${icons.logout()}
                         <span data-i18n="nav.logout">Déconnexion</span>
                     </button>
                     ` : ''}
