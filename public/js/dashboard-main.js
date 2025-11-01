@@ -15,7 +15,7 @@ import { fadeIn, shake, stagger, ripple } from './animations.js';
 import { showPageLoader, hidePageLoader, navigateWithLoader } from './page-loader.js';
 import { showShimmerLoader, hideShimmerLoader, showShimmerError } from './shimmer-loader.js';
 import { initRippleButtons } from './micro-interactions.js';
-//import { initIconReplacement } from './icon-replacer.js';
+import { initIconReplacement } from './icons8-icons.js';
 
 // Détecter Chrome iOS (problèmes de performance avec modules lourds)
 const isChromeIOS = /CriOS/i.test(navigator.userAgent);
