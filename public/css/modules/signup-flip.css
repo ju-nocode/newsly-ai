@@ -44,7 +44,6 @@
   opacity: 1;
   transform: translateX(0);
   pointer-events: auto;
-  position: relative;
 }
 
 /* Forgot password view - Slide from bottom */
