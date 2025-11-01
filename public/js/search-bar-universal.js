@@ -212,9 +212,9 @@ const LOCAL_SEARCH_COMMANDS = {
     password: {
         prefix: '/password',
         aliases: ['/reset', '/mdp', '/forgot'],
-        description: 'Réinitialiser mot de passe',
+        description: 'Changer le mot de passe',
         icon: '',
-        action: () => window.location.href = 'reset-password.html',
+        action: () => window.location.href = 'settings.html#security',
         suggestions: []
     },
     help: {
@@ -1098,9 +1098,24 @@ function findActionForQuery(query) {
 
     const command = SEARCH_COMMANDS[commandType];
 
-    // Si c'est exactement le prefix (ex: "/settings"), utiliser l'action principale
+    // Si c'est exactement le prefix (ex: "/settings"), vérifier si il y a des sous-menus
     if (trimmedQuery.toLowerCase() === command.prefix.toLowerCase() ||
         command.aliases?.some(alias => trimmedQuery.toLowerCase() === alias.toLowerCase())) {
+
+        // Si la commande a des suggestions, on retourne une action qui affiche les sous-menus
+        if (command.suggestions && command.suggestions.length > 0) {
+            console.log('Command has submenus, returning submenu action for:', trimmedQuery);
+            return () => {
+                const searchInput = document.getElementById('smartSearchInput');
+                if (searchInput) {
+                    searchInput.value = command.prefix + (command.prefix.endsWith(':') ? ' ' : '');
+                    searchInput.focus();
+                    handleSearchInput({ target: searchInput });
+                }
+            };
+        }
+
+        // Sinon, utiliser l'action principale
         console.log('Found main command action for:', trimmedQuery);
         return command.action;
     }
@@ -1510,6 +1525,9 @@ function showFavoritesAndHistory(favorites, history) {
                 })
             });
 
+            // Capturer l'index actuel dans la closure
+            const currentIndex = itemIndex;
+
             historyItem.addEventListener('mousedown', (e) => {
                 // Si on clique sur le bouton de suppression, ne rien faire ici
                 if (e.target.classList.contains('search-remove-history')) {
@@ -1517,11 +1535,11 @@ function showFavoritesAndHistory(favorites, history) {
                 }
                 e.preventDefault();
                 e.stopPropagation();
-                executeSuggestion(searchState.searchResults[itemIndex]);
+                executeSuggestion(searchState.searchResults[currentIndex]);
             });
 
             historyItem.addEventListener('mouseenter', () => {
-                searchState.selectedIndex = itemIndex;
+                searchState.selectedIndex = currentIndex;
                 updateSelectedSuggestion();
             });
 
