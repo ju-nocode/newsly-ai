@@ -521,6 +521,7 @@
         import { initNavbar } from './public/js/navbar-component.js';
         import { initThemeSystem, setTheme } from './public/js/theme-manager.js';
         import { initWeatherWidget, refreshWeatherLocation } from './public/js/weather.js';
+        import { initLanguageSwitcher } from './public/js/language-switcher.js';
         import { showPageLoader, hidePageLoader, navigateWithLoader } from './public/js/page-loader.js';
         import { initRippleButtons } from './public/js/micro-interactions.js';
 
@@ -561,6 +562,7 @@
         const initUIComponents = () => {
             initThemeSystem();
             initWeatherWidget();
+            initLanguageSwitcher();
 
             // Setup weather refresh button
             const refreshWeatherBtn = document.getElementById('refreshWeatherBtn');
@@ -1474,37 +1476,13 @@
             // Apply language
             localStorage.setItem('language', newLang);
 
-            // Update language toggle
-            const langToggle = document.getElementById('langToggle');
-            if (langToggle) {
-                langToggle.checked = newLang === 'en';
-            }
-
             // Traduire d'abord
             await translatePage();
 
             showSuccess('Préférences enregistrées avec succès !');
         });
 
-        // Theme is now managed by theme-manager.js
-
-        // Gérer le switch de langue
-        const langToggle = document.getElementById('langToggle');
-        const savedLang = localStorage.getItem('language') || 'fr';
-        langToggle.checked = savedLang === 'en';
-
-        langToggle.addEventListener('change', async () => {
-            const newLang = langToggle.checked ? 'en' : 'fr';
-
-            // Use centralized language change function (includes translatePage)
-            await changeLanguage(newLang);
-
-            // Mettre à jour le label du switch dans le burger menu
-            const langLabel = document.getElementById('langLabel');
-            if (langLabel) {
-                langLabel.textContent = newLang === 'en' ? 'English / Français' : 'Français / English';
-            }
-        });
+        // Theme and language are now managed by their respective modules
 
         // Bouton Dashboard
         document.getElementById('dashboardBtn').addEventListener('click', () => {

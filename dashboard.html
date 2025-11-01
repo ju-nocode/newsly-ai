@@ -190,6 +190,7 @@
         import { initNavbar } from './public/js/navbar-component.js';
         import { initThemeSystem } from './public/js/theme-manager.js';
         import { initWeatherWidget, refreshWeatherLocation } from './public/js/weather.js';
+        import { initLanguageSwitcher } from './public/js/language-switcher.js';
         import { showSuccess as notifySuccess, showError as notifyError, showInfo, showWarning as notifyWarning } from './public/js/notifications.js';
         import { showLoader, hideLoader, showSkeletons, hideSkeletons, addButtonLoader, removeButtonLoader } from './public/js/loader.js';
         import { fadeIn, shake, stagger, ripple } from './public/js/animations.js';
@@ -234,6 +235,7 @@
         const initUIComponents = () => {
             initThemeSystem();
             initWeatherWidget();
+            initLanguageSwitcher();
 
             // Setup weather refresh button
             const refreshWeatherBtn = document.getElementById('refreshWeatherBtn');
@@ -743,35 +745,7 @@
             }
         }
 
-        // Gérer le switch de langue
-        const langToggle = document.getElementById('langToggle');
-        const savedLang = localStorage.getItem('language') || 'fr';
-
-        langToggle.checked = savedLang === 'en';
-
-        langToggle.addEventListener('change', async () => {
-            const newLang = langToggle.checked ? 'en' : 'fr';
-
-            // Use centralized language change function (includes translatePage)
-            await changeLanguage(newLang);
-
-            // Mettre à jour le label du switch dans le burger menu
-            const langLabel = document.getElementById('langLabel');
-            if (langLabel) {
-                langLabel.textContent = newLang === 'en' ? 'English / Français' : 'Français / English';
-            }
-
-            // Mettre à jour le titre de la catégorie actuelle
-            const activeBtn = document.querySelector('.sidebar-menu-link[data-category].active');
-            if (activeBtn) {
-                const categoryKey = activeBtn.dataset.category;
-                const translatedCategory = t(`category.${categoryKey}`);
-                document.getElementById('categoryTitle').textContent =
-                    `${t('dashboard.title')} ${translatedCategory}`;
-            }
-
-            notifySuccess(`${t('msg.languageChanged')} ${newLang === 'fr' ? 'Français' : 'English'}`);
-        });
+        // Language switcher is now handled by language-switcher.js module
 
         // Gérer le bouton Settings (burger menu)
         document.getElementById('settingsBtn').addEventListener('click', () => {
