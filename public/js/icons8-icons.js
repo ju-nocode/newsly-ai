@@ -12,7 +12,7 @@
  * @returns {string} SVG element as HTML string
  */
 function createIcon(content, size = "20", className = "") {
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" class="${className}">${content}</svg>`;
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="${className}">${content}</svg>`;
 }
 
 // ================================================
@@ -69,9 +69,9 @@ export const icons = {
         className
     ),
 
-    // News / Newspaper icon
+    // News / Newspaper icon (iOS style outline)
     news: (size = "20", className = "") => createIcon(
-        `<g fill="currentColor"><path fill-rule="evenodd" d="M3.75 2A1.75 1.75 0 0 0 2 3.75v11.5c0 .966.784 1.75 1.75 1.75h11.5A1.75 1.75 0 0 0 17 15.25V3.75A1.75 1.75 0 0 0 15.25 2zM4.75 4.5a.75.75 0 0 0 0 1.5h9.5a.75.75 0 0 0 0-1.5zm0 3.5a.75.75 0 0 0 0 1.5h4.5a.75.75 0 0 0 0-1.5zm0 3.5a.75.75 0 0 0 0 1.5h9.5a.75.75 0 0 0 0-1.5z" clip-rule="evenodd"/><path d="M10.75 8a.75.75 0 0 1 .75.75v2.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1-.75-.75v-2.5a.75.75 0 0 1 .75-.75z"/></g>`,
+        `<rect x="3" y="4" width="18" height="16" rx="2"/><line x1="7" y1="8" x2="17" y2="8"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="7" y1="16" x2="13" y2="16"/>`,
         size,
         className
     ),
@@ -164,44 +164,44 @@ export const icons = {
     // CATEGORY ICONS (Sidebar)
     // ================================================
 
-    // Business / Briefcase icon
+    // Business / Briefcase icon (iOS style outline)
     briefcase: (size = "20", className = "") => createIcon(
-        `<path fill="currentColor" fill-rule="evenodd" d="M7 2.5A1.5 1.5 0 0 0 5.5 4v.5h9V4A1.5 1.5 0 0 0 13 2.5zM16 4v.5h.25A2.75 2.75 0 0 1 19 7.25v7.5A2.75 2.75 0 0 1 16.25 17H3.75A2.75 2.75 0 0 1 1 14.75v-7.5A2.75 2.75 0 0 1 3.75 4.5H4V4a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3m.25 2H3.75c-.69 0-1.25.56-1.25 1.25v7.5c0 .69.56 1.25 1.25 1.25h12.5c.69 0 1.25-.56 1.25-1.25v-7.5c0-.69-.56-1.25-1.25-1.25" clip-rule="evenodd"/>`,
+        `<rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="3" y1="13" x2="21" y2="13"/>`,
         size,
         className
     ),
 
-    // Technology / Laptop icon
+    // Technology / Laptop icon (iOS style outline)
     laptop: (size = "20", className = "") => createIcon(
-        `<path fill="currentColor" fill-rule="evenodd" d="M4.75 3A1.75 1.75 0 0 0 3 4.75v7.5c0 .966.784 1.75 1.75 1.75h10.5A1.75 1.75 0 0 0 17 12.25v-7.5A1.75 1.75 0 0 0 15.25 3zM4.5 4.75a.25.25 0 0 1 .25-.25h10.5a.25.25 0 0 1 .25.25v7.5a.25.25 0 0 1-.25.25H4.75a.25.25 0 0 1-.25-.25zM1 15.25A.75.75 0 0 1 1.75 14.5h16.5a.75.75 0 0 1 .75.75v.5A1.25 1.25 0 0 1 17.75 17H2.25A1.25 1.25 0 0 1 1 15.75z" clip-rule="evenodd"/>`,
+        `<rect x="2" y="5" width="20" height="12" rx="2"/><path d="M2 17h20"/><circle cx="12" cy="19" r="0.5" fill="currentColor"/>`,
         size,
         className
     ),
 
-    // Science / Test tube icon
+    // Science / Flask icon (iOS style outline - plus représentatif que test tube)
     testTube: (size = "20", className = "") => createIcon(
-        `<path fill="currentColor" fill-rule="evenodd" d="M11.28 2.22a.75.75 0 0 1 1.06 0l3.44 3.44a.75.75 0 0 1-1.06 1.06l-.22-.22v7.75a3.75 3.75 0 1 1-7.5 0V6.5l-.22.22a.75.75 0 0 1-1.06-1.06zM8 6.5v7.75a2.25 2.25 0 1 0 4.5 0V6.5zm1.5 6a1 1 0 1 0 0 2a1 1 0 0 0 0-2" clip-rule="evenodd"/>`,
+        `<path d="M9 3h6M10 3v7l4 6a2 2 0 0 1-1.7 3h-4.6A2 2 0 0 1 6 16l4-6V3"/><line x1="11" y1="13" x2="13" y2="13"/>`,
         size,
         className
     ),
 
-    // Health / Heart icon
+    // Health / Heart with pulse icon (iOS style outline)
     heartPulse: (size = "20", className = "") => createIcon(
-        `<path fill="currentColor" fill-rule="evenodd" d="M10 3.314C8.67 2.095 6.84 1.5 5 1.5c-2.545 0-4.5 1.955-4.5 4.5c0 1.28.478 2.45 1.262 3.36l.052.058l.067.07L10 17.5l8.119-8.012l.067-.07l.052-.058C19.022 8.45 19.5 7.28 19.5 6c0-2.545-1.955-4.5-4.5-4.5c-1.84 0-3.67.595-5 1.814M8.75 6a.75.75 0 0 0-1.5 0v1.25H6a.75.75 0 0 0 0 1.5h1.25V10a.75.75 0 0 0 1.5 0V8.75H10a.75.75 0 0 0 0-1.5H8.75z" clip-rule="evenodd"/>`,
+        `<path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"/><path d="M9 12h2l1-3 1 6 1-3h2"/>`,
         size,
         className
     ),
 
-    // Sports / Football icon
+    // Sports / Football icon (iOS style outline)
     football: (size = "20", className = "") => createIcon(
-        `<path fill="currentColor" fill-rule="evenodd" d="M10 2.5a7.5 7.5 0 1 0 0 15a7.5 7.5 0 0 0 0-15M1 10a9 9 0 1 1 18 0a9 9 0 0 1-18 0m9-3.5l1.854 1.354l-.708 2.176h-2.292l-.708-2.176zm-2.5.618L6.146 8.472l-1.854.674l.354 1.09l1.5.546zm5 0l1.354 1.354l1.854.674l-.354 1.09l-1.5.546zm-4.292 3.264l-.708 2.176L8.354 13.5h3.292l1.854-1.382l-.708-2.176z" clip-rule="evenodd"/>`,
+        `<circle cx="12" cy="12" r="9"/><path d="M12 3v2m0 14v2M3 12h2m14 0h2M6.34 6.34l1.41 1.41m8.49 8.49l1.41 1.41M6.34 17.66l1.41-1.41m8.49-8.49l1.41-1.41"/><circle cx="12" cy="12" r="3"/>`,
         size,
         className
     ),
 
-    // Entertainment / Clapperboard icon
+    // Entertainment / Film icon (iOS style outline - plus simple)
     clapperboard: (size = "20", className = "") => createIcon(
-        `<path fill="currentColor" fill-rule="evenodd" d="M3.75 2A2.75 2.75 0 0 0 1 4.75v10.5A2.75 2.75 0 0 0 3.75 18h12.5A2.75 2.75 0 0 0 19 15.25V4.75A2.75 2.75 0 0 0 16.25 2zM2.5 7.5v7.75c0 .69.56 1.25 1.25 1.25h12.5c.69 0 1.25-.56 1.25-1.25V7.5zm15 0V4.75c0-.69-.56-1.25-1.25-1.25h-1.19l-1.5 2.25h3.94m-5.94 0l1.5-2.25H9.94l-1.5 2.25zm-4.5 0L5.56 3.5H3.75c-.69 0-1.25.56-1.25 1.25V7.5z" clip-rule="evenodd"/>`,
+        `<rect x="2" y="5" width="20" height="15" rx="2"/><path d="M2 9h20M7 5l-2 4M12 5l-2 4M17 5l-2 4M22 5l-2 4"/>`,
         size,
         className
     ),
